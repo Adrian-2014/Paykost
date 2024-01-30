@@ -1,0 +1,114 @@
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url("/img/exterior.jpg");
+    background-size: cover;
+    max-height: 100vh !important;
+    position: relative;
+
+    @media screen and (max-width: 500px) {
+        background-position: 0% 70%;
+    }
+}
+
+.body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100dvh !important;
+    width: 100vw !important;
+}
+
+.image img {
+    height: 170px;
+    width: 170px;
+
+    @media screen and (max-width: 500px) {
+        height: 170px !important;
+        width: 170px !important;
+    }
+}
+
+/* .form-floating .form-control {
+ font-size: 90%;
+} */
+
+label {
+    color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.row .col-lg-6 form input.form-control-sm {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1.1px solid rgba(255, 255, 255, 0.808) !important;
+    height: 2.5rem !important;
+    background-color: rgba(255, 255, 255, 0.808) !important;
+    border-radius: 5px;
+}
+
+input.form-control-sm::placeholder {
+    font-style: italic;
+}
+
+@media screen and (max-width: 500px) {
+    .col-lg-6 form i.bi {
+        left: 85% !important;
+    }
+
+    .bot {
+        margin-top: 12.7rem !important;
+    }
+}
+
+.col-lg-6 form .w-100 i {
+    cursor: pointer !important;
+}
+
+button {
+    outline: none !important;
+    border: none !important;
+    padding: 0.5rem 0 !important;
+    border-radius: 10px !important;
+    color: rgb(255, 255, 255);
+}
+
+button.active {
+    background: linear-gradient(rgb(0, 81, 255), rgb(0, 153, 255));
+}
+
+.image img {
+    height: 220px;
+    width: 250px;
+}
+
+form h4 {
+    color: rgb(0, 0, 0);
+    text-shadow: 0 0 1.5px white;
+}
+
+form .link {
+    font-size: 0.9rem;
+}
+
+form .link a.text-white {
+    font-style: italic;
+    padding: 0.15rem 0.3rem;
+    padding-bottom: 0.05rem !important;
+    background-color: rgba(215, 215, 215, 0.5);
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.bot {
+    text-align: center !important;
+    font-size: 0.95rem;
+    margin-top: 3.5rem;
+    color: rgba(255, 255, 255, 0.845) !important;
+}

@@ -1,0 +1,419 @@
+:root {
+    --theme: linear-gradient(rgb(0, 140, 255), white, skyblue);
+}
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* N A V B A R  S */
+
+.container-fluid.satu {
+    position: relative !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .navbar.fixed-top {
+        display: flex;
+        justify-content: space-between;
+        background-color: white !important;
+
+        align-items: center !important;
+
+        .navbar-brand {
+            display: flex;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0 !important;
+            margin-top: 0.4rem;
+            img {
+                height: 35px;
+                width: 135px;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+            }
+        }
+        .profil {
+            display: flex;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0 !important;
+
+            img {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                border: 1.4px solid gray;
+            }
+        }
+    }
+}
+
+/* N A V B A R  E */
+
+/* S E C T I O N  F I R S T  S */
+
+.section.d-flex {
+    margin-top: 4rem;
+    .splide__pagination__page {
+        width: 6.5px;
+        height: 6.5px;
+    }
+
+    .splide__pagination__page.is-active {
+        transform: scale(1.3);
+    }
+    .row {
+        border-radius: 25px;
+        border: 1.5px solid gray;
+        background: var(--theme);
+        height: fit-content !important;
+        width: 100% !important;
+        color: white !important;
+        margin: 0.5rem;
+        overflow: hidden;
+        .col-11 {
+            padding: 0;
+            width: 100%;
+
+            .tag-top {
+                margin: 0.8rem 1rem !important;
+                .heading {
+                    font-size: 0.9rem;
+                }
+                .heading {
+                    font-size: 0.65rem;
+                }
+                .inf {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                }
+            }
+
+            .status {
+                position: relative;
+                z-index: 2;
+                display: flex;
+                justify-content: space-between;
+                background-color: white;
+                padding: 0.45rem 0.7rem;
+                border-radius: 20px;
+                margin-top: -0.45rem !important;
+                color: white;
+                align-items: center;
+                .heading {
+                    font-size: 0.8rem;
+                    color: rgba(0, 0, 0, 0.7);
+                }
+                .value .isi {
+                    border-radius: 15px;
+                    /* background: linear-gradient(
+                        to right,
+                        rgb(138, 217, 249),
+                        rgb(30, 148, 250)
+                    ); */
+                    background-color: rgba(0, 255, 0, 0.3);
+                    border: 1.7px solid rgba(0, 128, 0, 0.812);
+
+                    .lun {
+                        font-size: 0.65rem;
+                        padding: 0.4rem 0.55rem;
+                        color: rgba(0, 128, 0, 0.812) !important;
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .gambar {
+                height: 70%;
+                border-bottom-left-radius: 25px;
+                border-bottom-right-radius: 25px;
+                width: 100%;
+                margin: -1.2rem 0 !important;
+                padding: 0 !important;
+
+                .splide .splide__track .splide__list .splide__slide img {
+                    height: 100%;
+                    width: 100%;
+                    gap: 0 !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    /* border-bottom-left-radius: 23px;
+                    border-bottom-right-radius: 23px; */
+                }
+            }
+        }
+    }
+}
+
+/* S E C T I O N  F I R S T  E */
+
+/* N E X T  S */
+
+.next.container-fluid {
+    padding: 0.5rem 1rem;
+    .row {
+        .col-7 {
+            color: rgba(0, 0, 0, 0.7);
+
+            .head {
+                font-size: 0.65rem;
+            }
+            .value {
+                font-size: 1.1rem;
+                font-weight: bold;
+                color: grey;
+            }
+        }
+        .col-5 {
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            button {
+                border: none;
+                outline: none;
+                color: rgb(109, 108, 108);
+                padding: 0.6rem 0.8rem;
+                /* background: linear-gradient(
+                    to left,
+                    rgb(138, 217, 249),
+                    rgb(30, 148, 250)
+                ); */
+                background-color: rgba(128, 128, 128, 0.295);
+                border-radius: 18px;
+                letter-spacing: 0.5px;
+            }
+        }
+    }
+}
+
+/* N E X T  E */
+
+/* D A N G E R  S */
+
+.danger.container-fluid {
+    background-color: rgb(231, 231, 238);
+    display: flex;
+    height: 5.5rem;
+    justify-content: center;
+    align-items: center;
+    .inform {
+        border-radius: 1rem;
+        border: 1.5px solid rgba(255, 183, 0, 0.789);
+        padding: 0rem 0.3rem !important;
+        padding-right: 0 !important;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 4rem;
+        width: 100%;
+        background: linear-gradient(
+            rgba(255, 255, 0, 0.303),
+            rgba(255, 255, 0, 0.368)
+        );
+        background-color: white;
+        .alert {
+            width: auto;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            padding: 0.1rem !important;
+            align-items: center;
+            .bi.bi-exclamation-circle {
+                font-size: 2rem !important;
+                color: rgb(255, 183, 0);
+            }
+        }
+
+        .pemberitahuan {
+            padding-left: 0.2rem;
+
+            .head {
+                font-weight: bold;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+                color: rgb(255, 183, 0);
+            }
+
+            .isi {
+                font-size: 0.55rem;
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+    }
+}
+
+/* D A N G E R  E */
+
+/* K A T E G O R I  S */
+
+.kategori.container-fluid {
+    .row .col-12 {
+        display: flex;
+        padding: 0 1rem;
+        justify-content: space-between;
+        .kategori-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            .log {
+                height: fit-content;
+                width: fit-content;
+                padding: 10px;
+                border-radius: 50%;
+                /* background-color: rgb(231, 228, 228); */
+                background: linear-gradient(
+                    to bottom right,
+                    rgb(0, 127, 211),
+                    rgb(156, 223, 249)
+                );
+                i {
+                    font-size: 20px;
+                    color: rgb(255, 255, 255);
+                }
+            }
+
+            .keterangan {
+                margin-top: 0.3rem;
+                font-size: 0.55rem;
+                width: 3.7rem;
+                line-height: 1.2;
+            }
+        }
+        .kategori-item:nth-child(4) .keterangan {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 0 !important;
+            padding: 0 !important;
+            p {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .pe {
+                margin-top: 0.3rem !important;
+            }
+        }
+        /* .kategori-item.end {
+            .log {
+                height: fit-content;
+                width: fit-content;
+                padding: 2px !important;
+                .fi.fi-br-interrogation {
+                    font-size: 25px !important;
+                }
+            }
+        } */
+    }
+}
+
+/* K A T E G O R I  E */
+
+/* R E C O M E N D A T I O N  S */
+
+.recomendation.container-fluid {
+    height: 14.5rem;
+    margin-bottom: 5rem;
+    .splide {
+        height: 14.5rem;
+
+        .splide__track {
+            height: 14.5rem;
+
+            .splide__list {
+                height: 14.5rem;
+
+                .splide__slide {
+                    height: 14.5rem;
+
+                    .card {
+                        border-radius: 20px;
+                        overflow: hidden;
+                        background-color: white;
+                        height: 14.5rem;
+
+                        img {
+                            height: 10rem;
+                            border-radius: 20px;
+                            gap: 0 !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                        }
+                        .card-body {
+                            font-size: 0.75rem !important;
+                            padding: 0.4rem;
+                            padding-left: 0.65rem !important;
+
+                            .card-text {
+                                height: 1rem;
+                                line-height: 1.36;
+                                color: rgba(0, 0, 0, 0.503);
+                            }
+                            .tambahan {
+                                display: flex;
+                                margin-top: 0.6rem !important;
+                                justify-content: space-between;
+                                align-items: center;
+
+                                .harga {
+                                    font-size: 0.93rem;
+                                    position: relative;
+                                    top: 0.5rem;
+                                    left: 0rem;
+                                    font-weight: bold;
+                                    color: rgba(0, 153, 255, 0.603);
+                                }
+
+                                .lihat {
+                                    border-radius: 15px;
+                                    border-top-right-radius: 0 !important;
+                                    background: linear-gradient(
+                                        rgb(0, 136, 255),
+                                        rgb(119, 203, 255)
+                                    );
+
+                                    position: relative;
+                                    padding: 0.3rem 1.6rem;
+                                    padding-right: 2.2rem;
+                                    border-bottom-left-radius: 0px !important;
+                                    padding-top: 0.3rem !important;
+                                    right: -1rem;
+                                    top: 0.5rem;
+
+                                    a {
+                                        text-decoration: none;
+                                        color: white;
+                                        font-size: 0.95rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* R E C O M E N D A T I O N  E */
+
+/* M E N U  S */
+
+/* .navbar.fixed-bottom {
+} */
+
+/* M E N U  E*/
