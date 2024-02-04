@@ -1,0 +1,113 @@
+.container-fluid {
+    .navbar.fixed-top {
+        border-bottom: 0.5px solid rgba(128, 128, 128, 0.478) !important;
+
+        .navbar-brand {
+            img {
+                height: 25px;
+                width: 85px;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+            }
+        }
+        .id {
+            font-weight: bold;
+        }
+    }
+}
+
+.pay-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .pay {
+        font-weight: bold;
+        font-size: 1.3rem;
+        color: rgb(13, 110, 13);
+        margin-top: 4rem;
+    }
+
+    .tgl {
+        margin-top: -0.2rem;
+        color: rgba(0, 0, 0, 0.514);
+        font-size: 0.8rem;
+    }
+
+    .uang {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-top: 0rem;
+    }
+}
+
+.info-kost {
+    margin-top: 0.3rem;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.51);
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .inf {
+            color: rgba(128, 128, 128, 0.51);
+            font-size: 0.9rem;
+        }
+        .value {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+    }
+}
+
+.info-pembayaran {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    gap: 0.7rem;
+    .information {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.1rem;
+        gap: 0rem;
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            .name {
+                color: rgba(128, 128, 128, 0.51);
+            }
+            .value {
+                font-weight: bold;
+                color: rgba(0, 0, 0, 0.69);
+            }
+        }
+    }
+}
+
+.bukti {
+    margin-top: 0.2rem;
+    .name {
+        color: rgba(128, 128, 128, 0.514);
+        font-size: 1.2rem;
+    }
+    .gambar {
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            height: 280px !important;
+            width: 320px !important;
+            border: 1px solid rgba(128, 128, 128, 0.695);
+            border-radius: 10px;
+            margin-top: 0.6rem;
+        }
+    }
+}

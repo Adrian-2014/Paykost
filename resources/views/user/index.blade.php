@@ -11,18 +11,79 @@
 
 
     <div class="container-fluid satu position-relative">
-        <nav class="navbar fixed-top px-3 py-2">
+        <nav class="navbar fixed-top px-3 py-1">
             <div class="navbar-brand">
                 <img src="{{ asset('img/two.png') }}">
             </div>
             <div class="profil">
-                <a href="user/profil">
-                    <img src="{{ asset('img/person-1.jpg') }}">
-                </a>
+                <img src="{{ asset('img/person-1.jpg') }}" id="profil">
             </div>
         </nav>
     </div>
 
+    <div class="body">
+        <div class="profil-content">
+
+            <div class="profil-item">
+                <div class="logo">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+                <div class="value">
+                    <div class="judul">
+                        Nama
+                    </div>
+                    <div class="nama-v">
+                        Adrian
+                    </div>
+                </div>
+            </div>
+            <div class="profil-item">
+
+                <div class="value">
+                    <div class="judul">
+                        Nomor Kamar
+                    </div>
+                    <div class="nama-v">
+                        5
+                    </div>
+                </div>
+            </div>
+            <div class="profil-item">
+
+                <div class="value">
+                    <div class="judul">
+                        Tanggal Masuk
+                    </div>
+                    <div class="nama-v">
+                        20 November 2023
+                    </div>
+                </div>
+            </div>
+            <div class="profil-item">
+
+                <div class="value">
+                    <div class="judul">
+                        Durasi Ngekost
+                    </div>
+                    <div class="nama-v">
+                        5 Bulan 13 Hari
+                    </div>
+                </div>
+            </div>
+            <div class="profil-item">
+
+                <div class="value">
+                    <div class="judul">
+                        Pekerjaan
+                    </div>
+                    <div class="nama-v">
+                        Mahasiswa
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <section class="section d-flex justify-content-center text-align-center">
         <div class="row">
@@ -51,18 +112,9 @@
                                 SUDAH LUNAS
                             </div>
                         </div>
-                        {{-- <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-chevron-down"></i>
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </div> --}}
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class='fas fa-chevron-down'></i>
+                        </button>
                     </div>
                 </div>
 
@@ -87,6 +139,125 @@
         </div>
     </section>
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" id="exampleModalLabel">
+                        <img src="{{ asset('img/two.png') }}">
+                    </div>
+                    <div class="id">
+                        #0D97GEK7208F
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="first">
+                        <div class="suc">
+                            <div class="mess">
+                                Pembayaran Berhasil!
+                            </div>
+                            <div class="tgl">
+                                08 November 2023 17:54:12 WIB
+                            </div>
+                            <div class="pay">
+                                Rp. 1.500.000
+                            </div>
+                            <div class="stat">
+                                <div class="stat-item">
+                                    <div class="head">
+                                        Tanggal Masuk
+                                    </div>
+                                    <div class="value">
+                                        08/12/2023
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="head">
+                                        Durasi Ngekost
+                                    </div>
+                                    <div class="value">
+                                        28 Bulan 13 hari
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sec">
+                        <div class="info-list">
+                            <div class="info-item">
+                                <div class="inf">
+                                    Nama User
+                                </div>
+                                <div class="value">
+                                    Adrian Kurniawan
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="inf">
+                                    No. Kamar
+                                </div>
+                                <div class="value">
+                                    Kamar No. 5
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="inf">
+                                    Bulan Tagihan
+                                </div>
+                                <div class="value">
+                                    November 2023
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="inf">
+                                    Total Tagihan
+                                </div>
+                                <div class="value">
+                                    Rp. 1.500.000
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-l">
+                            <div class="info-item">
+                                <div class="inf">
+                                    Metode Bayar
+                                </div>
+                                <div class="value">
+                                    Transfer Bank BCA
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="inf">
+                                    Atas Nama
+                                </div>
+                                <div class="value">
+                                    Adrian
+                                </div>
+                            </div>
+                            <div class="bukti">
+                                <div class="inf">
+                                    Bukti Pembayaran
+                                </div>
+                                <div class="value">
+                                    <img src="{{ asset('img/not.jpg') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{-- <form action="/pdf">
+                        <button type="submit" class="btn">Download</button>
+                    </form> --}}
+                    <a href="javascript:void(0)" target="popup"
+                        onclick="window.open('/pdf','popup','width=600,height=600'); return false;"
+                        class="btn">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="next container-fluid">
         <div class="row">
             <div class="col-7">
@@ -103,20 +274,43 @@
         </div>
     </div>
 
-    <div class="danger container-fluid mt-2">
-        <div class="inform">
-            <div class="alert">
-                <i class="bi bi-exclamation-circle"></i>
-            </div>
-            <div class="pemberitahuan">
-                <div class="head">
-                    PENTING !
-                </div>
-                <div class="isi">
-                    Diinformasikan kepada semua para penghuni kost untuk selalu menutup kembali pagar depan & memasukkan
-                    kendaraannya.
-                </div>
-            </div>
+    <div class="splide danger container-fluid mt-2" role="group" id="danger-slide">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <div class="inform" id="inform-1">
+                        <div class="alert">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                        <div class="pemberitahuan">
+                            <div class="head">
+                                PENTING !
+                            </div>
+                            <div class="isi">
+                                Diinformasikan kepada semua para penghuni kost untuk selalu menutup kembali pagar depan
+                                & memasukkan
+                                kendaraannya.
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide dua">
+                    <div class="inform" id="inform-2">
+                        <div class="alert">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                        <div class="pemberitahuan">
+                            <div class="head">
+                                SANGAT PENTING !
+                            </div>
+                            <div class="isi">
+                                Diinformasikan kepada semua penghuni kost untuk selalu membayar tagihan kost tepat waktu.
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
         </div>
     </div>
 
@@ -128,7 +322,7 @@
                         <i class="fi fi-ss-leave"></i>
                     </div>
                     <div class="keterangan">
-                        Pindah kamar kost
+                        Pindah Kamar Kost
                     </div>
                 </div>
                 <div class="kategori-item">
@@ -136,7 +330,7 @@
                         <i class="fi fi-ss-house-chimney-crack"></i>
                     </div>
                     <div class="keterangan">
-                        Laporan kerusakan
+                        Laporan Kerusakan
                     </div>
                 </div>
                 <div class="kategori-item">
@@ -144,7 +338,7 @@
                         <i class="fi fi-ss-broom"></i>
                     </div>
                     <div class="keterangan">
-                        tenaga kebersihan
+                        Tenaga Kebersihan
                     </div>
                 </div>
                 <div class="kategori-item">
@@ -153,7 +347,7 @@
                     </div>
                     <div class="keterangan">
                         <p class="pe">Jasa</p>
-                        <p class="pi">cuci baju</p>
+                        <p class="pi">Cuci Baju</p>
                     </div>
                 </div>
                 <div class="kategori-item end">
@@ -161,9 +355,17 @@
                         <i class="fi fi-br-interrogation"></i>
                     </div>
                     <div class="keterangan">
-                        Laporan kehilangan
+                        Laporan ehilangan
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="banner container-fluid px-2 mt-3">
+        <div class="row">
+            <div class="col-11 mx-auto">
+
             </div>
         </div>
     </div>
@@ -177,7 +379,8 @@
                         <div class="card" style="width: 16rem;">
                             <img src="{{ asset('img-chategories/room-1.jpg') }}" class="card-img-top">
                             <div class="card-body">
-                                <div class="card-text">Kamar kost No. 08 - Uk. 3,5m x 3,5m - AC 1 pk - K. Mandi dalam </div>
+                                <div class="card-text">Kamar kost No. 08 - Uk. 3,5m x 3,5m - AC 1 pk - K. Mandi dalam
+                                </div>
                                 <div class="tambahan">
                                     <div class="harga">
                                         Rp. 1.600.000
@@ -284,10 +487,13 @@
         splide.mount();
 
         var splide = new Splide('#slider-2', {
-            type: 'loop',
+            // type: 'loop',
             autoplay: false,
-            padding: '2.2rem',
+            gap: '1rem',
+            padding: '0rem',
+            drag: 'free',
             // perPage: 1,
+            // perMove: 1,
             arrows: false,
             pagination: false,
             // interval: 4000,
@@ -295,7 +501,39 @@
 
         });
         splide.mount();
+
+        var splide = new Splide('#danger-slide', {
+            autoplay: true,
+            interval: 10000,
+            type: 'loop',
+            drag: false,
+            arrows: false,
+            // next: '<i class="bi bi-chevron-right"></i>',
+            // prev: '<i class="bi bi-chevron-left"></i>',
+            pagination: false,
+            gap: '1rem',
+
+        });
+        splide.mount();
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toggle = document.getElementById('profil');
+            var menu = document.querySelector('.body');
+            // var navbar = document.querySelector("nav");
+            toggle.addEventListener('click', function() {
+                menu.classList.toggle('active');
+                // navbar.classList.toggle('active');
+            });
 
-
+            document.addEventListener('click', function(e) {
+                var toggle = document.getElementById('profil');
+                var menu = document.querySelector('.body');
+                if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('active');
+                    // navbar.classList.remove('active');
+                }
+            });
+        });
+    </script>
 @endsection
