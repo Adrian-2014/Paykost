@@ -29,6 +29,13 @@ Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
 Route::get('/user/profil', [userPageController::class, 'profil']);
 Route::get('/user/index', [loginController::class, 'user']);
 
+Route::get('/pindah', [userPageController::class, 'pindah']);
+Route::get('/laporanKerusakan', [userPageController::class, 'laporanKerusakan']);
+Route::get('/kebersihan', [userPageController::class, 'kebersihan']);
+Route::get('/cuci', [userPageController::class, 'cuciBaju']);
+Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
+
+
 Route::get('/admin/index', [loginController::class, 'admin']);
 Route::get('/admin/create', [adminControll::class, 'index']);
 

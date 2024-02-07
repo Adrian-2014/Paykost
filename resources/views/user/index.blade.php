@@ -250,9 +250,7 @@
                     {{-- <form action="/pdf">
                         <button type="submit" class="btn">Download</button>
                     </form> --}}
-                    <a href="javascript:void(0)" target="popup"
-                        onclick="window.open('/pdf','popup','width=600,height=600'); return false;"
-                        class="btn">Download</a>
+                    <a href="javascript:void(0)" target="popup" onclick="window.open('/pdf','popup','width=600,height=600'); return false;" class="btn">Download</a>
                 </div>
             </div>
         </div>
@@ -318,59 +316,120 @@
         <div class="row">
             <div class="col-12">
                 <div class="kategori-item">
-                    <div class="log">
+                    <a href="/pindah" class="log">
                         <i class="fi fi-ss-leave"></i>
-                    </div>
+                    </a>
                     <div class="keterangan">
                         Pindah Kamar Kost
                     </div>
                 </div>
                 <div class="kategori-item">
-                    <div class="log">
+                    <a href="/laporanKerusakan" class="log">
                         <i class="fi fi-ss-house-chimney-crack"></i>
-                    </div>
+                    </a>
                     <div class="keterangan">
                         Laporan Kerusakan
                     </div>
                 </div>
                 <div class="kategori-item">
-                    <div class="log">
+                    <a href="/kebersihan" class="log">
                         <i class="fi fi-ss-broom"></i>
-                    </div>
+                    </a>
                     <div class="keterangan">
                         Tenaga Kebersihan
                     </div>
                 </div>
                 <div class="kategori-item">
-                    <div class="log">
+                    <a href="/cuci" class="log">
                         <i class="fi fi-ss-washer"></i>
-                    </div>
+                    </a>
                     <div class="keterangan">
                         <p class="pe">Jasa</p>
                         <p class="pi">Cuci Baju</p>
                     </div>
                 </div>
                 <div class="kategori-item end">
-                    <div class="log">
+                    <a href="/kehilangan" class="log">
                         <i class="fi fi-br-interrogation"></i>
-                    </div>
+                    </a>
                     <div class="keterangan">
-                        Laporan ehilangan
+                        Laporan Kehilangan
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="banner container-fluid px-2 mt-3">
-        <div class="row">
-            <div class="col-11 mx-auto">
-
-            </div>
+    <div class="splide" role="group" id="banner">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <div class="banner container-fluid">
+                        <div class="row satu">
+                            <div class="col-11 mx-auto">
+                                <div class="header fw-medium">
+                                    Ajak Teman dan dapatkan
+                                </div>
+                                <div class="inti fw-bold">
+                                    <div class="disk">DISKON 5%</div>
+                                    <div class="jangka">Selama Tiga Bulan</div>
+                                </div>
+                                <div class="rinci fw-medium">
+                                    Untuk setiap teman yang kamu ajak
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="banner container-fluid">
+                        <div class="row dua">
+                            <div class="col-11 mx-auto">
+                                <div class="display">
+                                    <div class="header">
+                                        <div class="satu fw-medium">Rasakan Kemudahan</div>
+                                        <div class="dua">#BayarKost</div>
+                                        <div class="tiga fw-medium">Dengan Paykost</div>
+                                    </div>
+                                    <div class="bottom">
+                                        Kemudahan & keamanan dalam Transaksi.
+                                    </div>
+                                </div>
+                                <div class="icons">
+                                    <img src="{{ asset('img/family.png') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="banner container-fluid">
+                        <div class="row tiga">
+                            <div class="col-11 mx-auto">
+                                <div class="content">
+                                    <div class="satu fw-semibold">
+                                        Proses Cepat
+                                    </div>
+                                    <div class="dua fw-semibold">
+                                        Pelayanan Mantap
+                                    </div>
+                                    <div class="tiga">
+                                        #PaykostAja
+                                    </div>
+                                </div>
+                                <div class="gambar">
+                                    <img src="{{ asset('img/celebrate.png') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
-    <div class="recomendation container-fluid mt-4">
+
+    <div class="recomendation container-fluid mt-5">
         <div class="splide" role="group" id="slider-2">
             <div class="splide__track">
                 <ul class="splide__list">
@@ -507,6 +566,20 @@
             interval: 10000,
             type: 'loop',
             drag: false,
+            arrows: false,
+            // next: '<i class="bi bi-chevron-right"></i>',
+            // prev: '<i class="bi bi-chevron-left"></i>',
+            pagination: false,
+            gap: '1rem',
+
+        });
+        splide.mount();
+
+        var splide = new Splide('#banner', {
+            autoplay: false,
+            interval: false,
+            type: 'loop',
+            drag: true,
             arrows: false,
             // next: '<i class="bi bi-chevron-right"></i>',
             // prev: '<i class="bi bi-chevron-left"></i>',
