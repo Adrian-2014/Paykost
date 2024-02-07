@@ -1012,7 +1012,7 @@ body {
     }
 }
 
-.navbar.fixed-bottom.active {
+.navbar.fixed-bottom .active {
     border-radius: 15px;
     background: linear-gradient(to left, rgb(123, 189, 244), rgb(6, 157, 216));
     padding: 0.1rem 0.7rem;
