@@ -10,18 +10,8 @@
                 <i class="left" data-feather="chevron-left"></i>
             </a>
             <div class="info fw-medium">
-                PENGAJUAN
+                PENGAJUAN PINDAH KAMAR
             </div>
-        </div>
-    </div>
-
-    <div class="head">
-        <div class="judul fw-semibold">
-            <div class="satu">PENGAJUAN</div>
-            <div class="dua">PINDAH KAMAR KOST</div>
-        </div>
-        <div class="deskripsi">
-            Mohon lengkapi data di bawah !
         </div>
     </div>
 

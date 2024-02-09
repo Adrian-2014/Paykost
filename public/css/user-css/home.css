@@ -987,7 +987,7 @@ body {
 /* M E N U  S */
 
 .navbar.fixed-bottom {
-    background-color: rgba(255, 255, 255, 0.388);
+    background-color: rgba(120, 118, 118, 0.652);
 }
 
 
@@ -995,6 +995,7 @@ body {
     justify-content: space-between !important;
     display: flex;
     align-items: center;
+
 }
 
 .nav-link {
@@ -1003,6 +1004,7 @@ body {
     i {
         display: flex;
         align-self: center;
+        color: rgba(0, 0, 0, 0.6);
     }
 
     .isi {
@@ -1017,6 +1019,11 @@ body {
     background: linear-gradient(to left, rgb(123, 189, 244), rgb(6, 157, 216));
     padding: 0.1rem 0.7rem;
     color: white;
+
+    i {
+        color: white;
+
+    }
 
     .isi {
         display: block;

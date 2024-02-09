@@ -445,9 +445,9 @@
                                         Rp. 1.600.000
                                     </div>
                                     <div class="lihat">
-                                        <a href="">
+                                        <a href="/rekomendasi">
                                             Lihat
-                                        </a>
+                                        </a>   
                                     </div>
                                 </div>
                             </div>
@@ -464,7 +464,7 @@
                                         Rp. 1.300.000
                                     </div>
                                     <div class="lihat">
-                                        <a href="">
+                                        <a href="/rekomendasi">
                                             Lihat
                                         </a>
                                     </div>
@@ -484,7 +484,27 @@
                                         Rp. 2.000.000
                                     </div>
                                     <div class="lihat">
-                                        <a href="">
+                                        <a href="/rekomendasi">
+                                            Lihat
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="splide__slide">
+                        <div class="card" style="width: 16rem;">
+                            <img src="{{ asset('img/tyler.jpg') }}" class="card-img-top">
+                            <div class="card-body">
+                                <div class="card-text">Kamar kost No. 02 - Uk. 3m x 4.5m - AC 1 pk - K. Mandi dalam
+                                </div>
+                                <div class="tambahan">
+                                    <div class="harga">
+                                        Rp. 1.650.000
+                                    </div>
+                                    <div class="lihat">
+                                        <a href="/rekomendasi">
                                             Lihat
                                         </a>
                                     </div>
