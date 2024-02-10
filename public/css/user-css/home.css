@@ -988,6 +988,7 @@ body {
 
 .navbar.fixed-bottom {
     background-color: rgba(120, 118, 118, 0.652);
+    
 }
 
 
@@ -1000,6 +1001,7 @@ body {
 
 .nav-link {
     display: flex !important;
+    flex-direction: column;
 
     i {
         display: flex;
@@ -1008,25 +1010,35 @@ body {
     }
 
     .isi {
-        padding-left: 0.4rem;
-        display: none;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 }
 
 .navbar.fixed-bottom .active {
     border-radius: 14px;
-    background: linear-gradient(to left, rgb(123, 189, 244), rgb(6, 157, 216));
-    padding: 0.1rem 0.7rem;
+    /* background: linear-gradient(to left, rgb(123, 189, 244), rgb(6, 157, 216)); */
+    padding: 0rem 0.7rem;
     color: white;
 
     i {
-        color: white;
-
+        background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
+        /* Ganti warna sesuai keinginan */
+        -webkit-background-clip: text;
+        /* Untuk browser Safari */
+        background-clip: text;
+        color: transparent;
+        /* Membuat teks menjadi transparan */
+        font-size: 1.42em;
     }
 
     .isi {
-        display: block;
+        background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
+        /* Ganti warna sesuai keinginan */
+        -webkit-background-clip: text;
+        /* Untuk browser Safari */
+        background-clip: text;
+        color: transparent;
+        font-size: .8rem;
     }
 }
 

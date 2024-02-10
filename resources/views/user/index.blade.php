@@ -447,7 +447,7 @@
                                     <div class="lihat">
                                         <a href="/rekomendasi">
                                             Lihat
-                                        </a>   
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -519,23 +519,23 @@
     </div>
 
     <nav class="navbar fixed-bottom bg-body-tertiary">
-        <div class="container-fluid d-flex my-2 px-3">
+        <div class="container-fluid d-flex my-1 px-3">
             <div class="nav-item active">
                 <a href="/user/index" class="nav-link">
                     <i class="bi bi-house-fill"></i>
-                    <div class="isi">Beranda</div>
+                    <div class="isi fw-normal">Beranda</div>
                 </a>
             </div>
             <div class="nav-item">
                 <a href="/user/kamarku" class="nav-link">
                     <i class="fa fa-bed" style="font-size:16px"></i>
-                    <div class="isi">Kamarku</div>
+                    <div class="isi fw-normal">Kamarku</div>
                 </a>
             </div>
             <div class="nav-item">
                 <a href="/user/riwayat" class="nav-link">
                     <i class="bi bi-clock-fill"></i>
-                    <div class="isi">
+                    <div class="isi fw-normal">
                         Riwayat
                     </div>
                 </a>
@@ -543,7 +543,7 @@
             <div class="nav-item">
                 <a href="/profil/profil" class="nav-link">
                     <i class="bi bi-people-fill"></i>
-                    <div class="isi">Profil</div>
+                    <div class="isi fw-normal">Profil</div>
                 </a>
             </div>
         </div>

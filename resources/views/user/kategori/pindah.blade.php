@@ -33,12 +33,28 @@
 
         <div class="formulir sec">
             <div class="form-item">
-                <label for="k-new" class="form-label fw-medium">No. Kamar Baru</label>
-                <input type="text" id="k-new" class="form-control">
+                <label for="k-new" class="form-label fw-medium">Kamar Baru</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pilih Kamar Baru anda
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <div class="item" onclick="changeValue('awokawokawok')">Kamar No. 1</div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="changeValue('anjay')">Kamar No. 2</div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="changeValue('slebew')">Kamar No. 3</div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="form-item">
-                <label for="harga" class="form-label fw-medium">Harga Kamar</label>
-                <input type="text" id="harga" class="form-control" disabled>
+                <label for="p" class="form-label fw-medium">Harga Kamar</label>
+                <input type="text" id="p" class="form-control" disabled value="rillkah?
+                ">
             </div>
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
@@ -56,5 +72,10 @@
 
         <button type="submit" class="fw-medium rounded-pill mt-0 mb-4">KIRIM PENGAJUAN</button>
     </form>
+    <script>
+        function changeValue(value) {
+            document.getElementById('p').value = value;
+        }
+    </script>
 
 @endsection
