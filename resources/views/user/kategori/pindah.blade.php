@@ -37,10 +37,10 @@
                 <div class="dropdown">
 
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="isi">
-                            Pilih Kamar Baru anda
+                        <div clas="isi">
+                            Pilih Kamar Barus anda
                         </div>
-                        <i class="bi bi-caret-down"></i>
+                        <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li class="first">
@@ -77,7 +77,7 @@
             </div>
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
-                <input type="text" id="tanggal" class="form-control">
+                <input type="date" id="tanggal" class="form-control">
             </div>
         </div>
 

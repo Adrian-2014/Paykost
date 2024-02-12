@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'pindah kamar')
+@section('title', 'Laporan kehilangan')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/kehilangan.css') }}">
 
 @section('container')
@@ -95,7 +95,6 @@
             isiInput.placeholder = placeholderText;
         }
     </script>
-
     <script>
         function enableSubmit() {
             var requiredInputs = document.getElementById("form").querySelectorAll("input");
@@ -132,5 +131,6 @@
             input.addEventListener("input", enableSubmit);
         });
     </script>
+
 
 @endsection
