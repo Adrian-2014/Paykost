@@ -15,8 +15,8 @@
         </div>
     </div>
 
-    <form action="" method="" class="form">
-        <div class="formulir">
+    <form action="" method="" class="form" id="form">
+        <div class="formulir" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama</label>
                 <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
@@ -35,26 +35,45 @@
             <div class="form-item">
                 <label for="k-new" class="form-label fw-medium">Kamar Baru</label>
                 <div class="dropdown">
+
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Pilih Kamar Baru anda
+                        <div class="isi">
+                            Pilih Kamar Baru anda
+                        </div>
+                        <i class="bi bi-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li>
-                            <div class="item" onclick="changeValue('awokawokawok')">Kamar No. 1</div>
+                        <li class="first">
+                            <div class="item" onclick="changeValue('Kamar No. 1', 'Rp. 1.300.000')">Kamar No. 1</div>
                         </li>
                         <li>
-                            <div class="item" onclick="changeValue('anjay')">Kamar No. 2</div>
+                            <div class="item" onclick="changeValue('Kamar No. 2', 'Rp. 1.450.000')">Kamar No. 2</div>
                         </li>
-                        <li>
-                            <div class="item" onclick="changeValue('slebew')">Kamar No. 3</div>
+                        <li class="last">
+                            <div class="item" onclick="changeValue('Kamar No. 3', 'Rp. 1.200.000')">Kamar No. 3</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="changeValue('Kamar No. 4', 'Rp. 1.60.000')">Kamar No. 4</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="changeValue('Kamar No. 5', 'Rp. 1.250.000')">Kamar No. 5</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="changeValue('Kamar No. 6', 'Rp. 1.100.000')">Kamar No. 6</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="changeValue('Kamar No. 7', 'Rp. 1.450.000')">Kamar No. 7</div>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="form-item">
-                <label for="p" class="form-label fw-medium">Harga Kamar</label>
-                <input type="text" id="p" class="form-control" disabled value="rillkah?
-                ">
+                <label for="p" class="form-label fw-medium">No. Kamar Baru</label>
+                <input type="text" id="p" class="form-control" disabled placeholder="mohon pilih kamar baru..">
+            </div>
+            <div class="form-item">
+                <label for="p" class="form-label fw-medium">Harga Kamar Baru</label>
+                <input type="text" id="d" class="form-control" disabled placeholder="mohon pilih kamar baru..">
             </div>
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
@@ -66,16 +85,55 @@
             <div class="form-item">
                 {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
                 <label for="exampleFormControlTextarea1" class="form-label fw-medium">Alasan Pindah Kamar (Opsional)</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="tambahkan alasan anda pindah kamar.."></textarea>
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4">KIRIM PENGAJUAN</button>
+        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">KIRIM PENGAJUAN</button>
     </form>
     <script>
-        function changeValue(value) {
-            document.getElementById('p').value = value;
+        function changeValue(nomor, kamar) {
+            document.getElementById('p').value = nomor;
+            document.getElementById('d').value = kamar;
+
         }
+    </script>
+
+    <script>
+        function enableSubmit() {
+            var requiredInputs = document.getElementById("form").querySelectorAll("input");
+            let btn = document.getElementById('tombol');
+            let isValid = true;
+
+            for (var i = 0; i < requiredInputs.length; i++) {
+                let changedInput = requiredInputs[i];
+
+                if (changedInput.value.trim() === "" || changedInput.value === null) {
+                    changedInput.classList.remove("mati");
+                    isValid = false;
+                    break;
+                } else {
+                    changedInput.classList.add("mati");
+                }
+            }
+            btn.disabled = !isValid;
+
+            if (isValid) {
+                btn.classList.remove("mati");
+                btn.classList.add("active");
+            } else {
+
+                btn.classList.remove("active");
+                btn.classList.add("mati");
+            }
+
+        }
+
+        // Attach the function to input events (e.g., input, change)
+        var formInputs = document.getElementById("form").querySelectorAll("input");
+        formInputs.forEach(function(input) {
+            input.addEventListener("input", enableSubmit);
+        });
     </script>
 
 @endsection
