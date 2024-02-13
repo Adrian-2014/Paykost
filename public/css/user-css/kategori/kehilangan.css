@@ -158,8 +158,6 @@ body {
                 }
             }
 
-
-
             input::placeholder {
                 color: var(--placeholderColor);
                 font-size: var(--placeholderSize);

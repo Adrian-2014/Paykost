@@ -9,7 +9,7 @@
                 <i class="left" data-feather="chevron-left"></i>
             </a>
             <div class="info fw-medium">
-                JASA CUCI BAJU
+                Jasa Cuci Baju
             </div>
         </div>
     </div>
@@ -40,16 +40,56 @@
         </div>
     </div>
 
-    <script>
-        var splide = new Splide('.splide', {
-            type: 'loop',
-            // padding: '0rem',
-            gap: '1rem',
-            perPage: 1,
-            pagination: false,
-            arrows: false,
-        });
+    <div class="layanan-cuci my-4">
+        <div class="judul fw-medium mb-2 px-3">
+            Layanan Kami
+        </div>
+        <div class="container text-center">
+            <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
+                <div class="col">
+                    <div class="item-pelayanan">Row column</div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">Row column</div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">Row column</div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">
+                        <img src="{{ asset('img-chategories/Setrika.png') }}">
+                        <div class="pelayanan-name">
+                            Cuci Setrika
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">Row column</div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">Row column</div>
+                </div>
 
-        splide.mount();
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var splide = new Splide('.splide', {
+                type: 'loop',
+                // padding: '0rem',
+                gap: '1rem',
+                perPage: 1,
+                pagination: false,
+                autoplay: true,
+                interval: 6000,
+            });
+
+            splide.options.arrowPathPrev = '<i class="bi bi-arrow-left"></i>';
+            splide.options.arrowPathNext = '<i class="bi bi-arrow-right"></i>';
+
+            splide.mount();
+        });
     </script>
 @endsection

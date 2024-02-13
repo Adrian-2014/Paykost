@@ -39,9 +39,9 @@ body {
 .splide.banner {
     width: 100%;
     /* background-color: blue; */
-    padding: 0 1rem !important;
+    padding: 0 .7rem !important;
     height: fit-content;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     overflow: hidden;
 
     .splide__track {
@@ -144,6 +144,35 @@ body {
                 }
             }
 
+        }
+    }
+
+}
+
+.layanan-cuci {
+    .container.text-center {
+        .row.row-cols-3 {
+            .col {
+                .item-pelayanan {
+                    height: 8.5rem;
+                    border-radius: 7px;
+                    background-color: rgba(239, 239, 239, 0.886);
+                    padding: .5rem 0;
+                    box-shadow: 1px 1px .5px gray;
+
+                    img {
+                        width: 5.5rem;
+                        height: 5.5rem;
+                        /* background-color: cyan; */
+                    }
+
+                    .pelayanan-name {
+                        font-size: .9rem;
+                        margin-top: .7rem;
+                    }
+
+                }
+            }
         }
     }
 }

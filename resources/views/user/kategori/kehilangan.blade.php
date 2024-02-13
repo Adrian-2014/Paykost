@@ -10,7 +10,7 @@
                 <i class="left" data-feather="chevron-left"></i>
             </a>
             <div class="info fw-medium">
-                LAPORAN KEHILANGAN
+                Laporan Kehilangan
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                             <div class="item" onclick="barang('Uang Tunai')">Uang tunai</div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="barang('Lainnya')">Lainnya..</div>
+                            <div class="item" onclick="barang('Lainnya..')">Lainnya..</div>
                         </li>
 
                     </ul>
@@ -66,12 +66,16 @@
                 <label for="tanggal" class="form-label fw-medium">Waktu Kehilangan</label>
                 <input type="date" id="tanggal" class="form-control">
             </div>
+            <div class="form-item">
+                <label for="waktu" class="form-label fw-medium">Jam Kehilangan</label>
+                <input type="time" id="waktu" class="form-control">
+            </div>
         </div>
 
         <div class="formulir last">
             <div class="form-item">
                 {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
-                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Lanjutan (Opsional)</label>
+                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Tambahan</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="tambahkan keterangan anda terkait barang yang hilang.."></textarea>
             </div>
         </div>
@@ -82,15 +86,15 @@
         function barang(barangHilang) {
             var isiInput = document.getElementById('isi');
             var placeholderText = '';
-            if (barangHilang === 'Lainnya') {
+            if (barangHilang === 'Lainnya..') {
                 isiInput.value = '';
                 isiInput.disabled = false;
-                placeholderText = 'isi barang anda yang hilang..';
+                placeholderText = 'Isi barang anda yang hilang..';
                 isiInput.focus();
             } else {
                 isiInput.value = barangHilang;
                 isiInput.disabled = true;
-                placeholderText = 'pilih barang anda yang hilang';
+                placeholderText = 'Pilih barang anda yang hilang';
             }
             isiInput.placeholder = placeholderText;
         }
@@ -124,7 +128,6 @@
             }
 
         }
-
         // Attach the function to input events (e.g., input, change)
         var formInputs = document.getElementById("form").querySelectorAll("input");
         formInputs.forEach(function(input) {

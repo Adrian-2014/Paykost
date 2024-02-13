@@ -10,7 +10,7 @@
                 <i class="left" data-feather="chevron-left"></i>
             </a>
             <div class="info fw-medium">
-                LAPORAN KERUSAKAN
+                Laporan Kerusakan
             </div>
         </div>
     </div>
@@ -31,7 +31,35 @@
 
             <div class="form-item">
                 <label for="p" class="form-label fw-medium">Kerusakan</label>
-                <input type="text" id="p" class="form-control"placeholder="bagian yang mengalami kerusakan..">
+                <div class="dropdown">
+
+                    <input type="text" disabled class="form-control" id="isi" placeholder="pilih barang anda yang hilang">
+                    </input>
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-caret-down-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="first">
+                            <div class="item" onclick="bagian('Kunci Kamar')">Pintu</div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="bagian('Handphone')">Plafon</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="bagian('Laptop')">Ac</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="bagian('Dompet')">Lantai Kamar</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="bagian('Uang Tunai')">Keran Air</div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="bagian('Lainnya..')">Lainnya..</div>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
             <div class="form-item">
                 <label for="p" class="form-label fw-medium">Unggah foto bagian yang rusak</label>
@@ -48,8 +76,26 @@
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">KIRIM PENGAJUAN</button>
+        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">KIRIM LAPORAN</button>
     </form>
+
+    <script>
+        function bagian(barangHilang) {
+            var isiInput = document.getElementById('isi');
+            var placeholderText = '';
+            if (barangHilang === 'Lainnya..') {
+                isiInput.value = '';
+                isiInput.disabled = false;
+                placeholderText = 'Bagian yang mengalami kerusakan..';
+                isiInput.focus();
+            } else {
+                isiInput.value = barangHilang;
+                isiInput.disabled = true;
+                placeholderText = 'Pilih bagian yang rusak';
+            }
+            isiInput.placeholder = placeholderText;
+        }
+    </script>
 
     <script>
         function enableSubmit() {

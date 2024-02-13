@@ -679,7 +679,8 @@ body {
     height: fit-content;
     overflow: hidden;
     /* background: black; */
-    margin: 2rem 0;
+    margin: 1.5rem 0;
+
     padding: 0 1rem !important;
     /* background-color: black; */
 
@@ -897,26 +898,28 @@ body {
 /* R E C O M E N D A T I O N  S */
 .recomendation.container-fluid {
     height: 14.5rem;
-    margin-bottom: 6rem;
+    margin-top: 2.3rem !important;
+    margin-bottom: 5rem;
+    /* background: black; */
 
     .splide {
-        height: 14.5rem;
+        height: fit-content;
 
         .splide__track {
-            height: 14.5rem;
+            height: fit-content;
 
             .splide__list {
-                height: 14.5rem;
+                height: fit-content;
 
                 .splide__slide {
-                    height: 14.5rem;
+                    height: fit-content;
                     width: auto !important;
 
                     .card {
                         border-radius: 20px;
                         overflow: hidden;
                         background-color: white;
-                        height: 14.5rem;
+                        height: fit-content;
 
                         img {
                             height: 10rem;
@@ -932,14 +935,14 @@ body {
                             padding-left: 0.65rem !important;
 
                             .card-text {
-                                height: 1rem;
+                                /* height: 1rem; */
                                 line-height: 1.36;
                                 color: rgba(0, 0, 0, 0.503);
                             }
 
                             .tambahan {
                                 display: flex;
-                                margin-top: 0.6rem !important;
+                                margin-top: 0rem !important;
                                 justify-content: space-between;
                                 align-items: center;
 
@@ -947,7 +950,7 @@ body {
                                     font-size: 0.93rem;
                                     position: relative;
                                     top: 0.5rem;
-                                    left: 0rem;
+                                    left: .3srem;
                                     font-weight: bold;
                                     color: rgba(0, 153, 255, 0.603);
                                 }
@@ -986,7 +989,9 @@ body {
 /* M E N U  S */
 
 .navbar.fixed-bottom {
-    background-color: rgba(120, 118, 118, 0.652);
+    padding: .3rem .4rem;
+    /* background: linear-gradient(rgb(0, 145, 255), rgb(0, 213, 255)); */
+    background-color: rgb(239, 235, 235);
 
 }
 
@@ -995,49 +1000,52 @@ body {
     justify-content: space-between !important;
     display: flex;
     align-items: center;
+    /* border: 1px solid whir; */
+    padding: .7px 1rem !important;
+    padding-top: 7px !important;
 
 }
 
 .nav-link {
     display: flex !important;
     flex-direction: column;
+    /* padding: 0rem 3rem; */
+
 
     i {
         display: flex;
         align-self: center;
-        color: rgba(0, 0, 0, 0.6);
+        color: rgba(0, 0, 0, 0.3);
+
+        height: fit-content;
+        width: fit-content;
+        font-size: 18px;
+        padding-bottom: 1px;
     }
 
     .isi {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
+        color: rgba(0, 0, 0, 0.3);
+
     }
 }
 
 .navbar.fixed-bottom .active {
-    border-radius: 14px;
-    /* background: linear-gradient(to left, rgb(123, 189, 244), rgb(6, 157, 216)); */
-    padding: 0rem 0.7rem;
     color: white;
 
     i {
         background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
-        /* Ganti warna sesuai keinginan */
         -webkit-background-clip: text;
-        /* Untuk browser Safari */
         background-clip: text;
         color: transparent;
-        /* Membuat teks menjadi transparan */
-        font-size: 1.42em;
     }
 
     .isi {
-        background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
-        /* Ganti warna sesuai keinginan */
+        background-image: linear-gradient(to bottom left, #0062ff, #9bcaee);
         -webkit-background-clip: text;
-        /* Untuk browser Safari */
         background-clip: text;
         color: transparent;
-        font-size: .8rem;
+
     }
 }
 

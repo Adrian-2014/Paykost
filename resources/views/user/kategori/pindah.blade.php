@@ -10,7 +10,7 @@
                 <i class="left" data-feather="chevron-left"></i>
             </a>
             <div class="info fw-medium">
-                PENGAJUAN PINDAH KAMAR
+                Pengajuan Pindah Kamar
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
     <form action="" method="" class="form" id="form">
         <div class="formulir" id="formulir">
             <div class="form-item">
-                <label for="name" class="form-label fw-medium">Nama</label>
+                <label for="name" class="form-label fw-medium">Nama User</label>
                 <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
             </div>
             <div class="form-item">
@@ -35,45 +35,76 @@
             <div class="form-item">
                 <label for="k-new" class="form-label fw-medium">Kamar Baru</label>
                 <div class="dropdown">
-
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div clas="isi">
-                            Pilih Kamar Barus anda
+                            Pilih Kamar Baru Kamu
                         </div>
                         <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li class="first">
-                            <div class="item" onclick="changeValue('Kamar No. 1', 'Rp. 1.300.000')">Kamar No. 1</div>
+                            <div class="item" onclick="changeValue('Kamar No. 1', 'Rp. 1.300.000', 'Uk. 3,5 x 3m')">
+                                <img src="{{ asset('img-chategories/room-1.jpg') }}">
+                                <div class="nomor">Kamar No. 1</div>
+                                <div class="ukuran">Uk. 3,5 x 3m</div>
+                            </div>
                         </li>
                         <li>
-                            <div class="item" onclick="changeValue('Kamar No. 2', 'Rp. 1.450.000')">Kamar No. 2</div>
+                            <div class="item" onclick="changeValue('Kamar No. 2', 'Rp. 1.450.000', 'Uk. 3,5 x 3,5m')">
+                                <img src="{{ asset('img-chategories/room-4.jpg') }}">
+                                <div class="nomor">Kamar No. 2</div>
+                                <div class="ukuran">Uk. 3,5 x 3,5m</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="changeValue('Kamar No. 3', 'Rp. 1.200.000', 'Uk. 3 x 2,8m')">
+                                <img src="{{ asset('img-chategories/room-3.jpg') }}">
+                                <div class="nomor">Kamar No. 3</div>
+                                <div class="ukuran">Uk. 3 x 2,8m</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="changeValue('Kamar No. 4', 'Rp. 1.60.000', 'Uk. 4 x 3,5m')">
+                                <img src="{{ asset('img/tyler.jpg') }}">
+                                <div class="nomor">Kamar No. 4</div>
+                                <div class="ukuran">Uk. 4 x 3,5m</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="changeValue('Kamar No. 5', 'Rp. 1.250.000', 'Uk. 3,5 x 2,3m')">
+                                <img src="{{ asset('img/satu.jpg') }}">
+                                <div class="nomor">Kamar No. 5</div>
+                                <div class="ukuran">Uk. 3,5 x 2,3m</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item" onclick="changeValue('Kamar No. 6', 'Rp. 1.100.000', 'Uk. 2,5 x 2,5m')">
+                                <img src="{{ asset('img-chategories/room-6.jpg') }}">
+                                <div class="nomor">Kamar No. 6</div>
+                                <div class="ukuran">Uk. 2,5 x 2,5m</div>
+                            </div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="changeValue('Kamar No. 3', 'Rp. 1.200.000')">Kamar No. 3</div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="changeValue('Kamar No. 4', 'Rp. 1.60.000')">Kamar No. 4</div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="changeValue('Kamar No. 5', 'Rp. 1.250.000')">Kamar No. 5</div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="changeValue('Kamar No. 6', 'Rp. 1.100.000')">Kamar No. 6</div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="changeValue('Kamar No. 7', 'Rp. 1.450.000')">Kamar No. 7</div>
+                            <div class="item" onclick="changeValue('Kamar No. 7', 'Rp. 1.450.000', 'Uk. 3,5 x 3,5m')">
+                                <img src="{{ asset('img-chategories/room-1`.jpg') }}">
+                                <div class="nomor">Kamar No. 7</div>
+                                <div class="ukuran">Uk. 3,5 x 3,5mm</div>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="form-item">
                 <label for="p" class="form-label fw-medium">No. Kamar Baru</label>
-                <input type="text" id="p" class="form-control" disabled placeholder="mohon pilih kamar baru..">
+                <input type="text" id="p" class="form-control" disabled placeholder="mohon pilih kamar dahulu!">
             </div>
             <div class="form-item">
                 <label for="p" class="form-label fw-medium">Harga Kamar Baru</label>
-                <input type="text" id="d" class="form-control" disabled placeholder="mohon pilih kamar baru..">
+                <input type="text" id="d" class="form-control" disabled placeholder="mohon pilih kamar dahulu!">
+            </div>
+            <div class="form-item">
+                <label for="i" class="form-label fw-medium">Ukuran Kamar</label>
+                <input type="text" id="i" class="form-control" disabled placeholder="mohon pilih kamar dahulu!">
             </div>
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
@@ -92,10 +123,12 @@
         <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">KIRIM PENGAJUAN</button>
     </form>
     <script>
-        function changeValue(nomor, kamar) {
+        function changeValue(nomor, kamar, ukuran) {
             document.getElementById('p').value = nomor;
             document.getElementById('d').value = kamar;
-
+            document.getElementById('i').value = ukuran;
+            var dropdownButton = document.querySelector('.btn.dropdown-toggle');
+            dropdownButton.classList.add('selected');
         }
     </script>
 

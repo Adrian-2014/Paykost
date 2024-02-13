@@ -429,7 +429,7 @@
     </div>
 
 
-    <div class="recomendation container-fluid mt-5">
+    <div class="recomendation container-fluid">
         <div class="splide" role="group" id="slider-2">
             <div class="splide__track">
                 <ul class="splide__list">
@@ -438,7 +438,7 @@
                         <div class="card" style="width: 16rem;">
                             <img src="{{ asset('img-chategories/room-1.jpg') }}" class="card-img-top">
                             <div class="card-body">
-                                <div class="card-text">Kamar kost No. 08 - Uk. 3,5m x 3,5m - AC 1 pk - K. Mandi dalam
+                                <div class="card-text">Kamar kost No. 08 - Uk. 3,5m x 3,5m
                                 </div>
                                 <div class="tambahan">
                                     <div class="harga">
@@ -458,7 +458,7 @@
                         <div class="card" style="width: 16rem;">
                             <img src="{{ asset('img-chategories/room-2.jpg') }}" class="card-img-top">
                             <div class="card-body">
-                                <div class="card-text">Kamar kost No. 07 - Uk. 3,1m x 3,1m - AC 1 pk </div>
+                                <div class="card-text">Kamar kost No. 07 - Uk. 3,1m x 3,1m </div>
                                 <div class="tambahan">
                                     <div class="harga">
                                         Rp. 1.300.000
@@ -477,7 +477,7 @@
                         <div class="card" style="width: 16rem;">
                             <img src="{{ asset('img-chategories/room-3.jpg') }}" class="card-img-top">
                             <div class="card-body">
-                                <div class="card-text">Kamar kost No. 06 - Uk. 5m x 5m - AC 2 pk - K. Mandi dalam
+                                <div class="card-text">Kamar kost No. 06 - Uk. 5m x 5m
                                 </div>
                                 <div class="tambahan">
                                     <div class="harga">
@@ -497,7 +497,7 @@
                         <div class="card" style="width: 16rem;">
                             <img src="{{ asset('img/tyler.jpg') }}" class="card-img-top">
                             <div class="card-body">
-                                <div class="card-text">Kamar kost No. 02 - Uk. 3m x 4.5m - AC 1 pk - K. Mandi dalam
+                                <div class="card-text">Kamar kost No. 02 - Uk. 3m x 4.5m
                                 </div>
                                 <div class="tambahan">
                                     <div class="harga">
@@ -518,23 +518,24 @@
         </div>
     </div>
 
-    <nav class="navbar fixed-bottom bg-body-tertiary">
+    <nav class="navbar fixed-bottom">
         <div class="container-fluid d-flex my-1 px-3">
             <div class="nav-item active">
                 <a href="/user/index" class="nav-link">
-                    <i class="bi bi-house-fill"></i>
+                    {{-- <i class="bi bi-house-fill"></i> --}}
+                    <i class='fas fa-home'></i>
                     <div class="isi fw-normal">Beranda</div>
                 </a>
             </div>
             <div class="nav-item">
                 <a href="/user/kamarku" class="nav-link">
-                    <i class="fa fa-bed" style="font-size:16px"></i>
+                    <i class='fas fa-door-open'></i>
                     <div class="isi fw-normal">Kamarku</div>
                 </a>
             </div>
             <div class="nav-item">
                 <a href="/user/riwayat" class="nav-link">
-                    <i class="bi bi-clock-fill"></i>
+                    <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat
                     </div>
@@ -542,10 +543,11 @@
             </div>
             <div class="nav-item">
                 <a href="/profil/profil" class="nav-link">
-                    <i class="bi bi-people-fill"></i>
+                    <i class='fas fa-user-alt'></i>
                     <div class="isi fw-normal">Profil</div>
                 </a>
             </div>
+
         </div>
     </nav>
 
