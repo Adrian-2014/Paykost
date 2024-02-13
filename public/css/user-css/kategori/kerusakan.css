@@ -221,3 +221,16 @@ body {
     background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
     color: white;
 }
+
+input[type="file"] {
+    display: none;
+}
+
+.labelFile {
+    color: white;
+    height: 2.5rem;
+    width: 100%;
+    border-radius: 5px;
+    background: linear-gradient(to bottom right, rgb(0, 85, 255), rgb(124, 213, 249));
+    position: relative;
+}

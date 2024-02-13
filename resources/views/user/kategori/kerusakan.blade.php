@@ -30,7 +30,7 @@
         <div class="formulir sec">
 
             <div class="form-item">
-                <label for="p" class="form-label fw-medium">Kerusakan</label>
+                <label for="p" class="form-label fw-medium forFile">Kerusakan</label>
                 <div class="dropdown">
 
                     <input type="text" disabled class="form-control" id="isi" placeholder="pilih barang anda yang hilang">
@@ -62,8 +62,11 @@
                 </div>
             </div>
             <div class="form-item">
-                <label for="p" class="form-label fw-medium">Unggah foto bagian yang rusak</label>
-                <input type="file" id="d" class="form-control">
+                <label for="files" class="form-label fw-medium">Unggah foto bagian yang rusak</label>
+                <input type="file" id="files" class="form-control">
+                <label for="files" class="labelFile">
+                    <div class="placeholder">choose file</div>
+                </label>
             </div>
 
         </div>
