@@ -96,15 +96,15 @@
             </div>
             <div class="form-item">
                 <label for="p" class="form-label fw-medium">No. Kamar Baru</label>
-                <input type="text" id="p" class="form-control" disabled placeholder="mohon pilih kamar dahulu!">
+                <input type="text" id="p" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!">
             </div>
             <div class="form-item">
                 <label for="p" class="form-label fw-medium">Harga Kamar Baru</label>
-                <input type="text" id="d" class="form-control" disabled placeholder="mohon pilih kamar dahulu!">
+                <input type="text" id="d" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!">
             </div>
             <div class="form-item">
                 <label for="i" class="form-label fw-medium">Ukuran Kamar</label>
-                <input type="text" id="i" class="form-control" disabled placeholder="mohon pilih kamar dahulu!">
+                <input type="text" id="i" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!">
             </div>
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
@@ -115,12 +115,12 @@
         <div class="formulir last">
             <div class="form-item">
                 {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
-                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Alasan Pindah Kamar (Opsional)</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="tambahkan alasan anda pindah kamar.."></textarea>
+                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Alasan Pindah (Opsional)</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan alasan kamu pindah..."></textarea>
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">KIRIM PENGAJUAN</button>
+        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">Kirim Pengajuan</button>
     </form>
     <script>
         function changeValue(nomor, kamar, ukuran) {
@@ -129,6 +129,12 @@
             document.getElementById('i').value = ukuran;
             var dropdownButton = document.querySelector('.btn.dropdown-toggle');
             dropdownButton.classList.add('selected');
+            var inputItemp = document.getElementById('p');
+            var inputItemd = document.getElementById('d');
+            var inputItemi = document.getElementById('i');
+            inputItemp.classList.add('nyalaOi');
+            inputItemd.classList.add('nyalaOi');
+            inputItemi.classList.add('nyalaOi');
         }
     </script>
 

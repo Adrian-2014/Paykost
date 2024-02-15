@@ -9,7 +9,6 @@
 
 @section('container')
 
-
     <div class="container-fluid satu position-relative">
         <nav class="navbar fixed-top px-3 py-1">
             <div class="navbar-brand">
@@ -19,6 +18,24 @@
                 <img src="{{ asset('img/person-1.jpg') }}" id="profil">
             </div>
         </nav>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pesan Penting</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Isi Pesan di sini -->
+                    Terima kasih atas laporan Anda!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="body">
@@ -570,7 +587,7 @@
         var splide = new Splide('#slider-2', {
             // type: 'loop',
             autoplay: false,
-            gap: '1rem',
+            gap: '.5rem',
             padding: '0rem',
             drag: 'free',
             // perPage: 1,
@@ -603,6 +620,8 @@
             type: 'loop',
             drag: true,
             arrows: false,
+            autoplay: true,
+            interval: 5000,
             // next: '<i class="bi bi-chevron-right"></i>',
             // prev: '<i class="bi bi-chevron-left"></i>',
             pagination: false,
@@ -631,4 +650,5 @@
             });
         });
     </script>
+
 @endsection

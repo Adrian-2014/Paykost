@@ -15,22 +15,22 @@
         </div>
     </div>
 
-    <form action="" method="" class="form" id="form">
+    <form action="/" method="POST" class="form" id="form">
+        @csrf
         <div class="formulir" id="formulir">
             <div class="form-item">
-                <label for="name" class="form-label fw-medium">Nama</label>
+                <label for="name" class="form-label fw-medium">Nama User</label>
                 <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
             </div>
             <div class="form-item">
                 <label for="k-now" class="form-label fw-medium">No. Kamar</label>
                 <input type="text" id="k-now" class="form-control" value="Kamar No. 5" disabled>
             </div>
-
         </div>
 
         <div class="formulir sec">
             <div class="form-item">
-                <label for="k-new" class="form-label fw-medium">Barang yang Hilang</label>
+                <label for="k-new" class="form-label fw-medium">Apa yang Hilang? <span>*</span></label>
                 <div class="dropdown">
 
                     <input type="text" disabled class="form-control" id="isi" placeholder="pilih barang anda yang hilang">
@@ -40,22 +40,65 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li class="first">
-                            <div class="item" onclick="barang('Kunci Kamar')">Kunci Kamar</div>
+                            <div class="item" onclick="barang('Kunci Kamar')">
+                                <div class="icons">
+                                    <img src="{{ asset('gambar-kategori/key-chain.png') }}">
+                                </div>
+                                <div class="value">
+                                    Kunci Kamar
+                                </div>
+                            </div>
+                        </li>
+                        <li class="last">
+                            <div class="item" onclick="barang('Dompet')">
+                                <div class="icons">
+                                    <img src="{{ asset('gambar-kategori/wallet.png') }}">
+                                </div>
+                                <div class="value">
+                                    Dompet
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <div class="item" onclick="barang('Handphone')">Handphone</div>
+                            <div class="item" onclick="barang('Handphone')">
+                                <div class="icons">
+                                    <img src="{{ asset('gambar-kategori/smartphone.png') }}">
+                                </div>
+                                <div class="value">
+                                    Handphone
+                                </div>
+                            </div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="barang('Laptop')">Laptop</div>
+                            <div class="item" onclick="barang('Laptop')">
+                                <div class="icons">
+                                    <img src="{{ asset('gambar-kategori/laptop.png') }}">
+                                </div>
+                                <div class="value">
+                                    Laptop
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="last">
+                            <div class="item" onclick="barang('Uang Tunai')">
+                                <div class="icons">
+                                    <img src="{{ asset('gambar-kategori/money.png') }}">
+                                </div>
+                                <div class="value">
+                                    Uang Tunai
+                                </div>
+                            </div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="barang('Dompet')">Dompet</div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="barang('Uang Tunai')">Uang tunai</div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="barang('Lainnya..')">Lainnya..</div>
+                            <div class="item" onclick="barang('Lainnya...')">
+                                <div class="icons">
+                                    <img src="{{ asset('gambar-kategori/pencil.png') }}">
+                                </div>
+                                <div class="value">
+                                    Lainnya...
+                                </div>
+                            </div>
                         </li>
 
                     </ul>
@@ -63,11 +106,11 @@
             </div>
 
             <div class="form-item">
-                <label for="tanggal" class="form-label fw-medium">Waktu Kehilangan</label>
+                <label for="tanggal" class="form-label fw-medium">Waktu Kehilangan <span>*</span></label>
                 <input type="date" id="tanggal" class="form-control">
             </div>
             <div class="form-item">
-                <label for="waktu" class="form-label fw-medium">Jam Kehilangan</label>
+                <label for="waktu" class="form-label fw-medium">Jam Kehilangan <span>*</span></label>
                 <input type="time" id="waktu" class="form-control">
             </div>
         </div>
@@ -75,21 +118,21 @@
         <div class="formulir last">
             <div class="form-item">
                 {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
-                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Tambahan</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="tambahkan keterangan anda terkait barang yang hilang.."></textarea>
+                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Tambahan <span>*</span></label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">KIRIM LAPORAN</button>
+        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">Kirim Laporan</button>
     </form>
     <script>
         function barang(barangHilang) {
             var isiInput = document.getElementById('isi');
             var placeholderText = '';
-            if (barangHilang === 'Lainnya..') {
+            if (barangHilang === 'Lainnya...') {
                 isiInput.value = '';
                 isiInput.disabled = false;
-                placeholderText = 'Isi barang anda yang hilang..';
+                placeholderText = 'Isi barang anda yang hilang...';
                 isiInput.focus();
             } else {
                 isiInput.value = barangHilang;
@@ -101,7 +144,7 @@
     </script>
     <script>
         function enableSubmit() {
-            var requiredInputs = document.getElementById("form").querySelectorAll("input");
+            var requiredInputs = document.getElementById("form").querySelectorAll(".form-control");
             let btn = document.getElementById('tombol');
             let isValid = true;
 
@@ -129,7 +172,7 @@
 
         }
         // Attach the function to input events (e.g., input, change)
-        var formInputs = document.getElementById("form").querySelectorAll("input");
+        var formInputs = document.getElementById("form").querySelectorAll(".form-control");
         formInputs.forEach(function(input) {
             input.addEventListener("input", enableSubmit);
         });

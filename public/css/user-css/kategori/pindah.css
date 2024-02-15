@@ -69,7 +69,6 @@ body {
             flex-direction: column;
             gap: 0;
 
-
             label {
                 font-size: var(--lableSize);
                 margin-bottom: 0.1rem !important;
@@ -202,12 +201,20 @@ body {
             }
 
             input::placeholder {
-                color: var(--placeholderColor);
-                font-size: var(--placeholderSize);
+                color: var(--placeholderColor) !important;
+                font-size: var(--placeholderSize) !important;
             }
 
         }
+
+        .nyalaOi {
+            background: linear-gradient(to right, rgb(0, 78, 142), skyblue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
     }
+
 
     .selected {
         background: rgba(159, 159, 159, 0.708) !important;
@@ -227,8 +234,8 @@ body {
             width: 107%;
 
             label {
-                font-size: var(--textareaLabelsize);
-                color: var(--textareaLablecolor);
+                font-size: var(--lableSize);
+                color: var(--labelColor);
             }
 
             textarea {

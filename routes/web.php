@@ -40,5 +40,6 @@ Route::get('/admin/index', [loginController::class, 'admin']);
 Route::get('/admin/create', [adminControll::class, 'index']);
 
 Route::get('/pengajuan', [loginController::class, 'pengajuan']);
+// Route::post('/kerusakan', [ userPageController::class, 'store']); // kirim laporan kerusakan
 
 Route::get('/pdf', [userPageController::class, 'pdf']);  // download pdf

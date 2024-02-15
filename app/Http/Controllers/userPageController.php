@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Mpdf\Mpdf;
 use Illuminate\Http\Request;
-
+use Illuminate\Routing\Redirector;
 
 class userPageController extends Controller
 {
@@ -35,5 +35,9 @@ class userPageController extends Controller
     public function kehilangan() {
         return view('user.kategori.kehilangan');
     }
+
+    // public function store(request $request) {
+    //     return Redirect('user.index');
+    // }
 
 }

@@ -34,7 +34,7 @@
                 </li>
                 <li class="splide__slide dua"><img src="{{ asset('img-chategories/Putih & Merah Muda Minimalis Banner  Promosi Self Service Laundry.jpg') }}"></li>
                 <li class="splide__slide tiga">
-                    <img src="{{ asset('img-chategories/Kuning Ungu Ilustrasi Spanduk Jasa Cuci Baju Kilat.jpg') }}" alt="">
+                    <img src="{{ asset('img-chategories/Kuning Ungu Ilustrasi Spanduk Jasa Cuci Baju Kilat.jpg') }}">
                 </li>
             </ul>
         </div>
@@ -47,16 +47,16 @@
         <div class="container text-center">
             <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
                 <div class="col">
-                    <div class="item-pelayanan">Row column</div>
+                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan">Row column</div>
+                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan">Row column</div>
+                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan">
+                    <div class="item-pelayanan" onclick="changeBg(this)">
                         <img src="{{ asset('img-chategories/Setrika.png') }}">
                         <div class="pelayanan-name">
                             Cuci Setrika
@@ -64,15 +64,25 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan">Row column</div>
+                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan">Row column</div>
+                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
                 </div>
 
             </div>
         </div>
     </div>
+
+    <script>
+        function changeBg(element) {
+            if (element) {
+                element.classList.add('.nyala');
+            } else {
+                element.classList.remove('.nyala');
+            }
+        }
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -84,6 +94,7 @@
                 pagination: false,
                 autoplay: true,
                 interval: 6000,
+                arrows: false,
             });
 
             splide.options.arrowPathPrev = '<i class="bi bi-arrow-left"></i>';
@@ -92,4 +103,6 @@
             splide.mount();
         });
     </script>
+
+
 @endsection
