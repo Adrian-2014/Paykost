@@ -45,44 +45,71 @@
             Layanan Kami
         </div>
         <div class="container text-center">
-            <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
+            <div class="row row-cols-2 row-cols-lg-5 g-3">
                 <div class="col">
-                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
-                </div>
-                <div class="col">
-                    <div class="item-pelayanan" onclick="changeBg(this)">
-                        <img src="{{ asset('img-chategories/Setrika.png') }}">
-                        <div class="pelayanan-name">
-                            Cuci Setrika
-                        </div>
+                    <div class="item-pelayanan">
+                        <a href="/pemesanan">
+                            <img src="{{ asset('gambar-kategori/laundry.png') }}">
+                            <div class="pelayanan-name fw-medium">
+                                Cuci Kering
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
+                    <div class="item-pelayanan">
+                        <a href="/pemesanan">
+                            <img src="{{ asset('gambar-kategori/towels.png') }}">
+                            <div class="pelayanan-name fw-medium">
+                                Dry Cleaning
+                            </div>
+                        </a>
+                    </div>
                 </div>
                 <div class="col">
-                    <div class="item-pelayanan" onclick="changeBg(this)">Row column</div>
+                    <div class="item-pelayanan">
+                        <a href="/pemesanan">
+                            <img src="{{ asset('gambar-kategori/wet.png') }}">
+                            <div class="pelayanan-name fw-medium">
+                                Cuci Basah
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">
+                        <a href="/pemesanan">
+                            <img src="{{ asset('gambar-kategori/ironing.png') }}">
+                            <div class="pelayanan-name fw-medium">
+                                Jasa Setrika
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">
+                        <a href="/pemesanan">
+                            <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
+                            <div class="pelayanan-name fw-medium">
+                                Jasa Antar Jemput
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="item-pelayanan">
+                        <a href="/pemesanan">
+                            <img src="{{ asset('gambar-kategori/setrika.png') }}">
+                            <div class="pelayanan-name fw-medium">
+                                Cuci Setrika
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-    <script>
-        function changeBg(element) {
-            if (element) {
-                element.classList.add('.nyala');
-            } else {
-                element.classList.remove('.nyala');
-            }
-        }
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

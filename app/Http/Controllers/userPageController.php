@@ -40,4 +40,8 @@ class userPageController extends Controller
     //     return Redirect('user.index');
     // }
 
+    public function pesanCuci() {
+        return view('user.kategori.pemesanan');
+    }
+
 }

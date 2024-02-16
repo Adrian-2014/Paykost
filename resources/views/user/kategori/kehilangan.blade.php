@@ -106,7 +106,7 @@
             </div>
 
             <div class="form-item">
-                <label for="tanggal" class="form-label fw-medium">Waktu Kehilangan <span>*</span></label>
+                <label for="tanggal" class="form-label fw-medium">Tanggal Kehilangan <span>*</span></label>
                 <input type="date" id="tanggal" class="form-control">
             </div>
             <div class="form-item">

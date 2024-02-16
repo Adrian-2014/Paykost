@@ -547,7 +547,7 @@ body {
 
                 .inform {
                     border-radius: 1rem;
-                    border: 1.5px solid rgba(0, 89, 255, 0.7);
+                    border: 1.5px solid rgba(33, 108, 249, 0.6);
                     padding: 0.3rem 0.3rem !important;
                     padding-right: 0 !important;
                     display: flex;
@@ -586,7 +586,7 @@ body {
 
                         .isi {
                             font-size: 0.55rem;
-                            color: white !important;
+                            color: rgba(0, 0, 0, 0.7) !important;
 
                         }
                     }
@@ -901,7 +901,7 @@ body {
 .recomendation.container-fluid {
     height: 14.5rem;
     margin-top: 2.3rem !important;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
     /* background: black; */
     padding: 0 .5rem !important;
 
@@ -995,7 +995,7 @@ body {
     padding: .3rem .4rem;
     /* background: linear-gradient(rgb(0, 145, 255), rgb(0, 213, 255)); */
     background-color: rgb(255, 255, 255);
-
+    border-top: .5px solid rgba(128, 128, 128, 0.4);
 }
 
 

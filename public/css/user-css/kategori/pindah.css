@@ -6,9 +6,9 @@
     --isianColor: rgba(0, 0, 0, 0.75);
     --placeholderColor: rgba(0, 0, 0, 0.4);
     --placeholderSize: .8rem;
-    --bgInput: rgba(0, 0, 0, 0.025);
+    --bgInput: rgba(0, 0, 0, 0.1);
+    --bgCerah: white;
     --textareaLabelsize: .75rem;
-    --textareaLablecolor: rgba(83, 82, 82, 0.834);
 }
 
 *,
@@ -20,11 +20,15 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+body {
+    background-color: rgba(78, 77, 77, 0.325) !important;
+}
+
 .navbar {
     justify-content: unset !important;
     height: 3rem;
     border-bottom: .5px solid rgba(128, 128, 128, 0.4);
-    background-color: rgb(242, 240, 240);
+    background-color: rgb(255, 252, 252);
     padding: 0 1rem !important;
 
     .container-fluid {
@@ -50,24 +54,27 @@ body {
 }
 
 .form {
-    color: white !important;
-    margin-top: 2rem;
+    background-color: white !important;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 0 1.2rem;
 
-    .formulir {
+    margin-bottom: 0 !important;
+    border-radius: .7rem;
+
+    .formulir.first {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        margin-top: 1rem;
+        padding: .5rem;
+        width: 100%;
         gap: 1rem;
 
         .form-item {
             display: flex;
             flex-direction: column;
-            gap: 0;
+
 
             label {
                 font-size: var(--lableSize);
@@ -96,28 +103,23 @@ body {
         }
     }
 
-    .formulir::after {
-        content: '';
-        display: block;
-        border-bottom: .5px solid rgba(167, 167, 167, 0.799);
-        transform: scaleX(.9);
-        width: 100%;
-        top: .4rem;
-        position: relative;
-        /* top: ; */
-    }
 
     .formulir.sec {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        padding: .5rem;
+        width: 100%;
         gap: 1rem;
 
         .form-item {
             display: flex;
             flex-direction: column;
-            gap: 0;
-            width: 100%;
+
+            label {
+                font-size: var(--lableSize);
+                margin-bottom: 0.1rem !important;
+                color: var(--labelColor);
+            }
 
             .dropdown {
                 min-width: 100%;
@@ -200,9 +202,22 @@ body {
                 }
             }
 
+            input {
+                border: var(--borderInput);
+                background-color: var(--bgCerah);
+                color: var(--isianColor);
+            }
+
+            input:focus {
+                box-shadow: none;
+                outline: none;
+                border: var(--borderInputActive);
+
+            }
+
             input::placeholder {
-                color: var(--placeholderColor) !important;
-                font-size: var(--placeholderSize) !important;
+                color: var(--placeholderColor);
+                font-size: var(--placeholderSize);
             }
 
         }
@@ -223,15 +238,13 @@ body {
     .formulir.last {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        padding: .5rem;
+        width: 100%;
         gap: 1rem;
-        margin-top: .4rem;
 
         .form-item {
             display: flex;
             flex-direction: column;
-            gap: 0;
-            width: 107%;
 
             label {
                 font-size: var(--lableSize);
@@ -239,7 +252,7 @@ body {
             }
 
             textarea {
-                background-color: var(--bgInput);
+                background-color: var(--bgCerah);
                 border: var(--borderInput);
                 color: var(--isianColor);
                 /* height: 80vh; */
@@ -266,17 +279,39 @@ body {
     }
 }
 
-.form>button {
-    /* background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229)); */
-    background-color: rgba(86, 86, 86, 0.15);
-    padding: .5rem 2rem;
-    color: rgba(0, 0, 0, 0.553);
-    border: none;
-    outline: none;
-    letter-spacing: .5px;
+.navbar.sticky-bottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    justify-content: center;
+    margin: 0 !important;
+    padding: .5rem !important;
+    border-top: .5px solid rgba(128, 128, 128, 0.495);
+
+    /* background-color: rgba(78, 77, 77, 0.325) !important; */
+
+    .isi {
+        width: 100%;
+        /* background-color: black; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            padding: .5rem 2rem;
+            /* margin: 1rem 0; */
+            outline: none !important;
+            border: none !important;
+            margin: auto !important;
+            background-color: rgba(153, 153, 153, 0.3);
+            font-size: .95rem;
+        }
+    }
+
 }
 
-.form button.active {
+.active {
     background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
     color: white;
 }

@@ -16,7 +16,7 @@
     </div>
 
     <form action="" method="" class="form" id="form">
-        <div class="formulir" id="formulir">
+        <div class="formulir first" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama User</label>
                 <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
@@ -110,6 +110,10 @@
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
                 <input type="date" id="tanggal" class="form-control">
             </div>
+            <div class="form-item">
+                <label for="jam" class="form-label fw-medium">Jam Pindah</label>
+                <input type="time" id="jam" class="form-control">
+            </div>
         </div>
 
         <div class="formulir last">
@@ -120,7 +124,11 @@
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">Kirim Pengajuan</button>
+        <div class="navbar sticky-bottom">
+            <div class="isi">
+                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
+            </div>
+        </div>
     </form>
     <script>
         function changeValue(nomor, kamar, ukuran) {

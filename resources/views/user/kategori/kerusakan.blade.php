@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'pindah kamar')
+@section('title', 'laporan kerusakan')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/kerusakan.css') }}">
 
 @section('container')
@@ -16,7 +16,7 @@
     </div>
 
     <form action="" method="" class="form" id="form" enctype="multipart/form-data">
-        <div class="formulir" id="formulir">
+        <div class="formulir first" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama User</label>
                 <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
@@ -28,11 +28,9 @@
         </div>
 
         <div class="formulir sec">
-
-            <div class="form-item">
-                <label for="p" class="form-label fw-medium forFile">Apa yang Rusak? <span>*</span></label>
+            <div class="form-item first">
+                <label class="form-label fw-medium forFile">Apa yang Rusak? <span>*</span></label>
                 <div class="dropdown">
-
                     <input type="text" disabled class="form-control" id="isi" placeholder="Bagian yang mengalami kerusakan...">
                     </input>
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -104,13 +102,58 @@
                 </div>
             </div>
             <div class="form-item">
+                <label for="tanggal" class="fw-medium">Tanggal Rusak <span>*</span></label>
+                <input type="date" id="tangal" class="form-control">
+            </div>
+            <div class="form-item">
                 <label for="files" class="form-label fw-medium">Unggah Foto <span>*</span></label>
-                <input type="file" id="files" class="form-control" accept="image/*">
-                <label for="files" class="labelFile" id="labelku">
-                    <i class='far fa-folder-open'></i>
-                    <div class="placeholder" id="statusnya">Unggah Gambar di sini...</div>
-                </label>
-                <div class="previewImg" id="previewImage"></div>
+                <div class="uploadFoto">
+                    <div class="uploadFoto-item">
+                        <input type="file" id="files" class="form-control" accept="image/*">
+                        <label for="files" class="labelFile" id="labelku">
+                            <i class='far fa-folder-open'></i>
+                        </label>
+                    </div>
+                    <div class="uploadFoto-item">
+                        <input type="file" id="files" class="form-control" accept="image/*">
+                        <label for="files" class="labelFile" id="labelku">
+                            <i class='far fa-folder-open'></i>
+                        </label>
+                    </div>
+                    <div class="uploadFoto-item">
+                        <input type="file" id="files" class="form-control" accept="image/*">
+                        <label for="files" class="labelFile" id="labelku">
+                            <i class='far fa-folder-open'></i>
+                        </label>
+                    </div>
+                    <div class="uploadFoto-item">
+                        <input type="file" id="files" class="form-control" accept="image/*">
+                        <label for="files" class="labelFile" id="labelku">
+                            <i class='far fa-folder-open'></i>
+                        </label>
+                    </div>
+                    <div class="uploadFoto-item">
+                        <input type="file" id="files" class="form-control" accept="image/*">
+                        <label for="files" class="labelFile" id="labelku">
+                            <i class='far fa-folder-open'></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="splide fotoCrewsakan" role="group" aria-label="Splide Basic HTML Example">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <li class="splide__slide">
+
+                            </li>
+                            <li class="splide__slide">
+
+                            </li>
+                            <li class="splide__slide">
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -122,7 +165,11 @@
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">Kirim Laporan</button>
+        <div class="navbar sticky-bottom">
+            <div class="isi">
+                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
+            </div>
+        </div>
     </form>
 
     <script>
@@ -143,7 +190,7 @@
         }
     </script>
 
-    {{-- <script>
+    <script>
         function enableSubmit() {
             var requiredInputs = document.getElementById("form").querySelectorAll("input");
             let btn = document.getElementById('tombol');
@@ -178,57 +225,39 @@
         formInputs.forEach(function(input) {
             input.addEventListener("input", enableSubmit);
         });
-    </script> --}}
+    </script>
 
     <script>
-        // Mendapatkan elemen-elemen yang diperlukan
-        const form = document.getElementById('form');
-        const inputs = form.querySelectorAll('input');
-        const files = document.getElementById('files');
-        const submitButton = document.getElementById('tombol');
-        var labelnya = document.getElementById('statusnya');
-
-        // Fungsi untuk memeriksa apakah semua input memiliki nilai
-        function checkInputs() {
-            let allFilled = true;
-            inputs.forEach(input => {
-                if (input !== files && input.value.trim() === '') {
-                    allFilled = false;
-                }
-            });
-            return allFilled && files.files.length > 0;
-        }
-
-        // Fungsi untuk mengubah status tombol
-        function updateButton() {
-            if (checkInputs()) {
-                submitButton.disabled = false;
-                // labelnya.textContent = 'File terlah di unggah, ingin ganti foto?';
-                files.disabled = true;
-                submitButton.classList.add('active');
-            } else {
-                submitButton.disabled = true;
-                // labelnya.textContent = 'Unggah Gambar di sini...';
-                files.disabled = false;
-                submitButton.classList.remove('active');
-            }
-        }
-
-        fileInput.addEventListener('change', function() {
-            labelnya.textContent = 'gambar sudah di upload'; // Memperbarui teks di dalam div status
+        var splide = new Splide('.splide', {
+            perPage: 1,
+            autoplay: false,
+            drag: 'free',
+            arrows: false,
         });
 
-        // Menambahkan event listener untuk setiap input tipe teks atau textarea
-        inputs.forEach(input => {
-            input.addEventListener('input', updateButton);
-        });
-
-        // Menambahkan event listener untuk input tipe file
-        files.addEventListener('change', updateButton);
-
-        // Memanggil fungsi updateButton saat halaman dimuat untuk pertama kali
-        updateButton();
+        splide.mount();
     </script>
+
+    {{-- <script>
+        document.getElementById('files').addEventListener('change', function() {
+            var file = this.files[0];
+            var butt = document.querySelector('#statusnya');
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var image = document.querySelector('.uploadItem');
+                    image.src = e.target.result;
+                    image.setAttribute('id', 'imagePreview');
+                    var imageContainer = document.getElementById('');
+                    imageContainer.innerHTML = ''; // Kosongkan konten sebelumnya
+                    imageContainer.appendChild(image); // Tambahkan gambar baru
+                    document.getElementById('labelku').classList.add('uploaded'); //
+                    butt.textContent = 'Ganti Foto? ';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script> --}}
 
     <script>
         document.getElementById('files').addEventListener('change', function() {
@@ -236,13 +265,11 @@
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
+                    var splide = document.querySelectorAll('.splide__slide')
                     var image = document.createElement('img');
                     image.src = e.target.result;
-                    image.setAttribute('id', 'imagePreview');
-                    var imageContainer = document.getElementById('previewImage');
-                    imageContainer.innerHTML = ''; // Kosongkan konten sebelumnya
-                    imageContainer.appendChild(image); // Tambahkan gambar baru
-                    document.getElementById('labelku').classList.add('uploaded'); //
+                    image.classList.add('uploadItem')
+                    splide.appendChild(image)
                 };
                 reader.readAsDataURL(file);
             }
