@@ -109,32 +109,32 @@
                 <label for="files" class="form-label fw-medium">Unggah Foto <span>*</span></label>
                 <div class="uploadFoto">
                     <div class="uploadFoto-item">
-                        <input type="file" id="files" class="form-control" accept="image/*">
-                        <label for="files" class="labelFile" id="labelku">
+                        <input type="file" id="files1" class="form-control untuk-file" accept="image/*">
+                        <label for="files1" class="labelFile" id="labelku">
                             <i class='far fa-folder-open'></i>
                         </label>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files" class="form-control" accept="image/*">
-                        <label for="files" class="labelFile" id="labelku">
+                        <input type="file" id="files2" class="form-control untuk-file" accept="image/*">
+                        <label for="files2" class="labelFile" id="labelku">
                             <i class='far fa-folder-open'></i>
                         </label>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files" class="form-control" accept="image/*">
-                        <label for="files" class="labelFile" id="labelku">
+                        <input type="file" id="files3" class="form-control untuk-file" accept="image/*">
+                        <label for="files3" class="labelFile" id="labelku">
                             <i class='far fa-folder-open'></i>
                         </label>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files" class="form-control" accept="image/*">
-                        <label for="files" class="labelFile" id="labelku">
+                        <input type="file" id="files4" class="form-control untuk-file" accept="image/*">
+                        <label for="files4" class="labelFile" id="labelku">
                             <i class='far fa-folder-open'></i>
                         </label>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files" class="form-control" accept="image/*">
-                        <label for="files" class="labelFile" id="labelku">
+                        <input type="file" id="files5" class="form-control untuk-file" accept="image/*">
+                        <label for="files5" class="labelFile" id="labelku">
                             <i class='far fa-folder-open'></i>
                         </label>
                     </div>
@@ -142,15 +142,7 @@
                 <div class="splide fotoCrewsakan" role="group" aria-label="Splide Basic HTML Example">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            <li class="splide__slide">
 
-                            </li>
-                            <li class="splide__slide">
-
-                            </li>
-                            <li class="splide__slide">
-
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -171,6 +163,70 @@
             </div>
         </div>
     </form>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputs = document.querySelectorAll('.untuk-file');
+            const labels = document.querySelectorAll('.labelFile');
+            const splideList = document.querySelector('.splide__list');
+            let uploadedImages = [];
+
+            if (inputs.length === labels.length && splideList) {
+                inputs.forEach((input, index) => {
+                    const label = labels[index];
+                    input.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                const imageUrl = e.target.result;
+                                if (uploadedImages[index]) {
+                                    // If there's already an uploaded image, replace it with the new one
+                                    const existingSlide = splideList.querySelector(`#slide-${index}`);
+                                    const existingImage = existingSlide.querySelector('.uploadItem');
+                                    existingImage.src = imageUrl;
+                                    uploadedImages[index] = imageUrl;
+                                } else {
+                                    // If no image uploaded yet, create a new slide
+                                    const newSlide = document.createElement('li');
+                                    newSlide.id = `slide-${index}`;
+                                    newSlide.classList.add('splide__slide');
+                                    newSlide.innerHTML = `
+                                        <img src="${imageUrl}" class="uploadItem">
+                                        <button class="btn-delete">Delete</button>
+                                    `;
+                                    const deleteButton = newSlide.querySelector('.btn-delete');
+                                    deleteButton.addEventListener('click', function() {
+                                        uploadedImages[index] = null;
+                                        splideList.removeChild(newSlide);
+                                        input.value = ''; // Reset input value
+                                        input.disabled = false; // Enable input
+                                        label.classList.remove('uploaded'); // Remove class when image is deleted
+                                    });
+                                    splideList.appendChild(newSlide);
+                                    uploadedImages[index] = imageUrl;
+                                    // Add class to label when an image is uploaded
+                                    label.classList.add('uploaded');
+                                }
+                                // Disable input after uploading image
+                                input.disabled = true;
+                                // Refresh Splide after each upload
+                                new Splide('.splide', {
+                                    perPage: 1,
+                                    pagination: false,
+                                    drag: 'free',
+                                }).mount();
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                });
+            } else {
+                console.error('Number of inputs and labels do not match or splideList not found.');
+            }
+        });
+    </script>
 
     <script>
         function bagian(barangHilang) {
@@ -227,7 +283,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         var splide = new Splide('.splide', {
             perPage: 1,
             autoplay: false,
@@ -236,30 +292,9 @@
         });
 
         splide.mount();
-    </script>
-
-    {{-- <script>
-        document.getElementById('files').addEventListener('change', function() {
-            var file = this.files[0];
-            var butt = document.querySelector('#statusnya');
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var image = document.querySelector('.uploadItem');
-                    image.src = e.target.result;
-                    image.setAttribute('id', 'imagePreview');
-                    var imageContainer = document.getElementById('');
-                    imageContainer.innerHTML = ''; // Kosongkan konten sebelumnya
-                    imageContainer.appendChild(image); // Tambahkan gambar baru
-                    document.getElementById('labelku').classList.add('uploaded'); //
-                    butt.textContent = 'Ganti Foto? ';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
     </script> --}}
 
-    <script>
+    {{-- <script>
         document.getElementById('files').addEventListener('change', function() {
             var file = this.files[0];
             if (file) {
@@ -274,5 +309,7 @@
                 reader.readAsDataURL(file);
             }
         });
-    </script>
+    </script> --}}
+
+
 @endsection

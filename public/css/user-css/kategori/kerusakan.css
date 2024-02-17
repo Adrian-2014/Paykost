@@ -282,19 +282,13 @@ body {
         }
 
     }
+}
 
-    .previewImg {
-        display: flex;
-        justify-content: center;
-        align-items: center;
 
-        #imagePreview {
-            max-width: 323px;
-            height: auto;
-            margin-top: 10px;
-
-        }
-    }
+.uploadItem {
+    max-width: 323px;
+    height: auto;
+    margin-top: 10px;
 }
 
 
