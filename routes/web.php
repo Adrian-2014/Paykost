@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\adminControll;
 use App\Http\Controllers\AuthenticatedController;
+use App\Http\Controllers\dropzoneController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\userPageController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
 
 Route::get('/admin/index', [loginController::class, 'admin']);
 Route::get('/admin/create', [adminControll::class, 'index']);
+
+Route::post('/upload', [dropzoneController::class, 'store'])->name('dropzone.store');
 
 Route::get('/pengajuan', [loginController::class, 'pengajuan']);
 // Route::post('/kerusakan', [ userPageController::class, 'store']); // kirim laporan kerusakan

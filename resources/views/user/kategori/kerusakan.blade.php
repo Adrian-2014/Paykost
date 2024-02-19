@@ -109,43 +109,51 @@
                 <label for="files" class="form-label fw-medium">Unggah Foto <span>*</span></label>
                 <div class="uploadFoto">
                     <div class="uploadFoto-item">
-                        <input type="file" id="files1" class="form-control untuk-file" accept="image/*">
-                        <label for="files1" class="labelFile" id="labelku">
-                            <i class='far fa-folder-open'></i>
-                        </label>
+                        <div class="input-area">
+                            <input type="file" id="files1" class="form-control untuk-file" accept="image/*">
+                            <label for="files1" class="labelFile" id="labelku1">
+                                <i class='bx bx-cloud-upload'></i>
+                            </label>
+                        </div>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files2" class="form-control untuk-file" accept="image/*">
-                        <label for="files2" class="labelFile" id="labelku">
-                            <i class='far fa-folder-open'></i>
-                        </label>
+                        <div class="input-area">
+                            <input type="file" id="files2" class="form-control untuk-file" accept="image/*">
+                            <label for="files2" class="labelFile" id="labelku2">
+                                <i class='bx bx-cloud-upload'></i>
+                            </label>
+                        </div>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files3" class="form-control untuk-file" accept="image/*">
-                        <label for="files3" class="labelFile" id="labelku">
-                            <i class='far fa-folder-open'></i>
-                        </label>
+                        <div class="input-area">
+                            <input type="file" id="files3" class="form-control untuk-file" accept="image/*">
+                            <label for="files3" class="labelFile" id="labelku3">
+                                <i class='bx bx-cloud-upload'></i>
+                            </label>
+                        </div>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files4" class="form-control untuk-file" accept="image/*">
-                        <label for="files4" class="labelFile" id="labelku">
-                            <i class='far fa-folder-open'></i>
-                        </label>
+                        <div class="input-area">
+                            <input type="file" id="files4" class="form-control untuk-file" accept="image/*">
+                            <label for="files4" class="labelFile" id="labelku4">
+                                <i class='bx bx-cloud-upload'></i>
+                            </label>
+                        </div>
                     </div>
                     <div class="uploadFoto-item">
-                        <input type="file" id="files5" class="form-control untuk-file" accept="image/*">
-                        <label for="files5" class="labelFile" id="labelku">
-                            <i class='far fa-folder-open'></i>
-                        </label>
+                        <div class="input-area">
+                            <input type="file" id="files5" class="form-control untuk-file" accept="image/*">
+                            <label for="files5" class="labelFile" id="labelku5">
+                                <i class='bx bx-cloud-upload'></i>
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="splide fotoCrewsakan" role="group" aria-label="Splide Basic HTML Example">
-                    <div class="splide__track">
-                        <ul class="splide__list">
 
-                        </ul>
-                    </div>
+                <div class="notification">
+                    Berhasil Di Hapus!
                 </div>
+
             </div>
         </div>
 
@@ -164,67 +172,67 @@
         </div>
     </form>
 
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const inputs = document.querySelectorAll('.untuk-file');
-            const labels = document.querySelectorAll('.labelFile');
-            const splideList = document.querySelector('.splide__list');
-            let uploadedImages = [];
+        // Menangkap semua elemen input file
+        const inputFiles = document.querySelectorAll('.untuk-file');
+        const isian = document.querySelector('.uploadFoto');
 
-            if (inputs.length === labels.length && splideList) {
-                inputs.forEach((input, index) => {
-                    const label = labels[index];
-                    input.addEventListener('change', function(event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                const imageUrl = e.target.result;
-                                if (uploadedImages[index]) {
-                                    // If there's already an uploaded image, replace it with the new one
-                                    const existingSlide = splideList.querySelector(`#slide-${index}`);
-                                    const existingImage = existingSlide.querySelector('.uploadItem');
-                                    existingImage.src = imageUrl;
-                                    uploadedImages[index] = imageUrl;
-                                } else {
-                                    // If no image uploaded yet, create a new slide
-                                    const newSlide = document.createElement('li');
-                                    newSlide.id = `slide-${index}`;
-                                    newSlide.classList.add('splide__slide');
-                                    newSlide.innerHTML = `
-                                        <img src="${imageUrl}" class="uploadItem">
-                                        <button class="btn-delete">Delete</button>
-                                    `;
-                                    const deleteButton = newSlide.querySelector('.btn-delete');
-                                    deleteButton.addEventListener('click', function() {
-                                        uploadedImages[index] = null;
-                                        splideList.removeChild(newSlide);
-                                        input.value = ''; // Reset input value
-                                        input.disabled = false; // Enable input
-                                        label.classList.remove('uploaded'); // Remove class when image is deleted
-                                    });
-                                    splideList.appendChild(newSlide);
-                                    uploadedImages[index] = imageUrl;
-                                    // Add class to label when an image is uploaded
-                                    label.classList.add('uploaded');
-                                }
-                                // Disable input after uploading image
-                                input.disabled = true;
-                                // Refresh Splide after each upload
-                                new Splide('.splide', {
-                                    perPage: 1,
-                                    pagination: false,
-                                    drag: 'free',
-                                }).mount();
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
+        // Loop melalui setiap elemen input file
+        inputFiles.forEach(input => {
+            input.addEventListener('change', function() {
+                // Menghapus gambar sebelumnya jika ada
+                const inputArea = this.parentElement;
+                const existingImg = inputArea.querySelector('img');
+                if (existingImg) {
+                    existingImg.remove();
+                    // Mengembalikan label
+                    const label = inputArea.querySelector('.labelFile');
+                    label.style.display = 'flex';
+                }
+
+                // Mengambil file yang diunggah
+                const file = this.files[0];
+
+                // Membuat elemen gambar baru
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+
+                // Membuat tombol hapus
+                var deleteButton = document.createElement('button');
+                deleteButton.classList.add('button-delete')
+                deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
+                deleteButton.addEventListener('click', function() {
+                    img.remove();
+                    this.remove();
+                    // Mengembalikan label
+                    const label = inputArea.querySelector('.labelFile');
+                    label.style.display = 'flex';
+                    // Mengosongkan nilai input file
+                    input.value = '';
+
+                    // Menambahkan div pesan berhasil dihapus
+                    const successMessage = document.createElement('div');
+                    successMessage.classList.add('notification', 'visible');
+                    successMessage.textContent = 'Berhasil dihapus';
+                    isian.appendChild(successMessage);
+
+                    // Menambahkan timeout untuk menghapus pesan setelah 2 detik
+                    setTimeout(function() {
+                        successMessage.classList.remove('visible');
+                    }, 800);
+
+
+                    // Menambahkan div dengan latar belakang merah selama 2 detik
                 });
-            } else {
-                console.error('Number of inputs and labels do not match or splideList not found.');
-            }
+
+                // Menghapus label
+                const label = inputArea.querySelector('.labelFile');
+                label.style.display = 'none';
+
+                // Menambahkan gambar dan tombol hapus ke dalam div input-area
+                inputArea.appendChild(img);
+                inputArea.appendChild(deleteButton);
+            });
         });
     </script>
 
@@ -246,7 +254,7 @@
         }
     </script>
 
-    <script>
+    {{-- <script>
         function enableSubmit() {
             var requiredInputs = document.getElementById("form").querySelectorAll("input");
             let btn = document.getElementById('tombol');
@@ -281,35 +289,50 @@
         formInputs.forEach(function(input) {
             input.addEventListener("input", enableSubmit);
         });
-    </script>
-
-    {{-- <script>
-        var splide = new Splide('.splide', {
-            perPage: 1,
-            autoplay: false,
-            drag: 'free',
-            arrows: false,
-        });
-
-        splide.mount();
     </script> --}}
 
-    {{-- <script>
-        document.getElementById('files').addEventListener('change', function() {
-            var file = this.files[0];
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var splide = document.querySelectorAll('.splide__slide')
-                    var image = document.createElement('img');
-                    image.src = e.target.result;
-                    image.classList.add('uploadItem')
-                    splide.appendChild(image)
-                };
-                reader.readAsDataURL(file);
+    <script>
+        function enableSubmit() {
+            var requiredInputs = document.querySelectorAll(".form-item:not(.uploadFoto) input");
+            var uploadFotoInputs = document.querySelectorAll(".uploadFoto input");
+            var btn = document.getElementById('tombol');
+            var isValid = true;
+
+            // Check if all required inputs outside the uploadFoto div are filled
+            for (var i = 0; i < requiredInputs.length; i++) {
+                if (requiredInputs[i].value.trim() === "" || requiredInputs[i].value === null) {
+                    isValid = false;
+                    break;
+                }
             }
-        });
-    </script> --}}
 
+            // Check if at least one input inside the uploadFoto div is filled
+            var uploadFotoFilled = false;
+            for (var j = 0; j < uploadFotoInputs.length; j++) {
+                if (uploadFotoInputs[j].value.trim() !== "" && uploadFotoInputs[j].value !== null) {
+                    uploadFotoFilled = true;
+                    break;
+                }
+            }
+
+            // Enable or disable the button based on conditions
+            btn.disabled = !(isValid && uploadFotoFilled);
+
+            // Update button class based on validity
+            if (isValid && uploadFotoFilled) {
+                btn.classList.remove("mati");
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+                btn.classList.add("mati");
+            }
+        }
+
+        // Attach the function to input events (e.g., input, change)
+        var formInputs = document.querySelectorAll("#form input");
+        formInputs.forEach(function(input) {
+            input.addEventListener("input", enableSubmit);
+        });
+    </script>
 
 @endsection

@@ -1,3 +1,7 @@
+:root {
+    --black: rgba(0, 0, 0, 0.7);
+}
+
 *,
 html,
 body {
@@ -34,4 +38,64 @@ body {
 
     }
 
+}
+
+
+.container {
+    .row.pesanan {
+        margin-top: 1rem;
+        gap: 1rem;
+        padding: .8rem;
+
+        .col-12.pesanan-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .item {
+                width: 100%;
+                padding: .7rem;
+                height: fit-content;
+                border-radius: 10px;
+                box-shadow: 0 0 10px gainsboro;
+                display: flex;
+                /* justify-content: center; */
+                gap: .5rem;
+                align-items: center;
+
+                .image-item {
+                    img {
+                        height: 5rem;
+                        width: 5rem;
+                    }
+                }
+
+                .rincian-item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+
+                    .nama-item {
+                        color: var(--black);
+                        font-size: 1.1rem;
+                    }
+
+                    .detail-item {
+                        display: flex;
+                        align-items: center;
+                        font-size: .9rem;
+                        gap: .4rem;
+
+                        .harga {
+                            color: var(--black);
+                        }
+
+                        .per {
+                            color: rgba(128, 128, 128, 0.5);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

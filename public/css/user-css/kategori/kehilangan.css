@@ -53,200 +53,257 @@ body {
 }
 
 .form {
-    /* color: rgb(0, 0, 0) !important; */
     background-color: rgb(255, 255, 255);
-    /* margin-top: 2rem; */
+    display: flex;
+    margin-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0rem !important;
+    border-radius: .7rem;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    margin: .8rem .5rem;
-    border-radius: .7rem;
+    gap: 1rem;
 
-    .formulir {
+    padding: .5rem;
+
+    .form-item {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-
-        padding: .5rem;
-
-        .form-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
+        gap: 0;
 
 
-            label {
-                font-size: var(--lableSize);
-                margin-bottom: 0.1rem !important;
-                color: var(--labelColor);
-            }
+        label {
+            font-size: var(--lableSize);
+            margin-bottom: 0.1rem !important;
+            color: var(--labelColor);
+        }
 
-            input {
-                border: var(--borderInput);
-                background-color: var(--bgInput);
-                color: var(--isianColor);
-
-            }
-
-            input:focus {
-                box-shadow: none;
-                outline: none;
-                border: var(--borderInputActive);
-
-            }
-
-            input::placeholder {
-                color: var(--placeholderColor);
-            }
+        input {
+            border: var(--borderInput);
+            background-color: var(--bgInput);
+            color: var(--isianColor);
 
         }
-    }
 
-    .formulir.sec {
+        input:focus {
+            box-shadow: none;
+            outline: none;
+            border: var(--borderInputActive);
+
+        }
+
+        input::placeholder {
+            color: var(--placeholderColor);
+        }
+
+    }
+}
+
+*/ .formulir.first {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    padding: .5rem;
+    width: 100%;
+    gap: 1rem;
+
+    .form-item {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 1rem;
 
-        .form-item {
+
+        label {
+            font-size: var(--lableSize);
+            margin-bottom: 0.1rem !important;
+            color: var(--labelColor);
+        }
+
+        input {
+            border: var(--borderInput);
+            background-color: var(--bgInput);
+            color: var(--isianColor);
+
+        }
+
+        input:focus {
+            box-shadow: none;
+            outline: none;
+            border: var(--borderInputActive);
+
+        }
+
+        input::placeholder {
+            color: var(--placeholderColor);
+        }
+
+    }
+}
+
+
+.formulir.sec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .form-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+
+        .dropdown {
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            gap: 0;
+            justify-content: space-between;
             width: 100%;
 
-            .dropdown {
-                width: 100%;
+            input {
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+                border-right: none;
+            }
+
+            button {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+                color: white;
+                border: none;
+            }
+
+            button:after {
+                display: none;
+            }
+
+            .dropdown-menu {
+                min-width: 100%;
+            }
+
+            .dropdown-menu.show {
+                height: fit-content;
                 display: flex;
-                justify-content: space-between;
-                width: 100%;
+                flex-direction: column;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+                overflow: hidden;
+                overflow-y: auto;
+            }
 
-                input {
-                    border-bottom-right-radius: 0;
-                    border-top-right-radius: 0;
-                    border-right: none;
-                }
+            .dropdown-menu li {
+                padding: .5rem 1rem;
+                transition: .3s ease;
 
-                button {
-                    border-top-left-radius: 0;
-                    border-bottom-left-radius: 0;
-                    background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
-                    color: white;
-                    border: none;
-                }
-
-                button:after {
-                    display: none;
-                }
-
-                .dropdown-menu {
-                    min-width: 100%;
-                }
-
-                .dropdown-menu.show {
-                    height: fit-content;
+                .item {
                     display: flex;
-                    flex-direction: column;
-                    padding-top: 0 !important;
-                    padding-bottom: 0 !important;
-                    overflow: hidden;
-                    overflow-y: auto;
-                }
+                    gap: 1rem;
+                    align-items: center;
 
-                .dropdown-menu li {
-                    padding: .5rem 1rem;
-                    transition: .3s ease;
-
-                    .item {
-                        display: flex;
-                        gap: 1rem;
-                        align-items: center;
-
-                        .icons {
-                            img {
-                                height: 25px;
-                                width: 25px;
-                            }
+                    .icons {
+                        img {
+                            height: 25px;
+                            width: 25px;
                         }
                     }
-
                 }
 
-                .dropdown-menu li.first {
-                    padding-top: .6rem !important;
-                }
-
-                .dropdown-menu li.last {
-                    padding-bottom: .6rem !important;
-                }
-
-                .dropdown-menu li:hover {
-                    background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
-                    color: white;
-                }
             }
 
-            input::placeholder {
-                color: var(--placeholderColor);
-                font-size: var(--placeholderSize);
+            .dropdown-menu li.first {
+                padding-top: .6rem !important;
             }
 
+            .dropdown-menu li.last {
+                padding-bottom: .6rem !important;
+            }
+
+            .dropdown-menu li:hover {
+                background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+                color: white;
+            }
         }
-    }
 
-    .formulir.last {
+        input::placeholder {
+            color: var(--placeholderColor);
+            font-size: var(--placeholderSize);
+        }
+
+    }
+}
+
+.formulir.last {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem;
+    width: 100%;
+    gap: 1rem;
+
+    .form-item {
         display: flex;
         flex-direction: column;
+
+        label {
+            font-size: var(--lableSize);
+            color: var(--labelColor);
+        }
+
+        textarea {
+            background-color: var(--bgCerah);
+            border: var(--borderInput);
+            color: var(--isianColor);
+            resize: none;
+        }
+
+        textarea:focus {
+            background-color: var(--bgInput);
+
+            box-shadow: none !important;
+        }
+
+        textarea::placeholder {
+            color: var(--placeholderColor);
+            font-size: var(--placeholderSize);
+        }
+    }
+}
+
+}
+
+.navbar.sticky-bottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    justify-content: center;
+    margin: 0 !important;
+    padding: .5rem !important;
+    border-top: .5px solid rgba(128, 128, 128, 0.495);
+
+    /* background-color: rgba(78, 77, 77, 0.325) !important; */
+
+    .isi {
+        width: 100%;
+        /* background-color: black; */
+        display: flex;
         align-items: center;
-        gap: 1rem;
+        justify-content: center;
 
-        .form-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            width: 107%;
-
-            label {
-                font-size: var(--lableSize);
-                color: var(--labelColor);
-            }
-
-            textarea {
-                background-color: var(--bgInput);
-                border: var(--borderInput);
-                color: var(--isianColor);
-                /* height: 80vh; */
-                resize: none;
-            }
-
-            textarea:focus {
-                background-color: var(--bgInput);
-
-                box-shadow: none !important;
-            }
-
-            textarea::placeholder {
-                color: var(--placeholderColor);
-                font-size: var(--placeholderSize);
-            }
+        button {
+            padding: .5rem 2rem;
+            /* margin: 1rem 0; */
+            outline: none !important;
+            border: none !important;
+            margin: auto !important;
+            background-color: rgba(153, 153, 153, 0.3);
+            font-size: .95rem;
         }
     }
 
 }
 
-.form>button {
-    /* background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229)); */
-    background-color: rgba(86, 86, 86, 0.15);
-
-    padding: .5rem 2rem;
-    color: rgba(0, 0, 0, 0.553);
-    border: none;
-    outline: none;
-    letter-spacing: .5px;
-}
-
-.form button.active {
+.active {
     background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
     color: white;
 }

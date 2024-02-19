@@ -35,7 +35,8 @@ body {
 
     .container-fluid {
         display: flex;
-        justify-content: center !important;
+        justify-content: start !important;
+        padding-left: 1.5rem !important;
 
         padding: 0;
 
@@ -197,42 +198,99 @@ body {
 
             .uploadFoto {
                 display: flex;
-                justify-content: space-between;
-                padding: 0 .5rem;
-                margin: .8rem 0;
-
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: .26rem;
 
                 .uploadFoto-item {
-                    height: 1rem;
-                    width: 2.5rem;
+                    height: 4rem;
+                    width: 4rem;
                     display: flex;
                     align-items: center;
                     justify-content: center;
 
-
-                    label {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
+                    img {
+                        height: 4rem !important;
+                        width: 4rem !important;
+                        border-radius: 5px;
                     }
+
+                    .input-area {
+                        height: 4rem;
+                        width: 4rem;
+                        position: relative;
+
+                        .button-delete {
+                            display: flex;
+                            position: absolute;
+                            height: 4rem;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 4rem;
+                            top: 0;
+                            left: 0;
+                            background-color: rgba(0, 0, 0, 0.4);
+                            border-radius: 5px;
+                            border: none !important;
+
+                            .bi.bi-trash3 {
+                                padding: .5rem;
+                                color: white !important;
+                            }
+                        }
+
+                        .labelFile {
+                            background: rgba(221, 221, 221, 0.847) !important;
+                            height: 4rem;
+                            width: 4rem;
+                        }
+
+                        label {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            .bx.bx-cloud-upload {
+                                font-size: 2rem;
+                                color: white;
+                            }
+                        }
+                    }
+
                 }
             }
 
-            .splide.fotoCrewsakan {
+            /* .splide.fotoCrewsakan {
                 .splide__track {
                     .splide__list {
                         .splide__slide {
                             height: fit-content;
-                            max-width: 100%;
+                            width: 100%;
+                            position: relative;
 
-                            .uploadItem {
+                            img.uploadItem {
                                 height: auto;
-                                width: max-content;
+                                width: 100%;
+                                max-width: unset;
+                                border-radius: 8px;
+                            }
+
+                            .btn-delete {
+                                margin-top: .5rem;
+                                background: linear-gradient(rgba(0, 149, 255, 0.868), rgb(95, 194, 233));
+                                border-radius: 5px;
+                                color: white;
+                                font-size: .9rem;
+                                box-shadow: gray;
+                                padding: .5rem 1rem;
+                                border: unset;
                             }
                         }
                     }
                 }
-            }
+            } */
 
             input::placeholder {
                 color: var(--placeholderColor);
@@ -284,6 +342,28 @@ body {
     }
 }
 
+.notification {
+    height: 2.5rem;
+    width: 80%;
+    /* margin: 0 2rem !important; */
+    background-color: rgb(0, 0, 0, 0.5);
+    display: flex;
+    position: fixed;
+    top: 65%;
+    color: white;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    /* Awalnya div tidak terlihat */
+    transition: 0.5s ease-in-out;
+}
+
+.notification.visible {
+    transition: 0.5s ease-in-out;
+
+    opacity: 1;
+}
 
 .uploadItem {
     max-width: 323px;
@@ -323,6 +403,7 @@ body {
     }
 
 }
+
 
 
 .active {

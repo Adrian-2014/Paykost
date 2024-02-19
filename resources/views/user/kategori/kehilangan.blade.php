@@ -117,14 +117,20 @@
 
         <div class="formulir last">
             <div class="form-item">
-                {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
                 <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Tambahan <span>*</span></label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
             </div>
         </div>
 
-        <button type="submit" class="fw-medium rounded-pill mt-0 mb-4" disabled id="tombol">Kirim Laporan</button>
+        <div class="navbar sticky-bottom">
+            <div class="isi">
+                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
+            </div>
+        </div>
+
     </form>
+
+    
     <script>
         function barang(barangHilang) {
             var isiInput = document.getElementById('isi');

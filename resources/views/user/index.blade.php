@@ -581,7 +581,7 @@
             interval: 4000,
             pauseOnHover: false,
 
-    });
+        });
         splide.mount();
 
         var splide = new Splide('#slider-2', {
