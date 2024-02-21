@@ -7,16 +7,23 @@
         font-family: "Poppins", sans-serif;
     }
 
+    body {
+        background-color: rgb(194, 191, 191) !important;
+    }
+
+
     .navbar {
         justify-content: unset !important;
         height: 3rem;
         border-bottom: .5px solid rgba(128, 128, 128, 0.4);
-        background-color: rgb(242, 240, 240);
+        background-color: rgb(255, 255, 255);
+
         padding: 0 1rem !important;
 
         .container-fluid {
             display: flex;
-            justify-content: center !important;
+            justify-content: start !important;
+            padding-left: 1.5rem !important;
 
             padding: 0;
 
@@ -39,10 +46,12 @@
     .splide.banner {
         width: 100%;
         /* background-color: blue; */
-        padding: 0 .7rem !important;
+        padding: 1rem .7rem !important;
         height: fit-content;
-        margin-top: 1.5rem;
         overflow: hidden;
+        background: white;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
 
         .splide__track {
 
@@ -149,36 +158,140 @@
 
     }
 
-    .layanan-cuci {
-        .container.text-center {
-            .row.row-cols-2 {
-                .col {
-                    .item-pelayanan {
-                        height: 12rem;
-                        border-radius: 7px;
-                        background: linear-gradient(to bottom, rgba(0, 191, 255, 0.7), rgba(0, 115, 255, 0.7));
-                        padding: .5rem 0;
-                        padding-top: .6rem !important;
-                        /* box-shadow: 1px 1px .5px rgba(128, 128, 128, 0.684); */
 
-                        a {
-                            text-decoration: none;
+    .const {
+        margin-top: 1rem;
+        background-color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-top: .1rem !important;
 
-                            img {
-                                width: 9rem;
-                                height: 9rem;
-                                /* background-color: cyan; */
+        .layanan-cuci {
+            padding-bottom: 4.7rem;
+
+            .container.text-center {
+                .row.row-cols-3 {
+                    /* gap: .8rem !important; */
+                    row-gap: .3rem !important;
+
+                    .col {
+                        .item-pelayanan {
+                            height: 6.5rem;
+                            width: 6.5rem;
+                            border-radius: 7px;
+                            background: linear-gradient(to bottom right, rgba(35, 193, 217, 0.7), rgba(50, 141, 253, 0.7));
+                            padding: .5rem 0;
+                            padding-top: .6rem !important;
+                            /* box-shadow: 1px 1px .5px rgba(128, 128, 128, 0.684); */
+
+                            a {
+                                text-decoration: none;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+
+                                .gambar {
+                                    width: 4rem;
+                                    height: 4rem;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    img {
+                                        height: 4rem;
+                                        width: auto;
+                                        /* background-color: cyan; */
+                                    }
+
+                                    .cuciSetrika {
+                                        height: 4rem !important;
+                                        width: 4rem !important;
+                                    }
+                                }
+
+
+                                .pelayanan-name {
+                                    display: flex;
+                                    align-items: center !important;
+                                    font-size: .9rem !important;
+                                    justify-content: center !important;
+                                    font-size: .95rem;
+
+                                    color: white;
+                                    /* background-color: black; */
+                                    height: 2rem;
+                                    line-height: 1.2;
+                                }
                             }
 
-                            .pelayanan-name {
-                                font-size: .95rem;
-                                margin-top: .7rem;
-                                color: white;
-                            }
                         }
-
                     }
                 }
             }
+        }
+    }
+
+
+    .navbar.fixed-bottom {
+        height: fit-content;
+        background-color: rgb(255, 255, 255);
+        border-top: .5px solid rgba(128, 128, 128, 0.4);
+    }
+
+
+    .navbar.fixed-bottom .container-fluid {
+        justify-content: space-between !important;
+        display: flex;
+        align-items: center;
+        /* border: 1px solid whir; */
+        /* padding: 2rem 1rem !important; */
+        height: 3.2rem;
+        padding-top: 7px !important;
+
+    }
+
+    .nav-link {
+        display: flex !important;
+        flex-direction: column;
+        /* padding: 0rem 3rem; */
+
+
+        i {
+            display: flex;
+            align-self: center;
+            color: rgba(0, 0, 0, 0.2);
+
+            height: fit-content;
+            width: fit-content;
+            font-size: 1.5rem;
+            padding-bottom: 1px;
+            /* background-color: rgb(247, 0, 0); */
+        }
+
+
+        .isi {
+            font-size: 0.7rem;
+            color: rgba(0, 0, 0, 0.2);
+            /* background-color: #9bcaee; */
+        }
+    }
+
+    .navbar.fixed-bottom .active {
+        color: white;
+
+        i {
+            background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .isi {
+            background-image: linear-gradient(to bottom left, #0062ff, #9bcaee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
         }
     }

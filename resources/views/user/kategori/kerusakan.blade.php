@@ -31,8 +31,7 @@
             <div class="form-item first">
                 <label class="form-label fw-medium forFile">Apa yang Rusak? <span>*</span></label>
                 <div class="dropdown">
-                    <input type="text" disabled class="form-control" id="isi" placeholder="Bagian yang mengalami kerusakan...">
-                    </input>
+                    <input type="text" disabled class="form-control" id="isi" placeholder="Bagian yang mengalami kerusakan..." onkeyup="inputTyped()">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-caret-down-fill"></i>
                     </button>
@@ -101,11 +100,11 @@
                     </ul>
                 </div>
             </div>
-            <div class="form-item">
+            <div class="form-item sec">
                 <label for="tanggal" class="fw-medium">Tanggal Rusak <span>*</span></label>
-                <input type="date" id="tangal" class="form-control">
+                <input type="date" id="tanggal" class="form-control" style="box-shadow: unset !important">
             </div>
-            <div class="form-item">
+            <div class="form-item third">
                 <label for="files" class="form-label fw-medium">Unggah Foto <span>*</span></label>
                 <div class="uploadFoto">
                     <div class="uploadFoto-item">
@@ -167,172 +166,147 @@
 
         <div class="navbar sticky-bottom">
             <div class="isi">
-                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
+                <button type="submit" class="fw-medium rounded-pill" id="tombol" disabled>Kirim Laporan</button>
             </div>
         </div>
     </form>
 
+
     <script>
-        // Menangkap semua elemen input file
+        // Mengambil elemen input dan div gambar
+        const inputElement = document.getElementById('tanggal');
+        const inputIsi = document.getElementById('isi');
+        const imageContainer = document.querySelector('.form-item.third');
+        const submitButton = document.getElementById('tombol');
+
+        // Menambahkan event listener untuk input
+        inputElement.addEventListener('input', function() {
+            checkValidation();
+        });
+
+        // Menambahkan event listener untuk div gambar
+        imageContainer.addEventListener('DOMSubtreeModified', function() {
+            checkValidation();
+        });
+
+
+        // dropdown
+
+        function bagian(barangHilang) {
+            var isiInput = document.getElementById('isi');
+            var placeholderText = '';
+
+            if (barangHilang === 'Lainnya...') {
+
+                isiInput.value = '';
+                isiInput.disabled = false;
+                placeholderText = 'Bagian yang mengalami kerusakan..';
+                isiInput.focus();
+
+            } else {
+
+                isiInput.value = barangHilang;
+                isiInput.disabled = true;
+                placeholderText = 'Pilih bagian yang rusak';
+
+            }
+
+            isiInput.placeholder = placeholderText;
+
+            checkValidation();
+        }
+
+        function inputTyped() {
+            checkValidation();
+        }
+
+        // Loop melalui setiap elemen input file
         const inputFiles = document.querySelectorAll('.untuk-file');
         const isian = document.querySelector('.uploadFoto');
 
         // Loop melalui setiap elemen input file
         inputFiles.forEach(input => {
+            // ...
             input.addEventListener('change', function() {
-                // Menghapus gambar sebelumnya jika ada
-                const inputArea = this.parentElement;
-                const existingImg = inputArea.querySelector('img');
-                if (existingImg) {
-                    existingImg.remove();
-                    // Mengembalikan label
-                    const label = inputArea.querySelector('.labelFile');
-                    label.style.display = 'flex';
-                }
-
                 // Mengambil file yang diunggah
                 const file = this.files[0];
 
-                // Membuat elemen gambar baru
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
+                // Mencari label yang belum memiliki gambar
+                let targetLabel = null;
+                for (let i = 1; i <= 5; i++) {
+                    const label = document.getElementById(`labelku${i}`);
+                    const img = label.nextElementSibling;
+                    if (!img) {
+                        targetLabel = label;
+                        break;
+                    }
+                }
 
-                // Membuat tombol hapus
-                var deleteButton = document.createElement('button');
-                deleteButton.classList.add('button-delete')
-                deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
-                deleteButton.addEventListener('click', function() {
-                    img.remove();
-                    this.remove();
-                    // Mengembalikan label
-                    const label = inputArea.querySelector('.labelFile');
-                    label.style.display = 'flex';
-                    // Mengosongkan nilai input file
-                    input.value = '';
+                if (targetLabel) {
+                    // Membuat elemen gambar baru
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
 
-                    // Menambahkan div pesan berhasil dihapus
-                    const successMessage = document.createElement('div');
-                    successMessage.classList.add('notification', 'visible');
-                    successMessage.textContent = 'Berhasil dihapus';
-                    isian.appendChild(successMessage);
+                    // Membuat tombol hapus
+                    var deleteButton = document.createElement('button');
+                    deleteButton.classList.add('button-delete')
+                    deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
+                    deleteButton.addEventListener('click', function() {
+                        img.remove();
+                        this.remove();
+                        // Mengembalikan label
+                        targetLabel.style.display = 'flex';
+                        // Mengosongkan nilai input file
+                        input.value = '';
+                        // Menambahkan div pesan berhasil dihapus
+                        const successMessage = document.createElement('div');
+                        successMessage.classList.add('notification', 'visible');
+                        successMessage.textContent = 'Berhasil dihapus';
+                        isian.appendChild(successMessage);
 
-                    // Menambahkan timeout untuk menghapus pesan setelah 2 detik
-                    setTimeout(function() {
-                        successMessage.classList.remove('visible');
-                    }, 800);
+                        // Menambahkan timeout untuk menghapus pesan setelah 2 detik
+                        setTimeout(function() {
+                            successMessage.classList.remove('visible');
+                        }, 800);
 
+                        // Memeriksa apakah ada elemen gambar kosong di sebelah kanan
+                        const nextImageContainer = targetLabel.parentElement.nextElementSibling;
+                        if (nextImageContainer) {
+                            const nextImg = nextImageContainer.querySelector('img');
+                            if (!nextImg) {
+                                // Geser gambar-gambar ke kiri
+                                const currentImageContainer = targetLabel.parentElement;
+                                currentImageContainer.parentElement.removeChild(currentImageContainer);
+                                nextImageContainer.parentElement.insertBefore(currentImageContainer, nextImageContainer);
+                            }
+                        }
+                    });
 
-                    // Menambahkan div dengan latar belakang merah selama 2 detik
-                });
+                    // Menghapus label
+                    targetLabel.style.display = 'none';
 
-                // Menghapus label
-                const label = inputArea.querySelector('.labelFile');
-                label.style.display = 'none';
-
-                // Menambahkan gambar dan tombol hapus ke dalam div input-area
-                inputArea.appendChild(img);
-                inputArea.appendChild(deleteButton);
+                    // Menambahkan gambar dan tombol hapus ke dalam div input-area
+                    targetLabel.parentElement.appendChild(img);
+                    targetLabel.parentElement.appendChild(deleteButton);
+                }
             });
-        });
-    </script>
+            // ...
 
-    <script>
-        function bagian(barangHilang) {
-            var isiInput = document.getElementById('isi');
-            var placeholderText = '';
-            if (barangHilang === 'Lainnya...') {
-                isiInput.value = '';
-                isiInput.disabled = false;
-                placeholderText = 'Bagian yang mengalami kerusakan..';
-                isiInput.focus();
+        });
+
+
+
+        function checkValidation() {
+            // Memeriksa jika nilai input tidak kosong dan div gambar memiliki setidaknya satu gambar
+            if (inputElement.value !== '' && inputIsi.value !== '' && imageContainer.getElementsByTagName('img').length > 0) {
+                // Mengaktifkan tombol submit
+                submitButton.removeAttribute('disabled');
+                submitButton.classList.add('active');
             } else {
-                isiInput.value = barangHilang;
-                isiInput.disabled = true;
-                placeholderText = 'Pilih bagian yang rusak';
+                // Menonaktifkan tombol submit
+                submitButton.setAttribute('disabled', 'disabled');
+                submitButton.classList.remove('active');
             }
-            isiInput.placeholder = placeholderText;
         }
     </script>
-
-    {{-- <script>
-        function enableSubmit() {
-            var requiredInputs = document.getElementById("form").querySelectorAll("input");
-            let btn = document.getElementById('tombol');
-            let isValid = true;
-
-            for (var i = 0; i < requiredInputs.length; i++) {
-                let changedInput = requiredInputs[i];
-
-                if (changedInput.value.trim() === "" || changedInput.value === null) {
-                    changedInput.classList.remove("mati");
-                    isValid = false;
-                    break;
-                } else {
-                    changedInput.classList.add("mati");
-                }
-            }
-            btn.disabled = !isValid;
-
-            if (isValid) {
-                btn.classList.remove("mati");
-                btn.classList.add("active");
-            } else {
-
-                btn.classList.remove("active");
-                btn.classList.add("mati");
-            }
-
-        }
-
-        // Attach the function to input events (e.g., input, change)
-        var formInputs = document.getElementById("form").querySelectorAll("input");
-        formInputs.forEach(function(input) {
-            input.addEventListener("input", enableSubmit);
-        });
-    </script> --}}
-
-    <script>
-        function enableSubmit() {
-            var requiredInputs = document.querySelectorAll(".form-item:not(.uploadFoto) input");
-            var uploadFotoInputs = document.querySelectorAll(".uploadFoto input");
-            var btn = document.getElementById('tombol');
-            var isValid = true;
-
-            // Check if all required inputs outside the uploadFoto div are filled
-            for (var i = 0; i < requiredInputs.length; i++) {
-                if (requiredInputs[i].value.trim() === "" || requiredInputs[i].value === null) {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            // Check if at least one input inside the uploadFoto div is filled
-            var uploadFotoFilled = false;
-            for (var j = 0; j < uploadFotoInputs.length; j++) {
-                if (uploadFotoInputs[j].value.trim() !== "" && uploadFotoInputs[j].value !== null) {
-                    uploadFotoFilled = true;
-                    break;
-                }
-            }
-
-            // Enable or disable the button based on conditions
-            btn.disabled = !(isValid && uploadFotoFilled);
-
-            // Update button class based on validity
-            if (isValid && uploadFotoFilled) {
-                btn.classList.remove("mati");
-                btn.classList.add("active");
-            } else {
-                btn.classList.remove("active");
-                btn.classList.add("mati");
-            }
-        }
-
-        // Attach the function to input events (e.g., input, change)
-        var formInputs = document.querySelectorAll("#form input");
-        formInputs.forEach(function(input) {
-            input.addEventListener("input", enableSubmit);
-        });
-    </script>
-
 @endsection

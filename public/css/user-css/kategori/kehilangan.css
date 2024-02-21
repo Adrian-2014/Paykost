@@ -6,7 +6,7 @@
     --isianColor: rgba(0, 0, 0, 0.75);
     --placeholderColor: rgba(0, 0, 0, 0.4);
     --placeholderSize: .8rem;
-    --bgInput: rgba(0, 0, 0, 0.025);
+    --bgInput: rgba(0, 0, 0, 0.2);
 }
 
 *,
@@ -28,11 +28,13 @@ body {
     height: 3rem;
     border-bottom: .5px solid rgba(128, 128, 128, 0.4);
     background-color: rgb(255, 255, 255);
+
     padding: 0 1rem !important;
 
     .container-fluid {
         display: flex;
-        justify-content: center !important;
+        justify-content: start !important;
+        padding-left: 1.5rem !important;
 
         padding: 0;
 
@@ -53,20 +55,14 @@ body {
 }
 
 .form {
-    background-color: rgb(255, 255, 255);
-    display: flex;
+    background-color: white !important;
     margin-top: 1rem;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0rem !important;
-    border-radius: .7rem;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
 
-    padding: .5rem;
+    margin-bottom: 0 !important;
+    border-radius: .7rem;
 
     .form-item {
         display: flex;
@@ -101,7 +97,7 @@ body {
     }
 }
 
-*/ .formulir.first {
+.formulir.first {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
@@ -145,14 +141,21 @@ body {
 .formulir.sec {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: .5rem;
+    width: 100%;
     gap: 1rem;
+
 
     .form-item {
         display: flex;
         flex-direction: column;
-        gap: 0;
-        width: 100%;
+
+        input {
+            border: var(--borderInput);
+            background-color: var(--bgCerah);
+            color: var(--isianColor);
+
+        }
 
         .dropdown {
             width: 100%;
@@ -164,6 +167,7 @@ body {
                 border-bottom-right-radius: 0;
                 border-top-right-radius: 0;
                 border-right: none;
+                background-color: var(--bgCerah);
             }
 
             button {
@@ -253,6 +257,7 @@ body {
             background-color: var(--bgCerah);
             border: var(--borderInput);
             color: var(--isianColor);
+            /* height: 80vh; */
             resize: none;
         }
 
@@ -269,6 +274,10 @@ body {
     }
 }
 
+.formulir.last::after {
+    content: '';
+    display: block;
+    border-bottom: 0px solid white;
 }
 
 .navbar.sticky-bottom {

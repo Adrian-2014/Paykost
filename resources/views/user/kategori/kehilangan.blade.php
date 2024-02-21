@@ -17,7 +17,7 @@
 
     <form action="/" method="POST" class="form" id="form">
         @csrf
-        <div class="formulir" id="formulir">
+        <div class="formulir first" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama User</label>
                 <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
@@ -127,10 +127,8 @@
                 <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
             </div>
         </div>
-
     </form>
 
-    
     <script>
         function barang(barangHilang) {
             var isiInput = document.getElementById('isi');
