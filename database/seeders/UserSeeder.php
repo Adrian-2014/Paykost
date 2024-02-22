@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
                 'role_id'  => 2
             ],
             [
-                'name'     => 'User',
+                'name'     => 'doditya ramadhana',
                 'email'    => 'user@gmail.com',
                 'password' => Hash::make('12345678'),
                 'role_id'  => 3
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($datas as $value) {
-            
+
             User::create([
                 'name'     => $value['name'],
                 'email'    => $value['email'],

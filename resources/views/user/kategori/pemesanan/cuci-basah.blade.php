@@ -1,6 +1,6 @@
 @extends('layout.main')
-@section('title', 'pemesanan')
-<link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan.css') }}">
+@section('title', 'cuci basah')
+<link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/cuci-basah.css') }}">
 
 @section('container')
 
@@ -15,11 +15,24 @@
         </div>
     </div>
 
+    <div class="blanks">
+        <div class="blank">
+            <img src="{{ asset('img/people.png') }}">
+            <div class="isi-blank">
+                Kamu belum memilih item apapun,
+            </div>
+            <div class="sec">
+                Silahkan pilih item terlebih dahulu !
+            </div>
+            <button type="button" class="btn mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> <span class="tombol">+</span> <span class="isian">Tambahkan</span></button>
+        </div>
+    </div>
+
     <section class="body">
 
-        <div class="container">
+        {{-- <div class="container">
             <div class="row pesanan">
-                <div class="col-12 pesanan-items">
+                 <div class="col-12 pesanan-items">
                     <div class="item item1">
                         <div class="image-item">
                             <img src="{{ asset('gambar-kategori/shirt.png') }}">
@@ -236,12 +249,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="subtotal">
-                    </div>
-                    <div class="total">Total: Rp <span id="totalHarga">0</span></div>
+
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+        {{-- <div class="add">
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <div class="trigger-modal">
+                    +
+                </div>
+            </button>
+        </div> --}}
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -249,27 +268,70 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="isi">
-                            Konfirmasi Pembayaran
+                            Pilih Item
                         </div>
                     </div>
                     <div class="modal-body">
-                        <div class="subtotals">
+                        <div class="content">
+                            <div class="info-umum">
+                                <div class="info-item">
+                                    <div class="kiri">
+                                        Nama User
+                                    </div>
+                                    <div class="kanan">
+                                        {{ auth()->user()->name }}
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="kiri">
+                                        No. Kamar
+                                    </div>
+                                    <div class="kanan">
+                                        Kamar No. 5
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item-choice">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div clas="isi">
+                                            Pilih Item Untuk Di Cuci
+                                        </div>
+                                        <i class="bi bi-caret-down-fill"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
+
+                                        <li class="first">
+                                            <div class="item" onclick="changeValue('Kamar No. 1', 'Rp. 1.300.000', 'Uk. 3,5 x 3m')">
+                                                <div class="values">
+                                                    <img src="{{ asset('gambar-kategori/shirt.png') }}">
+                                                    <div class="name">
+                                                        Baju
+                                                    </div>
+                                                    <div class="cost">
+                                                        <div class="harga">
+                                                            Rp. 1000
+                                                        </div>
+                                                        <div class="per">
+                                                            /pcs
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tambahan">
+                                                    +
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
 
                         </div>
-
-
-                        <div class="total">
-                            <div class="head">
-                                Total harga
-                            </div>
-                            <div class="total-harga fw-medium" id="total-harga">
-
-                            </div>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn" data-bs-dismiss="modal">Pesan Sekarang</button>
+                        <button type="button" class="btn" data-bs-dismiss="modal"> <span class="tombol">+</span> <span class="isian">Tambah</span>
                     </div>
                 </div>
             </div>
@@ -277,11 +339,11 @@
 
     </section>
 
-    <div class="for-modal navbar sticky-bottom d-flex justify-content-center ">
+    {{-- <div class="for-modal navbar fixed-bottom d-flex justify-content-center ">
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Pesan Jasa
         </button>
-    </div>
+    </div> --}}
 
     {{-- <script>
         // Function untuk menambah jumlah item
@@ -325,7 +387,6 @@
             document.getElementById('totalHarga').textContent = 'Rp. ' + totalHarga;
         }
     </script> --}}
-
 
     <script>
         function tambah(item) {

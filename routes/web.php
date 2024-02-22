@@ -40,10 +40,9 @@ Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
 Route::get('/admin/index', [loginController::class, 'admin']);
 Route::get('/admin/create', [adminControll::class, 'index']);
 
-Route::post('/upload', [dropzoneController::class, 'store'])->name('dropzone.store');
 
 Route::get('/pengajuan', [loginController::class, 'pengajuan']);
 // Route::post('/kerusakan', [ userPageController::class, 'store']); // kirim laporan kerusakan
 
 Route::get('/pdf', [userPageController::class, 'pdf']);  // download pdf
-Route::get('/pemesanan', [userPageController::class, 'pesanCuci']);
+Route::get('/pemesanan', [userPageController::class, 'cuciBasah']);

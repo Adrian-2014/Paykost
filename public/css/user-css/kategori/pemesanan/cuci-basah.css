@@ -1,0 +1,419 @@
+:root {
+    --black: rgba(0, 0, 0, 0.7);
+}
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+    justify-content: unset !important;
+    height: 3.5rem;
+    border-bottom: .5px solid rgba(128, 128, 128, 0.4);
+    background-color: rgb(255, 255, 255);
+
+    padding: 0 1rem !important;
+
+    .container-fluid {
+        display: flex;
+        justify-content: start !important;
+        padding-left: 1.5rem !important;
+
+        padding: 0;
+
+        .back {
+            position: absolute;
+            left: .7rem;
+            text-decoration: none;
+            color: black;
+
+            .left {
+                font-size: 1.4rem;
+                font-weight: bold !important;
+            }
+        }
+
+    }
+
+}
+
+/* .body {
+    background-color: rgba(78, 77, 77, 0.325) !important;
+} */
+
+.blanks {
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .blank {
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100vw;
+
+        img {
+            height: 13rem;
+            width: 13rem;
+        }
+
+        .isi-blank {
+
+            text-align: center;
+            color: rgba(0, 0, 0, 0.4);
+            font-size: .85rem;
+        }
+
+        .sec {
+            text-align: center;
+            color: rgba(0, 0, 0, 0.4);
+            font-size: .85rem;
+        }
+
+        button.btn {
+            background: linear-gradient(to right, rgb(0, 102, 255), rgb(69, 189, 236));
+            border: unset !important;
+            color: white !important;
+            padding: .3rem 2rem !important;
+            border-radius: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .3rem;
+
+            .tombol {
+                font-size: 1.3rem;
+            }
+
+            .isian {
+                font-size: .9rem;
+            }
+        }
+    }
+
+}
+
+
+.container {
+    background-color: white !important;
+    margin-top: 1rem;
+
+    .row.pesanan {
+        margin-top: 1rem;
+        gap: 1rem;
+        padding: .8rem 0;
+
+        .col-12.pesanan-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .item {
+                width: 100%;
+                padding: .7rem;
+                height: fit-content;
+                border-radius: 10px;
+                box-shadow: 0 0 10px gainsboro;
+                display: flex;
+                /* justify-content: center; */
+                gap: .5rem;
+                align-items: center;
+
+                .image-item {
+
+                    img {
+                        height: 5rem;
+                        width: 5rem;
+                    }
+                }
+
+                .rincian-item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+
+                    .nama-item {
+                        color: var(--black);
+                        font-size: 1rem;
+                    }
+
+                    .detail-item {
+                        display: flex;
+                        align-items: center;
+                        font-size: .9rem;
+                        width: 10rem;
+                        gap: .4rem;
+
+                        .harga {
+                            color: var(--black);
+                        }
+
+                        .per {
+                            color: rgba(128, 128, 128, 0.5);
+                        }
+                    }
+                }
+
+                .quantity {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .5rem;
+
+                    .nilai {
+                        text-align: center;
+                        font-size: 1.1rem;
+                    }
+
+                    .pm {
+                        button {
+                            height: 1.5rem;
+                            width: 1.5rem;
+                            border: unset;
+                            border-radius: .3rem;
+                            color: white;
+                        }
+
+                        .tambah {
+                            background-color: rgb(0, 149, 255);
+                        }
+
+                        .kurang {
+                            background-color: gray;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.add {
+    position: fixed !important;
+    z-index: 3;
+    top: 75%;
+    left: 82%;
+
+
+    .btn {
+        border: none;
+        font-size: 1.5rem !important;
+
+        .trigger-modal {
+            height: fit-content;
+            width: fit-content;
+            background: linear-gradient(to right, rgb(27, 116, 248), rgb(89, 193, 234));
+            border-radius: .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.5rem !important;
+            width: 2.5rem !important;
+            color: white !important;
+        }
+    }
+}
+
+.modal.fade {
+
+    .modal-dialog {
+        .modal-content {
+            top: 12%;
+            height: 75%;
+
+            .modal-header {
+                padding: 0.6rem 1rem !important;
+            }
+
+            .modal-body {
+                .content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.3rem;
+
+                    .info-umum {
+                        display: flex;
+                        flex-direction: column;
+                        gap: .3rem;
+
+                        .info-item {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .kiri {
+                                font-size: .85rem;
+                                color: rgba(0, 0, 0, 0.6);
+                            }
+
+                            .kanan {
+                                font-size: .93rem;
+                                color: rgba(0, 0, 0, 0.8);
+                            }
+                        }
+                    }
+
+                    .item-choice {
+                        .dropdown {
+                            min-width: 100%;
+
+                            .dropdown-toggle {
+                                width: 100%;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+                                border: none !important;
+                                color: white;
+                            }
+
+                            .dropdown-toggle:after {
+                                display: none;
+                            }
+
+                            .dropdown-menu {
+                                width: 100%;
+                                background-color: white;
+                                border: var(--borderInputActive);
+                                color: black;
+
+                            }
+
+                            .dropdown-menu.show {
+                                height: 10rem;
+                                display: flex;
+                                flex-direction: column;
+                                padding-top: 0 !important;
+                                padding-bottom: 0 !important;
+                                overflow: hidden;
+                                overflow-y: auto;
+                            }
+
+                            .dropdown-menu li {
+                                padding: .5rem .7rem;
+                                transition: .3s ease;
+
+                                .item {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+
+                                    .values {
+                                        /* background-color: aqua; */
+                                        display: flex;
+                                        /* justify-content: center; */
+                                        align-items: center;
+                                        gap: 1rem;
+
+                                        img {
+                                            height: 35px;
+                                            width: 35px;
+                                            border-radius: 50%;
+                                            overflow: hidden;
+                                            border: 1.3px solid rgb(0, 119, 255);
+                                            /* background: linear-gradient(rgb(0, 128, 255), rgb(65, 151, 216)); */
+                                        }
+
+                                        .name {
+                                            font-size: .95rem;
+                                            /* background-color: cyan; */
+                                        }
+
+                                        .cost {
+                                            display: flex;
+                                            gap: .3rem;
+                                            align-items: center;
+
+                                            .harga {
+                                                font-size: .85rem;
+                                                color: rgba(0, 0, 0, 0.7);
+                                            }
+
+                                            .per {
+                                                font-size: .8rem;
+                                                color: rgba(0, 0, 0, 0.5);
+                                            }
+                                        }
+
+                                    }
+
+                                    .tambahan {
+                                        /* background-color: blue; */
+                                        background: linear-gradient(rgb(0, 81, 255), skyblue);
+                                        -webkit-background-clip: text;
+                                        background-clip: text;
+                                        color: transparent;
+                                        font-size: 1.2rem;
+                                        font-weight: bold;
+                                    }
+                                }
+
+                            }
+
+                            .dropdown-menu li:hover {
+                                background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+                                color: white;
+
+                                .ukuran {
+                                    color: rgba(255, 255, 255, 0.8);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            .modal-footer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: .1rem;
+
+                .btn {
+                    background: linear-gradient(to right, rgb(0, 102, 255), rgb(69, 189, 236));
+                    border: unset !important;
+                    color: white !important;
+                    padding: .2rem 1.5rem !important;
+                    border-radius: 19px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: .3rem;
+
+                    .tombol {
+                        font-size: 1.2rem !important;
+                    }
+
+                    .isian {
+                        font-size: .8rem;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.for-modal {
+    border-top: .4px solid rgb(198, 197, 197);
+    height: 3.5rem;
+
+    button.btn {
+        background: linear-gradient(to right, rgb(0, 102, 255), rgb(69, 189, 236));
+        border: unset !important;
+        color: white !important;
+        padding: .5em 2rem !important;
+        border-radius: 20px;
+    }
+}

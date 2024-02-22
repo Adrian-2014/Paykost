@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CuciItem;
 use Mpdf\Mpdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -40,8 +41,9 @@ class userPageController extends Controller
     //     return Redirect('user.index');
     // }
 
-    public function pesanCuci() {
-        return view('user.kategori.pemesanan');
+    public function cuciBasah() {
+        $CuciItems = CuciItem::all();
+        return view('user.kategori.pemesanan.cuci-basah', ['items' => $CuciItems]);
     }
 
 }
