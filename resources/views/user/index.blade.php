@@ -50,7 +50,7 @@
                         Nama
                     </div>
                     <div class="nama-v">
-                        Adrian
+                        {{ auth()->user()->name }}
                     </div>
                 </div>
             </div>
@@ -206,7 +206,7 @@
                                     Nama User
                                 </div>
                                 <div class="value">
-                                    Adrian Kurniawan
+                                    {{ auth()->user()->name }}
                                 </div>
                             </div>
                             <div class="info-item">

@@ -229,18 +229,36 @@ body {
 
     .modal-dialog {
         .modal-content {
-            top: 12%;
-            height: 75%;
+            top: 8%;
+            height: 85%;
+            width: 100%;
 
             .modal-header {
-                padding: 0.6rem 1rem !important;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.7rem 1rem !important;
+
+                .modal-title {
+                    img {
+                        height: 25px;
+                        width: 87px;
+                    }
+                }
+
+                .id {
+                    display: flex;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    gap: 0.5rem;
+                }
             }
 
             .modal-body {
                 .content {
                     display: flex;
                     flex-direction: column;
-                    gap: 1.3rem;
+                    gap: 0rem;
 
                     .info-umum {
                         display: flex;
@@ -250,17 +268,28 @@ body {
                         .info-item {
                             display: flex;
                             justify-content: space-between;
+                            align-items: center;
 
                             .kiri {
-                                font-size: .85rem;
+                                font-size: .8rem;
                                 color: rgba(0, 0, 0, 0.6);
                             }
 
                             .kanan {
-                                font-size: .93rem;
+                                font-size: .85rem;
                                 color: rgba(0, 0, 0, 0.8);
                             }
                         }
+                    }
+
+                    .judul {
+                        height: 3rem;
+                        font-size: 1.1rem;
+                        color: rgba(0, 0, 0, 0.7);
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                     }
 
                     .item-choice {
@@ -286,21 +315,22 @@ body {
                                 background-color: white;
                                 border: var(--borderInputActive);
                                 color: black;
-
+                                /* transform: translate(0px, 36.5px) !important; */
+                                --bs-dropdown-border-radius: unset;
                             }
 
                             .dropdown-menu.show {
-                                height: 10rem;
+                                height: 18rem;
                                 display: flex;
                                 flex-direction: column;
-                                padding-top: 0 !important;
-                                padding-bottom: 0 !important;
                                 overflow: hidden;
                                 overflow-y: auto;
+                                padding: .7rem .4rem;
+                                gap: .9rem;
                             }
 
                             .dropdown-menu li {
-                                padding: .5rem .7rem;
+
                                 transition: .3s ease;
 
                                 .item {
@@ -313,61 +343,130 @@ body {
                                         display: flex;
                                         /* justify-content: center; */
                                         align-items: center;
-                                        gap: 1rem;
+                                        gap: .4rem;
 
-                                        img {
-                                            height: 35px;
-                                            width: 35px;
+                                        .gambar {
                                             border-radius: 50%;
-                                            overflow: hidden;
+                                            padding: .2rem;
+
                                             border: 1.3px solid rgb(0, 119, 255);
-                                            /* background: linear-gradient(rgb(0, 128, 255), rgb(65, 151, 216)); */
+
+                                            img {
+                                                height: 27px;
+                                                width: 27px;
+                                                overflow: hidden;
+                                                /* background-color: aquamarine; */
+                                                /* background: linear-gradient(rgb(0, 128, 255), rgb(65, 151, 216)); */
+                                            }
                                         }
 
+
                                         .name {
-                                            font-size: .95rem;
-                                            /* background-color: cyan; */
+                                            font-size: .8rem;
+                                            width: 3.8rem;
+                                            line-height: 1.2;
                                         }
 
                                         .cost {
                                             display: flex;
-                                            gap: .3rem;
+                                            gap: 0rem;
                                             align-items: center;
 
                                             .harga {
-                                                font-size: .85rem;
+                                                font-size: .8rem;
                                                 color: rgba(0, 0, 0, 0.7);
                                             }
 
                                             .per {
-                                                font-size: .8rem;
+                                                font-size: .7rem;
                                                 color: rgba(0, 0, 0, 0.5);
                                             }
                                         }
 
                                     }
 
-                                    .tambahan {
+                                    .valuasi {
                                         /* background-color: blue; */
-                                        background: linear-gradient(rgb(0, 81, 255), skyblue);
-                                        -webkit-background-clip: text;
-                                        background-clip: text;
-                                        color: transparent;
-                                        font-size: 1.2rem;
-                                        font-weight: bold;
+                                        /* background: linear-gradient(rgb(0, 81, 255), skyblue); */
+                                        display: flex;
+                                        gap: .3rem;
+
+                                        .kurang {
+                                            /* height: .5rem; */
+                                            width: 1.4rem;
+                                            color: white;
+                                            text-align: center;
+                                            border-radius: 5px;
+                                            background: rgb(174, 174, 174);
+                                            cursor: pointer;
+                                            user-select: none;
+                                            /* Standard syntax */
+                                        }
+
+                                        .tambah {
+                                            /* height: .5rem; */
+                                            width: 1.4rem;
+                                            color: white;
+                                            text-align: center;
+                                            border-radius: 5px;
+                                            background: linear-gradient(rgb(0, 187, 255), rgb(15, 174, 237));
+                                            cursor: pointer;
+                                            user-select: none;
+                                            /* Standard syntax */
+                                        }
+
+                                        input {
+                                            width: 1.5rem;
+                                            border: unset !important;
+                                            text-align: center;
+                                            color: black;
+                                        }
+
+                                        input:focus {
+                                            border: 0px solid !important;
+                                            outline: none;
+                                        }
+
+                                        input[type=number]::-webkit-inner-spin-button,
+                                        input[type=number]::-webkit-outer-spin-button {
+                                            -webkit-appearance: none;
+                                            margin: 0;
+                                        }
+
+                                        input[type=number] {
+                                            -moz-appearance: textfield;
+                                            /* Firefox */
+                                        }
+
                                     }
                                 }
 
                             }
 
-                            .dropdown-menu li:hover {
+                            /* .dropdown-menu li:hover {
                                 background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
                                 color: white;
+
+                                .gambar {
+                                    border-color: white !important;
+                                }
 
                                 .ukuran {
                                     color: rgba(255, 255, 255, 0.8);
                                 }
-                            }
+
+                                .harga {
+                                    color: white !important;
+                                }
+
+                                .per {
+                                    color: rgba(255, 255, 255, 0.6) !important;
+                                }
+
+                                .tambahan {
+                                    color: white;
+                                }
+                            } */
                         }
                     }
                 }
@@ -381,7 +480,7 @@ body {
                 padding: .1rem;
 
                 .btn {
-                    background: linear-gradient(to right, rgb(0, 102, 255), rgb(69, 189, 236));
+                    background: linear-gradient(to right, rgb(12, 145, 212), rgb(81, 190, 234));
                     border: unset !important;
                     color: white !important;
                     padding: .2rem 1.5rem !important;
@@ -416,4 +515,8 @@ body {
         padding: .5em 2rem !important;
         border-radius: 20px;
     }
+}
+
+.red {
+    background-color: red;
 }
