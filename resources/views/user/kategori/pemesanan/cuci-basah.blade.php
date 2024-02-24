@@ -73,7 +73,7 @@
                                     </button>
 
                                     <ul class="dropdown-menu" x-bind:class="{ 'show': open }">
-                                        <li class="first">
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -92,17 +92,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -121,17 +121,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -150,17 +150,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -179,17 +179,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -208,17 +208,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -237,17 +237,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -266,17 +266,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -295,17 +295,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -324,17 +324,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -353,17 +353,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" readonly value="0">
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="end">
+                                        <li class="items">
                                             <div class="item">
                                                 <div class="values">
                                                     <div class="gambar">
@@ -382,11 +382,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="valuasi">
-                                                    <div class="kurang">
+                                                    <div class="kurang" onclick="kurang(this)">
                                                         -
                                                     </div>
-                                                    <input type="number" disabled>
-                                                    <div class="tambah">
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
                                                         +
                                                     </div>
                                                 </div>
@@ -395,7 +395,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="subtotal" id="subtotal">
+                            <div class="subtotal" id="subtotalContainer">
                             </div>
                         </div>
                     </div>
@@ -408,42 +408,56 @@
 
     </div>
     <script>
-        // Get all elements with class "tambah" and "kurang"
-        const tambahButtons = document.querySelectorAll('.tambah');
-        const kurangButtons = document.querySelectorAll('.kurang');
+        function tambah(button) {
+            var nilaiDiv = button.parentNode.querySelector('.nilai');
+            var nilai = parseInt(nilaiDiv.value);
+            nilaiDiv.value = nilai + 1;
+            subtotal();
+        }
 
-        // Add event listener to each "tambah" button
-        tambahButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Find the input element in the same parent node
-                const input = this.parentNode.querySelector('input');
-                // Get the current value of the input as an integer (or 0 if it's not a valid number)
-                let value = parseInt(input.value) || 0;
-                // Increment the value of the input
-                input.value = value + 1;
-                if (input.value > 0) {
-                    this.closest('.item').classList.add('red');
+        function kurang(button) {
+            var nilaiDiv = button.parentNode.querySelector('.nilai');
+            var nilai = parseInt(nilaiDiv.value);
+            if (nilai > 0) {
+                nilaiDiv.value = nilai - 1;
+                subtotal();
+            }
+        }
+
+        function subtotal() {
+
+            var items = document.querySelectorAll('.items');
+            var subtotalDiv = document.querySelector('.subtotal');
+            var subtotalHTML = '';
+
+            var totalHarga = 0;
+
+            items.forEach(function(item) {
+                var nilai = parseInt(item.querySelector('.nilai').value);
+                if (nilai > 0) {
+                    var gambar = item.querySelector('.gambar img').src;
+                    var nama = item.querySelector('.name').textContent;
+                    var harga = item.querySelector('.harga').textContent;
+                    harga = parseInt(harga.replace('Rp. ', '').replace('.', '')); // Remove Rp. and comma, then parse as integer
+
+                    var subtotal = nilai * harga;
+                    totalHarga += subtotal;
+
+                    subtotalHTML += '<div class="item-subtotal">';
+                    subtotalHTML += '<img src="' + gambar + '" alt="' + nama + '">';
+                    subtotalHTML += '<div>' + nama + '</div>';
+                    subtotalHTML += '<div>Rp. ' + subtotal.toLocaleString() + '</div>'; // Convert subtotal to currency format
+                    subtotalHTML += '</div>';
                 }
             });
-        });
 
-        // Add event listener to each "kurang" button
-        kurangButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Find the input element in the same parent node
-                const input = this.parentNode.querySelector('input');
-                let value = parseInt(input.value) || 0;
-                // Ensure the value doesn't go below 0
-                if (value > 0) {
-                    // Decrement the value of the input
-                    input.value = value - 1;
-                }
-                if (input.value == 0) {
-                    this.closest('.item').classList.remove('red');
-                }
-
-            });
-        });
+            if (subtotalHTML !== '') {
+                subtotalHTML += '<div class="total">Total: Rp. ' + totalHarga.toLocaleString() + '</div>'; // Convert totalHarga to currency format
+                subtotalDiv.innerHTML = subtotalHTML;
+            } else {
+                subtotalDiv.innerHTML = ''; // Clear the subtotal div if no items have a quantity greater than zero
+            }
+        }
     </script>
 
 @endsection
