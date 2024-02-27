@@ -48,19 +48,6 @@
             </div>
             <div class="container text-center">
                 <div class="row row-cols-3 gx-3 gy-2">
-
-                    <div class="col">
-                        <div class="item-pelayanan">
-                            <a href="/pemesanan">
-                                <div class="gambar">
-                                    <img src="{{ asset('gambar-kategori/delivery.png') }}">
-                                </div>
-                                <div class="pelayanan-name fw-medium">
-                                    Ambil Antar
-                                </div>
-                            </a>
-                        </div>
-                    </div>
                     <div class="col">
                         <div class="item-pelayanan">
                             <a href="/pemesanan">
@@ -82,6 +69,19 @@
                                 </div>
                                 <div class="pelayanan-name fw-medium">
                                     Cuci Jas
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="item-pelayanan">
+                            <a href="/pemesanan">
+                                <div class="gambar">
+                                    <img src="{{ asset('gambar-kategori/dress.png') }}">
+                                </div>
+                                <div class="pelayanan-name fw-medium">
+                                    Cuci Gaun
                                 </div>
                             </a>
                         </div>
@@ -123,20 +123,18 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="col">
                         <div class="item-pelayanan">
                             <a href="/pemesanan">
                                 <div class="gambar">
-                                    <img src="{{ asset('gambar-kategori/hoodie.png') }}">
+                                    <img src="{{ asset('gambar-kategori/blinds.png') }}">
                                 </div>
                                 <div class="pelayanan-name fw-medium">
-                                    Cuci Jaket
+                                    Cuci Gorden
                                 </div>
                             </a>
                         </div>
                     </div>
-
                     <div class="col">
                         <div class="item-pelayanan">
                             <a href="/pemesanan">
