@@ -364,7 +364,6 @@ input {
 
 .notification.visible {
     transition: 0.5s ease-in-out;
-
     opacity: 1;
 }
 

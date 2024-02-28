@@ -37,13 +37,14 @@ class userPageController extends Controller
         return view('user.kategori.kehilangan');
     }
 
-    // public function store(request $request) {
-    //     return Redirect('user.index');
-    // }
+    // For Layanan Laundry
 
     public function cuciBasah() {
-        $CuciItems = CuciItem::all();
-        return view('user.kategori.pemesanan.cuci-basah', ['items' => $CuciItems]);
+        return view('user.kategori.pemesanan.cuci-basah');
+    }
+
+    public function konfirmasi() {
+        return view('user.kategori.pemesanan.kofirmasi-pesan');
     }
 
 }

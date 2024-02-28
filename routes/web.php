@@ -36,6 +36,7 @@ Route::get('/kebersihan', [userPageController::class, 'kebersihan']);
 Route::get('/cuci', [userPageController::class, 'cuciBaju']);
 Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
 
+Route::get('/konfirmasiPay', [userPageController::class, 'konfirmasi']);
 
 Route::get('/admin/index', [loginController::class, 'admin']);
 Route::get('/admin/create', [adminControll::class, 'index']);

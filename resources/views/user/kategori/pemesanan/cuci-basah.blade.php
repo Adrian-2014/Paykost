@@ -28,28 +28,111 @@
         </div>
     </div>
 
-    <div class="container user-info">
-        <div class="row">
+    <form action="/konfirmasiPay">
 
-            <div class="col-12 inform" id="user-info">
-                <div class="tabel">
+        <div class="container user-info">
+            <div class="row">
 
+                <div class="col-12 inform" id="user-info">
+                    <div class="tabel">
+
+                    </div>
                 </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="container user-item" id="user-item">
-
-    </div>
-    <div class="container user-payment" id="user-payment">
-        <div class="row">
-            <div class="col-12">
 
             </div>
         </div>
-    </div>
+
+        <div class="container user-item" id="user-item">
+        </div>
+        <div class="container user-payment" id="user-payment">
+            <div class="row">
+                <div class="col-12">
+                    <div class="pay" onclick="dropit()" id="drop1">
+                        <div class="paymentChoice">Pilih Metode Pembayaran</div>
+                        <div class="paymentIcons">
+                            <i class="bi bi-credit-card-fill"></i>
+                        </div>
+                    </div>
+                    <div class="payChoice">
+                        <div class="payItems first">
+                            <div class="item">
+                                <div class="logos">
+                                    <img src="{{ asset('img/bca.png') }}">
+                                </div>
+                                <div class="nama">
+                                    Bank BCA
+                                </div>
+                            </div>
+                            <div class="input">
+                                <input type="radio" name="gate" value="bca">
+                            </div>
+                        </div>
+                        <div class="payItems">
+                            <div class="item">
+                                <div class="logos">
+                                    <img src="{{ asset('img/bni.png') }}">
+                                </div>
+                                <div class="nama">
+                                    Bank BNI
+                                </div>
+                            </div>
+                            <div class="input">
+                                <input type="radio" name="gate" value="bni">
+                            </div>
+                        </div>
+                        <div class="payItems">
+                            <div class="item">
+                                <div class="logos">
+                                    <img src="{{ asset('img/mandiri.png') }}">
+                                </div>
+                                <div class="nama">
+                                    Bank Mandiri
+                                </div>
+                            </div>
+                            <div class="input">
+                                <input type="radio" name="gate" value="mandri">
+                            </div>
+                        </div>
+                        <div class="payItems">
+                            <div class="item">
+                                <div class="logos">
+                                    <img src="{{ asset('img/bri.png') }}">
+                                </div>
+                                <div class="nama">
+                                    Bank BRI
+                                </div>
+                            </div>
+                            <div class="input">
+                                <input type="radio" name="gate" value="bri">
+                            </div>
+                        </div>
+                        <div class="payItems last">
+                            <div class="item">
+                                <div class="logos">
+                                    <img src="{{ asset('img/jatim.png') }}">
+                                </div>
+                                <div class="nama">
+                                    Bank Jatim
+                                </div>
+                            </div>
+                            <div class="input">
+                                <input type="radio" name="gate" value="jatim">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="confirm">
+            <div class="container-fluid">
+                <button type="submit" class="btn">Pesan Sekarang</button>
+            </div>
+        </div>
+
+    </form>
 
     <div class="ku">
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
@@ -562,13 +645,6 @@
     </div>
 
 
-    <div class="confirm">
-        <div class="container-fluid">
-            <button type="submit" class="btn">Pesan Sekarang</button>
-        </div>
-    </div>
-
-
 
     {{--          M Y   S C R I P T          --}}
 
@@ -685,12 +761,13 @@
             var subtotalHTML = document.querySelector('.subtotal').innerHTML;
             var head = document.querySelector('.modal-header').innerHTML;
             var inf = document.querySelector('.info-umum').innerHTML;
+            var dis = document.querySelector('.user-payment');
 
             var tab = document.createElement('div');
-            tab.innerHTML = '<div class="item">Item</div><div class="harga">Harga</div><div class="jumlah"> Jumlah</div><div class="jumlah">Subtotal</div>';
+            tab.innerHTML = '<div class="tabel"><div class="item">Item</div><div class="harga">Harga</div><div class="jumlah">Jml</div><div class="sub">total</div></div>';
             tabe = tab.innerHTML;
             tabel = document.querySelector('.tabel');
-            tabel
+            tabel.innerHTML = tab.innerHTML;
 
 
             var idT = document.querySelector('.id').innerHTML;
@@ -718,9 +795,45 @@
             var itemUser = document.getElementById('user-item');
 
             infoUser.innerHTML = transReal + inf;
-            itemUser.innerHTML = tabel + subtotalHTML + totals;
+            itemUser.innerHTML = tabel.innerHTML + subtotalHTML + totals;
 
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var payItems = document.querySelectorAll(".payItems");
+
+            payItems.forEach(function(item) {
+                item.addEventListener("click", function() {
+                    var radio = this.querySelector("input[type='radio']");
+                    radio.checked = true;
+                });
+            });
+        });
+
+
+        // function dropit() {
+        //     var button = document.getElementById('drop1');
+        //     var choice = document.querySelector('.payChoice');
+        //     var icon = document.querySelector('.paymentIcons');
+        //     choice.classList.toggle('show');
+        //     icon.classList.toggle('terbalik');
+        // }
+
+        // var cho = document.querySelector('.payChoice');
+        // var items = document.querySelectorAll('.payItems');
+        // var choice = document.querySelector('.payChoice').classList.contains('show');
+
+        // items.forEach(function(item) {
+        //     item.addEventListener('click', function() {
+        //         cho.classList.remove('show');
+        //     });
+        // });
+
+        // function changePayment(element) {
+        //     var paymentChoice = document.querySelector('.paymentChoice');
+        //     var namaBank = element.querySelector('.nama').textContent;
+        //     paymentChoice.textContent = namaBank;
+        // }
     </script>
 
     <script>
@@ -744,7 +857,8 @@
         // Memilih elemen div yang akan diamati
         var divDiamati = document.getElementById('user-info');
         var btnku = document.querySelector('.ku');
-        var confirm = document.querySelector('.confirm')
+        var confirm = document.querySelector('.confirm');
+        var dis = document.getElementById('user-payment')
         // Membuat event listener untuk perubahan dalam elemen div
         divDiamati.addEventListener('DOMSubtreeModified', function() {
             // Memilih div lain yang ingin ditambahkan kelasnya
@@ -755,14 +869,15 @@
                 divDitambahkanKelas.classList.add('boom');
                 btnku.classList.add('visible');
                 confirm.classList.add('nampak');
+                dis.classList.add('aktif');
 
             } else {
                 divDitambahkanKelas.classList.remove('boom');
                 btnku.classList.remove('visible');
                 confirm.classList.remove('nampak');
+                dis.classList.remove('aktif');
             }
         });
     </script>
-
 
 @endsection

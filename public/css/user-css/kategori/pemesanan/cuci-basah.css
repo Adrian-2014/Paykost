@@ -13,7 +13,7 @@ body {
 
 body {
     background-color: rgba(141, 141, 143, 0.75) !important;
-    padding-bottom: 4rem;
+    padding-bottom: 6.5rem;
 }
 
 .navbar {
@@ -315,8 +315,8 @@ body {
 .container.user-info {
     width: 95%;
     border-radius: .5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     background-color: white;
 
     .row {
@@ -364,6 +364,32 @@ body {
 
     .tabel {
         display: flex;
+        text-align: center;
+        font-size: .9rem;
+        padding: .5rem 0 !important;
+        padding-bottom: .3rem !important;
+        border-bottom: .5px solid rgba(128, 128, 128, 0.7);
+
+        .item {
+            width: 6.5rem;
+            /* background-color: chartreuse; */
+        }
+
+        .harga {
+            width: 6.4rem;
+            /* background-color: aqua; */
+        }
+
+        .jumlah {
+            width: 3.5rem;
+            /* background-color: brown; */
+        }
+
+        .sub {
+            width: 5.3rem;
+            /* background-color: blue; */
+
+        }
     }
 
     .item-subtotal {
@@ -433,7 +459,7 @@ body {
     }
 
     .totals {
-        border-top: 1px rgba(110, 110, 110, 0.7) solid;
+        border-top: 0.5px rgba(110, 110, 110, 0.7) solid;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -441,6 +467,89 @@ body {
     }
 
 
+}
+
+.container.user-payment {
+    width: 95%;
+    transform: scale();
+    margin-top: 1rem;
+
+    .row {
+
+        .col-12 {
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            border: .5px solid rgb(82, 82, 82);
+            overflow: hidden;
+            background-color: white;
+            padding: 0 !important;
+
+            .pay {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: .5px solid gray;
+
+                .paymentChoice {
+                    padding: .7rem 1.5rem;
+                }
+
+                .paymentIcons {
+                    padding: .7rem 1.5rem;
+
+                    .bi {
+                        font-size: 1.3rem;
+                        color: rgba(0, 0, 0, 0.75);
+                    }
+                }
+            }
+
+            .payChoice {
+
+                display: flex;
+                flex-direction: column;
+
+                .payItems {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .item {
+                        padding: .5rem 1.5rem;
+                        display: flex;
+                        align-items: center;
+                        gap: .7rem;
+
+                        .logos {
+                            width: 4rem;
+                            height: 1rem;
+
+                            img {
+                                height: 1rem;
+                                width: auto;
+                                max-width: 4rem;
+                            }
+                        }
+                    }
+
+                    .input {
+                        padding: .5rem 1.5rem;
+
+                    }
+                }
+
+                .payItems.first {
+                    padding-top: 1rem !important;
+                }
+
+                .payItems.last {
+                    padding-bottom: 1rem !important;
+                }
+            }
+        }
+
+    }
 }
 
 .modal.fade {
@@ -797,4 +906,8 @@ body {
 
 .myback {
     background: linear-gradient(to right, rgb(0, 102, 255), rgb(69, 189, 236)) !important;
+}
+
+.aktif {
+    transform: scale(1);
 }
