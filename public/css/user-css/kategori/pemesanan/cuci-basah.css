@@ -13,36 +13,64 @@ body {
 
 body {
     background-color: rgba(141, 141, 143, 0.75) !important;
-    padding-bottom: 6.5rem;
+    padding: 4.7rem 0;
+    padding-top: 3rem !important;
 }
 
 .navbar {
-    justify-content: unset !important;
-    height: 3.5rem;
+    height: 3rem;
     border-bottom: .5px solid rgba(128, 128, 128, 0.4);
     background-color: rgb(255, 255, 255);
-
-    padding: 0 1rem !important;
+    /* padding: 0 1rem !important;
+    padding-right: unset !important; */
+    --bs-navbar-padding-y: unset !important;
 
     .container-fluid {
         display: flex;
-        justify-content: start !important;
-        padding-left: 1.5rem !important;
+        justify-content: space-between;
+        align-items: center;
 
-        padding: 0;
+        .exit {
+            display: flex;
+            justify-content: start !important;
+            padding-left: 1.5rem !important;
+            padding: 0;
 
-        .back {
-            position: absolute;
-            left: .7rem;
-            text-decoration: none;
-            color: black;
+            .back {
+                position: absolute;
+                left: .7rem;
+                text-decoration: none;
+                color: black;
 
-            .left {
-                font-size: 1.4rem;
-                font-weight: bold !important;
+                .left {
+                    font-size: 1.4rem;
+                    font-weight: bold !important;
+                }
             }
         }
 
+        .ku {
+            transform: scale(0);
+            border-radius: 8px;
+            background: linear-gradient(to bottom left, rgb(8, 101, 200), rgb(68, 174, 216));
+            height: fit-content !important;
+            width: fit-content !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 0px solid !important;
+            color: white !important;
+
+            .btn {
+                height: 2.3rem !important;
+                width: 2.3rem !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white !important;
+                font-size: 1.5rem;
+            }
+        }
     }
 
 }
@@ -108,98 +136,6 @@ body {
 
 }
 
-/* .container {
-    background-color: white !important;
-    margin-top: 1rem;
-
-    .row.pesanan {
-        margin-top: 1rem;
-        gap: 1rem;
-        padding: .8rem 0;
-
-        .col-12.pesanan-items {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            .item {
-                width: 100%;
-                padding: .7rem;
-                height: fit-content;
-                border-radius: 10px;
-                box-shadow: 0 0 10px gainsboro;
-                display: flex;
-                /* justify-content: center;
-                gap: .5rem;
-                align-items: center;
-
-                .image-item {
-
-                    img {
-                        height: 5rem;
-                        width: 5rem;
-                    }
-                }
-
-                .rincian-item {
-                    display: flex;
-                    flex-direction: column;
-                    gap: .5rem;
-
-                    .nama-item {
-                        color: var(--black);
-                        font-size: 1rem;
-                    }
-
-                    .detail-item {
-                        display: flex;
-                        align-items: center;
-                        font-size: .9rem;
-                        width: 10rem;
-                        gap: .4rem;
-
-                        .harga {
-                            color: var(--black);
-                        }
-
-                        .per {
-                            color: rgba(128, 128, 128, 0.5);
-                        }
-                    }
-                }
-
-                .quantity {
-                    display: flex;
-                    flex-direction: column;
-                    gap: .5rem;
-
-                    .nilai {
-                        text-align: center;
-                        font-size: 1.1rem;
-                    }
-
-                    .pm {
-                        button {
-                            height: 1.5rem;
-                            width: 1.5rem;
-                            border: unset;
-                            border-radius: .3rem;
-                            color: white;
-                        }
-
-                        .tambah {
-                            background-color: rgb(0, 149, 255);
-                        }
-
-                        .kurang {
-                            background-color: gray;
-                        }
-                    }
-                }
-            }
-        }
-    }
-} */
 
 .subtotal {
     display: flex;
@@ -469,6 +405,29 @@ body {
 
 }
 
+.container.user-tanggal {
+    width: 95%;
+    border-radius: .5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+
+    .splide.bulan {
+        width: 100%;
+
+        .splide__track {
+            .splide__list {
+                .splide__slide {
+                    width: 100%;
+                    text-align: center;
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
 .container.user-payment {
     width: 95%;
     transform: scale();
@@ -522,13 +481,15 @@ body {
                         gap: .7rem;
 
                         .logos {
-                            width: 4rem;
-                            height: 1rem;
+                            width: auto;
+                            height: 1.5rem;
 
                             img {
-                                height: 1rem;
+                                height: 1.5rem;
+                                /* background-color: aqua; */
                                 width: auto;
                                 max-width: 4rem;
+                                border-radius: 4px;
                             }
                         }
                     }
@@ -540,11 +501,11 @@ body {
                 }
 
                 .payItems.first {
-                    padding-top: 1rem !important;
+                    padding-top: .5rem !important;
                 }
 
                 .payItems.last {
-                    padding-bottom: 1rem !important;
+                    padding-bottom: .5rem !important;
                 }
             }
         }
@@ -862,32 +823,6 @@ body {
     }
 }
 
-.ku {
-    transform: scale(0);
-    position: fixed;
-    top: 84%;
-    border-radius: 8px;
-    left: 87%;
-    background: linear-gradient(to bottom left, rgb(8, 101, 200), rgb(68, 174, 216));
-    height: fit-content !important;
-    width: fit-content !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 0px solid !important;
-    color: white !important;
-
-    .btn {
-        height: 2.3rem !important;
-        width: 2.3rem !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white !important;
-        font-size: 1.5rem;
-    }
-}
-
 .nampak {
     transform: scale(1);
 }
@@ -910,4 +845,8 @@ body {
 
 .aktif {
     transform: scale(1);
+}
+
+.mati {
+    background: rgba(128, 128, 128, 0.8) !important;
 }

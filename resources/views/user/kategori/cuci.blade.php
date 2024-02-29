@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="splide__slide dua"><img src="{{ asset('img-chategories/Putih & Merah Muda Minimalis Banner  Promosi Self Service Laundry.jpg') }}"></li>
+                <li class="splide__slide dua"><img src="{{ asset('img-chategories/Paykost-Laundry.png') }}"></li>
                 <li class="splide__slide tiga">
                     <img src="{{ asset('img-chategories/Kuning Ungu Ilustrasi Spanduk Jasa Cuci Baju Kilat.jpg') }}">
                 </li>
@@ -50,7 +50,7 @@
                 <div class="row row-cols-3 gx-3 gy-2">
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
                                 </div>
@@ -63,7 +63,7 @@
 
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/wedding-suit.png') }}">
                                 </div>
@@ -76,7 +76,7 @@
 
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/dress.png') }}">
                                 </div>
@@ -89,7 +89,7 @@
 
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/wet.png') }}">
                                 </div>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/tshirt.png') }}">
                                 </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/laundry.png') }}">
                                 </div>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/blinds.png') }}">
                                 </div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/carpet.png') }}">
                                 </div>
@@ -150,7 +150,7 @@
 
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/setrika.png') }}" class="cuciSetrika">
                                 </div>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/bed-cover.png') }}">
                                 </div>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/blanket.png') }}">
                                 </div>
@@ -186,7 +186,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/selimut.png') }}">
                                 </div>
@@ -198,7 +198,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/running-shoe.png') }}">
                                 </div>
@@ -212,7 +212,7 @@
 
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/ironing.png') }}">
                                 </div>
@@ -224,7 +224,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/pemesanan">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/towels.png') }}">
                                 </div>

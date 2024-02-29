@@ -4,15 +4,21 @@
 
 @section('container')
 
-    <div class="navbar sticky-top">
+    <div class="navbar fixed-top">
         <div class="container-fluid">
-            <a href="/cuci" class="back">
-                <i class="left" data-feather="chevron-left"></i>
-            </a>
-            <div class="info fw-medium">
-                Layanan Cuci Basah
+            <div class="exit">
+                <a href="/cuci" class="back">
+                    <i class="left" data-feather="chevron-left"></i>
+                </a>
+                <div class="info fw-medium">
+                    Layanan Cuci Basah
+                </div>
+            </div>
+            <div class="ku">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
             </div>
         </div>
+
     </div>
 
     <div class="blanks" id="blanks">
@@ -44,10 +50,36 @@
 
         <div class="container user-item" id="user-item">
         </div>
+
+        <div class="container user-tanggal" id="user-tanggal">
+            <div class="row">
+                <div class="col-12">
+                    <div class="splide bulan" role="group" aria-label="Splide Basic HTML Example">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide">Januari</li>
+                                <li class="splide__slide">Februari</li>
+                                <li class="splide__slide">Maret</li>
+                                <li class="splide__slide">April</li>
+                                <li class="splide__slide">Mei</li>
+                                <li class="splide__slide">Juni</li>
+                                <li class="splide__slide">Juli</li>
+                                <li class="splide__slide">Agustus</li>
+                                <li class="splide__slide">September</li>
+                                <li class="splide__slide">Oktober</li>
+                                <li class="splide__slide">November</li>
+                                <li class="splide__slide">Desember</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container user-payment" id="user-payment">
             <div class="row">
                 <div class="col-12">
-                    <div class="pay" onclick="dropit()" id="drop1">
+                    <div class="pay" id="drop1">
                         <div class="paymentChoice">Pilih Metode Pembayaran</div>
                         <div class="paymentIcons">
                             <i class="bi bi-credit-card-fill"></i>
@@ -106,10 +138,10 @@
                                 <input type="radio" name="gate" value="bri">
                             </div>
                         </div>
-                        <div class="payItems last">
+                        <div class="payItems">
                             <div class="item">
                                 <div class="logos">
-                                    <img src="{{ asset('img/jatim.png') }}">
+                                    <img src="{{ asset('img/jatim.jpeg') }}">
                                 </div>
                                 <div class="nama">
                                     Bank Jatim
@@ -119,7 +151,19 @@
                                 <input type="radio" name="gate" value="jatim">
                             </div>
                         </div>
-
+                        <div class="payItems last">
+                            <div class="item">
+                                <div class="logos">
+                                    <img src="{{ asset('img/btn.png') }}">
+                                </div>
+                                <div class="nama">
+                                    Bank BTN
+                                </div>
+                            </div>
+                            <div class="input">
+                                <input type="radio" name="gate" value="btn">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -128,16 +172,11 @@
 
         <div class="confirm">
             <div class="container-fluid">
-                <button type="submit" class="btn">Pesan Sekarang</button>
+                <button type="submit" class="btn mati" id="nextPage" disabled>Pesan Sekarang</button>
             </div>
         </div>
 
     </form>
-
-    <div class="ku">
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
-    </div>
-
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -593,6 +632,35 @@
                                         <div class="item">
                                             <div class="values">
                                                 <div class="gambar">
+                                                    <img src="{{ asset('gambar-kategori/shorts.png') }}">
+                                                </div>
+                                                <div class="name">
+                                                    Celana Pendek
+                                                </div>
+                                                <div class="cost">
+                                                    <div class="harga">
+                                                        Rp. 500
+                                                    </div>
+                                                    <div class="per">
+                                                        /ptg
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="valuasi">
+                                                <div class="kurang" onclick="kurang(this)">
+                                                    -
+                                                </div>
+                                                <input type="number" readonly value="0" class="nilai">
+                                                <div class="tambah" onclick="tambah(this)">
+                                                    +
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="items">
+                                        <div class="item">
+                                            <div class="values">
+                                                <div class="gambar">
                                                     <img src="{{ asset('gambar-kategori/bra.png') }}">
                                                 </div>
                                                 <div class="name">
@@ -645,9 +713,19 @@
     </div>
 
 
-
     {{--          M Y   S C R I P T          --}}
 
+    <script>
+        var splide = new Splide('.splide', {
+            type: 'loop',
+            perpage: 1,
+            pagination: false,
+            drag: 'free',
+            arrows: false,
+        });
+
+        splide.mount();
+    </script>
 
     <script>
         function tambah(button) {
@@ -805,35 +883,14 @@
             payItems.forEach(function(item) {
                 item.addEventListener("click", function() {
                     var radio = this.querySelector("input[type='radio']");
+                    var button = document.getElementById('nextPage');
+
                     radio.checked = true;
+                    button.removeAttribute("disabled");
+                    button.classList.remove("mati");
                 });
             });
         });
-
-
-        // function dropit() {
-        //     var button = document.getElementById('drop1');
-        //     var choice = document.querySelector('.payChoice');
-        //     var icon = document.querySelector('.paymentIcons');
-        //     choice.classList.toggle('show');
-        //     icon.classList.toggle('terbalik');
-        // }
-
-        // var cho = document.querySelector('.payChoice');
-        // var items = document.querySelectorAll('.payItems');
-        // var choice = document.querySelector('.payChoice').classList.contains('show');
-
-        // items.forEach(function(item) {
-        //     item.addEventListener('click', function() {
-        //         cho.classList.remove('show');
-        //     });
-        // });
-
-        // function changePayment(element) {
-        //     var paymentChoice = document.querySelector('.paymentChoice');
-        //     var namaBank = element.querySelector('.nama').textContent;
-        //     paymentChoice.textContent = namaBank;
-        // }
     </script>
 
     <script>

@@ -46,4 +46,4 @@ Route::get('/pengajuan', [loginController::class, 'pengajuan']);
 // Route::post('/kerusakan', [ userPageController::class, 'store']); // kirim laporan kerusakan
 
 Route::get('/pdf', [userPageController::class, 'pdf']);  // download pdf
-Route::get('/pemesanan', [userPageController::class, 'cuciBasah']);
+Route::get('/basah', [userPageController::class, 'cuciBasah']);
