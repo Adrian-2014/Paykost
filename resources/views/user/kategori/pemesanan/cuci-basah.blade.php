@@ -53,8 +53,16 @@
 
         <div class="container user-tanggal" id="user-tanggal">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 for-slide">
                     <div class="splide bulan" role="group" aria-label="Splide Basic HTML Example">
+                        <div class="splide__arrows splide__arrows--ltr">
+                            <button class="splide__arrow splide__arrow--prev" type="button" aria-label="Go to last slide" aria-controls="splide01-track">
+                                <i class='bx bxs-chevron-left'></i>
+                            </button>
+                            <button class="splide__arrow splide__arrow--next" type="button" aria-label="Next slide" aria-controls="splide01-track">
+                                <i class='bx bxs-chevron-right'></i>
+                            </button>
+                        </div>
                         <div class="splide__track">
                             <ul class="splide__list">
                                 <li class="splide__slide">Januari</li>
@@ -71,6 +79,41 @@
                                 <li class="splide__slide">Desember</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-12 for-tangal">
+                    <div class="tanggal">
+                        <div class="tanggal-item">1</div>
+                        <div class="tanggal-item">2</div>
+                        <div class="tanggal-item">3</div>
+                        <div class="tanggal-item">4</div>
+                        <div class="tanggal-item">5</div>
+                        <div class="tanggal-item">6</div>
+                        <div class="tanggal-item">7</div>
+                        <div class="tanggal-item">8</div>
+                        <div class="tanggal-item">9</div>
+                        <div class="tanggal-item">10</div>
+                        <div class="tanggal-item">11</div>
+                        <div class="tanggal-item">12</div>
+                        <div class="tanggal-item">13</div>
+                        <div class="tanggal-item">14</div>
+                        <div class="tanggal-item">15</div>
+                        <div class="tanggal-item">16</div>
+                        <div class="tanggal-item">17</div>
+                        <div class="tanggal-item">18</div>
+                        <div class="tanggal-item">19</div>
+                        <div class="tanggal-item">20</div>
+                        <div class="tanggal-item">21</div>
+                        <div class="tanggal-item">22</div>
+                        <div class="tanggal-item">23</div>
+                        <div class="tanggal-item">24</div>
+                        <div class="tanggal-item">25</div>
+                        <div class="tanggal-item">26</div>
+                        <div class="tanggal-item">27</div>
+                        <div class="tanggal-item">28</div>
+                        <div class="tanggal-item">29</div>
+                        <div class="tanggal-item">30</div>
                     </div>
                 </div>
             </div>
@@ -721,7 +764,6 @@
             perpage: 1,
             pagination: false,
             drag: 'free',
-            arrows: false,
         });
 
         splide.mount();

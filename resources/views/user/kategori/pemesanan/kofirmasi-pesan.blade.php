@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('title', 'rincian-pembyaran')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/konfirmasi-pesan.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@trimbleinc/modus-bootstrap@1.6.3/dist/modus.min.css">
 @section('container')
 
     <div class="navbar sticky-top">
@@ -61,7 +62,9 @@
             <div class="message">Mohon transfer ke No. Rekening ini</div>
             <div class="rekening">
                 <div class="no-rek" id="no-rek">065722313040</div>
-                <div class="copy" onclick="salinTeks()"><i class="bi bi-copy"></i></div>
+                <div class="copy" onclick="salinTeks()">
+                    <img src="{{ asset('img-chategories/copy.png') }}" class="ico">
+                </div>
             </div>
             <div class="atas-nama fw-medium d-flex">
                 <div class="a fw-bold">
@@ -76,17 +79,13 @@
             <button type="submit" class="submit">Konfirmasi Pembayaran</button>
         </div>
     </form>
+    <div class="alert">
+        <div class="menyala">
+
+        </div>
+    </div>
 
     <div class="splide banner" role="group" aria-label="Splide Basic HTML Example" id="label">
-
-        <div class="splide__arrows splide__arrows--ltr">
-            <button class="splide__arrow splide__arrow--prev" type="button" aria-label="Previous slide" aria-controls="splide01-track">
-                {{-- <i class="bi bi-chevron-left"></i> --}}
-            </button>
-            <button class="splide__arrow splide__arrow--next" type="button" aria-label="Next slide" aria-controls="splide01-track">
-                {{-- <i class="bi bi-chevron-right"></i> --}}
-            </button>
-        </div>
         <div class="splide__track">
             <ul class="splide__list">
                 <li class="splide__slide">
@@ -105,48 +104,91 @@
         </div>
     </div>
 
-    <div class="container cuci-sepatu">
-        <div class="row">
-            <div class="col-12">
-                <div class="icon-sepatu">
-
-                </div>
-                <div class="nama-layananan">
-                    Jasa Fast Cleaning
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="icon-sepatu">
-
-                </div>
-                <div class="nama-layananan">
-                    Jasa Deep Cleaning
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="icon-sepatu">
-
-                </div>
-                <div class="nama-layananan">
-                    Jasa Restorasi Warna
+    <div class="container cuci-sepatu overflow-hidden text-center">
+        <div class="row g-3">
+            <div class="col-6">
+                <div class="px-2 py-2">
+                    <div class="s-gambar">
+                        <img src="{{ asset('gambar-kategori/fast-cleaning.png') }}">
+                    </div>
+                    <div class="d-l">
+                        <div class="nama-layanan fw-medium">
+                            Fast Cleaning
+                        </div>
+                        <div class="desk">
+                            Layanan pembersihan sepatu cepat
+                        </div>
+                    </div>
+                    <div class="tombol-lihat">
+                        <a href="/cuci-sepatu" class="btn">
+                            Lihat
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="icon-sepatu">
-
+            <div class="col-6">
+                <div class="px-2 py-2">
+                    <div class="s-gambar">
+                        <img src="{{ asset('gambar-kategori/deep-cleaning.png') }}">
+                    </div>
+                    <div class="d-l">
+                        <div class="nama-layanan fw-medium">
+                            Deep Cleaning
+                        </div>
+                        <div class="desk">
+                            Pembersihan detail dan menyeluruh
+                        </div>
+                    </div>
+                    <div class="tombol-lihat">
+                        <a href="/cuci-sepatu" class="btn">
+                            Lihat
+                        </a>
+                    </div>
                 </div>
-                <div class="nama-layananan">
-                    Jasa Whitening
+            </div>
+            <div class="col-6">
+                <div class="px-2 py-2">
+                    <div class="s-gambar">
+                        <img src="{{ asset('gambar-kategori/restorasi-warna.png') }}">
+                    </div>
+                    <div class="d-l">
+                        <div class="nama-layanan fw-medium">
+                            Repaint
+                        </div>
+                        <div class="desk">
+                            Perawatan restorasi warna sepatu
+                        </div>
+                    </div>
+                    <div class="tombol-lihat">
+                        <a href="/cuci-sepatu" class="btn">
+                            Lihat
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="px-2 py-2">
+                    <div class="s-gambar">
+                        <img src="{{ asset('gambar-kategori/whitening.png') }}">
+                    </div>
+                    <div class="d-l">
+                        <div class="nama-layanan fw-medium">
+                            Whitening
+                        </div>
+                        <div class="desk">
+                            Perawatan sepatu yang menguning
+                        </div>
+                    </div>
+                    <div class="tombol-lihat">
+                        <a href="/cuci-sepatu" class="btn">
+                            Lihat
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="alert">
-        <div class="menyala">
-
-        </div>
-    </div>
 
     <script>
         var splide = new Splide('.splide', {
@@ -155,19 +197,20 @@
             pagination: false,
             // drag: false,
             autoplay: true,
+            arrows: false,
             interval: 5000,
         });
 
         splide.mount();
     </script>
 
-
     <script>
         function salinTeks() {
             // Pilih elemen dengan ID "no-rek"
             var elem = document.getElementById("no-rek");
             var button = document.querySelector(".copy");
-            var ico = document.querySelector('.bi.bi-copy')
+            var ico = document.querySelector('.ico');
+            var alert = document.querySelector('.alert');
             var menyala = document.querySelector('.menyala');
 
             var range = document.createRange();
@@ -177,7 +220,9 @@
             document.execCommand("copy");
             window.getSelection().removeAllRanges();
 
-            button.classList.add('copied');
+            // button.classList.add('copied');
+            ico.src = "{{ asset('img-chategories/copied.png') }}";
+            ico.classList.add('co');
             menyala.classList.add('cops');
             var isCopy = document.createElement('div');
             isCopy.classList.add('content');
@@ -186,7 +231,9 @@
             <div class="teks"> berhasil disalin </div>`;
 
             setTimeout(function() {
-                button.classList.remove('copied');
+                // button.classList.remove('copied');
+                ico.src = "{{ asset('img-chategories/copy.png') }}";
+                ico.classList.remove('co');
                 menyala.classList.remove('cops');
 
             }, 1500);

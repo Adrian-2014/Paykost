@@ -410,22 +410,41 @@ body {
     border-radius: .5rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    background-color: white;
+    background: linear-gradient(rgb(0, 72, 255), rgb(20, 166, 223));
 
-    .splide.bulan {
-        width: 100%;
+    .row {
+        gap: .3rem;
 
-        .splide__track {
-            .splide__list {
-                .splide__slide {
-                    width: 100%;
-                    text-align: center;
-                    font-size: 1.2rem;
-                    font-weight: 500;
+        .col-12.for-slide {
+            .splide.bulan {
+                width: 100%;
+
+                .splide__track {
+                    .splide__list {
+                        .splide__slide {
+                            width: 100%;
+                            text-align: center;
+                            font-size: 1.2rem;
+                            font-weight: 500;
+                            color: white;
+                        }
+                    }
                 }
             }
         }
+
+        .col-12.for-tangal {
+            .tanggal {
+                padding: .7rem;
+                display: flex;
+                /* overflow-x: auto; */
+                overflow: hidden;
+                color: white;
+                gap: 1.2rem;
+            }
+        }
     }
+
 }
 
 .container.user-payment {
@@ -485,7 +504,7 @@ body {
                             height: 1.5rem;
 
                             img {
-                                height: 1.5rem;
+                                height: 1.5rem !important;
                                 /* background-color: aqua; */
                                 width: auto;
                                 max-width: 4rem;
@@ -723,11 +742,6 @@ body {
                                             margin: 0;
                                         }
 
-                                        input[type=number] {
-                                            -moz-appearance: textfield;
-                                            /* Firefox */
-                                        }
-
                                     }
                                 }
 
@@ -742,7 +756,7 @@ body {
                                     display: flex;
                                     justify-content: center;
                                     align-items: center;
-                                    width: 12 rem;
+                                    width: 12rem;
                                     border-radius: 13px;
                                 }
                             }
@@ -849,4 +863,15 @@ body {
 
 .mati {
     background: rgba(128, 128, 128, 0.8) !important;
+}
+
+.splide__arrow {
+    background-color: rgba(255, 0, 0, 0) !important;
+    color: white !important;
+    opacity: 1 !important;
+
+    .bx {
+        color: white !important;
+        font-size: 2rem;
+    }
 }
