@@ -52,6 +52,8 @@
         </div>
 
         <div class="container user-tanggal" id="user-tanggal">
+
+            <div class="heading">Pilih Waktu Pengambilan</div>
             <div class="row">
                 <div class="col-12 for-slide">
                     <div class="splide bulan" role="group" aria-label="Splide Basic HTML Example">
@@ -116,6 +118,22 @@
                         <div class="tanggal-item">30</div>
                     </div>
                 </div>
+            </div>
+            <div class="for-jam">
+
+                <div class="jam-item">
+                    07:30
+                </div>
+                <div class="jam-item">
+                    12:00
+                </div>
+                <div class="jam-item">
+                    16:30
+                </div>
+                <div class="jam-item">
+                    20:00
+                </div>
+
             </div>
         </div>
 
@@ -763,7 +781,7 @@
             type: 'loop',
             perpage: 1,
             pagination: false,
-            drag: 'free',
+            drag: true,
         });
 
         splide.mount();

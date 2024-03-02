@@ -105,11 +105,11 @@
     </div>
 
     <div class="container cuci-sepatu overflow-hidden text-center">
-        <div class="row g-3">
+        <div class="row">
             <div class="col-6">
-                <div class="px-2 py-2">
+                <div class="items">
                     <div class="s-gambar">
-                        <img src="{{ asset('gambar-kategori/fast-cleaning.png') }}">
+                        <img src="{{ asset('gambar-kategori/fast-cleaning.jpeg') }}">
                     </div>
                     <div class="d-l">
                         <div class="nama-layanan fw-medium">
@@ -120,16 +120,15 @@
                         </div>
                     </div>
                     <div class="tombol-lihat">
-                        <a href="/cuci-sepatu" class="btn">
-                            Lihat
-                        </a>
+                        <div class="rp">Rp.</div>
+                        <div class="real-cost">15.000</div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div class="px-2 py-2">
+                <div class="items">
                     <div class="s-gambar">
-                        <img src="{{ asset('gambar-kategori/deep-cleaning.png') }}">
+                        <img src="{{ asset('gambar-kategori/deep-cleaning.jpeg') }}">
                     </div>
                     <div class="d-l">
                         <div class="nama-layanan fw-medium">
@@ -140,16 +139,15 @@
                         </div>
                     </div>
                     <div class="tombol-lihat">
-                        <a href="/cuci-sepatu" class="btn">
-                            Lihat
-                        </a>
+                        <div class="rp">Rp.</div>
+                        <div class="real-cost">22.000</div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div class="px-2 py-2">
+                <div class="items">
                     <div class="s-gambar">
-                        <img src="{{ asset('gambar-kategori/restorasi-warna.png') }}">
+                        <img src="{{ asset('gambar-kategori/repaint.jpg') }}">
                     </div>
                     <div class="d-l">
                         <div class="nama-layanan fw-medium">
@@ -160,16 +158,15 @@
                         </div>
                     </div>
                     <div class="tombol-lihat">
-                        <a href="/cuci-sepatu" class="btn">
-                            Lihat
-                        </a>
+                        <div class="rp">Rp.</div>
+                        <div class="real-cost">30.000</div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div class="px-2 py-2">
+                <div class="items">
                     <div class="s-gambar">
-                        <img src="{{ asset('gambar-kategori/whitening.png') }}">
+                        <img src="{{ asset('gambar-kategori/whitening.jpg') }}">
                     </div>
                     <div class="d-l">
                         <div class="nama-layanan fw-medium">
@@ -180,9 +177,8 @@
                         </div>
                     </div>
                     <div class="tombol-lihat">
-                        <a href="/cuci-sepatu" class="btn">
-                            Lihat
-                        </a>
+                        <div class="rp">Rp.</div>
+                        <div class="real-cost">25.000</div>
                     </div>
                 </div>
             </div>

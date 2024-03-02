@@ -1,5 +1,5 @@
 :root {
-    --black: rgba(0, 0, 0, 0.7);
+    --black: rgba(0, 0, 0, 0.8);
 }
 
 *,
@@ -334,7 +334,7 @@ body {
         justify-content: space-between;
         width: 100%;
         gap: .1rem;
-        padding: .4rem .5rem;
+        padding: .4rem .8rem;
 
         .sub-gambar {
             height: 2rem;
@@ -399,7 +399,7 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: .5rem;
+        padding: .5rem .8rem;
     }
 
 
@@ -410,12 +410,25 @@ body {
     border-radius: .5rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    background: linear-gradient(rgb(0, 72, 255), rgb(20, 166, 223));
+    background-color: white;
+    padding: .5rem .8rem !important;
+
+    .heading {
+        color: var(--black);
+        margin-bottom: .5rem;
+    }
 
     .row {
+        background: linear-gradient(rgb(0, 72, 255), rgb(20, 166, 223));
         gap: .3rem;
+        margin: unset !important;
+        padding: .5rem;
+        border-radius: .5rem;
+
 
         .col-12.for-slide {
+            margin-bottom: .5rem;
+
             .splide.bulan {
                 width: 100%;
 
@@ -435,13 +448,28 @@ body {
 
         .col-12.for-tangal {
             .tanggal {
-                padding: .7rem;
                 display: flex;
                 /* overflow-x: auto; */
                 overflow: hidden;
                 color: white;
-                gap: 1.2rem;
+                gap: 1.1rem;
             }
+        }
+
+    }
+
+    .for-jam {
+        display: flex;
+        margin-top: .7rem;
+        margin-bottom: .5rem;
+        justify-content: space-between;
+
+        .jam-item {
+            border: 1.5px solid rgb(0, 136, 255);
+            padding: .2rem .6rem;
+            color: rgb(0, 102, 255);
+            border-radius: 6px;
+            font-weight: 500;
         }
     }
 

@@ -223,7 +223,7 @@ body {
             .splide__slide {
                 img {
                     width: 100% !important;
-                    height: 12rem !important;
+                    height: 11.5rem !important;
                 }
             }
         }
@@ -239,27 +239,32 @@ body {
         display: flex;
         justify-content: space-between;
 
+        --bs-gutter-y: .7rem !important;
+        --bs-gutter-x: .7rem !important;
+
         .col-6 {
-            .px-2 {
+            .items {
+                overflow: hidden;
                 background: white;
                 border-radius: .5rem;
                 display: flex;
                 flex-direction: column;
-                gap: .5rem;
 
                 .s-gambar {
                     img {
-                        height: 5rem;
-                        width: auto;
+                        height: 100%;
+                        width: 100%;
                     }
                 }
 
                 .d-l {
                     display: flex;
                     flex-direction: column;
+                    padding: .5rem .5rem;
+                    text-align: start;
 
                     .nama-layanan {
-                        font-size: 1.05rem;
+                        /* font-size: 1.05rem; */
                         color: var(--black);
                     }
 
@@ -271,16 +276,24 @@ body {
                 }
 
                 .tombol-lihat {
-                    padding-top: .1rem;
+                    display: flex;
+                    gap: .5rem;
+                    padding: 0 .5rem;
+                    align-items: center;
+                    padding-bottom: .5rem !important;
 
-                    .btn {
-                        padding: .2rem 1.5rem;
-                        border-radius: .4rem;
-                        color: white;
-                        background: linear-gradient(to bottom right, rgb(0, 94, 255), rgb(18, 171, 232));
-                        font-size: .9rem;
-                        outline: unset;
-                        border: unset;
+                    .rp {
+                        font-size: 1rem;
+                        color: var(--black);
+                    }
+
+                    .real-cost {
+                        font-weight: 600;
+                        background: linear-gradient(to top right, rgb(61, 172, 236), rgb(120, 206, 240));
+                        background-clip: text;
+                        -webkit-background-clip: text;
+                        color: transparent;
+                        font-size: 1.1rem;
                     }
                 }
             }
