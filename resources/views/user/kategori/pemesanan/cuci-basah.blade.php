@@ -21,7 +21,7 @@
 
     </div>
 
-    <div class="blanks" id="blanks">
+    {{-- <div class="blanks" id="blanks">
         <div class="blank">
             <img src="{{ asset('img/people.png') }}">
             <div class="isi-blank">
@@ -32,7 +32,7 @@
             </div>
             <button type="button" class="btn mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> <span class="tombol">+</span> <span class="isian">Tambahkan</span></button>
         </div>
-    </div>
+    </div> --}}
 
     <form action="/konfirmasiPay">
 
@@ -116,6 +116,7 @@
                         <div class="tanggal-item">28</div>
                         <div class="tanggal-item">29</div>
                         <div class="tanggal-item">30</div>
+                        <div class="tanggal-item">31</div>
                     </div>
                 </div>
             </div>
@@ -134,6 +135,21 @@
                     20:00
                 </div>
 
+            </div>
+
+            <div id="ok-button">
+                OK
+            </div>
+
+            <div class="for-result">
+                <div class="result-item">
+                    <div class="kiri">Tgl Pengambilan</div>
+                    <div class="kanan" id="tgl-pick">belum dipilih !</div>
+                </div>
+                <div class="result-item">
+                    <div class="kiri">Tgl Selesai</div>
+                    <div class="kanan" id="tgl-selesai">belum di pilih !</div>
+                </div>
             </div>
         </div>
 
@@ -777,14 +793,67 @@
     {{--          M Y   S C R I P T          --}}
 
     <script>
-        var splide = new Splide('.splide', {
-            type: 'loop',
-            perpage: 1,
-            pagination: false,
-            drag: true,
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var splide = new Splide('.splide', {
+                type: 'slide',
+                perPage: 1,
+                pagination: false,
+                drag: true,
+                autoplay: false,
+            });
 
-        splide.mount();
+            splide.mount();
+
+            var currentDate = new Date();
+            var currentDay = currentDate.getDate();
+            var currentMonthIndex = currentDate.getMonth(); // Menggunakan nol-indeks untuk bulan (Januari = 0)
+            var currentYear = currentDate.getFullYear();
+
+            var tanggalItems = document.querySelectorAll('.tanggal-item');
+            tanggalItems[currentDay - 1].classList.add('active');
+
+            splide.go(currentMonthIndex);
+
+            var jamItems = document.querySelectorAll('.jam-item');
+            jamItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    jamItems.forEach(function(item) {
+                        item.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                });
+            });
+
+            var tanggalItems = document.querySelectorAll('.tanggal-item');
+            tanggalItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    tanggalItems.forEach(function(item) {
+                        item.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                });
+            });
+
+            var okButton = document.getElementById('ok-button');
+            okButton.addEventListener('click', function() {
+                var tanggalAktif = document.querySelector('.tanggal-item.active').textContent;
+                var bulanAktifIndex = splide.index;
+                var bulanAktif = document.querySelectorAll('.splide__slide')[bulanAktifIndex].textContent;
+                var jamAktif = document.querySelector('.jam-item.active').textContent;
+
+                var takeOffDiv = document.querySelector('#tgl-pick');
+                var takeOffDate = new Date(currentYear, bulanAktifIndex, parseInt(tanggalAktif));
+
+                var takeOffFormatted = takeOffDate.getDate() + '-' + (takeOffDate.getMonth() + 1) + '-' + takeOffDate.getFullYear() + ' ' + jamAktif;
+                takeOffDiv.textContent = takeOffFormatted;
+
+                var nextDayDiv = document.querySelector('#tgl-selesai');
+                var nextDayDate = new Date(takeOffDate);
+                nextDayDate.setDate(nextDayDate.getDate() + 1);
+                var nextDayFormatted = nextDayDate.getDate() + '-' + (nextDayDate.getMonth() + 1) + '-' + nextDayDate.getFullYear() + ' ' + jamAktif;
+                nextDayDiv.textContent = nextDayFormatted;
+            });
+        });
     </script>
 
     <script>

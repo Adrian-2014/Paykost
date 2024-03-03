@@ -283,7 +283,6 @@ body {
                 }
             }
 
-
         }
     }
 }
@@ -449,8 +448,8 @@ body {
         .col-12.for-tangal {
             .tanggal {
                 display: flex;
-                /* overflow-x: auto; */
-                overflow: hidden;
+                overflow-x: auto;
+                /* overflow: hidden; */
                 color: white;
                 gap: 1.1rem;
             }
@@ -470,6 +469,32 @@ body {
             color: rgb(0, 102, 255);
             border-radius: 6px;
             font-weight: 500;
+        }
+    }
+
+    .for-result {
+        display: flex;
+        flex-direction: column;
+        padding: .3rem !important;
+        gap: .3rem;
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .kiri {
+                font-size: 0.8rem;
+                color: gray;
+                margin-top: -.2rem;
+            }
+
+            .kanan {
+                font-size: 0.85rem;
+                color: rgba(0, 0, 0, 0.85);
+                font-weight: 500;
+                margin-top: -.2rem;
+            }
         }
     }
 
@@ -902,4 +927,8 @@ body {
         color: white !important;
         font-size: 2rem;
     }
+}
+
+.active {
+    background-color: chartreuse;
 }
