@@ -62,13 +62,13 @@ body {
             color: white !important;
 
             .btn {
-                height: 2.3rem !important;
-                width: 2.3rem !important;
+                height: 1.75rem !important;
+                width: 1.75rem !important;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 color: white !important;
-                font-size: 1.5rem;
+                font-size: 1rem;
             }
         }
     }
@@ -144,6 +144,7 @@ body {
     gap: .9rem;
     overflow-x: auto;
     width: 100% !important;
+    /* height: 2rem; */
 
 
     .item-subtotal {
@@ -202,6 +203,22 @@ body {
             width: 7rem;
             text-align: end;
         }
+    }
+}
+
+.ongkos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .ol {
+        color: gray;
+        font-size: 0.9em;
+    }
+
+    .ongkos-laundry {
+        font-size: 1rem;
+        color: rgba(0, 0, 0, 0.8);
     }
 }
 
@@ -311,12 +328,12 @@ body {
         }
 
         .harga {
-            width: 6.4rem;
+            width: 6rem;
             /* background-color: aqua; */
         }
 
         .jumlah {
-            width: 3.5rem;
+            width: 3.9rem;
             /* background-color: brown; */
         }
 
@@ -405,6 +422,7 @@ body {
 }
 
 .container.user-tanggal {
+    display: none;
     width: 95%;
     border-radius: .5rem;
     margin-top: 1rem;
@@ -422,6 +440,7 @@ body {
         gap: .3rem;
         margin: unset !important;
         padding: .5rem;
+        padding-bottom: unset !important;
         border-radius: .5rem;
 
 
@@ -449,9 +468,20 @@ body {
             .tanggal {
                 display: flex;
                 overflow-x: auto;
+                padding-bottom: .5rem;
+                gap: .15rem;
                 /* overflow: hidden; */
                 color: white;
-                gap: 1.1rem;
+
+                .tanggal-item {
+                    height: 1.5rem !important;
+                    width: 1.5rem !important;
+                    padding: .5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 3px;
+                }
             }
         }
 
@@ -465,11 +495,30 @@ body {
 
         .jam-item {
             border: 1.5px solid rgb(0, 136, 255);
-            padding: .2rem .6rem;
+            height: 2.5rem !important;
+            width: 6.3rem !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: rgb(0, 102, 255);
             border-radius: 6px;
             font-weight: 500;
+
+            .jam-value {
+                text-align: center;
+                width: 3rem;
+
+            }
         }
+    }
+
+    #ok-button {
+        margin: .4rem auto !important;
+        padding: .2rem 1.5rem;
+        background: linear-gradient(to bottom right, rgb(0, 85, 255), rgb(93, 194, 233));
+        color: white;
+        width: fit-content;
+        border-radius: 13.5px;
     }
 
     .for-result {
@@ -930,5 +979,22 @@ body {
 }
 
 .active {
-    background-color: chartreuse;
+    background: white;
+    color: rgb(0, 106, 255);
 }
+
+.terselect {
+    background: linear-gradient(rgb(0, 68, 255), rgb(60, 175, 221));
+    color: white !important;
+    border: none !important;
+    padding-bottom: 0rem;
+}
+
+.showing {
+    display: block !important;
+}
+
+/*
+.shut {
+    height: unset !important;
+} */

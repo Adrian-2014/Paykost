@@ -21,7 +21,7 @@
 
     </div>
 
-    {{-- <div class="blanks" id="blanks">
+    <div class="blanks" id="blanks">
         <div class="blank">
             <img src="{{ asset('img/people.png') }}">
             <div class="isi-blank">
@@ -32,7 +32,7 @@
             </div>
             <button type="button" class="btn mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> <span class="tombol">+</span> <span class="isian">Tambahkan</span></button>
         </div>
-    </div> --}}
+    </div>
 
     <form action="/konfirmasiPay">
 
@@ -52,8 +52,7 @@
         </div>
 
         <div class="container user-tanggal" id="user-tanggal">
-
-            <div class="heading">Pilih Waktu Pengambilan</div>
+            <div class="heading">Waktu Pengambilan</div>
             <div class="row">
                 <div class="col-12 for-slide">
                     <div class="splide bulan" role="group" aria-label="Splide Basic HTML Example">
@@ -123,31 +122,39 @@
             <div class="for-jam">
 
                 <div class="jam-item">
-                    07:30
+                    <input type="hidden" value="06:30:00">
+                    <div class="jam-value">
+                        06:30
+                    </div>
                 </div>
                 <div class="jam-item">
-                    12:00
+                    <input type="hidden" value="13:00:00">
+                    <div class="jam-value">
+
+                        13:00
+                    </div>
                 </div>
                 <div class="jam-item">
-                    16:30
-                </div>
-                <div class="jam-item">
-                    20:00
+                    <input type="hidden" value="20:00:00">
+                    <div class="jam-value">
+
+                        20:00
+                    </div>
                 </div>
 
             </div>
 
             <div id="ok-button">
-                OK
+                Konfirmasi
             </div>
 
             <div class="for-result">
                 <div class="result-item">
-                    <div class="kiri">Tgl Pengambilan</div>
+                    <div class="kiri">Pengambilan Laundry</div>
                     <div class="kanan" id="tgl-pick">belum dipilih !</div>
                 </div>
                 <div class="result-item">
-                    <div class="kiri">Tgl Selesai</div>
+                    <div class="kiri">Selesai Laundry</div>
                     <div class="kanan" id="tgl-selesai">belum di pilih !</div>
                 </div>
             </div>
@@ -157,7 +164,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="pay" id="drop1">
-                        <div class="paymentChoice">Pilih Metode Pembayaran</div>
+                        <div class="paymentChoice">Metode Pembayaran</div>
                         <div class="paymentIcons">
                             <i class="bi bi-credit-card-fill"></i>
                         </div>
@@ -772,10 +779,12 @@
                                     </div>
                                 </ul>
                             </div>
-
                         </div>
 
                         <div class="subtotal" id="subtotalContainer">
+                        </div>
+                        <div class="ongkos">
+
                         </div>
                         <div class="tots mt-2">
 
@@ -818,9 +827,9 @@
             jamItems.forEach(function(item) {
                 item.addEventListener('click', function() {
                     jamItems.forEach(function(item) {
-                        item.classList.remove('active');
+                        item.classList.remove('terselect');
                     });
-                    item.classList.add('active');
+                    item.classList.add('terselect');
                 });
             });
 
@@ -835,22 +844,23 @@
             });
 
             var okButton = document.getElementById('ok-button');
+
             okButton.addEventListener('click', function() {
                 var tanggalAktif = document.querySelector('.tanggal-item.active').textContent;
                 var bulanAktifIndex = splide.index;
                 var bulanAktif = document.querySelectorAll('.splide__slide')[bulanAktifIndex].textContent;
-                var jamAktif = document.querySelector('.jam-item.active').textContent;
+                var jamAktif = document.querySelector('.jam-item.terselect input').value;
 
                 var takeOffDiv = document.querySelector('#tgl-pick');
                 var takeOffDate = new Date(currentYear, bulanAktifIndex, parseInt(tanggalAktif));
 
-                var takeOffFormatted = takeOffDate.getDate() + '-' + (takeOffDate.getMonth() + 1) + '-' + takeOffDate.getFullYear() + ' ' + jamAktif;
+                var takeOffFormatted = takeOffDate.getDate() + '/' + (takeOffDate.getMonth() + 1) + '/' + takeOffDate.getFullYear() + ', ' + jamAktif;
                 takeOffDiv.textContent = takeOffFormatted;
 
                 var nextDayDiv = document.querySelector('#tgl-selesai');
                 var nextDayDate = new Date(takeOffDate);
                 nextDayDate.setDate(nextDayDate.getDate() + 1);
-                var nextDayFormatted = nextDayDate.getDate() + '-' + (nextDayDate.getMonth() + 1) + '-' + nextDayDate.getFullYear() + ' ' + jamAktif;
+                var nextDayFormatted = nextDayDate.getDate() + '/' + (nextDayDate.getMonth() + 1) + '/' + nextDayDate.getFullYear() + ', ' + jamAktif;
                 nextDayDiv.textContent = nextDayFormatted;
             });
         });
@@ -881,19 +891,23 @@
             var bungkus = document.querySelector('.tabel')
             var subtotalHTML = '';
             var konten = document.querySelector('.tots');
-
+            var ongkost = document.querySelector('.ongkos');
             var totalHarga = 0;
+            var ongkos = 0;
+            var totalQty = 0;
 
             let button = document.getElementById("add");
             console.log(button);
+
             items.forEach(function(item) {
                 var nilai = parseInt(item.querySelector('.nilai').value);
+                totalQty += nilai;
                 if (nilai > 0) {
                     var gambar = item.querySelector('.gambar img').src;
                     var nama = item.querySelector('.name').textContent;
                     var harga = item.querySelector('.harga').textContent;
                     var rego = item.querySelector('.cost').innerHTML;
-                    harga = parseInt(harga.replaceAll('Rp. ', '').replace('.', '')); // Remove Rp. and comma, then parse as integer
+                    harga = parseInt(harga.replaceAll('Rp. ', '').replace('.', ''));
 
                     var subtotal = nilai * harga;
                     totalHarga += subtotal;
@@ -911,20 +925,35 @@
                     subtotalHTML += '<div class="sub">Rp. ' + subtotal.toLocaleString().replace(',', '.') + '</div>'; // Convert subtotal to currency format
                     subtotalHTML += '</div>';
                 }
+
             });
 
+            if (totalQty < 10) {
+                ongkos = 5000;
+            } else if (totalQty >= 10 && totalQty <= 20) {
+                ongkos = 3000;
+            } else {
+                ongkos = 1500;
+            }
+
+            ongkotz = ongkos.toLocaleString().replace(',', '.')
+
             if (subtotalHTML !== '') {
-                var hTotal = totalHarga.toLocaleString().replace(',', '.');
+
+                totalAsli = totalHarga + ongkos;
+                var hTotal = totalAsli.toLocaleString().replace(',', '.');
+                ongkost.innerHTML = `<div class="ol">Biaya Laundry</div>
+                    <div class="ongkos-laundry fw-medium">Rp. ${ongkotz}</div>`;
                 konten.innerHTML = `
-                        <div class="rp">Total harga</div>
-                        <div class="totalHarga fw-medium">Rp. ${hTotal}</div>
-                    `; // Convert totalHarga to currency format
+                    <div class="rp">Total Biaya</div>
+                    <div class="totalHarga fw-medium">Rp. ${hTotal}</div>
+                `; // Convert totalHarga to currency format
                 subtotalDiv.innerHTML = subtotalHTML;
 
             } else {
                 konten.innerHTML = '';
                 subtotalDiv.innerHTML = '';
-
+                ongkost.innerHTML = '';
             }
         }
 
@@ -933,6 +962,7 @@
             var items = document.querySelectorAll('.dropdown-menu .nilai');
             // var dropToggle = document.querySelector('.btn.dropdown-toggle');
             var addButton = document.getElementById('add');
+            var sub = document.querySelector('.subtotal');
             var showClassExists = document.querySelector('.dropdown-menu').classList.contains('show');
             var inputGreaterThanZero = false;
 
@@ -947,10 +977,12 @@
             if (!showClassExists && inputGreaterThanZero) {
                 // Jika ya, tambahkan class ke tombol "add"
                 addButton.classList.add('myback');
+                sub.classList.add('shut');
                 addButton.disabled = false;
             } else {
                 // Jika tidak, hapus class dari tombol "add"
                 addButton.classList.remove('myback');
+                sub.classList.remove('shut');
                 addButton.disabled = true;
 
             }
@@ -1006,18 +1038,26 @@
 
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            var payItems = document.querySelectorAll(".payItems");
+        // Mengambil semua elemen dengan class "payItems"
+        const payItems = document.querySelectorAll('.payItems');
 
-            payItems.forEach(function(item) {
-                item.addEventListener("click", function() {
-                    var radio = this.querySelector("input[type='radio']");
-                    var button = document.getElementById('nextPage');
+        payItems.forEach(item => {
+            // Menambahkan event listener untuk setiap elemen payItems
+            item.addEventListener('click', function() {
+                const radioInput = this.querySelector('input[type="radio"]');
 
-                    radio.checked = true;
-                    button.removeAttribute("disabled");
-                    button.classList.remove("mati");
-                });
+                // Mengubah status input radio menjadi terpilih atau tidak terpilih
+                radioInput.checked = !radioInput.checked;
+                const anyChecked = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
+
+                var button = document.getElementById('nextPage');
+                if (anyChecked) {
+                    button.disabled = false;
+                    button.classList.remove('mati');
+                } else {
+                    button.classList.add('mati');
+                    button.disabled = true;
+                }
             });
         });
     </script>
@@ -1044,7 +1084,8 @@
         var divDiamati = document.getElementById('user-info');
         var btnku = document.querySelector('.ku');
         var confirm = document.querySelector('.confirm');
-        var dis = document.getElementById('user-payment')
+        var dis = document.getElementById('user-payment');
+        var tgl = document.getElementById('user-tanggal');
         // Membuat event listener untuk perubahan dalam elemen div
         divDiamati.addEventListener('DOMSubtreeModified', function() {
             // Memilih div lain yang ingin ditambahkan kelasnya
@@ -1056,12 +1097,14 @@
                 btnku.classList.add('visible');
                 confirm.classList.add('nampak');
                 dis.classList.add('aktif');
+                tgl.classList.add('showing');
 
             } else {
                 divDitambahkanKelas.classList.remove('boom');
                 btnku.classList.remove('visible');
                 confirm.classList.remove('nampak');
                 dis.classList.remove('aktif');
+                tgl.classList.remove('showing');
             }
         });
     </script>

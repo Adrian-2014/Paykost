@@ -233,14 +233,23 @@ body {
 .container.cuci-sepatu {
     margin-top: .5rem;
     margin-bottom: 1rem;
-    border-radius: .7rem;
+    padding: .5rem;
+
+    background-color: white;
+
+    .heading {
+        align-items: start;
+        margin-bottom: .4rem !important;
+        margin-left: .1rem;
+        text-align: start;
+        font-weight: 500;
+    }
 
     .row {
         display: flex;
         justify-content: space-between;
-
-        --bs-gutter-y: .7rem !important;
         --bs-gutter-x: .7rem !important;
+        --bs-gutter-y: .7rem !important;
 
         .col-6 {
             .items {
@@ -249,6 +258,8 @@ body {
                 border-radius: .5rem;
                 display: flex;
                 flex-direction: column;
+                border: 1px solid rgba(104, 103, 103, 0.678);
+                height: 15.8rem;
 
                 .s-gambar {
                     img {
@@ -261,6 +272,7 @@ body {
                     display: flex;
                     flex-direction: column;
                     padding: .5rem .5rem;
+                    padding-bottom: 0.2rem !important;
                     text-align: start;
 
                     .nama-layanan {
@@ -280,7 +292,6 @@ body {
                     gap: .5rem;
                     padding: 0 .5rem;
                     align-items: center;
-                    padding-bottom: .5rem !important;
 
                     .rp {
                         font-size: 1rem;

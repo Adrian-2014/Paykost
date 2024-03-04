@@ -105,6 +105,9 @@
     </div>
 
     <div class="container cuci-sepatu overflow-hidden text-center">
+        <div class="heading">
+            Jasa Cuci Sepatu
+        </div>
         <div class="row">
             <div class="col-6">
                 <div class="items">
