@@ -58,10 +58,10 @@
                     <div class="splide bulan" role="group" aria-label="Splide Basic HTML Example">
                         <div class="splide__arrows splide__arrows--ltr">
                             <button class="splide__arrow splide__arrow--prev" type="button" aria-label="Go to last slide" aria-controls="splide01-track">
-                                <i class='bx bxs-chevron-left'></i>
+                                <i class="bi bi-chevron-left"></i>
                             </button>
                             <button class="splide__arrow splide__arrow--next" type="button" aria-label="Next slide" aria-controls="splide01-track">
-                                <i class='bx bxs-chevron-right'></i>
+                                <i class="bi bi-chevron-right"></i>
                             </button>
                         </div>
                         <div class="splide__track">
@@ -130,23 +130,21 @@
                 <div class="jam-item">
                     <input type="hidden" value="13:00:00">
                     <div class="jam-value">
-
                         13:00
                     </div>
                 </div>
                 <div class="jam-item">
                     <input type="hidden" value="20:00:00">
                     <div class="jam-value">
-
                         20:00
                     </div>
                 </div>
 
             </div>
 
-            <div id="ok-button">
+            <button type="submit" id="ok-button" class="death" disabled>
                 Konfirmasi
-            </div>
+            </button>
 
             <div class="for-result">
                 <div class="result-item">
@@ -783,10 +781,14 @@
 
                         <div class="subtotal" id="subtotalContainer">
                         </div>
+                        <div class="tots mt-3">
+
+                        </div>
                         <div class="ongkos">
 
                         </div>
-                        <div class="tots mt-2">
+
+                        <div class="total-real mt-2 removeBorder">
 
                         </div>
                     </div>
@@ -798,10 +800,14 @@
         </div>
     </div>
 
-
     {{--          M Y   S C R I P T          --}}
 
     <script>
+        var currentDate = new Date();
+        var currentDay = currentDate.getDate();
+        var currentMonthIndex = currentDate.getMonth();
+        var currentYear = currentDate.getFullYear();
+
         document.addEventListener('DOMContentLoaded', function() {
             var splide = new Splide('.splide', {
                 type: 'slide',
@@ -809,19 +815,12 @@
                 pagination: false,
                 drag: true,
                 autoplay: false,
+                start: currentMonthIndex,
             });
-
             splide.mount();
-
-            var currentDate = new Date();
-            var currentDay = currentDate.getDate();
-            var currentMonthIndex = currentDate.getMonth(); // Menggunakan nol-indeks untuk bulan (Januari = 0)
-            var currentYear = currentDate.getFullYear();
 
             var tanggalItems = document.querySelectorAll('.tanggal-item');
             tanggalItems[currentDay - 1].classList.add('active');
-
-            splide.go(currentMonthIndex);
 
             var jamItems = document.querySelectorAll('.jam-item');
             jamItems.forEach(function(item) {
@@ -845,8 +844,29 @@
 
             var okButton = document.getElementById('ok-button');
 
+            document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.querySelector('#ok-button');
+                var jamActive = document.querySelectorAll('.jam-item');
+                jamActive.forEach(function(jam) {
+                    jam.classList.contains('terselect');
+                });
+                var tanggalActive = document.querySelectorAll('.tanggal-item');
+                tanggalActive.forEach(function(tanggal) {
+                    tanggal.classList.contains('active');
+                });
+
+                if (jamActive && tanggalActive) {
+                    btn.classList.remove('death');
+                    btn.removeAttribute('disabled');
+                } else {
+                    btn.classList.add('death');
+                    btn.setAttribute('disabled');
+                }
+            });
+
             okButton.addEventListener('click', function() {
                 var tanggalAktif = document.querySelector('.tanggal-item.active').textContent;
+
                 var bulanAktifIndex = splide.index;
                 var bulanAktif = document.querySelectorAll('.splide__slide')[bulanAktifIndex].textContent;
                 var jamAktif = document.querySelector('.jam-item.terselect input').value;
@@ -858,6 +878,7 @@
                 takeOffDiv.textContent = takeOffFormatted;
 
                 var nextDayDiv = document.querySelector('#tgl-selesai');
+                nextDayDiv.classList.add('kuning');
                 var nextDayDate = new Date(takeOffDate);
                 nextDayDate.setDate(nextDayDate.getDate() + 1);
                 var nextDayFormatted = nextDayDate.getDate() + '/' + (nextDayDate.getMonth() + 1) + '/' + nextDayDate.getFullYear() + ', ' + jamAktif;
@@ -892,6 +913,7 @@
             var subtotalHTML = '';
             var konten = document.querySelector('.tots');
             var ongkost = document.querySelector('.ongkos');
+            var totalReal = document.querySelector('.total-real');
             var totalHarga = 0;
             var ongkos = 0;
             var totalQty = 0;
@@ -941,19 +963,28 @@
             if (subtotalHTML !== '') {
 
                 totalAsli = totalHarga + ongkos;
-                var hTotal = totalAsli.toLocaleString().replace(',', '.');
+                t = totalAsli.toLocaleString().replaceAll(',', '.');
+                var hTotal = totalHarga.toLocaleString().replace(',', '.');
+
+                konten.innerHTML = `
+                    <div class="rp">Total</div>
+                    <div class="totalHarga fw-medium">Rp. ${hTotal}</div>
+                `;
                 ongkost.innerHTML = `<div class="ol">Biaya Laundry</div>
                     <div class="ongkos-laundry fw-medium">Rp. ${ongkotz}</div>`;
-                konten.innerHTML = `
-                    <div class="rp">Total Biaya</div>
-                    <div class="totalHarga fw-medium">Rp. ${hTotal}</div>
-                `; // Convert totalHarga to currency format
+
+                totalReal.innerHTML = `<div class="total">Total Biaya</div>
+                <div class="value fw-medium">Rp. ${t}</div>`;
+                totalReal.classList.remove('removeBorder');
                 subtotalDiv.innerHTML = subtotalHTML;
+
 
             } else {
                 konten.innerHTML = '';
                 subtotalDiv.innerHTML = '';
                 ongkost.innerHTML = '';
+                totalReal.innerHTML = '';
+                totalReal.classList.add('removeBorder');
             }
         }
 
@@ -997,13 +1028,15 @@
         document.getElementById('add').addEventListener('click', function() {
 
             var total = document.querySelector('.tots').innerHTML;
+            var bl = document.querySelector('.ongkos').innerHTML;
+            var totalBiaya = document.querySelector('.total-real').innerHTML;
             var subtotalHTML = document.querySelector('.subtotal').innerHTML;
             var head = document.querySelector('.modal-header').innerHTML;
             var inf = document.querySelector('.info-umum').innerHTML;
             var dis = document.querySelector('.user-payment');
 
             var tab = document.createElement('div');
-            tab.innerHTML = '<div class="tabel"><div class="item">Item</div><div class="harga">Harga</div><div class="jumlah">Jml</div><div class="sub">total</div></div>';
+            tab.innerHTML = '<div class="tabel"><div class="item">Item</div><div class="harga">Harga</div><div class="jumlah">Jml</div><div class="sub">Total</div></div>';
             tabe = tab.innerHTML;
             tabel = document.querySelector('.tabel');
             tabel.innerHTML = tab.innerHTML;
@@ -1027,8 +1060,19 @@
             totalDiv.innerHTML = `<div class="totals">
                 ${total}
             </div>`;
+            var blDiv = document.createElement('div')
+            blDiv.classList.add('bl');
+            blDiv.innerHTML = `<div class="bls">
+                ${bl}
+            </div>`;
+            var tb = document.createElement('div')
+            tb.classList.add('tr');
+            tb.innerHTML = `<div class="trs">
+                ${totalBiaya}
+            </div>`;
 
-            var totals = totalDiv.innerHTML;
+            var totals = totalDiv.innerHTML + blDiv.innerHTML + tb.innerHTML;
+
 
             var infoUser = document.getElementById('user-info');
             var itemUser = document.getElementById('user-item');
@@ -1038,7 +1082,6 @@
 
         });
 
-        // Mengambil semua elemen dengan class "payItems"
         const payItems = document.querySelectorAll('.payItems');
 
         payItems.forEach(item => {

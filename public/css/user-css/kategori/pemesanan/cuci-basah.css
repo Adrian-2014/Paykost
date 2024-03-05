@@ -144,7 +144,7 @@ body {
     gap: .9rem;
     overflow-x: auto;
     width: 100% !important;
-    /* height: 2rem; */
+    height: 2rem;
 
 
     .item-subtotal {
@@ -213,7 +213,7 @@ body {
 
     .ol {
         color: gray;
-        font-size: 0.9em;
+        font-size: 0.9rem;
     }
 
     .ongkos-laundry {
@@ -231,10 +231,28 @@ body {
 
     .rp {
         color: gray;
+        font-size: .9rem;
     }
 
     .totals {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+.total-real {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(128, 128, 128, 0.447);
+
+    .total {
+        color: gray;
+        font-size: .9rem;
+    }
+
+    .value {
+        font-size: 1rem;
         color: rgba(0, 0, 0, 0.8);
     }
 }
@@ -415,7 +433,55 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: .5rem .8rem;
+        padding: .2rem .5rem;
+
+        .rp {
+            font-size: .9rem;
+            color: rgba(128, 128, 128, 0.8);
+        }
+
+        .totalHarga {
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.75);
+        }
+    }
+
+    .bls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: -.7rem;
+        padding: 0 .5rem;
+
+        .ol {
+            font-size: .9rem;
+            color: rgba(128, 128, 128, 0.8);
+        }
+
+        .ongkos-laundry {
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.75);
+        }
+    }
+
+    .trs {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 .5rem !important;
+        padding: .5rem 0 !important;
+        border-top: 1px rgba(128, 128, 128, 0.5) solid;
+
+        .total {
+            font-size: .9rem;
+            color: rgba(128, 128, 128, 0.9);
+        }
+
+        .value {
+            font-size: 1rem;
+            font-weight: bold !important;
+            color: rgba(0, 0, 0, 0.75);
+        }
     }
 
 
@@ -972,9 +1038,10 @@ body {
     color: white !important;
     opacity: 1 !important;
 
-    .bx {
+    .bi {
         color: white !important;
-        font-size: 2rem;
+        font-size: 1rem;
+        stroke-width: 1rem;
     }
 }
 
@@ -994,7 +1061,19 @@ body {
     display: block !important;
 }
 
-/*
+.death {
+    background: gray !important;
+    color: white;
+}
+
 .shut {
     height: unset !important;
-} */
+}
+
+.kuning {
+    color: rgb(255, 191, 0) !important;
+}
+
+.removeBorder {
+    border-top: unset !important;
+}
