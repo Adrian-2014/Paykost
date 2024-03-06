@@ -18,32 +18,59 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// LOGIN
+
 Route::post('/', [loginController::class, 'login']);
-
-Route::post('/admin/create', [adminControll::class, 'create']);
-
 Route::get('/logout', [loginController::class, 'logout']);
-
 Route::get('/', [loginController::class, 'index']);
+
+// LOGIN
+
+
+
+// USER
+
+// Menu
 Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
 Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
 Route::get('/user/profil', [userPageController::class, 'profil']);
 Route::get('/user/index', [loginController::class, 'user']);
+// Menu
 
+// kategori
 Route::get('/pindah', [userPageController::class, 'pindah']);
 Route::get('/laporanKerusakan', [userPageController::class, 'laporanKerusakan']);
 Route::get('/kebersihan', [userPageController::class, 'kebersihan']);
-Route::get('/cuci', [userPageController::class, 'cuciBaju']);
 Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
+Route::get('/cuci', [userPageController::class, 'cuciBaju']);
+// kategori
+
+// jasa cuci baju
+Route::get('/basah', [userPageController::class, 'cuciBasah']);
+Route::get('/kering', [userPageController::class, 'cuciKering']);
 
 Route::get('/konfirmasiPay', [userPageController::class, 'konfirmasi']);
+// jasa cuci baju
 
-Route::get('/admin/index', [loginController::class, 'admin']);
-Route::get('/admin/create', [adminControll::class, 'index']);
+// USER
 
 
-Route::get('/pengajuan', [loginController::class, 'pengajuan']);
+// A D M I N
+
+Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index');
+
+// createUser
+Route::get('/admin/create', [adminControll::class, 'create']);
+Route::post('/admin/create', [adminControll::class, 'create']);
+// createUser
+Route::get('/admin/cuciProduct', [adminControll::class, 'cuciProduct']);
+Route::post('cuciProduct', [adminControll::class, 'storeCuciItem'])->name('cuciProduct.storeCuciItem');
+
+// A D M I N
+
+
 // Route::post('/kerusakan', [ userPageController::class, 'store']); // kirim laporan kerusakan
 
-Route::get('/pdf', [userPageController::class, 'pdf']);  // download pdf
-Route::get('/basah', [userPageController::class, 'cuciBasah']);
+// EXTRA
+Route::get('/pengajuan', [loginController::class, 'pengajuan']);
+Route::get('/pdf', [userPageController::class, 'pdf']);

@@ -42,6 +42,9 @@ class userPageController extends Controller
     public function cuciBasah() {
         return view('user.kategori.pemesanan.cuci-basah');
     }
+    public function cuciKering() {
+        return view('user.kategori.pemesanan.cuci-kering');
+    }
 
     public function konfirmasi() {
         return view('user.kategori.pemesanan.kofirmasi-pesan');

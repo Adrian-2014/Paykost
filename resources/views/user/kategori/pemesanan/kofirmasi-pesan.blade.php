@@ -6,9 +6,9 @@
 
     <div class="navbar sticky-top">
         <div class="container-fluid">
-            <a href="/basah " class="back">
+            {{-- <a href="/basah " class="back">
                 <i class="left" data-feather="chevron-left"></i>
-            </a>
+            </a> --}}
             <div class="info fw-medium">
                 Pembayaran
             </div>
@@ -17,6 +17,10 @@
 
     <form action="" method="" class="form">
         <div class="inform-umum">
+            <div class="umum-item">
+                <div class="kiri">No. Transaksi</div>
+                <div class="kanan">#0D97GEK7208F</div>
+            </div>
             <div class="umum-item">
                 <div class="kiri">Nama User</div>
                 <div class="kanan">{{ auth()->user()->name }}</div>

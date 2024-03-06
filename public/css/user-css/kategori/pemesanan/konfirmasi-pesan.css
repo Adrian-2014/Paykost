@@ -30,7 +30,6 @@ body {
     .container-fluid {
         display: flex;
         justify-content: start !important;
-        padding-left: 1.5rem !important;
 
         padding: 0;
 

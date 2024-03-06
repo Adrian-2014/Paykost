@@ -101,7 +101,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/kering">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/tshirt.png') }}">
                                 </div>

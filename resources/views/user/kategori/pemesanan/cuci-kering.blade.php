@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'cuci basah')
+@section('title', 'cuci kering')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/cuci-basah.css') }}">
 
 @section('container')
@@ -11,7 +11,7 @@
                     <i class="left" data-feather="chevron-left"></i>
                 </a>
                 <div class="info fw-medium">
-                    Layanan Cuci Basah
+                    Layanan Cuci Kering
                 </div>
             </div>
             <div class="ku">
@@ -270,7 +270,7 @@
                         <img src="{{ asset('img/two.png') }}">
                     </div>
                     <div class="id">
-                        c
+                        #0D97GEK7208F
                     </div>
                 </div>
                 <div class="modal-body">
@@ -317,7 +317,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1.000
+                                                        Rp. 1.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -346,7 +346,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1.000
+                                                        Rp. 1.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -375,7 +375,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1.500
+                                                        Rp. 2.000
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -433,7 +433,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 500
+                                                        Rp. 1.000
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -462,7 +462,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 2.000
+                                                        Rp. 2.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -520,7 +520,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 2.000
+                                                        Rp. 2.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -549,7 +549,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1000
+                                                        Rp. 1.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -578,7 +578,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1000
+                                                        Rp. 1.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -607,7 +607,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1000
+                                                        Rp. 2.000
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -636,7 +636,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 500
+                                                        Rp. 1.000
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -694,7 +694,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 1000
+                                                        Rp. 2.000
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -723,7 +723,7 @@
                                                 </div>
                                                 <div class="cost">
                                                     <div class="harga">
-                                                        Rp. 500
+                                                        Rp. 1.500
                                                     </div>
                                                     <div class="per">
                                                         /ptg
@@ -864,7 +864,7 @@
                 var nextDayDiv = document.querySelector('#tgl-selesai');
                 nextDayDiv.classList.add('kuning');
                 var nextDayDate = new Date(takeOffDate);
-                nextDayDate.setDate(nextDayDate.getDate() + 1);
+                nextDayDate.setDate(nextDayDate.getDate() + 3);
                 var nextDayFormatted = nextDayDate.getDate() + '/' + (nextDayDate.getMonth() + 1) + '/' + nextDayDate.getFullYear() + ', ' + jamAktif;
                 nextDayDiv.textContent = nextDayFormatted;
             });
@@ -958,7 +958,7 @@
                 ongkost.innerHTML = `<div class="ol">Biaya Laundry</div>
                     <div class="ongkos-laundry fw-medium">Rp. ${ongkotz}</div>`;
 
-                totalReal.innerHTML = `<div class="total fw-bold">Total Biaya</div>
+                totalReal.innerHTML = `<div class="total">Total Biaya</div>
                 <div class="value fw-medium">Rp. ${t}</div>`;
                 totalReal.classList.remove('removeBorder');
                 subtotalDiv.innerHTML = subtotalHTML;
@@ -1030,7 +1030,7 @@
             var idT = document.querySelector('.id').innerHTML;
             var transId = document.createElement('div');
             transId.innerHTML = `
-            <div class="info-item">
+            <div class="info-item mb-2">
             <div class="kiri">
                 No Transaksi
             </div>
@@ -1076,18 +1076,11 @@
 
                 radioInput.checked = !radioInput.checked;
                 const anyChecked = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
-            });
-        });
 
-        // const jamItem = document.querySelectorAll('.jam-item');
-        // jamItem.forEach(item => {
-        //     // Menambahkan event listener untuk setiap elemen payItems
-        //     item.addEventListener('click', function() {
-        //        item.classList.toggle('terselect')
-        //         radioInput.checked = !radioInput.checked;
-        //         const anyChecked = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
-        //     });
-        // });
+
+            });
+
+        });
 
         document.addEventListener('click', function() {
             var button = document.getElementById('nextPage');
