@@ -150,7 +150,7 @@
 
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/cuciSetrika">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/setrika.png') }}" class="cuciSetrika">
                                 </div>

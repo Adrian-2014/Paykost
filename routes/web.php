@@ -48,6 +48,7 @@ Route::get('/cuci', [userPageController::class, 'cuciBaju']);
 // jasa cuci baju
 Route::get('/basah', [userPageController::class, 'cuciBasah']);
 Route::get('/kering', [userPageController::class, 'cuciKering']);
+Route::get('/cuciSetrika', [userPageController::class, 'cuciSetrika']);
 
 Route::get('/konfirmasiPay', [userPageController::class, 'konfirmasi']);
 // jasa cuci baju
@@ -61,10 +62,15 @@ Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index')
 
 // createUser
 Route::get('/admin/create', [adminControll::class, 'create']);
-Route::post('/admin/create', [adminControll::class, 'create']);
+// Route::post('storeCreate', [adminControll::class, 'createStore']);
 // createUser
+// create cuci item
 Route::get('/admin/cuciProduct', [adminControll::class, 'cuciProduct']);
 Route::post('cuciProduct', [adminControll::class, 'storeCuciItem'])->name('cuciProduct.storeCuciItem');
+Route::get('/admin/addCuciKering', [adminControll::class, 'addCuciKering']);
+Route::post('cuciKering', [adminControll::class, 'storeCuciKering'])->name('storeCuciKering');
+// create cuci item
+
 
 // A D M I N
 

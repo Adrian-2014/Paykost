@@ -5,7 +5,7 @@
 
 @section('container')
 
-    <form action="{{ route('cuciProduct.storeCuciItem') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('storeCuciKering') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="text" name="nama_barang" placeholder="Nama Barang">
         <input type="text" name="harga_barang" placeholder="Harga Barang" id="numberInput" oninput="formatNumber()">

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\cuciBasah;
 use App\Models\CuciItem;
-use Mpdf\Mpdf;
+use App\Models\cuciKering;
+use App\Models\CuciProduct;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Mpdf\Mpdf;
 
 class userPageController extends Controller
 {
@@ -40,10 +43,15 @@ class userPageController extends Controller
     // For Layanan Laundry
 
     public function cuciBasah() {
-        return view('user.kategori.pemesanan.cuci-basah');
+        $cuciBasahItems = cuciBasah::all();
+        return view('user.kategori.pemesanan.cuci-basah', compact('cuciBasahItems'));
     }
     public function cuciKering() {
-        return view('user.kategori.pemesanan.cuci-kering');
+        $cuciKeringItems = cuciKering::all();
+        return view('user.kategori.pemesanan.cuci-kering', compact('cuciKeringItems'));
+    }
+    public function cuciSetrika() {
+        return view('user.kategori.pemesanan.cuci-setrika');
     }
 
     public function konfirmasi() {

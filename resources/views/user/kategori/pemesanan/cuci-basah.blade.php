@@ -270,7 +270,7 @@
                         <img src="{{ asset('img/two.png') }}">
                     </div>
                     <div class="id">
-                        c
+                        #0D97GEK7208F
                     </div>
                 </div>
                 <div class="modal-body">
@@ -306,470 +306,37 @@
                                     <i class="bi bi-caret-down-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu" x-bind:class="{ 'show': open }">
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/shirt.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Baju
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1.000
+                                    @foreach ($cuciBasahItems as $item)
+                                        <li class="items">
+                                            <div class="item">
+                                                <div class="values">
+                                                    <div class="gambar">
+                                                        <img src="{{ asset('uploads/' . $item->gambar_barang) }}">
                                                     </div>
-                                                    <div class="per">
-                                                        /ptg
+                                                    <div class="name">
+                                                        {{ $item->nama_barang }}
+                                                    </div>
+                                                    <div class="cost">
+                                                        <div class="harga">
+                                                            Rp. {{ $item->harga_barang }}
+                                                        </div>
+                                                        <div class="per">
+                                                            /ptg
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/skirt.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Rok
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1.000
+                                                <div class="valuasi">
+                                                    <div class="kurang" onclick="kurang(this)">
+                                                        -
                                                     </div>
-                                                    <div class="per">
-                                                        /ptg
+                                                    <input type="number" readonly value="0" class="nilai">
+                                                    <div class="tambah" onclick="tambah(this)">
+                                                        +
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/kemeja.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Kemeja
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1.500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/pants.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Celana Panjang
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1.500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/tie.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Dasi
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/hoodie.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Hoodie
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 2.000
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/underwear.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Celana Dalam
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/jacket.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Jaket
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 2.000
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/pareo.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Sarung
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1000
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/flapper-dress.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Daster
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1000
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/towel.png   ') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Handuk
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1000
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/kaos-dalam.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Kaos Dalam
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/picnic.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Kain Lap
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/sajadah.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Sajadah
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 1000
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/shorts.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Celana Pendek
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="items">
-                                        <div class="item">
-                                            <div class="values">
-                                                <div class="gambar">
-                                                    <img src="{{ asset('gambar-kategori/bra.png') }}">
-                                                </div>
-                                                <div class="name">
-                                                    Bra
-                                                </div>
-                                                <div class="cost">
-                                                    <div class="harga">
-                                                        Rp. 500
-                                                    </div>
-                                                    <div class="per">
-                                                        /ptg
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="valuasi">
-                                                <div class="kurang" onclick="kurang(this)">
-                                                    -
-                                                </div>
-                                                <input type="number" readonly value="0" class="nilai">
-                                                <div class="tambah" onclick="tambah(this)">
-                                                    +
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    @endforeach
                                     <div class="last">
                                         <button class="btn dropdown-toggle totop" type="button" x-on:click="open = !open" id="b">
                                             <div clas="isi">
@@ -952,14 +519,14 @@
                 var hTotal = totalHarga.toLocaleString().replace(',', '.');
 
                 konten.innerHTML = `
-                    <div class="rp">Total</div>
-                    <div class="totalHarga fw-medium">Rp. ${hTotal}</div>
-                `;
+                <div class="rp">Total</div>
+                <div class="totalHarga fw-medium">Rp. ${hTotal}</div>
+            `;
                 ongkost.innerHTML = `<div class="ol">Biaya Laundry</div>
-                    <div class="ongkos-laundry fw-medium">Rp. ${ongkotz}</div>`;
+                <div class="ongkos-laundry fw-medium">Rp. ${ongkotz}</div>`;
 
-                totalReal.innerHTML = `<div class="total fw-bold">Total Biaya</div>
-                <div class="value fw-medium">Rp. ${t}</div>`;
+                totalReal.innerHTML = `<div class="total">Total Biaya</div>
+            <div class="value fw-bold">Rp. ${t}</div>`;
                 totalReal.classList.remove('removeBorder');
                 subtotalDiv.innerHTML = subtotalHTML;
 
@@ -1030,31 +597,31 @@
             var idT = document.querySelector('.id').innerHTML;
             var transId = document.createElement('div');
             transId.innerHTML = `
-            <div class="info-item">
-            <div class="kiri">
-                No Transaksi
-            </div>
-                                <div class="kanan fw-medium">
-                                    ${idT}
-                                </div>
-                                </div> `;
+        <div class="info-item">
+        <div class="kiri">
+            No Transaksi
+        </div>
+                            <div class="kanan fw-medium">
+                                ${idT}
+                            </div>
+                            </div> `;
             transReal = transId.innerHTML;
 
             var totalDiv = document.createElement('div')
             totalDiv.classList.add('totalHarga');
             totalDiv.innerHTML = `<div class="totals">
-                ${total}
-            </div>`;
+            ${total}
+        </div>`;
             var blDiv = document.createElement('div')
             blDiv.classList.add('bl');
             blDiv.innerHTML = `<div class="bls">
-                ${bl}
-            </div>`;
+            ${bl}
+        </div>`;
             var tb = document.createElement('div')
             tb.classList.add('tr');
             tb.innerHTML = `<div class="trs">
-                ${totalBiaya}
-            </div>`;
+            ${totalBiaya}
+        </div>`;
 
             var totals = totalDiv.innerHTML + blDiv.innerHTML + tb.innerHTML;
 
@@ -1149,6 +716,27 @@
                 confirm.classList.remove('nampak');
                 dis.classList.remove('aktif');
                 tgl.classList.remove('showing');
+            }
+        });
+    </script>
+
+    <script>
+        
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
             }
         });
     </script>
