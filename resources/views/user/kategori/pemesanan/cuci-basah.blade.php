@@ -1,6 +1,10 @@
 @extends('layout.main')
 @section('title', 'cuci basah')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/cuci-basah.css') }}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://eonasdan.github.io/bootstrap-datetimepicker/css/prettify-1.0.css">
+<link rel="stylesheet" href="https://eonasdan.github.io/bootstrap-datetimepicker/css/base.css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css">
 
 @section('container')
 
@@ -53,72 +57,8 @@
 
         <div class="container user-tanggal" id="user-tanggal">
             <div class="heading">Waktu Pengambilan</div>
-            <div class="row">
-                <div class="col-12 for-slide">
-                    <div class="splide bulan" role="group" aria-label="Splide Basic HTML Example">
-                        <div class="splide__arrows splide__arrows--ltr">
-                            <button class="splide__arrow splide__arrow--prev" type="button" aria-label="Go to last slide" aria-controls="splide01-track">
-                                <i class="bi bi-chevron-left"></i>
-                            </button>
-                            <button class="splide__arrow splide__arrow--next" type="button" aria-label="Next slide" aria-controls="splide01-track">
-                                <i class="bi bi-chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="splide__track">
-                            <ul class="splide__list">
-                                <li class="splide__slide">Januari</li>
-                                <li class="splide__slide">Februari</li>
-                                <li class="splide__slide">Maret</li>
-                                <li class="splide__slide">April</li>
-                                <li class="splide__slide">Mei</li>
-                                <li class="splide__slide">Juni</li>
-                                <li class="splide__slide">Juli</li>
-                                <li class="splide__slide">Agustus</li>
-                                <li class="splide__slide">September</li>
-                                <li class="splide__slide">Oktober</li>
-                                <li class="splide__slide">November</li>
-                                <li class="splide__slide">Desember</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-12 for-tangal">
-                    <div class="tanggal">
-                        <div class="tanggal-item"> 1 </div>
-                        <div class="tanggal-item"> 2 </div>
-                        <div class="tanggal-item"> 3 </div>
-                        <div class="tanggal-item"> 4 </div>
-                        <div class="tanggal-item"> 5 </div>
-                        <div class="tanggal-item"> 6 </div>
-                        <div class="tanggal-item"> 7 </div>
-                        <div class="tanggal-item"> 8 </div>
-                        <div class="tanggal-item"> 9 </div>
-                        <div class="tanggal-item"> 10 </div>
-                        <div class="tanggal-item"> 11 </div>
-                        <div class="tanggal-item"> 12 </div>
-                        <div class="tanggal-item"> 13 </div>
-                        <div class="tanggal-item"> 14 </div>
-                        <div class="tanggal-item"> 15 </div>
-                        <div class="tanggal-item"> 16 </div>
-                        <div class="tanggal-item"> 17 </div>
-                        <div class="tanggal-item"> 18 </div>
-                        <div class="tanggal-item"> 19 </div>
-                        <div class="tanggal-item"> 20 </div>
-                        <div class="tanggal-item"> 21 </div>
-                        <div class="tanggal-item"> 22 </div>
-                        <div class="tanggal-item"> 23 </div>
-                        <div class="tanggal-item"> 24 </div>
-                        <div class="tanggal-item"> 25 </div>
-                        <div class="tanggal-item"> 26 </div>
-                        <div class="tanggal-item"> 27 </div>
-                        <div class="tanggal-item"> 28 </div>
-                        <div class="tanggal-item"> 29 </div>
-                        <div class="tanggal-item"> 30 </div>
-                        <div class="tanggal-item"> 31 </div>
-                    </div>
-                </div>
-            </div>
+            <div id="datetimepicker"></div>
             <div class="for-jam">
 
                 <div class="jam-item">
@@ -371,7 +311,12 @@
 
     {{--          M Y   S C R I P T          --}}
 
-    <script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+
+    {{-- <script>
         var currentDate = new Date();
         var currentDay = currentDate.getDate();
         var currentMonthIndex = currentDate.getMonth();
@@ -392,17 +337,35 @@
             tanggalItems[currentDay - 1].classList.add('active');
 
             var jamItems = document.querySelectorAll('.jam-item');
-            jamItems.forEach(function(item) {
-                item.addEventListener('click', function() {
+
+            function selectedFunction() {
+                var button = document.getElementById('ok-button');
+                button.classList.remove('death');
+                button.removeAttribute('disabled');
+            }
+            // Fungsi kedua yang akan dijalankan ketika tidak ada yang terpilih
+            function unselectedFunction() {
+                var button = document.getElementById('ok-button');
+                button.classList.add('death');
+                button.setAttribute('disabled', 'disabled');
+            }
+            jamItems.forEach(function(divItem) {
+                divItem.addEventListener('click', function() {
+                    var isSelected = this.classList.contains('terselect');
+
                     jamItems.forEach(function(item) {
                         item.classList.remove('terselect');
-                        okButton.classList.remove('death');
-                        okButton.removeAttribute('disabled')
                     });
-                    item.classList.add('terselect');
+
+                    // Jika div sudah memiliki class "selected", hapus class tersebut; jika tidak, tambahkan class tersebut
+                    if (!isSelected) {
+                        this.classList.add('terselect');
+                        selectedFunction();
+                    } else {
+                        unselectedFunction();
+                    }
                 });
             });
-
             var tanggalItems = document.querySelectorAll('.tanggal-item');
             tanggalItems.forEach(function(item) {
                 item.addEventListener('click', function() {
@@ -410,12 +373,14 @@
                         item.classList.remove('active');
                     });
                     item.classList.add('active');
+                    selectedFunction();
                 });
             });
 
             var okButton = document.getElementById('ok-button');
 
             okButton.addEventListener('click', function() {
+                unselectedFunction(); // Jalankan fungsi kedua
                 var tanggalAktif = document.querySelector('.tanggal-item.active').textContent;
 
                 var bulanAktifIndex = splide.index;
@@ -436,8 +401,13 @@
                 nextDayDiv.textContent = nextDayFormatted;
             });
 
+
+            document.addEventListener('change', function() {
+
+            });
+
         });
-    </script>
+    </script> --}}
 
     <script>
         function tambah(button) {
@@ -720,8 +690,20 @@
         });
     </script>
 
-    <script>
-        
+    <script id="rendered-js">
+        $(function() {
+            $('#datetimepicker').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                locale: 'id',
+                format: 'DD.MM.YYYY'
+            });
+
+        });
+    </script>
+
+    {{-- <script>
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -739,6 +721,6 @@
                 });
             }
         });
-    </script>
+    </script> --}}
 
 @endsection
