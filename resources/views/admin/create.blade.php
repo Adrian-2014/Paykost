@@ -149,10 +149,11 @@
                     <div class="cucibaju">
                         <a href="/admin/cuciProduct">Tambah Item Cuci Basah</a>
                     </div>
+                    <div class="cucibaju">
+                        <a href="/admin/addCuciKering">Tambah Item Cuci Kering </a>
+                    </div>
                 </div>
-
             </div>
-
 
         </div>
 

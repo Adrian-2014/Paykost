@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title', 'cuci basah')
-<link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/cuci-basah.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/cuci-umum.css') }}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://eonasdan.github.io/bootstrap-datetimepicker/css/prettify-1.0.css">
 <link rel="stylesheet" href="https://eonasdan.github.io/bootstrap-datetimepicker/css/base.css">
@@ -60,25 +60,30 @@
 
             <div id="datetimepicker"></div>
             <div class="for-jam">
-
-                <div class="jam-item">
+                <button type="button" class="jam-item">
                     <input type="hidden" value="06:30:00">
                     <div class="jam-value">
                         06:30
                     </div>
-                </div>
-                <div class="jam-item">
+                </button>
+                <button type="button" class="jam-item">
                     <input type="hidden" value="13:00:00">
                     <div class="jam-value">
                         13:00
                     </div>
-                </div>
-                <div class="jam-item">
+                </button>
+                <button type="button" class="jam-item">
+                    <input type="hidden" value="17:00:00">
+                    <div class="jam-value">
+                        17:00
+                    </div>
+                </button>
+                <button type="button" class="jam-item">
                     <input type="hidden" value="20:00:00">
                     <div class="jam-value">
                         20:00
                     </div>
-                </div>
+                </button>
 
             </div>
 
@@ -316,98 +321,140 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 
-    {{-- <script>
-        var currentDate = new Date();
-        var currentDay = currentDate.getDate();
-        var currentMonthIndex = currentDate.getMonth();
-        var currentYear = currentDate.getFullYear();
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var splide = new Splide('.splide', {
-                type: 'loop',
-                perPage: 1,
-                pagination: false,
-                drag: true,
-                autoplay: false,
-                start: currentMonthIndex,
+    <script id="rendered-js">
+        $(function() {
+            $('#datetimepicker').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                locale: 'id',
+                format: 'DD/MM/YYYY',
+                minDate: new Date(),
             });
-            splide.mount();
 
-            var tanggalItems = document.querySelectorAll('.tanggal-item');
-            tanggalItems[currentDay - 1].classList.add('active');
+            $('#datetimepicker').on('dp.change', function() {
+                var tglActive = document.querySelector('.day.active');
+                var jamActive = document.querySelector('.jam-item.terselect');
+                var Btarget = document.getElementById('ok-button');
 
+                if (tglActive && jamActive) {
+                    Btarget.classList.remove('death');
+                    Btarget.removeAttribute('disabled');
+                } else {
+                    Btarget.classList.add('death');
+                    Btarget.setAttribute('disabled', true);
+                }
+            });
+
+            var bulan = document.querySelector('.picker-switch');
+            bulan.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            });
+
+            var currentDate = new Date();
+            var currentDay = currentDate.getDate();
+            var currentMonthIndex = currentDate.getMonth();
+            var currentYear = currentDate.getFullYear();
+            var tanggalItems = document.querySelectorAll('.day');
             var jamItems = document.querySelectorAll('.jam-item');
 
-            function selectedFunction() {
-                var button = document.getElementById('ok-button');
-                button.classList.remove('death');
-                button.removeAttribute('disabled');
-            }
-            // Fungsi kedua yang akan dijalankan ketika tidak ada yang terpilih
-            function unselectedFunction() {
-                var button = document.getElementById('ok-button');
-                button.classList.add('death');
-                button.setAttribute('disabled', 'disabled');
-            }
             jamItems.forEach(function(divItem) {
                 divItem.addEventListener('click', function() {
-                    var isSelected = this.classList.contains('terselect');
 
+                    var isSelected = this.classList.contains('terselect');
                     jamItems.forEach(function(item) {
                         item.classList.remove('terselect');
                     });
-
-                    // Jika div sudah memiliki class "selected", hapus class tersebut; jika tidak, tambahkan class tersebut
                     if (!isSelected) {
                         this.classList.add('terselect');
-                        selectedFunction();
-                    } else {
-                        unselectedFunction();
                     }
+                    check();
                 });
             });
-            var tanggalItems = document.querySelectorAll('.tanggal-item');
-            tanggalItems.forEach(function(item) {
-                item.addEventListener('click', function() {
-                    tanggalItems.forEach(function(item) {
-                        item.classList.remove('active');
-                    });
-                    item.classList.add('active');
-                    selectedFunction();
-                });
+
+            function check() {
+                var tglActive = document.querySelector('.day.active');
+                var jamActive = document.querySelector('.jam-item.terselect');
+                var Btarget = document.getElementById('ok-button');
+
+                if (tglActive && jamActive) {
+                    Btarget.classList.remove('death');
+                    Btarget.removeAttribute('disabled');
+                } else {
+                    Btarget.classList.add('death');
+                    Btarget.setAttribute('disabled', true);
+                }
+            }
+
+            function uncheck() {
+                var tglActive = document.querySelector('.day.active');
+                var jamActive = document.querySelector('.jam-item.terselect');
+                var Btarget = document.getElementById('ok-button');
+                Btarget.classList.add('death');
+                Btarget.setAttribute('disabled', true);
+
+            }
+
+            document.addEventListener('change', function() {
+                check();
             });
 
             var okButton = document.getElementById('ok-button');
-
             okButton.addEventListener('click', function() {
-                unselectedFunction(); // Jalankan fungsi kedua
-                var tanggalAktif = document.querySelector('.tanggal-item.active').textContent;
+                uncheck();
 
-                var bulanAktifIndex = splide.index;
-                var bulanAktif = document.querySelectorAll('.splide__slide')[bulanAktifIndex].textContent;
-                var jamAktif = document.querySelector('.jam-item.terselect input').value;
+                var tanggalAktif = document.querySelector('.day.active');
+                var jamAktif = document.querySelector('.jam-item.terselect');
 
-                var takeOffDiv = document.querySelector('#tgl-pick');
-                var takeOffDate = new Date(currentYear, bulanAktifIndex, parseInt(tanggalAktif));
+                tanggalAktif = tanggalAktif.getAttribute('data-day');
+                jamAktif = jamAktif.querySelector('input').value;
 
-                var takeOffFormatted = takeOffDate.getDate() + '/' + (takeOffDate.getMonth() + 1) + '/' + takeOffDate.getFullYear() + ', ' + jamAktif;
-                takeOffDiv.textContent = takeOffFormatted;
+                // Lanjutkan dengan pemrosesan seperti yang Anda lakukan sebelumnya
+                var takeOffFormatted = tanggalAktif + ', ' + jamAktif;
+                var kananDiv = document.querySelector('#tgl-pick');
+                kananDiv.textContent = takeOffFormatted;
 
-                var nextDayDiv = document.querySelector('#tgl-selesai');
-                nextDayDiv.classList.add('kuning');
-                var nextDayDate = new Date(takeOffDate);
-                nextDayDate.setDate(nextDayDate.getDate() + 1);
-                var nextDayFormatted = nextDayDate.getDate() + '/' + (nextDayDate.getMonth() + 1) + '/' + nextDayDate.getFullYear() + ', ' + jamAktif;
-                nextDayDiv.textContent = nextDayFormatted;
+                var nextDayDate = moment(tanggalAktif, 'DD/MM/YYYY').add(1, 'day').format('DD/MM/YYYY');
+                var nextDayFormatted = nextDayDate + ', ' + jamAktif;
+
+                var kiriDiv = document.querySelector('#tgl-selesai');
+                kiriDiv.textContent = nextDayFormatted;
+                kiriDiv.classList.add('kuning');
+
             });
 
+            // Mendapatkan waktu saat ini
+            var currentTime = new Date();
+            // Mendapatkan jam, menit, dan detik dari waktu saat ini
+            var currentHour = currentTime.getHours();
+            var currentMinute = currentTime.getMinutes();
+            var currentSecond = currentTime.getSeconds();
 
-            document.addEventListener('change', function() {
+            // Menghitung waktu saat ini dalam format "HH:MM:SS"
+            var formattedCurrentTime = currentHour + ":" + currentMinute + ":" + currentSecond;
+
+            // Mendapatkan semua elemen jam
+            var jamItems = document.querySelectorAll('.jam-item');
+
+            // Iterasi melalui setiap elemen jam
+            jamItems.forEach(function(jamItem) {
+
+                var jamValue = jamItem.querySelector('input[type="hidden"]').value;
+
+                if (formattedCurrentTime > jamValue) {
+                    jamItem.classList.add('disabled');
+                    jamItem.setAttribute('disabled', true);
+                }
+
+                function jamItemClickHandler(event) {
+                    event.preventDefault();
+                }
 
             });
 
         });
-    </script> --}}
+    </script>
 
     <script>
         function tambah(button) {
@@ -511,7 +558,6 @@
         }
 
         function updateAddButton() {
-            // Ambil semua item dalam dropdown menu
             var items = document.querySelectorAll('.dropdown-menu .nilai');
             // var dropToggle = document.querySelector('.btn.dropdown-toggle');
             var addButton = document.getElementById('add');
@@ -548,7 +594,6 @@
         document.querySelector('.dropdown').addEventListener('click', updateAddButton);
 
         document.getElementById('add').addEventListener('click', function() {
-
             var total = document.querySelector('.tots').innerHTML;
             var bl = document.querySelector('.ongkos').innerHTML;
             var totalBiaya = document.querySelector('.total-real').innerHTML;
@@ -556,6 +601,11 @@
             var head = document.querySelector('.modal-header').innerHTML;
             var inf = document.querySelector('.info-umum').innerHTML;
             var dis = document.querySelector('.user-payment');
+
+            var nexts = document.querySelector('.table-condensed thead tr th.next');
+            var prevs = document.querySelector('.table-condensed thead tr th.prev');
+            nexts.innerHTML = '<i class="bi bi-chevron-right"></i>';
+            prevs.innerHTML = '<i class="bi bi-chevron-left"></i>';
 
             var tab = document.createElement('div');
             tab.innerHTML = '<div class="tabel"><div class="item">Item</div><div class="harga">Harga</div><div class="jumlah">Jml</div><div class="sub">Total</div></div>';
@@ -567,10 +617,10 @@
             var idT = document.querySelector('.id').innerHTML;
             var transId = document.createElement('div');
             transId.innerHTML = `
-        <div class="info-item">
-        <div class="kiri">
-            No Transaksi
-        </div>
+                <div class="info-item">
+                    <div class="kiri">
+                        No Transaksi
+                </div>
                             <div class="kanan fw-medium">
                                 ${idT}
                             </div>
@@ -581,17 +631,17 @@
             totalDiv.classList.add('totalHarga');
             totalDiv.innerHTML = `<div class="totals">
             ${total}
-        </div>`;
+                  </div>`;
             var blDiv = document.createElement('div')
             blDiv.classList.add('bl');
             blDiv.innerHTML = `<div class="bls">
             ${bl}
-        </div>`;
+                    </div>`;
             var tb = document.createElement('div')
             tb.classList.add('tr');
             tb.innerHTML = `<div class="trs">
             ${totalBiaya}
-        </div>`;
+                     </div>`;
 
             var totals = totalDiv.innerHTML + blDiv.innerHTML + tb.innerHTML;
 
@@ -615,16 +665,6 @@
                 const anyChecked = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
             });
         });
-
-        // const jamItem = document.querySelectorAll('.jam-item');
-        // jamItem.forEach(item => {
-        //     // Menambahkan event listener untuk setiap elemen payItems
-        //     item.addEventListener('click', function() {
-        //        item.classList.toggle('terselect')
-        //         radioInput.checked = !radioInput.checked;
-        //         const anyChecked = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
-        //     });
-        // });
 
         document.addEventListener('click', function() {
             var button = document.getElementById('nextPage');
@@ -690,37 +730,5 @@
         });
     </script>
 
-    <script id="rendered-js">
-        $(function() {
-            $('#datetimepicker').datetimepicker({
-                inline: true,
-                sideBySide: true,
-                locale: 'id',
-                format: 'DD.MM.YYYY'
-            });
-
-        });
-    </script>
-
-    {{-- <script>
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-            }
-        });
-    </script> --}}
 
 @endsection

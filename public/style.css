@@ -1,0 +1,124 @@
+*,
+html,
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+
+    font-size: 1.3rem;
+}
+
+.heading {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgb(74, 73, 73);
+
+    .photo {
+        height: fit-content;
+        width: fit-content;
+
+        img {
+            height: 6rem;
+            width: 6rem;
+            border-radius: 50%;
+        }
+    }
+
+    .identitas {
+        display: flex;
+        flex-direction: column;
+        gap: .3rem;
+
+        .titles {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: rgb(255, 38, 0);
+        }
+
+        .extra {
+            font-size: 1.2rem !important;
+            color: rgba(0, 0, 0, 0.8);
+        }
+    }
+}
+
+.isi {
+    display: flex;
+    flex-direction: column;
+
+    .for-first {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+
+        .items {
+            display: flex;
+            gap: 2rem;
+
+            .kiri {
+                width: 6.5rem;
+                color: rgb(44, 43, 43);
+            }
+        }
+    }
+
+
+
+    .isi-true {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        font-size: 1.1rem;
+
+        .content {
+            line-height: 1.5;
+
+            p.fist {
+                margin-left: 2rem;
+            }
+        }
+
+        ol {
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+
+        }
+
+        .penutup {
+            .fist {
+                margin-left: 2rem;
+            }
+        }
+    }
+
+}
+
+.ttd {
+    margin-top: .8rem;
+    display: flex;
+    justify-content: end;
+    padding: 0 1.5rem;
+
+    img {
+        height: 9rem;
+        width: auto;
+    }
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    font-size: 1rem !important;
+    padding-top: 1rem;
+    margin-top: 2rem;
+    border-top: 2px solid rgb(74, 73, 73);
+
+}

@@ -80,3 +80,6 @@ Route::post('cuciKering', [adminControll::class, 'storeCuciKering'])->name('stor
 // EXTRA
 Route::get('/pengajuan', [loginController::class, 'pengajuan']);
 Route::get('/pdf', [userPageController::class, 'pdf']);
+Route::get('proposal', function() {
+    return view('proposal-rafi');
+});

@@ -290,7 +290,6 @@
                     targetLabel.parentElement.appendChild(deleteButton);
                 }
             });
-            // ...
 
         });
 

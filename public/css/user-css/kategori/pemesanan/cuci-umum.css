@@ -530,27 +530,6 @@ body {
             }
         }
 
-        .col-12.for-tangal {
-            .tanggal {
-                display: flex;
-                overflow-x: auto;
-                padding-bottom: .5rem;
-                gap: .15rem;
-                /* overflow: hidden; */
-                color: white;
-
-                .tanggal-item {
-                    height: 1.5rem !important;
-                    width: 1.5rem !important;
-                    padding: .5rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border-radius: 3px;
-                }
-            }
-        }
-
     }
 
     .for-jam {
@@ -561,19 +540,19 @@ body {
 
         .jam-item {
             border: 1.5px solid rgb(0, 136, 255);
-            height: 2.5rem !important;
-            width: 6.3rem !important;
+            height: 2.3rem !important;
+            width: 4.6rem !important;
             display: flex;
             align-items: center;
             justify-content: center;
             color: rgb(0, 102, 255);
             border-radius: 6px;
             font-weight: 500;
+            font-size: .92rem;
 
             .jam-value {
                 text-align: center;
                 width: 3rem;
-
             }
         }
     }
@@ -1049,6 +1028,7 @@ body {
 .active {
     background: white;
     color: rgb(0, 106, 255);
+    font-weight: normal !important;
 }
 
 .terselect {
@@ -1078,3 +1058,182 @@ body {
 .removeBorder {
     border-top: unset !important;
 }
+
+.bol {
+    font-weight: bold;
+}
+
+.disabled {
+    cursor: none !important;
+    color: rgb(177, 176, 176) !important;
+    border-color: rgb(170, 168, 168) !important;
+}
+
+
+/* TANGGAL */
+
+#datetimepicker {
+    background: linear-gradient(to bottom right, rgb(62, 87, 226), rgb(75, 176, 216));
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: .5rem;
+    border-radius: .5rem;
+
+    .bootstrap-datetimepicker-widget {
+
+        .list-unstyled {
+            margin-bottom: unset !important;
+
+            li {
+                .datepicker {
+                    .datepicker-days {
+                        display: flex !important;
+                        flex-direction: column;
+                        align-items: center;
+
+                        .table-condensed {
+                            width: 85vw !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            flex-direction: column !important;
+
+                            thead {
+                                color: white !important;
+
+
+                                tr {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    .picker-switch {
+                                        pointer-events: none;
+                                    }
+
+                                    /* .prev {
+                                        height: fit-content;
+                                        width: fit-content;
+
+                                        span {
+                                            height: 2rem;
+                                            width: 2rem;
+                                        }
+                                    } */
+
+                                    th:hover {
+                                        background-color: unset;
+                                        content: unset;
+                                    }
+
+                                    th.prev.disabled {
+                                        color: rgba(255, 253, 253, 0.642) !important;
+                                    }
+                                }
+                            }
+
+                            tbody {
+                                display: flex !important;
+                                width: 79vw !important;
+                                overflow-x: auto !important;
+                                margin-top: .35rem;
+                                gap: .25rem;
+
+                                tr {
+                                    display: flex !important;
+                                    gap: .2rem !important;
+
+                                    td {
+                                        height: 1.5rem !important;
+                                        width: 1.5rem !important;
+                                        padding: .5rem !important;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        border-radius: .4rem;
+                                        border: unset !important;
+                                        color: white;
+                                        flex: 0 0 auto;
+                                    }
+
+                                    td:hover {
+                                        background: unset !important;
+                                        background-color: unset !important;
+                                    }
+
+                                    td.day.old,
+                                    .day.new {
+                                        display: none !important;
+                                    }
+
+                                    td.active {
+                                        background-color: white !important;
+                                        border-radius: 6.5px;
+                                        color: rgb(0, 132, 255) !important;
+                                        font-weight: normal !important;
+                                        font-size: .95rem !important;
+                                    }
+
+                                    td.today {
+                                        font-weight: bold;
+                                    }
+
+                                    td:before {
+                                        display: none !important;
+                                        content: '' !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.wrapper {
+    background: #f5f5f5;
+    width: 400px;
+    height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.bootstrap-datetimepicker-widget {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+
+/* Ab hier für dich interessant :) */
+
+.bootstrap-datetimepicker-widget table thead tr:first-child th:hover,
+.bootstrap-datetimepicker-widget table td.day:hover,
+.bootstrap-datetimepicker-widget table td.hour:hover,
+.bootstrap-datetimepicker-widget table td.minute:hover,
+.bootstrap-datetimepicker-widget table td.second:hover,
+.bootstrap-datetimepicker-widget table td span:hover {
+    /* Hintergrundfarbe für die angehoverte Auswahl */
+    background: #f5f5f5;
+}
+
+.datepicker-days tbody .day.date-passed {
+    color: #ccc !important;
+    /* Mengubah warna menjadi abu-abu */
+    pointer-events: none;
+    /* Menonaktifkan klik pada tanggal yang sudah lewat */
+}
+
+thead tr:nth-child(2) {
+    display: none !important;
+}
+
+.day.disabled {
+    color: rgba(255, 253, 253, 0.642) !important;
+}
+
+/* TANGGAL */
