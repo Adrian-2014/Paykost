@@ -39,6 +39,13 @@
                 }
             }
 
+            .help {
+                margin-left: 10rem;
+                img {
+                    width: 2rem;
+                    height: 2rem;
+                }
+            }
         }
 
     }

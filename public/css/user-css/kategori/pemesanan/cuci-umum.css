@@ -509,27 +509,6 @@ body {
         padding-bottom: unset !important;
         border-radius: .5rem;
 
-
-        .col-12.for-slide {
-            margin-bottom: .5rem;
-
-            .splide.bulan {
-                width: 100%;
-
-                .splide__track {
-                    .splide__list {
-                        .splide__slide {
-                            width: 100%;
-                            text-align: center;
-                            font-size: 1.2rem;
-                            font-weight: 500;
-                            color: white;
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
     .for-jam {
@@ -549,6 +528,7 @@ body {
             border-radius: 6px;
             font-weight: 500;
             font-size: .92rem;
+            background: white;
 
             .jam-value {
                 text-align: center;
@@ -1032,7 +1012,7 @@ body {
 }
 
 .terselect {
-    background: linear-gradient(rgb(0, 68, 255), rgb(60, 175, 221));
+    background: linear-gradient(rgb(0, 68, 255), rgb(60, 175, 221)) !important;
     color: white !important;
     border: none !important;
     padding-bottom: 0rem;
@@ -1112,16 +1092,6 @@ body {
                                         pointer-events: none;
                                     }
 
-                                    /* .prev {
-                                        height: fit-content;
-                                        width: fit-content;
-
-                                        span {
-                                            height: 2rem;
-                                            width: 2rem;
-                                        }
-                                    } */
-
                                     th:hover {
                                         background-color: unset;
                                         content: unset;
@@ -1137,6 +1107,7 @@ body {
                                 display: flex !important;
                                 width: 79vw !important;
                                 overflow-x: auto !important;
+
                                 margin-top: .35rem;
                                 gap: .25rem;
 
@@ -1154,7 +1125,6 @@ body {
                                         border-radius: .4rem;
                                         border: unset !important;
                                         color: white;
-                                        flex: 0 0 auto;
                                     }
 
                                     td:hover {
@@ -1172,11 +1142,12 @@ body {
                                         border-radius: 6.5px;
                                         color: rgb(0, 132, 255) !important;
                                         font-weight: normal !important;
-                                        font-size: .95rem !important;
+                                        font-size: 1rem !important;
                                     }
 
                                     td.today {
                                         font-weight: bold;
+                                        font-size: 1.25rem;
                                     }
 
                                     td:before {

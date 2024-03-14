@@ -84,7 +84,6 @@
                         20:00
                     </div>
                 </button>
-
             </div>
 
             <div class="d-flex align-items-center justify-center">
@@ -93,7 +92,7 @@
                 </button>
             </div>
 
-            <div class="for-result">
+            <div class="for-result d-none">
                 <div class="result-item">
                     <div class="kiri">Pengambilan Laundry</div>
                     <div class="kanan" id="tgl-pick">belum dipilih !</div>
@@ -251,7 +250,7 @@
                                     <i class="bi bi-caret-down-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu" x-bind:class="{ 'show': open }">
-                                    @foreach ($cuciBasahItems as $item)
+                                    @foreach ($cuciKeringItems as $item)
                                         <li class="items">
                                             <div class="item">
                                                 <div class="values">
@@ -320,7 +319,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
-
 
     <script id="rendered-js">
         $(function() {
@@ -404,13 +402,13 @@
             okButton.addEventListener('click', function() {
                 uncheck();
 
+                var forResult = document.querySelector('.for-result');
                 var tanggalAktif = document.querySelector('.day.active');
                 var jamAktif = document.querySelector('.jam-item.terselect');
 
                 tanggalAktif = tanggalAktif.getAttribute('data-day');
                 jamAktif = jamAktif.querySelector('input').value;
 
-                // Lanjutkan dengan pemrosesan seperti yang Anda lakukan sebelumnya
                 var takeOffFormatted = tanggalAktif + ', ' + jamAktif;
                 var kananDiv = document.querySelector('#tgl-pick');
                 kananDiv.textContent = takeOffFormatted;
@@ -421,38 +419,8 @@
                 var kiriDiv = document.querySelector('#tgl-selesai');
                 kiriDiv.textContent = nextDayFormatted;
                 kiriDiv.classList.add('kuning');
-
+                forResult.classList.remove('d-none');
             });
-
-            // Mendapatkan waktu saat ini
-            var currentTime = new Date();
-            // Mendapatkan jam, menit, dan detik dari waktu saat ini
-            var currentHour = currentTime.getHours();
-            var currentMinute = currentTime.getMinutes();
-            var currentSecond = currentTime.getSeconds();
-
-            // Menghitung waktu saat ini dalam format "HH:MM:SS"
-            var formattedCurrentTime = currentHour + ":" + currentMinute + ":" + currentSecond;
-
-            // Mendapatkan semua elemen jam
-            var jamItems = document.querySelectorAll('.jam-item');
-
-            // Iterasi melalui setiap elemen jam
-            jamItems.forEach(function(jamItem) {
-
-                var jamValue = jamItem.querySelector('input[type="hidden"]').value;
-
-                if (formattedCurrentTime > jamValue) {
-                    jamItem.classList.add('disabled');
-                    jamItem.setAttribute('disabled', true);
-                }
-
-                function jamItemClickHandler(event) {
-                    event.preventDefault();
-                }
-
-            });
-
         });
     </script>
 
@@ -594,6 +562,7 @@
         document.querySelector('.dropdown').addEventListener('click', updateAddButton);
 
         document.getElementById('add').addEventListener('click', function() {
+
             var total = document.querySelector('.tots').innerHTML;
             var bl = document.querySelector('.ongkos').innerHTML;
             var totalBiaya = document.querySelector('.total-real').innerHTML;
@@ -654,8 +623,43 @@
 
         });
 
-        const payItems = document.querySelectorAll('.payItems');
+        // Mendapatkan semua elemen tombol jam
+        const jamItems = document.querySelectorAll('.jam-item');
 
+        function updateJamItems() {
+            const currentTime = new Date();
+            const currentHours = currentTime.getHours();
+            const currentMinutes = currentTime.getMinutes();
+            const currentSeconds = currentTime.getSeconds();
+
+            // Loop melalui setiap tombol jam
+            jamItems.forEach(jamItem => {
+                // Mendapatkan waktu dari input tersembunyi dalam format jam
+                const jamValue = jamItem.querySelector('input').value.split(':');
+                const jamHours = parseInt(jamValue[0]);
+                const jamMinutes = parseInt(jamValue[1]);
+                const jamSeconds = parseInt(jamValue[2]) || 0; // Menangani kasus di mana detik tidak tersedia
+
+                // Memeriksa apakah waktu saat ini sudah terlewati waktu tombol jam
+                if (currentHours > jamHours ||
+                    (currentHours === jamHours && currentMinutes > jamMinutes) ||
+                    (currentHours === jamHours && currentMinutes === jamMinutes && currentSeconds >= jamSeconds)) {
+                    // Menambahkan kelas "disabled" dan atribut "disabled"
+                    jamItem.classList.add('disabled');
+                    jamItem.setAttribute('disabled', true);
+                } else {
+                    // Menghapus kelas "disabled" dan atribut "disabled" jika sudah tidak terlewati
+                    jamItem.classList.remove('disabled');
+                    jamItem.removeAttribute('disabled');
+                }
+            });
+        }
+
+        updateJamItems();
+
+        setInterval(updateJamItems, 1000);
+
+        const payItems = document.querySelectorAll('.payItems');
         payItems.forEach(item => {
             // Menambahkan event listener untuk setiap elemen payItems
             item.addEventListener('click', function() {

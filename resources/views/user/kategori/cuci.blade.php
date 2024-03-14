@@ -11,6 +11,9 @@
             <div class="info fw-medium">
                 Jasa Laundry
             </div>
+            <div class="help">
+                <img src="{{ asset('gambar-kategori/customer-service.png') }}">
+            </div>
         </div>
     </div>
 
