@@ -15,7 +15,7 @@
                     <i class="left" data-feather="chevron-left"></i>
                 </a>
                 <div class="info fw-medium">
-                    Layanan Cuci Basah
+                    Layanan {{ Str::title(Str::replace('-', ' ', $detail)) }}
                 </div>
             </div>
             <div class="ku">
@@ -39,7 +39,6 @@
     </div>
 
     <form action="/konfirmasiPay">
-
         <div class="container user-info">
             <div class="row">
 
@@ -203,7 +202,6 @@
                 <button type="submit" class="btn mati" id="nextPage" disabled>Pesan Sekarang</button>
             </div>
         </div>
-
     </form>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -344,15 +342,9 @@
                 }
             });
 
-            var wrap = document.querySelector('.datepicker-days .table-condensed tbody');
-            wrap.addEventListener('DOMContentLoaded', function() {
-                var target = document.querySelector('.today');
-                target.scrollIntoView();
 
-                if(target.scrollIntoView) {
-                    console.log('sukses')
-                }
-            });
+            var target = document.querySelector('.datepicker-days .table-condensed tbody tr .today');
+            target.scrollIntoView();
 
             var bulan = document.querySelector('.picker-switch');
             bulan.addEventListener('click', function(event) {
@@ -498,11 +490,11 @@
             });
 
             if (totalQty < 10) {
-                ongkos = 5000;
-            } else if (totalQty >= 10 && totalQty <= 20) {
                 ongkos = 3000;
+            } else if (totalQty >= 10 && totalQty <= 20) {
+                ongkos = 2000;
             } else {
-                ongkos = 1500;
+                ongkos = 1000;
             }
 
             ongkotz = ongkos.toLocaleString().replace(',', '.')

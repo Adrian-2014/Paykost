@@ -43,12 +43,15 @@ Route::get('/laporanKerusakan', [userPageController::class, 'laporanKerusakan'])
 Route::get('/kebersihan', [userPageController::class, 'kebersihan']);
 Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
 Route::get('/cuci', [userPageController::class, 'cuciBaju']);
+Route::get('/cuci/{detail}/{cuci}', [userPageController::class, 'cuciBajuDetail'])->name('cuciBajuDetail');
 // kategori
 
 // jasa cuci baju
-Route::get('/basah', [userPageController::class, 'cuciBasah']);
-Route::get('/kering', [userPageController::class, 'cuciKering']);
-Route::get('/cuciSetrika', [userPageController::class, 'cuciSetrika']);
+Route::get('/cuci-umum', [userPageController::class, 'cuciBasah']);
+// Route::get('/kering', [userPageController::class, 'cuciKering']);
+// Route::get('/lipat', [userPageController::class, 'cuciLipat']);
+// Route::get('/cuciSetrika', [userPageController::class, 'cuciSetrika']);
+// Route::get('/jasaSetrika', [userPageController::class, 'jasaSetrika']);
 
 Route::get('/konfirmasiPay', [userPageController::class, 'konfirmasi']);
 // jasa cuci baju
@@ -65,10 +68,16 @@ Route::get('/admin/create', [adminControll::class, 'create']);
 // Route::post('storeCreate', [adminControll::class, 'createStore']);
 // createUser
 // create cuci item
-Route::get('/admin/cuciProduct', [adminControll::class, 'cuciProduct']);
-Route::post('cuciProduct', [adminControll::class, 'storeCuciItem'])->name('cuciProduct.storeCuciItem');
-Route::get('/admin/addCuciKering', [adminControll::class, 'addCuciKering']);
-Route::post('cuciKering', [adminControll::class, 'storeCuciKering'])->name('storeCuciKering');
+Route::get('/admin/addCuciBasah', [adminControll::class, 'addCuciBasah']);
+Route::post('cuciBasah', [adminControll::class, 'storeCuciBasah'])->name('storeCuciBasah');
+// Route::get('/admin/addCuciKering', [adminControll::class, 'addCuciKering']);
+// Route::post('cuciKering', [adminControll::class, 'storeCuciKering'])->name('storeCuciKering');
+// Route::get('/admin/addCuciSetrika', [adminControll::class, 'addCuciSetrika']);
+// Route::post('cuciSetrika', [adminControll::class, 'storeCuciSetrika'])->name('storeCuciSetrika');
+// Route::get('/admin/addCuciLipat', [adminControll::class, 'addCuciLipat']);
+// Route::post('cuciLipat', [adminControll::class, 'storeCuciLipat'])->name('storeCuciLipat');
+// Route::get('/admin/addJasaSetrika', [adminControll::class, 'addJasaSetrika']);
+// Route::post('jasaSetrika', [adminControll::class, 'storeJasaSetrika'])->name('storeJasaSetrika');
 // create cuci item
 
 

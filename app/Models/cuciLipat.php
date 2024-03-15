@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cuciBasah extends Model
+class cuciLipat extends Model
 {
     use HasFactory;
-    protected $table = 'cuci_basah';
+    use HasFactory;
+    protected $table = 'cuci_lipat';
 }

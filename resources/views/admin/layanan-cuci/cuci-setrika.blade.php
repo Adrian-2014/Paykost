@@ -1,18 +1,18 @@
 @extends('layout.main')
 
-@section('title', 'createcuciItems')
+@section('title', 'Cuci Setrika')
 
 
 @section('container')
 
-    <form action="{{ route('cuciProduct.storeCuciItem') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('storeCuciSetrika') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="text" name="nama_barang" placeholder="Nama Barang">
         <input type="text" name="harga_barang" placeholder="Harga Barang" id="numberInput" oninput="formatNumber()">
         <input type="file" name="gambar_barang">
         <button type="submit">Tambah Barang</button>
     </form>
-
+    <a href="/admin/create">Kembali</a>
 
     <script>
         function formatNumber() {

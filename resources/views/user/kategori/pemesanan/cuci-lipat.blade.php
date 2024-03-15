@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'cuci setrika')
+@section('title', 'cuci lipat')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/cuci-umum.css') }}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://eonasdan.github.io/bootstrap-datetimepicker/css/prettify-1.0.css">
@@ -15,7 +15,7 @@
                     <i class="left" data-feather="chevron-left"></i>
                 </a>
                 <div class="info fw-medium">
-                    Layanan Cuci Setrika
+                    Layanan Cuci Lipat
                 </div>
             </div>
             <div class="ku">
@@ -250,7 +250,7 @@
                                     <i class="bi bi-caret-down-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu" x-bind:class="{ 'show': open }">
-                                    @foreach ($cuciSetrikaItems as $item)
+                                    @foreach ($cuciLipatItems as $item)
                                         <li class="items">
                                             <div class="item">
                                                 <div class="values">
@@ -417,7 +417,7 @@
                 var kananDiv = document.querySelector('#tgl-pick');
                 kananDiv.textContent = takeOffFormatted;
 
-                var nextDayDate = moment(tanggalAktif, 'DD/MM/YYYY').add(3, 'day').format('DD/MM/YYYY');
+                var nextDayDate = moment(tanggalAktif, 'DD/MM/YYYY').add(2, 'day').format('DD/MM/YYYY');
                 var nextDayFormatted = nextDayDate + ', ' + jamAktif;
 
                 var kiriDiv = document.querySelector('#tgl-selesai');
@@ -492,11 +492,11 @@
             });
 
             if (totalQty < 10) {
-                ongkos = 5000;
+                ongkos = 4000;
             } else if (totalQty >= 10 && totalQty <= 20) {
-                ongkos = 2000;
+                ongkos = 3000;
             } else {
-                ongkos = 1000;
+                ongkos = 1500;
             }
 
             ongkotz = ongkos.toLocaleString().replace(',', '.')

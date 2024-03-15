@@ -147,10 +147,19 @@
 
                 <div class="isi col-lg-10">
                     <div class="cucibaju">
-                        <a href="/admin/cuciProduct">Tambah Item Cuci Basah</a>
+                        <a href="/admin/addCuciBasah">Tambah Item Cuci Basah</a>
                     </div>
                     <div class="cucibaju">
                         <a href="/admin/addCuciKering">Tambah Item Cuci Kering </a>
+                    </div>
+                    <div class="cucibaju">
+                        <a href="/admin/addCuciSetrika">Tambah Item Cuci Setrika </a>
+                    </div>
+                    <div class="cucibaju">
+                        <a href="/admin/addCuciLipat">Tambah Item Cuci Lipat </a>
+                    </div>
+                    <div class="cucibaju">
+                        <a href="/admin/addJasaSetrika">Tambah Item Jasa Setrika </a>
                     </div>
                 </div>
             </div>

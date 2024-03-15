@@ -488,11 +488,11 @@
             });
 
             if (totalQty < 10) {
-                ongkos = 5000;
+                ongkos = 4500;
             } else if (totalQty >= 10 && totalQty <= 20) {
-                ongkos = 3000;
+                ongkos = 2500;
             } else {
-                ongkos = 1500;
+                ongkos = 1000;
             }
 
             ongkotz = ongkos.toLocaleString().replace(',', '.')
