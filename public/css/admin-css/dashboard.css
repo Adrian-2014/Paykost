@@ -1,0 +1,23 @@
+/* Sidebar S */
+
+.left-sidebar {
+    div {
+        .brand-logo {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            .text-nowrap {
+
+                img.dark-logo,
+                .light-logo {
+                    height: 3rem !important;
+                    width: auto !important;
+                }
+            }
+        }
+
+    }
+}
+
+/* Sidebar E  */

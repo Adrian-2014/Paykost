@@ -1,0 +1,54 @@
+.table-responsive {
+    #demo-foo-addrow {
+        thead {
+            tr {
+                th {
+                    .item {
+                        display: flex !important;
+                        justify-content: center !important;
+                        align-items: center !important;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                height: fit-content !important;
+                width: fit-content !important;
+
+                td {
+                    height: fit-content !important;
+                    width: fit-content !important;
+                    padding: .35rem !important;
+
+                    .is-item {
+                        display: flex !important;
+                        justify-content: center !important;
+                        align-items: center !important;
+                        text-align: center;
+                        height: 3rem !important;
+                    }
+
+                    .is-last {
+                        display: flex !important;
+                        justify-content: space-between !important;
+                        align-items: center !important;
+                        padding: 0 .5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.tambah {
+    background: linear-gradient(to bottom right, rgb(29, 165, 223), rgb(119, 203, 255));
+    border: none !important;
+    font-size: 1.1rem;
+}
+
+.imgs {
+    height: 2rem;
+    width: 2rem;
+}

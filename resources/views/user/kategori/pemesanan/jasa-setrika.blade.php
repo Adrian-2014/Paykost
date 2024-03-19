@@ -15,7 +15,7 @@
                     <i class="left" data-feather="chevron-left"></i>
                 </a>
                 <div class="info fw-medium">
-                    Layanan Setrika
+                    Jasa Setrika
                 </div>
             </div>
             <div class="ku">
@@ -38,171 +38,122 @@
         </div>
     </div>
 
-    <form action="/konfirmasiPay">
-        <div class="container user-info">
-            <div class="row">
 
-                <div class="col-12 inform" id="user-info">
-                    <div class="tabel">
+    <div class="container user-info">
+        <div class="row">
 
-                    </div>
-                </div>
+            <div class="col-12 inform" id="user-info">
+                <div class="tabel">
 
-            </div>
-        </div>
-
-        <div class="container user-item" id="user-item">
-        </div>
-
-        <div class="container user-tanggal" id="user-tanggal">
-            <div class="heading">Waktu Pengambilan</div>
-
-            <div id="datetimepicker"></div>
-            <div class="for-jam">
-                <button type="button" class="jam-item">
-                    <input type="hidden" value="06:30:00">
-                    <div class="jam-value">
-                        06:30
-                    </div>
-                </button>
-                <button type="button" class="jam-item">
-                    <input type="hidden" value="13:00:00">
-                    <div class="jam-value">
-                        13:00
-                    </div>
-                </button>
-                <button type="button" class="jam-item">
-                    <input type="hidden" value="17:00:00">
-                    <div class="jam-value">
-                        17:00
-                    </div>
-                </button>
-                <button type="button" class="jam-item">
-                    <input type="hidden" value="20:00:00">
-                    <div class="jam-value">
-                        20:00
-                    </div>
-                </button>
-            </div>
-
-            <div class="d-flex align-items-center justify-center">
-                <button type="button" id="ok-button" class="death" disabled>
-                    Konfirmasi
-                </button>
-            </div>
-
-            <div class="for-result d-none">
-                <div class="result-item">
-                    <div class="kiri">Pengambilan Laundry</div>
-                    <div class="kanan" id="tgl-pick">belum dipilih !</div>
-                </div>
-                <div class="result-item">
-                    <div class="kiri">Selesai Laundry</div>
-                    <div class="kanan" id="tgl-selesai">belum di pilih !</div>
                 </div>
             </div>
+
+        </div>
+    </div>
+
+    <div class="container user-item" id="user-item">
+    </div>
+
+    <div class="container user-tanggal" id="user-tanggal">
+        <div class="heading">Waktu Pengambilan</div>
+
+        <div id="datetimepicker"></div>
+        <div class="for-jam">
+            <button type="button" class="jam-item">
+                <input type="hidden" value="06:30:00">
+                <div class="jam-value">
+                    06:30
+                </div>
+            </button>
+            <button type="button" class="jam-item">
+                <input type="hidden" value="13:00:00">
+                <div class="jam-value">
+                    13:00
+                </div>
+            </button>
+            <button type="button" class="jam-item">
+                <input type="hidden" value="17:00:00">
+                <div class="jam-value">
+                    17:00
+                </div>
+            </button>
+            <button type="button" class="jam-item">
+                <input type="hidden" value="20:00:00">
+                <div class="jam-value">
+                    20:00
+                </div>
+            </button>
         </div>
 
-        <div class="container user-payment" id="user-payment">
-            <div class="row">
-                <div class="col-12">
-                    <div class="pay" id="drop1">
-                        <div class="paymentChoice">Metode Pembayaran</div>
-                        <div class="paymentIcons">
-                            <i class="bi bi-credit-card-fill"></i>
-                        </div>
+        <div class="d-flex align-items-center justify-center">
+            <button type="button" id="ok-button" class="death" disabled>
+                Konfirmasi
+            </button>
+        </div>
+
+        <div class="for-result d-none">
+            <div class="result-item">
+                <div class="kiri">Pengambilan Laundry</div>
+                <div class="kanan" id="tgl-pick">belum dipilih !</div>
+            </div>
+            <div class="result-item">
+                <div class="kiri">Selesai Laundry</div>
+                <div class="kanan" id="tgl-selesai">belum di pilih !</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container user-payment" id="user-payment">
+        <div class="row">
+            <div class="col-12">
+                <div class="pay" id="drop1">
+                    <div class="paymentChoice">Metode Pembayaran</div>
+                    <div class="paymentIcons">
+                        <i class="bi bi-credit-card-fill"></i>
                     </div>
-                    <div class="payChoice">
-                        <div class="payItems first">
+                </div>
+                <div class="payChoice">
+                    @foreach ($banks as $bank)
+                        <div class="payItems {{ $loop->first ? 'first' : ($loop->last ? 'last' : null) }}">
                             <div class="item">
                                 <div class="logos">
-                                    <img src="{{ asset('img/bca.png') }}">
+                                    <img src="{{ asset('img/' . $bank->gambar) }}">
                                 </div>
                                 <div class="nama">
-                                    Bank BCA
+                                    {{ $bank->nama }}
                                 </div>
                             </div>
                             <div class="input">
                                 <input type="radio" name="gate" value="bca">
                             </div>
                         </div>
-                        <div class="payItems">
-                            <div class="item">
-                                <div class="logos">
-                                    <img src="{{ asset('img/bni.png') }}">
-                                </div>
-                                <div class="nama">
-                                    Bank BNI
-                                </div>
-                            </div>
-                            <div class="input">
-                                <input type="radio" name="gate" value="bni">
-                            </div>
-                        </div>
-                        <div class="payItems">
-                            <div class="item">
-                                <div class="logos">
-                                    <img src="{{ asset('img/mandiri.png') }}">
-                                </div>
-                                <div class="nama">
-                                    Bank Mandiri
-                                </div>
-                            </div>
-                            <div class="input">
-                                <input type="radio" name="gate" value="mandri">
-                            </div>
-                        </div>
-                        <div class="payItems">
-                            <div class="item">
-                                <div class="logos">
-                                    <img src="{{ asset('img/bri.png') }}">
-                                </div>
-                                <div class="nama">
-                                    Bank BRI
-                                </div>
-                            </div>
-                            <div class="input">
-                                <input type="radio" name="gate" value="bri">
-                            </div>
-                        </div>
-                        <div class="payItems">
-                            <div class="item">
-                                <div class="logos">
-                                    <img src="{{ asset('img/jatim.jpeg') }}">
-                                </div>
-                                <div class="nama">
-                                    Bank Jatim
-                                </div>
-                            </div>
-                            <div class="input">
-                                <input type="radio" name="gate" value="jatim">
-                            </div>
-                        </div>
-                        <div class="payItems last">
-                            <div class="item">
-                                <div class="logos">
-                                    <img src="{{ asset('img/btn.png') }}">
-                                </div>
-                                <div class="nama">
-                                    Bank BTN
-                                </div>
-                            </div>
-                            <div class="input">
-                                <input type="radio" name="gate" value="btn">
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
-
             </div>
-        </div>
 
+        </div>
+    </div>
+
+    <form action="{{ route('storeJasa') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="nama" id="nama" value="">
+        <input type="hidden" name="id" id="id" value="">
+        <input type="hidden" name="jumlah" id="jumlah" value="">
+        <input type="hidden" name="layanan" id="layanan" value="Jasa Setrika">
+        <input type="hidden" name="total_biaya" id="tobi" value="">
+
+        <input type="hidden" name="gambar" id="img" value="">
+        <input type="hidden" name="bank_name" id="bank_name" value="">
+
+        <input type="hidden" name="mulai" id="mulai" value="">
+        <input type="hidden" name="selesai" id="selesai" value="">
         <div class="confirm">
             <div class="container-fluid">
                 <button type="submit" class="btn mati" id="nextPage" disabled>Pesan Sekarang</button>
             </div>
         </div>
     </form>
+
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -211,7 +162,7 @@
                     <div class="modal-title" id="exampleModalLabel">
                         <img src="{{ asset('img/two.png') }}">
                     </div>
-                    <div class="id">
+                    <div class="id" id="idku">
                         #0D97GEK7208F
                     </div>
                 </div>
@@ -222,7 +173,7 @@
                                 <div class="kiri">
                                     Nama User
                                 </div>
-                                <div class="kanan">
+                                <div class="kanan" id="name_of_user">
                                     {{ auth()->user()->name }}
                                 </div>
                             </div>
@@ -248,7 +199,7 @@
                                     <i class="bi bi-caret-down-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu" x-bind:class="{ 'show': open }">
-                                    @foreach ($jasaSetrikaItems as $item)
+                                    @foreach ($cuciItems as $item)
                                         <li class="items">
                                             <div class="item">
                                                 <div class="values">
@@ -332,6 +283,44 @@
                 var tglActive = document.querySelector('.day.active');
                 var jamActive = document.querySelector('.jam-item.terselect');
                 var Btarget = document.getElementById('ok-button');
+                var perbaikanJam = document.querySelector('.day.active.today');
+                if (perbaikanJam) {
+                    const currentTime = new Date();
+                    const currentHours = currentTime.getHours();
+                    const currentMinutes = currentTime.getMinutes();
+                    const currentSeconds = currentTime.getSeconds();
+
+                    // Loop melalui setiap tombol jam
+                    jamItems.forEach(jamItem => {
+                        // Mendapatkan waktu dari input tersembunyi dalam format jam
+                        const jamValue = jamItem.querySelector('input').value.split(':');
+                        const jamHours = parseInt(jamValue[0]);
+                        const jamMinutes = parseInt(jamValue[1]);
+                        const jamSeconds = parseInt(jamValue[2]) || 0; // Menangani kasus di mana detik tidak tersedia
+
+                        // Memeriksa apakah waktu saat ini sudah terlewati waktu tombol jam
+                        if (currentHours > jamHours ||
+                            (currentHours === jamHours && currentMinutes > jamMinutes) ||
+                            (currentHours === jamHours && currentMinutes === jamMinutes && currentSeconds >= jamSeconds)) {
+                            // Menambahkan kelas "disabled" dan atribut "disabled"
+                            jamItem.classList.add('disabled');
+                            jamItem.setAttribute('disabled', true);
+                            jamItem.classList.remove('terselect');
+                        } else {
+                            // Menghapus kelas "disabled" dan atribut "disabled" jika sudah tidak terlewati
+                            jamItem.classList.remove('disabled');
+                            jamItem.removeAttribute('disabled');
+                            // jamItem.classList.add('terselect');
+                        }
+                    });
+                    setInterval(updateJamItems, 1000);
+                } else {
+                    jamItems.forEach(jamItem => {
+                        jamItem.classList.remove('disabled');
+                        jamItem.removeAttribute('disabled');
+
+                    });
+                }
 
                 if (tglActive && jamActive) {
                     Btarget.classList.remove('death');
@@ -340,24 +329,47 @@
                     Btarget.classList.add('death');
                     Btarget.setAttribute('disabled', true);
                 }
+
             });
 
+            const jamItems = document.querySelectorAll('.jam-item');
 
-            var target = document.querySelector('.datepicker-days .table-condensed tbody tr .today');
-            target.scrollIntoView();
+            const currentTime = new Date();
+            const currentHours = currentTime.getHours();
+            const currentMinutes = currentTime.getMinutes();
+            const currentSeconds = currentTime.getSeconds();
 
-            var bulan = document.querySelector('.picker-switch');
-            bulan.addEventListener('click', function(event) {
-                event.preventDefault();
-                event.stopPropagation();
+            // Loop melalui setiap tombol jam
+            jamItems.forEach(jamItem => {
+                // Mendapatkan waktu dari input tersembunyi dalam format jam
+                const jamValue = jamItem.querySelector('input').value.split(':');
+                const jamHours = parseInt(jamValue[0]);
+                const jamMinutes = parseInt(jamValue[1]);
+                const jamSeconds = parseInt(jamValue[2]) || 0; // Menangani kasus di mana detik tidak tersedia
+                var okbtn = document.getElementById('ok-button');
+
+                // Memeriksa apakah waktu saat ini sudah terlewati waktu tombol jam
+                if (currentHours > jamHours ||
+                    (currentHours === jamHours && currentMinutes > jamMinutes) ||
+                    (currentHours === jamHours && currentMinutes === jamMinutes && currentSeconds >= jamSeconds)) {
+                    // Menambahkan kelas "disabled" dan atribut "disabled"
+                    jamItem.classList.add('disabled');
+                    jamItem.setAttribute('disabled', true);
+
+                } else {
+                    // Menghapus kelas "disabled" dan atribut "disabled" jika sudah tidak terlewati
+                    jamItem.classList.remove('disabled');
+                    jamItem.removeAttribute('disabled');
+                }
             });
+
 
             var currentDate = new Date();
             var currentDay = currentDate.getDate();
             var currentMonthIndex = currentDate.getMonth();
             var currentYear = currentDate.getFullYear();
             var tanggalItems = document.querySelectorAll('.day');
-            var jamItems = document.querySelectorAll('.jam-item');
+
 
             jamItems.forEach(function(divItem) {
                 divItem.addEventListener('click', function() {
@@ -371,6 +383,15 @@
                     }
                     check();
                 });
+            });
+
+            var target = document.querySelector('.datepicker-days .table-condensed tbody tr .today');
+            target.scrollIntoView();
+
+            var bulan = document.querySelector('.picker-switch');
+            bulan.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
             });
 
             function check() {
@@ -458,6 +479,8 @@
             var totalQty = 0;
 
             let button = document.getElementById("add");
+            var quantity = document.getElementById('jumlah');
+
             console.log(button);
 
             items.forEach(function(item) {
@@ -489,10 +512,12 @@
 
             });
 
+            quantity.value = totalQty;
+
             if (totalQty < 10) {
-                ongkos = 4500;
+                ongkos = 5000;
             } else if (totalQty >= 10 && totalQty <= 20) {
-                ongkos = 2500;
+                ongkos = 3000;
             } else {
                 ongkos = 1500;
             }
@@ -513,7 +538,7 @@
                 <div class="ongkos-laundry fw-medium">Rp. ${ongkotz}</div>`;
 
                 totalReal.innerHTML = `<div class="total">Total Biaya</div>
-            <div class="value fw-bold">Rp. ${t}</div>`;
+            <div class="value fw-bold" id="TB">Rp. ${t}</div>`;
                 totalReal.classList.remove('removeBorder');
                 subtotalDiv.innerHTML = subtotalHTML;
 
@@ -525,6 +550,8 @@
                 totalReal.innerHTML = '';
                 totalReal.classList.add('removeBorder');
             }
+
+
         }
 
         function updateAddButton() {
@@ -625,53 +652,6 @@
 
         });
 
-        // Mendapatkan semua elemen tombol jam
-        const jamItems = document.querySelectorAll('.jam-item');
-
-        function updateJamItems() {
-            const currentTime = new Date();
-            const currentHours = currentTime.getHours();
-            const currentMinutes = currentTime.getMinutes();
-            const currentSeconds = currentTime.getSeconds();
-
-            // Loop melalui setiap tombol jam
-            jamItems.forEach(jamItem => {
-                // Mendapatkan waktu dari input tersembunyi dalam format jam
-                const jamValue = jamItem.querySelector('input').value.split(':');
-                const jamHours = parseInt(jamValue[0]);
-                const jamMinutes = parseInt(jamValue[1]);
-                const jamSeconds = parseInt(jamValue[2]) || 0; // Menangani kasus di mana detik tidak tersedia
-
-                // Memeriksa apakah waktu saat ini sudah terlewati waktu tombol jam
-                if (currentHours > jamHours ||
-                    (currentHours === jamHours && currentMinutes > jamMinutes) ||
-                    (currentHours === jamHours && currentMinutes === jamMinutes && currentSeconds >= jamSeconds)) {
-                    // Menambahkan kelas "disabled" dan atribut "disabled"
-                    jamItem.classList.add('disabled');
-                    jamItem.setAttribute('disabled', true);
-                } else {
-                    // Menghapus kelas "disabled" dan atribut "disabled" jika sudah tidak terlewati
-                    jamItem.classList.remove('disabled');
-                    jamItem.removeAttribute('disabled');
-                }
-            });
-        }
-
-        updateJamItems();
-
-        setInterval(updateJamItems, 1000);
-
-        const payItems = document.querySelectorAll('.payItems');
-        payItems.forEach(item => {
-            // Menambahkan event listener untuk setiap elemen payItems
-            item.addEventListener('click', function() {
-                const radioInput = this.querySelector('input[type="radio"]');
-
-                radioInput.checked = !radioInput.checked;
-                const anyChecked = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
-            });
-        });
-
         document.addEventListener('click', function() {
             var button = document.getElementById('nextPage');
             var check = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
@@ -681,12 +661,90 @@
             if (check && bruh) {
                 button.disabled = false;
                 button.classList.remove('mati');
+                kirim();
             } else {
                 button.disabled = true;
                 button.classList.add('mati');
             }
 
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const payItems = document.querySelectorAll('.payItems');
+            const inputGambar = document.getElementById('img'); // ID input gambar
+            const inputNama = document.getElementById('bank_name'); // ID input nama
+
+            payItems.forEach(function(item) {
+                item.addEventListener('click', function(event) {
+                    const radioInput = this.querySelector('input[type="radio"]');
+                    const radioChecked = radioInput.checked;
+
+                    // Toggle status input radio
+                    radioInput.checked = !radioChecked;
+
+                    // Matikan semua input radio kecuali yang dipilih
+                    payItems.forEach(function(otherItem) {
+                        const otherRadioInput = otherItem.querySelector('input[type="radio"]');
+                        if (otherItem !== item) {
+                            otherRadioInput.checked = false;
+                        }
+                    });
+
+                    // Mengambil gambar dan nama dari item yang dipilih
+                    const gambar = this.querySelector('.logos img').getAttribute('src');
+                    const nama = this.querySelector('.nama').innerHTML;
+
+                    // Memasukkan nilai gambar dan nama ke dalam input tersembunyi
+                    inputGambar.value = gambar;
+                    inputNama.value = nama;
+                });
+
+                const radioInput = item.querySelector('input[type="radio"]');
+                radioInput.addEventListener('click', function(event) {
+                    const radioChecked = this.checked;
+                    const parentItem = this.closest('.payItems');
+
+                    // Toggle status input radio
+                    this.checked = !radioChecked;
+
+                    // Matikan semua input radio kecuali yang dipilih
+                    payItems.forEach(function(otherItem) {
+                        const otherRadioInput = otherItem.querySelector('input[type="radio"]');
+                        if (otherItem !== parentItem) {
+                            otherRadioInput.checked = false;
+                        }
+                    });
+
+                    // Mengambil gambar dan nama dari item yang dipilih
+                    const gambar = parentItem.querySelector('.logos img').getAttribute('src');
+                    const nama = parentItem.querySelector('.nama').innerHTML;
+
+                    inputGambar.value = gambar;
+                    inputNama.value = nama;
+                });
+            });
+        });
+
+        function kirim() {
+            var nama = document.getElementById('nama');
+            var id = document.getElementById('id');
+            var mulai = document.getElementById('mulai');
+            var selesai = document.getElementById('selesai');
+            var totalBiaya = document.getElementById('tobi');
+
+            var targetName = document.getElementById('name_of_user');
+            var targetId = document.getElementById('idku');
+            var targetMulai = document.getElementById('tgl-pick');
+            var targetSelesai = document.getElementById('tgl-selesai');
+            var targetBiaya = document.getElementById('TB');
+
+
+            nama.value = targetName.innerHTML;
+            id.value = idku.innerHTML;
+            mulai.value = targetMulai.innerHTML;
+            selesai.value = targetSelesai.innerHTML;
+            totalBiaya.value = targetBiaya.innerHTML;
+        }
     </script>
 
     <script>

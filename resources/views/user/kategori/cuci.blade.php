@@ -53,7 +53,7 @@
                 <div class="row row-cols-3 gx-3 gy-2">
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/cuci/cuci-express/express">
+                            <a href="/cuciExpress">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
                                 </div>
@@ -63,7 +63,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="col">
                         <div class="item-pelayanan">
                             <a href="/cuci/cuci-jas/jas">
@@ -76,7 +75,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="col">
                         <div class="item-pelayanan">
                             <a href="/cuci/cuci-gaun/gaun">
@@ -89,10 +87,9 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/cuci/cuci-basah/basah">
+                            <a href="/basah">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/wet.png') }}">
                                 </div>
@@ -104,7 +101,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/cuci/cuci-kering/kering">
+                            <a href="/kering">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/tshirt.png') }}">
                                 </div>
@@ -224,7 +221,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/dryCleaning">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/towels.png') }}">
                                 </div>

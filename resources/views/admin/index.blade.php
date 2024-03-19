@@ -1,193 +1,562 @@
-@extends('layout.main')
-@section('title', 'Dashboard page')
-<link rel="stylesheet" href="/css/admin/dashboard.css">
+@extends('layout.dashboard')
+
+@section('title', 'Index Admin')
+
 
 @section('container')
-
-    <body>
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-            <symbol id="check2" viewBox="0 0 16 16">
-                <path
-                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-            </symbol>
-            <symbol id="circle-half" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
-            </symbol>
-            <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-                <path
-                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
-                <path
-                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
-            </symbol>
-            <symbol id="sun-fill" viewBox="0 0 16 16">
-                <path
-                    d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
-            </symbol>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-            <symbol id="calendar3" viewBox="0 0 16 16">
-                <path
-                    d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
-                <path
-                    d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-            </symbol>
-            <symbol id="cart" viewBox="0 0 16 16">
-                <path
-                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </symbol>
-            <symbol id="chevron-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-            </symbol>
-            <symbol id="door-closed" viewBox="0 0 16 16">
-                <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z" />
-                <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z" />
-            </symbol>
-            <symbol id="file-earmark" viewBox="0 0 16 16">
-                <path
-                    d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
-            </symbol>
-            <symbol id="file-earmark-text" viewBox="0 0 16 16">
-                <path
-                    d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z" />
-                <path
-                    d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-            </symbol>
-            <symbol id="gear-wide-connected" viewBox="0 0 16 16">
-                <path
-                    d="M7.068.727c.243-.97 1.62-.97 1.864 0l.071.286a.96.96 0 0 0 1.622.434l.205-.211c.695-.719 1.888-.03 1.613.931l-.08.284a.96.96 0 0 0 1.187 1.187l.283-.081c.96-.275 1.65.918.931 1.613l-.211.205a.96.96 0 0 0 .434 1.622l.286.071c.97.243.97 1.62 0 1.864l-.286.071a.96.96 0 0 0-.434 1.622l.211.205c.719.695.03 1.888-.931 1.613l-.284-.08a.96.96 0 0 0-1.187 1.187l.081.283c.275.96-.918 1.65-1.613.931l-.205-.211a.96.96 0 0 0-1.622.434l-.071.286c-.243.97-1.62.97-1.864 0l-.071-.286a.96.96 0 0 0-1.622-.434l-.205.211c-.695.719-1.888.03-1.613-.931l.08-.284a.96.96 0 0 0-1.186-1.187l-.284.081c-.96.275-1.65-.918-.931-1.613l.211-.205a.96.96 0 0 0-.434-1.622l-.286-.071c-.97-.243-.97-1.62 0-1.864l.286-.071a.96.96 0 0 0 .434-1.622l-.211-.205c-.719-.695-.03-1.888.931-1.613l.284.08a.96.96 0 0 0 1.187-1.186l-.081-.284c-.275-.96.918-1.65 1.613-.931l.205.211a.96.96 0 0 0 1.622-.434l.071-.286zM12.973 8.5H8.25l-2.834 3.779A4.998 4.998 0 0 0 12.973 8.5zm0-1a4.998 4.998 0 0 0-7.557-3.779l2.834 3.78h4.723zM5.048 3.967c-.03.021-.058.043-.087.065l.087-.065zm-.431.355A4.984 4.984 0 0 0 3.002 8c0 1.455.622 2.765 1.615 3.678L7.375 8 4.617 4.322zm.344 7.646.087.065-.087-.065z" />
-            </symbol>
-            <symbol id="graph-up" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z" />
-            </symbol>
-            <symbol id="house-fill" viewBox="0 0 16 16">
-                <path
-                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
-                <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
-            </symbol>
-            <symbol id="list" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-            </symbol>
-            <symbol id="people" viewBox="0 0 16 16">
-                <path
-                    d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
-            </symbol>
-            <symbol id="plus-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path
-                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-            </symbol>
-            <symbol id="puzzle" viewBox="0 0 16 16">
-                <path
-                    d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.459.459 0 0 0-.115.118.113.113 0 0 0-.012.025L6.5 4.5v.003l.003.01c.004.01.014.028.036.053a.86.86 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.86.86 0 0 0 .271-.194.213.213 0 0 0 .039-.063v-.009a.112.112 0 0 0-.012-.025.459.459 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.459.459 0 0 0 .115-.118.113.113 0 0 0 .012-.025L9.5 11.5v-.003a.214.214 0 0 0-.039-.064.859.859 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11c-.491 0-.912.1-1.19.24a.859.859 0 0 0-.271.194.214.214 0 0 0-.039.063v.003l.001.006a.113.113 0 0 0 .012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238l-.244-2.855zM4.605 3a.5.5 0 0 0-.498.55l.001.007.29 3.4A.5.5 0 0 1 3.9 7.5h-.782c-.696 0-1.182-.497-1.469-.872a.459.459 0 0 0-.118-.115.112.112 0 0 0-.025-.012L1.5 6.5h-.003a.213.213 0 0 0-.064.039.86.86 0 0 0-.193.27C1.1 7.09 1 7.51 1 8c0 .491.1.912.24 1.19.07.14.14.225.194.271a.213.213 0 0 0 .063.039H1.5l.006-.001a.112.112 0 0 0 .025-.012.459.459 0 0 0 .118-.115c.287-.375.773-.872 1.469-.872H3.9a.5.5 0 0 1 .498.542l-.29 3.408a.5.5 0 0 0 .497.55h1.878c-.048-.166-.195-.352-.463-.557-.274-.21-.52-.528-.52-.943 0-.568.447-.947.862-1.154C6.807 10.123 7.387 10 8 10s1.193.123 1.638.346c.415.207.862.586.862 1.154 0 .415-.246.733-.52.943-.268.205-.415.39-.463.557h1.878a.5.5 0 0 0 .498-.55l-.001-.007-.29-3.4A.5.5 0 0 1 12.1 8.5h.782c.696 0 1.182.497 1.469.872.05.065.091.099.118.115.013.008.021.01.025.012a.02.02 0 0 0 .006.001h.003a.214.214 0 0 0 .064-.039.86.86 0 0 0 .193-.27c.14-.28.24-.7.24-1.191 0-.492-.1-.912-.24-1.19a.86.86 0 0 0-.194-.271.215.215 0 0 0-.063-.039H14.5l-.006.001a.113.113 0 0 0-.025.012.459.459 0 0 0-.118.115c-.287.375-.773.872-1.469.872H12.1a.5.5 0 0 1-.498-.543l.29-3.407a.5.5 0 0 0-.497-.55H9.517c.048.166.195.352.463.557.274.21.52.528.52.943 0 .568-.447.947-.862 1.154C9.193 5.877 8.613 6 8 6s-1.193-.123-1.638-.346C5.947 5.447 5.5 5.068 5.5 4.5c0-.415.246-.733.52-.943.268-.205.415-.39.463-.557H4.605z" />
-            </symbol>
-            <symbol id="search" viewBox="0 0 16 16">
-                <path
-                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </symbol>
-        </svg>
-
-
-        {{-- N A V B A R  S --}}
-
-        <nav class="navbar sticky-top flex-md-nowrap px-0 py-2 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 px-4 fs-4 text-white" href="#">{{ auth()->user()->name }}</a>
-        </nav>
-
-        {{-- N A V B A R  E --}}
-
-
-
-        <div class="container-fluid">
-
-            <div class="row">
-
-                {{-- S I D E B A R  S --}}
-
-                <div class="sidebar col-md-3 col-lg-2 p-0">
-
-                    <div class="offcanvas-md offcanvas-end" tabindex="-1" id="sidebarMenu">
-                        <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                                        href="/admin/index">
-                                        <i class="bi bi-house"></i>
-                                        Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="#"
-                                        style="color: black;">
-                                        <i class="bi bi-people" style="color: black; font-size: 1rem;"></i>
-                                        Pengguna
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="#"
-                                        style="color: black;">
-                                        <i class="bi bi-clock-history" style="color: black; font-size: 1rem;"></i>
-                                        Riwayat
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <h6
-                                class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                                <span>Lainnya</span>
-                                <a class="link-secondary" href="#" aria-label="Add a new report">
-                                </a>
-                            </h6>
-                            <ul class="nav flex-column mb-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="/admin/create"
-                                        style="color: rgb(0, 179, 255);">
-                                        <i class="bi bi-file-earmark-plus"
-                                            style="color: rgb(0, 179, 255); font-size: 1rem;"></i>
-                                        Buat
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center gap-2" href="#"
-                                        style="color: rgb(0, 179, 255);">
-                                        <i class="bi bi-pen" style="color: rgb(0, 179, 255); font-size: 1rem;"></i>
-                                        Perbarui
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <form action="/logout" method="get">
-                                        @csrf
-                                        <button type="submit" class="nav-link d-flex align-items-center gap-2"
-                                            style="color: red;">
-                                            <i class="bi bi-door-closed" style="color: red; font-size: 1rem;"></i>
-                                            Log-out
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-
+    <div class="container-fluid">
+        <!--  Owl carousel -->
+        <div class="owl-carousel counter-carousel owl-theme">
+            <div class="item">
+                <div class="card border-0 zoom-in bg-light-primary shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ asset('package') }}/dist/images/svgs/icon-user-male.svg" width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-primary mb-1"> Employees </p>
+                            <h5 class="fw-semibold text-primary mb-0">96</h5>
                         </div>
                     </div>
                 </div>
-
-                {{-- S I D E B A R  E --}}
-
-
             </div>
-
-
+            <div class="item">
+                <div class="card border-0 zoom-in bg-light-warning shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ asset('package') }}/dist/images/svgs/icon-briefcase.svg" width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-warning mb-1">Clients</p>
+                            <h5 class="fw-semibold text-warning mb-0">3,650</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card border-0 zoom-in bg-light-info shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ asset('package') }}/dist/images/svgs/icon-mailbox.svg" width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-info mb-1">Projects</p>
+                            <h5 class="fw-semibold text-info mb-0">356</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card border-0 zoom-in bg-light-danger shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ asset('package') }}/dist/images/svgs/icon-favorites.svg" width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-danger mb-1">Events</p>
+                            <h5 class="fw-semibold text-danger mb-0">696</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card border-0 zoom-in bg-light-success shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ asset('package') }}/dist/images/svgs/icon-speech-bubble.svg" width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-success mb-1">Payroll</p>
+                            <h5 class="fw-semibold text-success mb-0">$96k</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card border-0 zoom-in bg-light-info shadow-none">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="{{ asset('package') }}/dist/images/svgs/icon-connect.svg" width="50" height="50" class="mb-3" alt="" />
+                            <p class="fw-semibold fs-3 text-info mb-1">Reports</p>
+                            <h5 class="fw-semibold text-info mb-0">59</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        
-
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
-            integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous">
-        </script>
-        <script src="/js/dashboard.js"></script>
-    </body>
-
-
+        <!--  Row 1 -->
+        <div class="row">
+            <div class="col-lg-8 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                            <div class="mb-3 mb-sm-0">
+                                <h5 class="card-title fw-semibold">Revenue Updates</h5>
+                                <p class="card-subtitle mb-0">Overview of Profit</p>
+                            </div>
+                            <div>
+                                <select class="form-select">
+                                    <option value="1">March 2023</option>
+                                    <option value="2">April 2023</option>
+                                    <option value="3">May 2023</option>
+                                    <option value="4">June 2023</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-lg-8 col-md-8">
+                                <div id="chart"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="d-flex align-items-center mb-4 pb-1">
+                                    <div class="p-8 bg-light-primary rounded-1 me-3 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-grid-dots text-primary fs-6"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-0 fs-7 fw-semibold">$63,489.50</h4>
+                                        <p class="fs-3 mb-0">Total Earnings</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-flex align-items-baseline mb-4">
+                                        <span class="round-8 bg-primary rounded-circle me-6"></span>
+                                        <div>
+                                            <p class="fs-3 mb-1">Earnings this month</p>
+                                            <h6 class="fs-5 fw-semibold mb-0">$48,820</h6>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-baseline mb-4 pb-1">
+                                        <span class="round-8 bg-secondary rounded-circle me-6"></span>
+                                        <div>
+                                            <p class="fs-3 mb-1">Expense this month</p>
+                                            <h6 class="fs-5 fw-semibold mb-0">$26,498</h6>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary w-100">View Full Report</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-12 col-md-6 col-sm-12">
+                        <!-- Yearly Breakup -->
+                        <div class="card overflow-hidden">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
+                                        <h4 class="fw-semibold mb-3">$36,358</h4>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-arrow-up-left text-success"></i>
+                                            </span>
+                                            <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+                                            <p class="fs-3 mb-0">last year</p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-4">
+                                                <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
+                                                <span class="fs-2">2023</span>
+                                            </div>
+                                            <div>
+                                                <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
+                                                <span class="fs-2">2023</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <div id="breakup"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-6 col-sm-12">
+                        <!-- Monthly Earnings -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row alig n-items-start">
+                                    <div class="col-8">
+                                        <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
+                                        <h4 class="fw-semibold mb-3">$6,820</h4>
+                                        <div class="d-flex align-items-center pb-1">
+                                            <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-arrow-down-right text-danger"></i>
+                                            </span>
+                                            <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+                                            <p class="fs-3 mb-0">last year</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-end">
+                                            <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                                                <i class="ti ti-currency-dollar fs-6"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="earning"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  Row 2 -->
+        <div class="row">
+            <!-- Employee Salary -->
+            <div class="col-lg-4 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title fw-semibold mb-1">Employee Salary</h5>
+                            <p class="card-subtitle mb-0">Every month</p>
+                            <div id="salary" class="mb-7 pb-8"></div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-light-primary rounded me-8 p-8 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-grid-dots text-primary fs-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="fs-3 mb-0 fw-normal">Salary</p>
+                                        <h6 class="fw-semibold text-dark fs-4 mb-0">$36,358</h6>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-light rounded me-8 p-8 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-grid-dots text-muted fs-6"></i>
+                                    </div>
+                                    <div>
+                                        <p class="fs-3 mb-0 fw-normal">Profit</p>
+                                        <h6 class="fw-semibold text-dark fs-4 mb-0">$5,296</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Project -->
+            <div class="col-lg-4">
+                <div class="row">
+                    <!-- Customers -->
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body pb-0 mb-xxl-4 pb-1">
+                                <p class="mb-1 fs-3">Customers</p>
+                                <h4 class="fw-semibold fs-7">36,358</h4>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-arrow-down-right text-danger"></i>
+                                    </span>
+                                    <p class="text-dark fs-3 mb-0">+9%</p>
+                                </div>
+                            </div>
+                            <div id="customers"></div>
+                        </div>
+                    </div>
+                    <!-- Projects -->
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="mb-1 fs-3">Projects</p>
+                                <h4 class="fw-semibold fs-7">78,298</h4>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-arrow-up-left text-success"></i>
+                                    </span>
+                                    <p class="text-dark fs-3 mb-0">+9%</p>
+                                </div>
+                                <div id="projects"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Comming Soon -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-7 pb-2">
+                            <div class="me-3 pe-1">
+                                <img src="{{ asset('package') }}/dist/images/profile/user-1.jpg" class="shadow-warning rounded-2" alt="" width="72" height="72" />
+                            </div>
+                            <div>
+                                <h5 class="fw-semibold fs-5 mb-2"> Super awesome, Vue coming soon! </h5>
+                                <p class="fs-3 mb-0">22 March, 2023</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <ul class="hstack mb-0">
+                                <li class="ms-n8">
+                                    <a href="javascript:void(0)" class="me-1">
+                                        <img src="{{ asset('package') }}/dist/images/profile/user-2.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
+                                    </a>
+                                </li>
+                                <li class="ms-n8">
+                                    <a href="javascript:void(0)" class="me-1">
+                                        <img src="{{ asset('package') }}/dist/images/profile/user-3.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
+                                    </a>
+                                </li>
+                                <li class="ms-n8">
+                                    <a href="javascript:void(0)" class="me-1">
+                                        <img src="{{ asset('package') }}/dist/images/profile/user-4.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
+                                    </a>
+                                </li>
+                                <li class="ms-n8">
+                                    <a href="javascript:void(0)" class="me-1">
+                                        <img src="{{ asset('package') }}/dist/images/profile/user-5.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
+                                    </a>
+                                </li>
+                            </ul>
+                            <a href="#" class="bg-light rounded py-1 px-8 d-flex align-items-center text-decoration-none">
+                                <i class="ti ti-message-2 fs-6 text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Selling Products -->
+            <div class="col-lg-4 d-flex align-items-strech">
+                <div class="card bg-primary border-0 w-100">
+                    <div class="card-body pb-0">
+                        <h5 class="fw-semibold mb-1 text-white card-title"> Best Selling Products </h5>
+                        <p class="fs-3 mb-3 text-white">Overview 2023</p>
+                        <div class="text-center mt-3">
+                            <img src="{{ asset('package') }}/dist/images/backgrounds/piggy.png" class="img-fluid" alt="" />
+                        </div>
+                    </div>
+                    <div class="card mx-2 mb-2 mt-n2">
+                        <div class="card-body">
+                            <div class="mb-7 pb-1">
+                                <div class="d-flex justify-content-between align-items-center mb-6">
+                                    <div>
+                                        <h6 class="mb-1 fs-4 fw-semibold">MaterialPro</h6>
+                                        <p class="fs-3 mb-0">$23,568</p>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-light-primary text-primary fw-semibold fs-3">55%</span>
+                                    </div>
+                                </div>
+                                <div class="progress bg-light-primary" style="height: 4px;">
+                                    <div class="progress-bar w-50" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center mb-6">
+                                    <div>
+                                        <h6 class="mb-1 fs-4 fw-semibold">Flexy Admin</h6>
+                                        <p class="fs-3 mb-0">$23,568</p>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-light-secondary text-secondary fw-bold fs-3">20%</span>
+                                    </div>
+                                </div>
+                                <div class="progress bg-light-secondary" style="height: 4px;">
+                                    <div class="progress-bar bg-secondary w-25" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  Row 3 -->
+        <div class="row">
+            <!-- Weekly Stats -->
+            <div class="col-lg-4 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Weekly Stats</h5>
+                        <p class="card-subtitle mb-0">Average sales</p>
+                        <div id="stats" class="my-4"></div>
+                        <div class="position-relative">
+                            <div class="d-flex align-items-center justify-content-between mb-7">
+                                <div class="d-flex">
+                                    <div class="p-6 bg-light-primary rounded me-6 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-grid-dots text-primary fs-6"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fs-4 fw-semibold">Top Sales</h6>
+                                        <p class="fs-3 mb-0">Johnathan Doe</p>
+                                    </div>
+                                </div>
+                                <div class="bg-light-primary badge">
+                                    <p class="fs-3 text-primary fw-semibold mb-0">+68</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-7">
+                                <div class="d-flex">
+                                    <div class="p-6 bg-light-success rounded me-6 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-grid-dots text-success fs-6"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fs-4 fw-semibold">Best Seller</h6>
+                                        <p class="fs-3 mb-0">MaterialPro Admin</p>
+                                    </div>
+                                </div>
+                                <div class="bg-light-success badge">
+                                    <p class="fs-3 text-success fw-semibold mb-0">+68</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex">
+                                    <div class="p-6 bg-light-danger rounded me-6 d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-grid-dots text-danger fs-6"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fs-4 fw-semibold">Most Commented</h6>
+                                        <p class="fs-3 mb-0">Ample Admin</p>
+                                    </div>
+                                </div>
+                                <div class="bg-light-danger badge">
+                                    <p class="fs-3 text-danger fw-semibold mb-0">+68</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Top Performers -->
+            <div class="col-lg-8 d-flex align-items-strech">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                            <div class="mb-3 mb-sm-0">
+                                <h5 class="card-title fw-semibold">Top Performers</h5>
+                                <p class="card-subtitle mb-0">Best Employees</p>
+                            </div>
+                            <div>
+                                <select class="form-select">
+                                    <option value="1">March 2023</option>
+                                    <option value="2">April 2023</option>
+                                    <option value="3">May 2023</option>
+                                    <option value="4">June 2023</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-middle text-nowrap mb-0">
+                                <thead>
+                                    <tr class="text-muted fw-semibold">
+                                        <th scope="col" class="ps-0">Assigned</th>
+                                        <th scope="col">Project</th>
+                                        <th scope="col">Priority</th>
+                                        <th scope="col">Budget</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="border-top">
+                                    <tr>
+                                        <td class="ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2 pe-1">
+                                                    <img src="{{ asset('package') }}/dist/images/profile/user-1.jpg" class="rounded-circle" width="40" height="40" alt="" />
+                                                </div>
+                                                <div>
+                                                    <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
+                                                    <p class="fs-2 mb-0 text-muted">Web Designer</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 fs-3">Elite Admin</p>
+                                        </td>
+                                        <td>
+                                            <span class="badge fw-semibold py-1 w-85 bg-light-primary text-primary">Low</span>
+                                        </td>
+                                        <td>
+                                            <p class="fs-3 text-dark mb-0">$3.9K</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2 pe-1">
+                                                    <img src="{{ asset('package') }}/dist/images/profile/user-2.jpg" class="rounded-circle" width="40" height="40" alt="" />
+                                                </div>
+                                                <div>
+                                                    <h6 class="fw-semibold mb-1">John Deo</h6>
+                                                    <p class="fs-2 mb-0 text-muted"> Web Developer </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 fs-3">Flexy Admin</p>
+                                        </td>
+                                        <td>
+                                            <span class="badge fw-semibold py-1 w-85 bg-light-warning text-warning">Medium</span>
+                                        </td>
+                                        <td>
+                                            <p class="fs-3 text-dark mb-0">$24.5K</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2 pe-1">
+                                                    <img src="{{ asset('package') }}/dist/images/profile/user-3.jpg" class="rounded-circle" width="40" height="40" alt="" />
+                                                </div>
+                                                <div>
+                                                    <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
+                                                    <p class="fs-2 mb-0 text-muted">Web Manager</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 fs-3">Material Pro</p>
+                                        </td>
+                                        <td>
+                                            <span class="badge fw-semibold py-1 w-85 bg-light-info text-info">High</span>
+                                        </td>
+                                        <td>
+                                            <p class="fs-3 text-dark mb-0">$12.8K</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2 pe-1">
+                                                    <img src="{{ asset('package') }}/dist/images/profile/user-4.jpg" class="rounded-circle" width="40" height="40" alt="" />
+                                                </div>
+                                                <div>
+                                                    <h6 class="fw-semibold mb-1">Yuvraj Sheth</h6>
+                                                    <p class="fs-2 mb-0 text-muted"> Project Manager </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 fs-3">Xtreme Admin</p>
+                                        </td>
+                                        <td>
+                                            <span class="badge fw-semibold py-1 w-85 bg-light-success text-success">Low</span>
+                                        </td>
+                                        <td>
+                                            <p class="fs-3 text-dark mb-0">$4.8K</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border-0 ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-2 pe-1">
+                                                    <img src="{{ asset('package') }}/dist/images/profile/user-5.jpg" class="rounded-circle" width="40" height="40" alt="" />
+                                                </div>
+                                                <div>
+                                                    <h6 class="fw-semibold mb-1">Micheal Doe</h6>
+                                                    <p class="fs-2 mb-0 text-muted"> Content Writer </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="border-0">
+                                            <p class="mb-0 fs-3">Helping Hands WP Theme</p>
+                                        </td>
+                                        <td class="border-0">
+                                            <span class="badge fw-semibold py-1 w-85 bg-light-danger text-danger">High</span>
+                                        </td>
+                                        <td class="border-0">
+                                            <p class="fs-3 text-dark mb-0">$9.3K</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

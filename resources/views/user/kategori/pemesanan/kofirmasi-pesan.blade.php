@@ -19,7 +19,7 @@
         <div class="inform-umum">
             <div class="umum-item">
                 <div class="kiri">No. Transaksi</div>
-                <div class="kanan">#0D97GEK7208F</div>
+                <div class="kanan">{{ $pemesanan->id_pembelian }}</div>
             </div>
             <div class="umum-item">
                 <div class="kiri">Nama User</div>
@@ -31,36 +31,32 @@
             </div>
             <div class="umum-item">
                 <div class="kiri">Layanan</div>
-                <div class="kanan">Cuci Basah</div>
-            </div>
-            <div class="umum-item">
-                <div class="kiri">Tanggal Order</div>
-                <div class="kanan">19/02/2024 - 19:45:42</div>
+                <div class="kanan">{{ $pemesanan->jenis_layanan }}</div>
             </div>
             <div class="umum-item">
                 <div class="kiri">Tanggal Laundry</div>
-                <div class="kanan">20/02/2024 - 08:24:11</div>
+                <div class="kanan">{{ $pemesanan->tgl_start }}</div>
             </div>
             <div class="umum-item special">
                 <div class="kiri">Tanggal Pengambilan</div>
-                <div class="kanan">24/02/2024 - 08:24:11</div>
+                <div class="kanan">{{ $pemesanan->tgl_done }}</div>
             </div>
             <div class="umum-item">
                 <div class="kiri">Jumlah Barang</div>
-                <div class="kanan">20 potong</div>
+                <div class="kanan">{{ $pemesanan->jumlah }} potong</div>
             </div>
         </div>
         <div class="inform-total">
             <div class="info">Total Biaya</div>
-            <div class="value fw-medium">Rp. 200.000</div>
+            <div class="value fw-medium">{{ $pemesanan->total_biaya }}</div>
         </div>
         <div class="inform-pay">
             <div class="media">
                 <div class="logo">
-                    <img src="{{ asset('img/bca.png') }}">
+                    <img src="{{ asset('img/' . $bank->gambar) }}">
                 </div>
                 <div class="nama-bank">
-                    Bank BCA
+                    {{ $bank->nama }}
                 </div>
             </div>
             <div class="message">Mohon transfer ke No. Rekening ini</div>
