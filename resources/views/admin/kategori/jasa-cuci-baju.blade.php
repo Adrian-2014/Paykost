@@ -1,7 +1,16 @@
 @extends('layout.dashboard')
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 @section('title', 'Tambah Cuci Item')
 <link rel="stylesheet" href="{{ asset('css/admin-css/kategori/cuci.css') }}">
+{{--
+@section('styles')
+    <style>
+        option {
+            padding: 100px;
+        }
+    </style>
+@endsection --}}
 
 @section('container')
     <header class="app-header">
@@ -52,14 +61,14 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Table-Footable</h4>
+                        <h4 class="fw-semibold mb-8">Layanan Cuci</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a class="text-muted " href="./index.html">Dashboard</a>
+                                    <a class="text-muted " href="./index.html">Admin</a>
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">
-                                    Table-Footable
+                                    Layanan Cuci
                                 </li>
                             </ol>
                         </nav>
@@ -75,55 +84,16 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="border-bottom title-part-padding">
-                        <h4 class="card-title mb-0">Contact Emplyee list</h4>
+                    <div class="border-bottom">
+                        <h4 class="card-title mb-2">Data Item Jasa Cuci</h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-rounded m-t-10 mb-2  text-light tambah" data-bs-toggle="modal" data-bs-target="#add-contact">
+                            <button type="button" class="btn btn-rounded m-t-10 mb-2  text-light tambah" data-bs-toggle="modal" data-bs-target="#add-item">
                                 Tambahkan Item
                             </button>
                         </div>
                         <!-- Add Contact Popup Model -->
-                        <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header d-flex align-items-center">
-                                        <h4 class="modal-title" id="myModalLabel">
-                                            Tambahkan Item Cuci
-                                        </h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form action="{{ route('storeCuciItem') }}" method="POST" enctype="multipart/form-data">
-                                        <div class="modal-body">
-                                            @csrf
-                                            <input type="text" name="nama_barang" placeholder="Nama Barang">
-                                            <input type="text" name="harga_barang" placeholder="Harga Barang" id="numberInput" oninput="formatNumber()">
-                                            <input type="file" name="gambar_barang">
-                                            <select name="jenis" required>
-                                                <option value="">-- Jenis Jasa --</option>
-                                                <option value="Cuci Basah"> Cuci Basah</option>
-                                                <option value="Cuci Kering">Cuci Kering</option>
-                                                <option value="Cuci Lipat">Cuci lipat</option>
-                                                <option value="Cuci Setrika">Cuci Setrika</option>
-                                                <option value="Jasa Setrika">Jasa Setrika</option>
-                                                <option value="Cuci Express">Cuci Express</option>
-                                                <option value="Dry Cleaning">Dry Cleaning</option>
-                                            </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect" data-bs-dismiss="modal">
-                                                Batal
-                                            </button>
-                                            <button type="submit" class="btn btn-info waves-effect" data-bs-dismiss="modal">
-                                                Tambahkan
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                        </div>
                         <div class="table-responsive">
                             <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list" data-paging="true" data-paging-size="7">
                                 <thead>
@@ -141,6 +111,9 @@
                                             <div class="item"> Gambar Produk</div>
                                         </th>
                                         <th>
+                                            <div class="item"> Status</div>
+                                        </th>
+                                        <th>
                                             <div class="item"> Aksi</div>
                                         </th>
 
@@ -150,76 +123,300 @@
                                     @foreach ($cuciItems as $item)
                                         <tr>
                                             <td>
-                                                <div class="is-item">
+                                                <div class="itemku">
                                                     {{ $item->nama_barang }}
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="is-item">
+                                                <div class="itemku">
                                                     {{ $item->harga_barang }}
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="is-item">
+                                                <div class="itemku">
                                                     {{ $item->jenis_layanan }}
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="is-item">
+                                                <div class="itemku">
                                                     <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="imgs">
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="is-last">
-                                                    <div class="btn edit">Edit</div>
-                                                    <div class="btn delte">
-                                                        <form action="{{ route('item.destroy', $item->id) }}" method="POST">
+                                                <div class="istat">
+                                                    {{ $item->status }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ist-last">
+                                                    <button type="button" class="btn edit" data-bs-toggle="modal" data-bs-target="#edit-item">Edit</button>
+                                                    <div class="delete-form">
+                                                        <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn delete" onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">Hapus</button>
+                                                            <button type="submit" class="btn delete">Hapus</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        <div class="pagination d-flex justify-content-center">
+                            {{ $cuciItems->links() }}
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
+
+    <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center">
+                    <h4 class="modal-title" id="myModalLabel">
+                        Tambahkan Item Cuci
+                    </h4>
+                </div>
+                <form action="{{ route('storeCuciItem') }}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control">
+                        <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control">
+                        <input type="file" name="gambar_barang" class="form-control">
+
+                        <div class="dropdown status">
+                            <input type="text" readonly class="form-control" id="isis" placeholder="pilih Layanan . . ." name="jenis" required>
+                            </input>
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="is-real">
+                                    <div class="item" onclick="item('Dry Cleaning')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/towels.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Dry Cleaning
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="is-real">
+                                    <div class="item" onclick="item('Cuci Express')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Cuci Express
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown layanan">
+                            <input type="text" readonly class="form-control" id="isi" placeholder="pilih Layanan . . ." name="jenis" required>
+                            </input>
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
+                                <i class="fa-solid fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="is-item">
+                                    <div class="item" onclick="item('Dry Cleaning')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/towels.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Dry Cleaning
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="is-item">
+                                    <div class="item" onclick="item('Cuci Express')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Cuci Express
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="is-item">
+                                    <div class="item" onclick="item('Cuci Basah')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/wet.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Cuci Basah
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="is-item">
+                                    <div class="item" onclick="item('Cuci Kering')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/tshirt.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Cuci Kering
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item" onclick="item('Cuci Lipat')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/laundry.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Cuci Lipat
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="is-item">
+                                    <div class="item" onclick="item('Cuci Setrika')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/setrika.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Cuci Setrika
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="is-item">
+                                    <div class="item" onclick="item('Jasa Setrika')">
+                                        <div class="icons">
+                                            <img src="{{ asset('gambar-kategori/ironing.png') }}">
+                                        </div>
+                                        <div class="value">
+                                            Jasa Setrika
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn waves-effect simpan" data-bs-dismiss="modal">
+                            Tambahkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+
 @endsection
 
-@if (Session::has('success'))
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+
     <script>
-        swal({
-            title: "Sukses!",
-            text: "{{ Session::get('success') }}",
-            icon: "success",
+        function item(itemName) {
+            var inputElement = document.getElementById('isi');
+            inputElement.setAttribute('value', itemName);
+            modal();
+        }
+
+        document.querySelectorAll('.is-item').forEach(function(item) {
+            item.addEventListener('click', close);
+        });
+
+        function close() {
+            var modals = document.querySelector('.modal-body');
+            modals.classList.remove('active');
+        }
+
+        function modal() {
+            var btnyala = document.querySelector('.dropdown-toggle.show');
+            var modals = document.querySelector('.modal-body');
+            if (btnyala) {
+                modals.classList.add('active');
+            } else {
+                modals.classList.remove('active');
+            }
+        }
+    </script>
+    <script>
+        function its(nims) {
+            var ins = document.getElementById('status');
+            ins.setAttribute('value', nims);
+        }
+    </script>
+    <script>
+        // Select all delete buttons and attach event listener to each of them
+        document.querySelectorAll('.btn.delete').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var form = this.closest('form');
+
+                // Display Sweet Alert for confirmation
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Item ini akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+
+                    }
+                });
+            });
         });
     </script>
-@endif
 
-<script>
-    function formatNumber() {
-        // Get the input element
-        var inputElement = document.getElementById("numberInput");
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Sukses!',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500 // Waktu penampilan Sweet Alert (dalam milidetik)
+            });
+        </script>
+    @endif
 
-        // Get the current value of the input
-        var value = inputElement.value;
+    @if (Session::has('berhasil'))
+        <script>
+            Swal.fire({
+                title: 'Sukses!',
+                text: '{{ Session::get('berhasil') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500
+            });
+        </script>
+    @endif
 
-        // Remove any existing dots
-        value = value.replace(/\./g, '');
+    <script>
+        function formatNumber() {
+            // Get the input element
+            var inputElement = document.getElementById("numberInput");
 
-        // Add dots every three digits
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            // Get the current value of the input
+            var value = inputElement.value;
 
-        // Update the input value with the formatted number
-        inputElement.value = value;
-    }
-</script>
+            // Remove any existing dots
+            value = value.replace(/\./g, '');
+
+            // Add dots every three digits
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Update the input value with the formatted number
+            inputElement.value = value;
+        }
+    </script>
+@endsection

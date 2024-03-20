@@ -8,7 +8,7 @@
     }
 
     body {
-        background-color: rgb(194, 191, 191) !important;
+        background-color: rgba(225, 220, 220, 0.881) !important;
     }
 
 
@@ -41,6 +41,7 @@
 
             .help {
                 margin-left: 10rem;
+
                 img {
                     width: 2rem;
                     height: 2rem;

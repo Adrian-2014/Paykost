@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->string('harga_barang');
             $table->string('gambar_barang');
-            $table->enum('jenis_layanan',['Cuci Basah','Cuci Kering','Cuci Lipat','Cuci Setrika','Jasa Setrika','Cuci Express', 'Dry Cleaning']);
+            $table->string('status');
+            $table->string('jenis_layanan');
             $table->timestamps();
         });
     }

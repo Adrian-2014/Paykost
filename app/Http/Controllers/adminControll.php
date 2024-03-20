@@ -11,10 +11,12 @@ use App\Models\cuciLipat;
 use App\Models\cuciSetrika;
 use App\Models\jasaSetrika;
 use App\Models\User;
+use Database\Seeders\CuciKeringSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class adminControll extends Controller
 {
@@ -47,7 +49,7 @@ class adminControll extends Controller
     }
 
     public function addCuciItem() {
-        $cuciItems = Cuci::orderBy('created_at', 'desc')->get();;
+        $cuciItems = Cuci::orderBy('created_at', 'desc')->paginate(15);
         return view('admin.kategori.jasa-cuci-baju', compact('cuciItems'));
     }
 
@@ -58,6 +60,7 @@ class adminControll extends Controller
             'harga_barang' => 'required',
             // 'layanan_barang' => 'required',
             'gambar_barang' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status'=>'required',
             'jenis'=>'required',
         ]);
 
@@ -73,21 +76,28 @@ class adminControll extends Controller
         $cuciItem->gambar_barang = $namaFile;
         $cuciItem->save();
         // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
-        return back()->with('success', 'Barang berhasil ditambahkan.');
+        return back()->with('berhasil', 'Barang berhasil ditambahkan.');
 
+    }
+    public function show(Cuci $Cuci)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Post',
+            'data'    => $Cuci
+        ]);
     }
 
     public function hapus($id)
-{
-    // Cari item berdasarkan ID
-    $item = Cuci::findOrFail($id);
-    // Hapus item
-    $item->delete();
+    {
+        // Cari item berdasarkan ID
+        $item = Cuci::findOrFail($id);
+        // Hapus item
+        $item->delete();
 
-     // Set pesan sukses ke dalam session
-     Session::flash('success', 'Item berhasil dihapus');
+        // Set pesan sukses ke dalam session
+        return redirect()->back();
+        Session::flash('success', 'Item berhasil dihapus');
+    }
 
-     // Redirect kembali ke halaman sebelumnya
-     return redirect()->back();
-}
 }

@@ -75,6 +75,9 @@ Route::get('/admin/jasaCuci', [adminControll::class, 'addCuciItem']);
 Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy');
 Route::post('cuciItem', [adminControll::class, 'storeCuciItem'])->name('storeCuciItem');
 
+
+// Route::post('')
+
 // A D M I N
 
 
