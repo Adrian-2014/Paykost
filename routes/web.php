@@ -71,9 +71,11 @@ Route::get('/admin/create', [adminControll::class, 'create']);
 // createUser
 
 // layanan cuci
-Route::get('/admin/jasaCuci', [adminControll::class, 'addCuciItem']);
+Route::get('/admin/jasaCuci', [adminControll::class, 'addCuciItem'])->name('pageCuci');
 Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy');
 Route::post('cuciItem', [adminControll::class, 'storeCuciItem'])->name('storeCuciItem');
+Route::get('editData{id}', [adminControll::class, 'updateCuci']);
+Route::put('editCuciItem{id}', [adminControll::class, 'editCuciItem'])->name('editCuciItem');
 
 
 // Route::post('')

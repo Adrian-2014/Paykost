@@ -50,7 +50,7 @@ class userPageController extends Controller
     // For Layanan Laundry
 
     public function cuciBasah() {
-        $cuciItems = Cuci::where('jenis_layanan','Cuci Basah')->get();
+        $cuciItems = Cuci::where('jenis_layanan','Cuci Basah')->where('status', 'Publish')->get();
         $banks = Bank::get();
         return view('user.kategori.pemesanan.cuci-basah', compact(['cuciItems','banks']));
     }

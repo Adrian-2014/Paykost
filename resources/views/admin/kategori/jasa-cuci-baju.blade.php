@@ -3,14 +3,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 @section('title', 'Tambah Cuci Item')
 <link rel="stylesheet" href="{{ asset('css/admin-css/kategori/cuci.css') }}">
-{{--
-@section('styles')
-    <style>
-        option {
-            padding: 100px;
-        }
-    </style>
-@endsection --}}
 
 @section('container')
     <header class="app-header">
@@ -85,86 +77,67 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2">Data Item Jasa Cuci</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Data Item Jasa Cuci</h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-rounded m-t-10 mb-2  text-light tambah" data-bs-toggle="modal" data-bs-target="#add-item">
-                                Tambahkan Item
+                            <button type="button" class="btn btn-rounded m-t-10 mb-2 text-light tambah" data-bs-toggle="modal" data-bs-target="#add-item">
+                                <i class="fa-solid fa-plus"></i>
+                                <div class="te">Tambahkan Item</div>
                             </button>
                         </div>
-                        <!-- Add Contact Popup Model -->
-                        <div class="table-responsive">
-                            <table id="demo-foo-addrow" class="table table-bordered m-t-30 table-hover contact-list" data-paging="true" data-paging-size="7">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="item"> Nama Produk</div>
-                                        </th>
-                                        <th>
-                                            <div class="item"> Harga Produk</div>
-                                        </th>
-                                        <th>
-                                            <div class="item"> Jenis Layanan</div>
-                                        </th>
-                                        <th>
-                                            <div class="item"> Gambar Produk</div>
-                                        </th>
-                                        <th>
-                                            <div class="item"> Status</div>
-                                        </th>
-                                        <th>
-                                            <div class="item"> Aksi</div>
-                                        </th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($cuciItems as $item)
-                                        <tr>
-                                            <td>
-                                                <div class="itemku">
-                                                    {{ $item->nama_barang }}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="itemku">
-                                                    {{ $item->harga_barang }}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="itemku">
-                                                    {{ $item->jenis_layanan }}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="itemku">
-                                                    <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="imgs">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="istat">
-                                                    {{ $item->status }}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="ist-last">
-                                                    <button type="button" class="btn edit" data-bs-toggle="modal" data-bs-target="#edit-item">Edit</button>
-                                                    <div class="delete-form">
-                                                        <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn delete">Hapus</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="mytable">
+                            <div class="table-head">
+                                <div class="head-item">Nama Produk</div>
+                                <div class="head-item">Harga Produk</div>
+                                <div class="head-item">Jenis Layanan</div>
+                                <div class="head-item">Gambar Produk</div>
+                                <div class="head-item stat">Status</div>
+                                <div class="head-item last">Aksi</div>
+                            </div>
+                            <div class="table-body">
+                                @foreach ($cuciItems as $item)
+                                    <div class="body-item">
+                                        <div class="item name">
+                                            {{ $item->nama_barang }}
+                                        </div>
+                                        <div class="item">
+                                            {{ $item->harga_barang }}
+                                        </div>
+                                        <div class="item">
+                                            {{ $item->jenis_layanan }}
+                                        </div>
+                                        <div class="item">
+                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="imgs">
+                                        </div>
+                                        <div class="item stat @if ($item->status == 'Publish') published @else Unpublish @endif">
+                                            <div class="pengisi">
+                                                {{ $item->status }}
+                                            </div>
+                                        </div>
+                                        <div class="item last">
+                                            <div class="delete-form">
+                                                <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn delete">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="toggle-see btn">
+                                                <i class="fa-regular fa-eye"></i>
+                                            </div>
+                                            <a class="btn edit" href="{{ url('editData' . $item->id) }}">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
-                        <div class="pagination d-flex justify-content-center">
+                        <div class="pagination d-flex justify-content-center mt-3">
                             {{ $cuciItems->links() }}
                         </div>
                     </div>
@@ -184,48 +157,44 @@
                 <form action="{{ route('storeCuciItem') }}" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
-                        <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control">
-                        <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control">
-                        <input type="file" name="gambar_barang" class="form-control">
-
-                        <div class="dropdown status">
-                            <input type="text" readonly class="form-control" id="isis" placeholder="pilih Layanan . . ." name="jenis" required>
-                            </input>
+                        <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target">
+                        <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target">
+                        <div class="dropdown status" id="drop">
+                            <input type="text" readonly class="form-control" id="isis" name="status" placeholder="Pilih Status . . ." required>
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-caret-down"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li class="is-real">
-                                    <div class="item" onclick="item('Dry Cleaning')">
+                                <li class="is-real" onclick="its('Publish')">
+                                    <div class="item">
                                         <div class="icons">
-                                            <img src="{{ asset('gambar-kategori/towels.png') }}">
+                                            <img src="{{ asset('img/view.png') }}">
                                         </div>
                                         <div class="value">
-                                            Dry Cleaning
+                                            Publish
                                         </div>
                                     </div>
                                 </li>
-                                <li class="is-real">
-                                    <div class="item" onclick="item('Cuci Express')">
+                                <li class="is-real" onclick="its('Unpublish')">
+                                    <div class="item">
                                         <div class="icons">
-                                            <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
+                                            <img src="{{ asset('img/hide.png') }}">
                                         </div>
                                         <div class="value">
-                                            Cuci Express
+                                            Unpublish
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                         <div class="dropdown layanan">
-                            <input type="text" readonly class="form-control" id="isi" placeholder="pilih Layanan . . ." name="jenis" required>
-                            </input>
+                            <input type="text" readonly class="form-control" id="isi" placeholder="Pilih Layanan . . ." name="jenis" required>
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
                                 <i class="fa-solid fa-caret-down"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li class="is-item">
-                                    <div class="item" onclick="item('Dry Cleaning')">
+                                <li class="is-item" onclick="item('Dry Cleaning')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/towels.png') }}">
                                         </div>
@@ -234,8 +203,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="is-item">
-                                    <div class="item" onclick="item('Cuci Express')">
+                                <li class="is-item" onclick="item('Cuci Express')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
                                         </div>
@@ -244,8 +213,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="is-item">
-                                    <div class="item" onclick="item('Cuci Basah')">
+                                <li class="is-item" onclick="item('Cuci Basah')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/wet.png') }}">
                                         </div>
@@ -254,8 +223,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="is-item">
-                                    <div class="item" onclick="item('Cuci Kering')">
+                                <li class="is-item" onclick="item('Cuci Kering')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/tshirt.png') }}">
                                         </div>
@@ -264,8 +233,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="item" onclick="item('Cuci Lipat')">
+                                <li class="is-item" onclick="item('Cuci Lipat')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/laundry.png') }}">
                                         </div>
@@ -274,8 +243,8 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="is-item">
-                                    <div class="item" onclick="item('Cuci Setrika')">
+                                <li class="is-item" onclick="item('Cuci Setrika')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/setrika.png') }}">
                                         </div>
@@ -285,8 +254,8 @@
                                     </div>
                                 </li>
 
-                                <li class="is-item">
-                                    <div class="item" onclick="item('Jasa Setrika')">
+                                <li class="is-item" onclick="item('Jasa Setrika')">
+                                    <div class="item">
                                         <div class="icons">
                                             <img src="{{ asset('gambar-kategori/ironing.png') }}">
                                         </div>
@@ -297,7 +266,7 @@
                                 </li>
                             </ul>
                         </div>
-
+                        <input type="file" name="gambar_barang" class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
@@ -316,13 +285,18 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
         function item(itemName) {
             var inputElement = document.getElementById('isi');
             inputElement.setAttribute('value', itemName);
             modal();
+        }
+
+        function its(nims) {
+            var ins = document.getElementById('isis');
+            ins.setAttribute('value', nims);
         }
 
         document.querySelectorAll('.is-item').forEach(function(item) {
@@ -343,12 +317,27 @@
                 modals.classList.remove('active');
             }
         }
+
+        var tekt = document.querySelector('.small.text-muted');
+        tekt.style.display = 'none';
     </script>
     <script>
-        function its(nims) {
-            var ins = document.getElementById('status');
-            ins.setAttribute('value', nims);
+        function ilust() {
+
         }
+
+        status = document.querySelectorAll('.stat').forEach(function(stat) {
+            stat.addEventListener('DOMContentLoaded', function() {
+                if (stat.innerText === "Unpublish") {
+                    stat.classList.add('un');
+                } else {
+                    stat.classList.remove('un');
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+
+        });
     </script>
     <script>
         // Select all delete buttons and attach event listener to each of them
@@ -384,7 +373,7 @@
                 text: '{{ Session::get('success') }}',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 3500 // Waktu penampilan Sweet Alert (dalam milidetik)
+                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
             });
         </script>
     @endif
@@ -396,7 +385,7 @@
                 text: '{{ Session::get('berhasil') }}',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 3500
+                timer: 3000
             });
         </script>
     @endif
