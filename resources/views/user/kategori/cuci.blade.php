@@ -125,7 +125,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/gorden">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/blinds.png') }}">
                                 </div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/karpet">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/carpet.png') }}">
                                 </div>
@@ -161,7 +161,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/bedCover">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/bed-cover.png') }}">
                                 </div>
@@ -173,7 +173,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/sprei">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/blanket.png') }}">
                                 </div>
@@ -185,7 +185,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/selimut">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/selimut.png') }}">
                                 </div>

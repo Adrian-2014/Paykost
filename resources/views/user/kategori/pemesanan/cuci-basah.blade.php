@@ -22,7 +22,6 @@
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
             </div>
         </div>
-
     </div>
 
     <div class="blanks" id="blanks">
@@ -38,14 +37,11 @@
         </div>
     </div>
 
-
     <div class="container user-info">
         <div class="row">
 
             <div class="col-12 inform" id="user-info">
-                <div class="tabel">
-
-                </div>
+                <div class="tabel"></div>
             </div>
 
         </div>
@@ -153,7 +149,6 @@
             </div>
         </div>
     </form>
-
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -551,7 +546,6 @@
                 totalReal.classList.add('removeBorder');
             }
 
-
         }
 
         function updateAddButton() {
@@ -607,7 +601,6 @@
 
             var tab = document.createElement('div');
             tab.innerHTML = '<div class="tabel"><div class="item">Item</div><div class="harga">Harga</div><div class="jumlah">Jml</div><div class="sub">Total</div></div>';
-            tabe = tab.innerHTML;
             tabel = document.querySelector('.tabel');
             tabel.innerHTML = tab.innerHTML;
 
@@ -793,6 +786,5 @@
             }
         });
     </script>
-
 
 @endsection

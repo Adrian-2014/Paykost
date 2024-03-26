@@ -24,7 +24,8 @@ class CuciKeringSeeder extends Seeder
                     'nama_barang'           => $data[1],
                     'harga_barang'          => $data[2],
                     'gambar_barang'         => $data[3],
-                    'jenis_layanan'         => $data[4],
+                    'status'                => $data[4],
+                    'jenis_layanan'         => $data[5],
                     'created_at'            => Carbon::now(),
                     'updated_at'            => Carbon::now()
                 ]);

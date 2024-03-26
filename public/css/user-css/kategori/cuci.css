@@ -1,305 +1,303 @@
-    *,
-    html,
-    body {
-        margin: 0;
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: rgba(236, 233, 233, 0.881) !important;
+}
+
+
+.navbar {
+    justify-content: unset !important;
+    height: 3rem;
+    border-bottom: .5px solid rgba(128, 128, 128, 0.4);
+    background-color: rgb(255, 255, 255);
+
+    padding: 0 1rem !important;
+
+    .container-fluid {
+        display: flex;
+        justify-content: start !important;
+        padding-left: 1.5rem !important;
+
         padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
 
-    body {
-        background-color: rgba(225, 220, 220, 0.881) !important;
-    }
+        .back {
+            position: absolute;
+            left: .7rem;
+            text-decoration: none;
+            color: black;
 
-
-    .navbar {
-        justify-content: unset !important;
-        height: 3rem;
-        border-bottom: .5px solid rgba(128, 128, 128, 0.4);
-        background-color: rgb(255, 255, 255);
-
-        padding: 0 1rem !important;
-
-        .container-fluid {
-            display: flex;
-            justify-content: start !important;
-            padding-left: 1.5rem !important;
-
-            padding: 0;
-
-            .back {
-                position: absolute;
-                left: .7rem;
-                text-decoration: none;
-                color: black;
-
-                .left {
-                    font-size: 1.4rem;
-                    font-weight: bold !important;
-                }
-            }
-
-            .help {
-                margin-left: 10rem;
-
-                img {
-                    width: 2rem;
-                    height: 2rem;
-                }
+            .left {
+                font-size: 1.4rem;
+                font-weight: bold !important;
             }
         }
 
+        .help {
+            margin-left: 10rem;
+
+            img {
+                width: 2rem;
+                height: 2rem;
+            }
+        }
     }
 
-    .splide.banner {
-        width: 100%;
-        /* background-color: blue; */
-        padding: 1rem .7rem !important;
-        height: fit-content;
-        overflow: hidden;
-        background: white;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+}
 
-        .splide__track {
+.splide.banner {
+    width: 100%;
+    /* background-color: blue; */
+    padding: 1rem .7rem !important;
+    height: fit-content;
+    overflow: hidden;
+    background: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    .splide__track {
 
 
-            .splide__list {
+        .splide__list {
 
-                /* padding: 1rem !important; */
-                .splide__slide.satu {
-                    background: url("/img-chategories/laundry-banner-1.jpg");
-                    height: 10rem;
-                    width: 100%;
+            /* padding: 1rem !important; */
+            .splide__slide.satu {
+                background: url("/img-chategories/laundry-banner-1.jpg");
+                height: 10rem;
+                width: 100%;
 
-                    background-size: cover;
-                    border-radius: 10px;
-                    position: relative;
+                background-size: cover;
+                border-radius: 10px;
+                position: relative;
 
-                    .isi {
+                .isi {
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    z-index: 100;
+
+                    .quote {
+                        font-size: 1.3rem;
+                        /* font-weight: bold; */
+                        color: white;
+                        margin-left: 8rem;
+                        padding: .5rem 1rem;
+                        padding-top: 1rem !important;
+                        line-height: 1.3;
+                    }
+
+                    .diskon {
+                        margin-left: 8rem;
+                        padding: 1rem;
+                        padding-top: 0 !important;
                         display: flex;
                         flex-direction: column;
-                        position: absolute;
-                        z-index: 100;
 
-                        .quote {
-                            font-size: 1.3rem;
-                            /* font-weight: bold; */
-                            color: white;
-                            margin-left: 8rem;
-                            padding: .5rem 1rem;
-                            padding-top: 1rem !important;
-                            line-height: 1.3;
+
+                        .satu {
+                            background: linear-gradient(to right, rgb(2, 81, 151),
+                                    rgb(119, 203, 255));
+                            -webkit-background-clip: text;
+                            background-clip: text;
+                            color: transparent;
+                            font-size: 1.4rem;
+                            font-weight: 600;
+                            letter-spacing: .5px;
                         }
 
-                        .diskon {
-                            margin-left: 8rem;
-                            padding: 1rem;
-                            padding-top: 0 !important;
-                            display: flex;
-                            flex-direction: column;
-
-
-                            .satu {
-                                background: linear-gradient(to right, rgb(2, 81, 151),
-                                        rgb(119, 203, 255));
-                                -webkit-background-clip: text;
-                                background-clip: text;
-                                color: transparent;
-                                font-size: 1.4rem;
-                                font-weight: 600;
-                                letter-spacing: .5px;
-                            }
-
-                            .dua {
-                                font-size: .85rem;
-                                color: rgb(255, 255, 255);
-                                width: 80%;
-                                line-height: 1.1;
-                            }
+                        .dua {
+                            font-size: .85rem;
+                            color: rgb(255, 255, 255);
+                            width: 80%;
+                            line-height: 1.1;
                         }
                     }
                 }
+            }
 
-                .splide__slide.satu::after {
-                    content: '';
-                    display: block;
-                    height: 10rem;
+            .splide__slide.satu::after {
+                content: '';
+                display: block;
+                height: 10rem;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.03);
+                position: absolute;
+                top: 0;
+                border-radius: 10px;
+
+                left: 0;
+                z-index: 0;
+            }
+
+            .splide__slide.dua {
+                height: 10rem;
+                width: 100%;
+
+
+                img {
+                    height: 100%;
                     width: 100%;
-                    background-color: rgba(0, 0, 0, 0.03);
-                    position: absolute;
-                    top: 0;
                     border-radius: 10px;
 
-                    left: 0;
-                    z-index: 0;
                 }
-
-                .splide__slide.dua {
-                    height: 10rem;
-                    width: 100%;
-
-
-                    img {
-                        height: 100%;
-                        width: 100%;
-                        border-radius: 10px;
-
-                    }
-                }
-
-                .splide__slide.tiga {
-                    height: 10rem;
-                    width: 100%;
-
-
-                    img {
-                        height: 100%;
-                        width: 100%;
-                        border-radius: 10px;
-
-                    }
-                }
-
             }
-        }
 
+            .splide__slide.tiga {
+                height: 10rem;
+                width: 100%;
+
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 10px;
+
+                }
+            }
+
+        }
     }
 
+}
 
-    .const {
-        margin-top: 1rem;
-        background-color: white;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        padding-top: .1rem !important;
 
-        .layanan-cuci {
-            padding-bottom: 4.7rem;
+.const {
+    margin-top: 1rem;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-top: .1rem !important;
 
-            .container.text-center {
-                .row.row-cols-3 {
-                    /* gap: .8rem !important; */
-                    row-gap: .3rem !important;
+    .layanan-cuci {
+        padding-bottom: 4.7rem;
 
-                    .col {
-                        .item-pelayanan {
-                            height: 6.5rem;
-                            width: 6.5rem;
-                            border-radius: 7px;
-                            background: linear-gradient(to bottom right, rgba(35, 193, 217, 0.7), rgba(50, 141, 253, 0.7));
-                            padding: .5rem 0;
-                            padding-top: .6rem !important;
-                            /* box-shadow: 1px 1px .5px rgba(128, 128, 128, 0.684); */
+        .container.text-center {
+            .row.row-cols-3 {
+                /* gap: .8rem !important; */
+                row-gap: .3rem !important;
 
-                            a {
-                                text-decoration: none;
+                .col {
+                    .item-pelayanan {
+                        height: 6.5rem;
+                        width: 6.5rem;
+                        border-radius: 7px;
+                        background: linear-gradient(to bottom right, rgba(35, 193, 217, 0.7), rgba(50, 141, 253, 0.7));
+                        padding: .5rem 0;
+                        padding-top: .6rem !important;
+                        /* box-shadow: 1px 1px .5px rgba(128, 128, 128, 0.684); */
+
+                        a {
+                            text-decoration: none;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+
+                            .gambar {
+                                width: 4rem;
+                                height: 4rem;
                                 display: flex;
-                                flex-direction: column;
                                 align-items: center;
                                 justify-content: center;
 
-                                .gambar {
-                                    width: 4rem;
+                                img {
                                     height: 4rem;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-
-                                    img {
-                                        height: 4rem;
-                                        width: auto;
-                                        /* background-color: cyan; */
-                                    }
-
-                                    .cuciSetrika {
-                                        height: 4rem !important;
-                                        width: 4rem !important;
-                                    }
+                                    width: auto;
+                                    /* background-color: cyan; */
                                 }
 
-
-                                .pelayanan-name {
-                                    display: flex;
-                                    align-items: center !important;
-                                    font-size: .9rem !important;
-                                    justify-content: center !important;
-                                    font-size: .95rem;
-
-                                    color: white;
-                                    /* background-color: black; */
-                                    height: 2rem;
-                                    line-height: 1.2;
+                                .cuciSetrika {
+                                    height: 4rem !important;
+                                    width: 4rem !important;
                                 }
                             }
 
+
+                            .pelayanan-name {
+                                display: flex;
+                                align-items: center !important;
+                                font-size: .9rem !important;
+                                justify-content: center !important;
+                                font-size: .95rem;
+
+                                color: white;
+                                /* background-color: black; */
+                                height: 2rem;
+                                line-height: 1.2;
+                            }
                         }
+
                     }
                 }
             }
         }
     }
+}
+
+.navbar.fixed-bottom {
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+    border-top: .5px solid rgba(128, 128, 128, 0.4);
+}
+
+.navbar.fixed-bottom .container-fluid {
+    justify-content: space-between !important;
+    display: flex;
+    align-items: center;
+    /* border: 1px solid whir; */
+    /* padding: 2rem 1rem !important; */
+    height: 3.2rem;
+    padding-top: 7px !important;
+
+}
+
+.nav-link {
+    display: flex !important;
+    flex-direction: column;
+    /* padding: 0rem 3rem; */
 
 
-    .navbar.fixed-bottom {
-        height: fit-content;
-        background-color: rgb(255, 255, 255);
-        border-top: .5px solid rgba(128, 128, 128, 0.4);
-    }
-
-
-    .navbar.fixed-bottom .container-fluid {
-        justify-content: space-between !important;
+    i {
         display: flex;
-        align-items: center;
-        /* border: 1px solid whir; */
-        /* padding: 2rem 1rem !important; */
-        height: 3.2rem;
-        padding-top: 7px !important;
+        align-self: center;
+        color: rgba(0, 0, 0, 0.2);
 
+        height: fit-content;
+        width: fit-content;
+        font-size: 1.5rem;
+        padding-bottom: 1px;
+        /* background-color: rgb(247, 0, 0); */
     }
 
-    .nav-link {
-        display: flex !important;
-        flex-direction: column;
-        /* padding: 0rem 3rem; */
 
+    .isi {
+        font-size: 0.7rem;
+        color: rgba(0, 0, 0, 0.2);
+        /* background-color: #9bcaee; */
+    }
+}
 
-        i {
-            display: flex;
-            align-self: center;
-            color: rgba(0, 0, 0, 0.2);
+.navbar.fixed-bottom .active {
+    color: white;
 
-            height: fit-content;
-            width: fit-content;
-            font-size: 1.5rem;
-            padding-bottom: 1px;
-            /* background-color: rgb(247, 0, 0); */
-        }
-
-
-        .isi {
-            font-size: 0.7rem;
-            color: rgba(0, 0, 0, 0.2);
-            /* background-color: #9bcaee; */
-        }
+    i {
+        background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
     }
 
-    .navbar.fixed-bottom .active {
-        color: white;
+    .isi {
+        background-image: linear-gradient(to bottom left, #0062ff, #9bcaee);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
 
-        i {
-            background-image: linear-gradient(to bottom right, #0062ff, #9bcaee);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .isi {
-            background-image: linear-gradient(to bottom left, #0062ff, #9bcaee);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-
-        }
     }
+}

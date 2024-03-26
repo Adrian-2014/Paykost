@@ -22,15 +22,12 @@
                         </div>
 
                         <div class="w-100 mt-5">
-                            <input class="form-control form-control-sm" type="email" placeholder="Masukkan email anda..."
-                                name="email" value="{{ old('email') }}" autocomplete="off">
+                            <input class="form-control form-control-sm" type="email" placeholder="Masukkan email anda..." name="email" value="{{ old('email') }}" autocomplete="off">
 
                         </div>
                         <div class="w-100 mt-3 position-relative">
-                            <input class="form-control form-control-sm" type="password"
-                                placeholder="Masukkan kata sandi anda..." name="password" id="password" autocomplete="off">
-                            <i class="bi bi-eye-slash" id="waduh"
-                                style="position: absolute; top: 32%; left: 91% !important;"></i>
+                            <input class="form-control form-control-sm" type="password" placeholder="Masukkan kata sandi anda..." name="password" id="password" autocomplete="off">
+                            <i class="bi bi-eye-slash" id="waduh" style="position: absolute; top: 32%; left: 91% !important;"></i>
                         </div>
                         <div class="link mt-2 text-white text-end" style="text-shadow: 0 0 1.2px black;">
                             Lupa password?
@@ -93,7 +90,6 @@
                 btn.classList.remove("active");
                 btn.classList.add("mati");
             }
-
         }
 
         // Attach the function to input events (e.g., input, change)

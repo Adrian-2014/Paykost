@@ -20,17 +20,22 @@
     <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/owl.carousel/dist/assets/owl.carousel.min.css">
     <!-- Core Css -->
     <link id="themeColors" rel="stylesheet" href="{{ asset('package') }}/dist/css/style.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     @yield('styles')
+
 </head>
 
 <body>
     <!-- Preloader -->
     <div class="preloader">
-        <img src="{{ asset('package') }}/dist/images/logos/favicon.ico" alt="loader" class="lds-ripple img-fluid" />
+        <img src="{{ asset('img/logo.png') }}" alt="loader" class="lds-ripple img-fluid" />
     </div>
     <!-- Preloader -->
     <div class="preloader">
-        <img src="{{ asset('package') }}/dist/images/logos/favicon.ico" alt="loader" class="lds-ripple img-fluid" />
+        <img src="{{ asset('img/logo.png') }}" alt="loader" class="lds-ripple img-fluid" />
     </div>
 
     <div class="page-wrapper" id="main-wrapper" data-theme="blue_theme" data-layout="vertical" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
@@ -50,15 +55,11 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar>
                     <ul id="sidebarnav">
-                        <!-- ============================= -->
-                        <!-- Home -->
-                        <!-- ============================= -->
+
                         <li class="nav-small-cap">
-                            <span class="hide-menu">Home</span>
+                            <span class="hide-menu">Main</span>
                         </li>
-                        <!-- =================== -->
-                        <!-- Dashboard -->
-                        <!-- =================== -->
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/index" aria-expanded="false">
                                 <span>
@@ -67,20 +68,25 @@
                                 <span class="hide-menu">Beranda</span>
                             </a>
                         </li>
+
+                        <li class="nav-small-cap">
+                            <span class="hide-menu">Kategori</span>
+                        </li>
+
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                                 <span class="d-flex">
                                     <i class="ti ti-chart-donut-3"></i>
                                 </span>
-                                <span class="hide-menu">Kategori</span>
+                                <span class="hide-menu">Jasa Cuci Baju</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="/admin/jasaCuci" class="sidebar-link">
+                                    <a href="/admin/jasaCuciUmum" class="sidebar-link">
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
                                         </div>
-                                        <span class="hide-menu">Jasa Cuci Baju</span>
+                                        <span class="hide-menu">Jasa Cuci Umum</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
@@ -88,7 +94,7 @@
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
                                         </div>
-                                        <span class="hide-menu">Details</span>
+                                        <span class="hide-menu">Jasa Cuci Khusus </span>
                                     </a>
                                 </li>
                             </ul>
@@ -108,11 +114,6 @@
                         <li class="nav-item">
                             <a class="nav-link sidebartoggler nav-icon-hover ms-n3" id="headerCollapse" href="javascript:void(0)">
                                 <i class="ti ti-menu-2"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="ti ti-search"></i>
                             </a>
                         </li>
                     </ul>
@@ -152,95 +153,6 @@
     </div>
 
     <!--  Search Bar -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content rounded-1">
-                <div class="modal-header border-bottom">
-                    <input type="search" class="form-control fs-3" placeholder="Search here" id="search" />
-                    <span data-bs-dismiss="modal" class="lh-1 cursor-pointer">
-                        <i class="ti ti-x fs-5 ms-3"></i>
-                    </span>
-                </div>
-                <div class="modal-body message-body" data-simplebar="">
-                    <h5 class="mb-0 fs-5 p-1">Quick Page Links</h5>
-                    <ul class="list mb-0 py-2">
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Modern</span>
-                                <span class="fs-3 text-muted d-block">/dashboards/dashboard1</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Dashboard</span>
-                                <span class="fs-3 text-muted d-block">/dashboards/dashboard2</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Contacts</span>
-                                <span class="fs-3 text-muted d-block">/apps/contacts</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Posts</span>
-                                <span class="fs-3 text-muted d-block">/apps/blog/posts</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Detail</span>
-                                <span class="fs-3 text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Shop</span>
-                                <span class="fs-3 text-muted d-block">/apps/ecommerce/shop</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Modern</span>
-                                <span class="fs-3 text-muted d-block">/dashboards/dashboard1</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Dashboard</span>
-                                <span class="fs-3 text-muted d-block">/dashboards/dashboard2</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Contacts</span>
-                                <span class="fs-3 text-muted d-block">/apps/contacts</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Posts</span>
-                                <span class="fs-3 text-muted d-block">/apps/blog/posts</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Detail</span>
-                                <span class="fs-3 text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
-                            </a>
-                        </li>
-                        <li class="p-1 mb-1 bg-hover-light-black">
-                            <a href="#">
-                                <span class="fs-3 text-black fw-normal d-block">Shop</span>
-                                <span class="fs-3 text-muted d-block">/apps/ecommerce/shop</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
     @yield('script')
     <!--  Import Js Files -->

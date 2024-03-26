@@ -47634,12 +47634,13 @@ html[dir=rtl] .welcome-bg-img {
 .lds-ripple {
     display: inline-block;
     position: relative;
-    width: 40px;
+    width: 8rem;
     position: absolute;
     top: calc(50% - 3.5px);
     left: 0;
     right: 0;
-    margin: 0 auto
+    margin: 0 auto;
+    animation: load 1s ease alternate;
 }
 
 .jp-controls {
@@ -55957,4 +55958,16 @@ ul {
 
 .title-part-padding {
     padding: 15px 30px
+}
+
+@keyframes load {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

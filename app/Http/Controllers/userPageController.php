@@ -84,6 +84,22 @@ class userPageController extends Controller
         $banks = Bank::get();
         return view('user.kategori.pemesanan.dry-cleaning', compact('cuciItems','banks'));
     }
+    public function gorden() {
+        return view('user.kategori.pemesanan.cuci-gorden');
+    }
+    public function karpet() {
+        $banks = Bank::get();
+        return view('user.kategori.pemesanan.cuci-karpet', compact('banks'));
+    }
+    public function bedCover() {
+        return view('user.kategori.pemesanan.bed-cover');
+    }
+    public function selimut() {
+        return view('user.kategori.pemesanan.cuci-selimut');
+    }
+    public function sprei() {
+        return view('user.kategori.pemesanan.cuci-sprei');
+    }
 
     public function konfirmasi(Request $request) {
 

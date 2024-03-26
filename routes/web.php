@@ -54,6 +54,12 @@ Route::get('/jasaSetrika', [userPageController::class, 'jasaSetrika']);
 Route::get('/cuciExpress', [userPageController::class, 'cuciExpress']);
 Route::get('/dryCleaning', [userPageController::class, 'dryCleaning']);
 
+Route::get('/gorden', [userPageController::class, 'gorden']);
+Route::get('/karpet', [userPageController::class, 'karpet']);
+Route::get('/bedCover', [userPageController::class, 'bedCover']);
+Route::get('/sprei', [userPageController::class, 'sprei']);
+Route::get('/selimut', [userPageController::class, 'selimut']);
+
 Route::post('/konfirmasiPay', [userPageController::class, 'konfirmasi'])->name('storeJasa');
 Route::get('/checkKonfirmasi', [userPageController::class, 'checkKonfirmasi'])->name('checkKonfirmasi');
 // jasa cuci baju
@@ -70,12 +76,19 @@ Route::get('/admin/create', [adminControll::class, 'create']);
 // Route::post('storeCreate', [adminControll::class, 'createStore']);
 // createUser
 
-// layanan cuci
-Route::get('/admin/jasaCuci', [adminControll::class, 'addCuciItem'])->name('pageCuci');
+// layanan cuci umum
+Route::get('/admin/jasaCuciUmum', [adminControll::class, 'jasaCuciUmum'])->name('pageCuci');
+Route::post('cuciUmum', [adminControll::class, 'storeCuciUmum'])->name('storeCuciUmum');
+Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy');
+// Route untuk mengambil data barang
+
+
+
+
+// Khusus
+Route::get('/admin/jasaCuciKhusus', [adminControll::class, 'addCuciItem'])->name('pageCuci');
 Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy');
 Route::post('cuciItem', [adminControll::class, 'storeCuciItem'])->name('storeCuciItem');
-Route::get('editData{id}', [adminControll::class, 'updateCuci']);
-Route::put('editCuciItem{id}', [adminControll::class, 'editCuciItem'])->name('editCuciItem');
 
 
 // Route::post('')

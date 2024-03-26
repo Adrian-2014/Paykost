@@ -49,12 +49,12 @@ class adminControll extends Controller
        return back()->with('success', 'creating success!, creating more users!');
     }
 
-    public function addCuciItem() {
-        $cuciItems = Cuci::orderBy('created_at', 'desc')->paginate(15);
-        return view('admin.kategori.jasa-cuci-baju', compact('cuciItems'));
+    public function jasaCuciUmum() {
+        $cuciItems = Cuci::orderBy('id', 'desc')->paginate(15);
+        return view('admin.kategori.cuci.jasa-cuci-umum', compact('cuciItems'));
     }
 
-    public function storeCuciItem(Request $request)
+    public function storeCuciUmum(Request $request)
     {
         $request->validate([
             'nama_barang' => 'required',
@@ -81,50 +81,6 @@ class adminControll extends Controller
         return back()->with('berhasil', 'Barang berhasil ditambahkan.');
     }
 
-    public function updateCuci($id) {
-        $item = Cuci::find($id);
-        return view('admin.kategori.editCuciItem', compact('item'));
-    }
-    public function editCuciItem(Request $request, $id) {
-        // Temukan item yang akan diupdate
-        $cuciItem = Cuci::find($id);
-
-        // Jika item tidak ditemukan, kembalikan response atau lakukan penanganan error sesuai kebutuhan Anda
-        if(!$cuciItem) {
-            return redirect()->back()->with('error', 'Item tidak ditemukan');
-        }
-
-        // Cek apakah file gambar baru diupload
-        if($request->hasFile('gambar_barang')) {
-            $gambarBarang = $request->file('gambar_barang');
-            $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
-            $gambarBarang->move(public_path('uploads'), $namaFile);
-
-            // Hapus file gambar lama jika ada
-            if($cuciItem->gambar_barang) {
-                $pathToFile = public_path('uploads').'/'.$cuciItem->gambar_barang;
-                if(file_exists($pathToFile)) {
-                    unlink($pathToFile);
-                }
-            }
-
-            // Simpan nama file gambar baru
-            $cuciItem->gambar_barang = $namaFile;
-        }
-
-        // Update data lainnya
-        $cuciItem->nama_barang = $request->nama_barang;
-        $cuciItem->harga_barang = $request->harga_barang;
-        $cuciItem->jenis_layanan = $request->jenis;
-        $cuciItem->status = $request->status;
-        // $cuciItem->layanan_barang = $request->layanan_barang;
-
-        // Simpan perubahan
-        $cuciItem->save();
-
-        // Redirect ke halaman yang sesuai
-        return redirect()->route('pageCuci')->with('success', 'Data berhasil diupdate');
-    }
 
     public function hapus($id)
     {

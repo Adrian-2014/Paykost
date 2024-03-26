@@ -1,3 +1,13 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+
+.container-fluid.main {
+    padding-bottom: 0 !important;
+}
+
+
 .mytable {
     border: 2px solid rgba(168, 168, 168, 0.1);
 
@@ -18,14 +28,6 @@
             align-items: center;
             justify-content: center !important;
         }
-
-        /* .stat {
-            width: 9rem !important;
-        }
-
-        .last {
-            width: 15rem !important;
-        } */
     }
 
     .table-body {
@@ -100,7 +102,7 @@
                 gap: .7rem;
                 align-items: center;
 
-                .btn.edit {
+                .edit-btn {
                     background: rgb(11, 183, 231);
                     padding: .5rem .6rem;
                     color: white;
@@ -114,7 +116,7 @@
 
                 .toggle-see {
                     color: white;
-                    background: greenyellow;
+                    background: rgb(123, 220, 20) !important;
                     padding: .5rem .6rem;
 
                 }
@@ -127,6 +129,7 @@
 
 .card-body {
     padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
 }
 
 .tambah {
@@ -151,7 +154,7 @@
                 .modal-body {
                     display: flex;
                     flex-direction: column;
-                    gap: .5rem;
+                    gap: .65rem;
                     height: fit-content;
 
 
@@ -259,5 +262,25 @@
     .dropdown-menu li:hover {
         background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
         color: white;
+    }
+}
+
+
+/* illustration */
+
+.illustration {
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+
+    .image {
+        img {
+            width: 13rem;
+            height: 13rem;
+        }
+    }
+
+    .text {
+        margin: .5rem;
     }
 }
