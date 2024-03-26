@@ -52,7 +52,7 @@ class userPageController extends Controller
     public function cuciBasah() {
         $cuciItems = Cuci::where('jenis_layanan','Cuci Basah')->where('status', 'Publish')->get();
         $banks = Bank::get();
-        return view('user.kategori.pemesanan.cuci-basah', compact(['cuciItems','banks']));
+        return view('user.kategori.pemesanan.cuci-basah', compact('cuciItems','banks'));
     }
     public function cuciKering() {
         $cuciItems = Cuci::where('jenis_layanan','Cuci Kering')->get();
@@ -75,7 +75,7 @@ class userPageController extends Controller
         return view('user.kategori.pemesanan.jasa-setrika', compact('cuciItems','banks'));
     }
     public function cuciExpress() {
-        $cuciItems= Cuci::where('jenis_layanan', 'Cuci Express')->get();
+        $cuciItems= Cuci::where('jenis_layanan', 'Cuci Express')->where('status', 'Publish')->get();
         $banks = Bank::get();
         return view('user.kategori.pemesanan.cuci-express', compact('cuciItems','banks'));
     }
@@ -92,13 +92,16 @@ class userPageController extends Controller
         return view('user.kategori.pemesanan.cuci-karpet', compact('banks'));
     }
     public function bedCover() {
-        return view('user.kategori.pemesanan.bed-cover');
+        $banks = Bank::get();
+        return view('user.kategori.pemesanan.bed-cover', compact('banks'));
     }
     public function selimut() {
-        return view('user.kategori.pemesanan.cuci-selimut');
+        $banks = Bank::get();
+        return view('user.kategori.pemesanan.cuci-selimut',compact('banks'));
     }
     public function sprei() {
-        return view('user.kategori.pemesanan.cuci-sprei');
+        $banks = Bank::get();
+        return view('user.kategori.pemesanan.cuci-sprei', compact('banks'));
     }
 
     public function konfirmasi(Request $request) {

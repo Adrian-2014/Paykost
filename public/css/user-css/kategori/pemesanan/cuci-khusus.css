@@ -371,17 +371,17 @@ input[type=number]::-webkit-inner-spin-button {
             border-bottom: .5px solid rgba(214, 210, 210, 0.7);
 
             .head-item {
-                width: 7rem;
+                width: 6.7rem;
                 /* background-color: chartreuse; */
             }
 
             .head-harga {
-                width: 5rem;
+                width: 6rem;
                 /* background-color: aqua; */
             }
 
             .head-jml {
-                width: 2rem;
+                width: 1.7rem;
                 /* background-color: brown; */
             }
 
@@ -403,11 +403,11 @@ input[type=number]::-webkit-inner-spin-button {
                 padding: 0.5rem !important;
 
                 .myItem {
-                    width: 7rem;
+                    width: 6.7rem;
                     display: flex;
                     justify-content: space;
                     text-align: left;
-                    gap: .6rem;
+                    gap: .3rem;
                     align-items: center;
                     /* background-color: darkgreen; */
 
@@ -432,12 +432,12 @@ input[type=number]::-webkit-inner-spin-button {
                 }
 
                 .myCost {
-                    width: 5rem;
+                    width: 6rem;
                     /* background-color: aqua; */
                 }
 
                 .myVal {
-                    width: 2rem;
+                    width: 1.7rem;
                     /* background-color: brown; */
                 }
 

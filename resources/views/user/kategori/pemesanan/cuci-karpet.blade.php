@@ -29,7 +29,7 @@
                 <div class="left">
                     No. Transaksi
                 </div>
-                <div class="right">
+                <div class="right" id="id_ku">
                     #0D97GEK7208F
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <div class="left">
                     Nama User
                 </div>
-                <div class="right">
+                <div class="right" id="nama_ku">
                     {{ auth()->user()->name }}
                 </div>
             </div>
@@ -133,7 +133,7 @@
                                         </div>
 
                                         <div class="cost">
-                                            Rp. 20.000
+                                            Rp. 100.000
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
                     <div class="left">
                         Total Biaya
                     </div>
-                    <div class="right">
+                    <div class="right" id="totalB">
 
                     </div>
                 </div>
@@ -292,7 +292,7 @@
         </div>
     </div>
 
-    <form action="{{ route('storeJasa') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('storeJasa') }}" method="POST" enctype="multipart/form-data" class="fr">
         @csrf
         <input type="hidden" name="nama" id="nama" value="">
         <input type="hidden" name="id" id="id" value="">
@@ -509,7 +509,7 @@
         var wrap = document.getElementById('item-row');
         moreBtn.addEventListener('click', function() {
             var newItem = `
-                <div class="item col-12 new">
+                <div class="item new col-12">
                     <div class="item-desc">
                         <div class="gambar">
                             <img src="{{ asset('img-chategories/floor.png') }}">
@@ -528,7 +528,7 @@
                                 <div class="uk d-none">
                                 </div>
                             </div>
-                            <div class="cost new">
+                            <div class="cost">
                             Rp. 0
                             </div>
                         </div>
@@ -549,13 +549,13 @@
             tempDiv.innerHTML = newItem;
             wrap.appendChild(tempDiv);
 
-            const items = document.querySelectorAll('.item.col-12.new');
+            const items = document.querySelectorAll('.item.new');
             items.forEach(item => {
                 // Tangkap input number di dalam item
                 var nilai = item.querySelector('.nilai').value;
                 const inputF = item.querySelector('.f');
                 const inputL = item.querySelector('.l');
-                const costDiv = item.querySelector('.cost.new');
+                const costDiv = item.querySelector('.cost');
                 const ukuran = item.querySelector('.uk');
 
                 inputL.addEventListener('input', function() {
@@ -616,6 +616,7 @@
         var subtotal = document.querySelector('.subtotal .right');
         var bl = document.querySelector('.bl .right');
         var total = document.querySelector('.total .right');
+        var jumlah = document.getElementById('jumlah');
         var totalHarga = 0;
         var ongkos = 0;
         var totalQty = 0;
@@ -623,18 +624,20 @@
         items.forEach(function(item) {
             var nilai = parseInt(item.querySelector('.nilai').value);
             totalQty += nilai;
+            jumlah.value = totalQty;
+
             if (nilai > 0) {
                 var gambar = item.querySelector('.item-desc .gambar img').src;
                 var nama = item.querySelector('.names').textContent;
                 var ukuran = item.querySelector('.uk').textContent;
                 // var subtotal = item.querySelector('.harga').textContent;
                 var harga = item.querySelector('.cost').innerHTML;
-                harga = parseInt(harga.replaceAll('Rp. ', '').replace('.', ''));
+                var harg = parseInt(harga.replaceAll('Rp. ', '').replaceAll('.', ''));
 
-                var subtotal = nilai * harga;
+                var subtotal = nilai * harg;
                 totalHarga += subtotal;
                 var subisi = subtotal.toLocaleString().replaceAll(',', '.');
-                var hargas = harga.toLocaleString().replaceAll(',', '.');
+                // var hargas = harga.toLocaleString().replaceAll(',', '.');
 
                 subtotalHTML += '<div class="subtotals">';
                 subtotalHTML += '<div class="myItem">';
@@ -644,7 +647,7 @@
                 subtotalHTML += '<div class="uku">' + ukuran + '</div> ';
                 subtotalHTML += '</div> ';
                 subtotalHTML += '</div> ';
-                subtotalHTML += '<div class="myCost">Rp. ' + hargas + '</div> ';
+                subtotalHTML += '<div class="myCost">' + harga + '</div> ';
                 subtotalHTML += '<div class="myVal">' + nilai + '</div> ';
                 subtotalHTML += '<div class="myTotal"> Rp.  ' + subisi + '</div> ';
                 subtotalHTML += '</div> ';
@@ -681,9 +684,7 @@
             deButton.setAttribute('disabled', 'disabled');
         }
     }
-</script>
 
-<script>
     document.addEventListener('click', function() {
         var button = document.getElementById('nextPage');
         var check = [...document.querySelectorAll('input[type="radio"]')].some(input => input.checked);
@@ -694,7 +695,7 @@
         if (check && bruh && !inner) {
             button.disabled = false;
             button.classList.remove('mati');
-            // kirim();
+            kirim();
         } else {
             button.disabled = true;
             button.classList.add('mati');
@@ -757,6 +758,27 @@
             });
         });
     });
+
+    function kirim() {
+        var nama = document.getElementById('nama');
+        var id = document.getElementById('id');
+        var mulai = document.getElementById('mulai');
+        var selesai = document.getElementById('selesai');
+        var totalBiaya = document.getElementById('tobi');
+
+        var targetName = document.getElementById('nama_ku');
+        var targetId = document.getElementById('id_ku');
+        var targetMulai = document.getElementById('tgl-pick');
+        var targetSelesai = document.getElementById('tgl-selesai');
+        var targetBiaya = document.getElementById('totalB');
+
+
+        nama.value = targetName.innerHTML;
+        id.value = targetId.innerHTML;
+        mulai.value = targetMulai.innerHTML;
+        selesai.value = targetSelesai.innerHTML;
+        totalBiaya.value = targetBiaya.innerHTML;
+    }
 </script>
 
 <script>

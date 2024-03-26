@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Tambah Cuci Item')
 <link rel="stylesheet" href="{{ asset('css/admin-css/kategori/cuci.css') }}">
 
@@ -91,57 +92,213 @@
                                 </div>
                             </div>
                         @else
-                            <div class="mytable">
-                                <div class="table-head">
-                                    <div class="head-item">Nama Produk</div>
-                                    <div class="head-item">Harga Produk</div>
-                                    <div class="head-item">Jenis Layanan</div>
-                                    <div class="head-item">Gambar Produk</div>
-                                    <div class="head-item stat">Status</div>
-                                    <div class="head-item last">Aksi</div>
-                                </div>
-                                <div class="table-body">
-                                    @foreach ($cuciItems as $item)
-                                        <div class="body-item" data-item-id="{{ $item->id }}">
-                                            <div class="item name">
-                                                {{ $item->nama_barang }}
-                                            </div>
-                                            <div class="item">
-                                                {{ $item->harga_barang }}
-                                            </div>
-                                            <div class="item">
-                                                {{ $item->jenis_layanan }}
-                                            </div>
-                                            <div class="item">
-                                                <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="imgs">
-                                            </div>
-                                            <div class="item stat @if ($item->status == 'Publish') published @else Unpublish @endif">
-                                                <div class="pengisi">
-                                                    {{ $item->status }}
-                                                </div>
-                                            </div>
-                                            <div class="item last">
-                                                <div class="delete-form">
-                                                    <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn delete">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                                <div class="toggle-see btn">
-                                                    <i class="fa-regular fa-eye"></i>
-                                                </div>
-                                                <button class="btn edit-btn" data-id="{{ $item->id }}" type="button" data-bs-toggle="modal" data-bs-target="#edit-data">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                </button>
+                            <div class="table-responsive">
+                                <table id="zero_config" class="table border table-bordered text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Produk</th>
+                                            <th>Harga Produk</th>
+                                            <th>Jenis Layanan</th>
+                                            <th>Gambar Produk</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($cuciItems as $item)
+                                            <tr>
+                                                <td>{{ $item->nama_barang }}</td>
+                                                <td>{{ $item->harga_barang }}</td>
+                                                <td>{{ $item->jenis_layanan }}</td>
+                                                <td> <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="imgs"></td>
+                                                <td>
+                                                    <div class="item stat @if ($item->status == 'Publish') published @else Unpublish @endif">
+                                                        <div class="pengisi">
+                                                            {{ $item->status }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="delete-form">
+                                                        <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn delete">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="toggle">
+                                                        <form id="edit-form" name="edit-form" method="post">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <button type="button" class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#edit-data{{ $item->id }}">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </button>
+                                                    <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header d-flex align-items-center">
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        Edit Data Cuci
+                                                                    </h4>
+                                                                </div>
+                                                                <form action="{{ route('cuciUmumEdit') }}" method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <div class="items ps-2">
+                                                                            <input type="hidden" value="{{ $item->id }}" name="id">
+                                                                            <div class="title pb-1">Nama Barang <span class="text-danger">*</span></div>
+                                                                            <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target" value="{{ $item->nama_barang }}">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
+                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target" value="{{ $item->harga_barang }}">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
+                                                                            <div class="dropdown status" id="drop">
+                                                                                <input type="text" readonly class="form-control" id="edit-status" name="status" placeholder="Pilih Status . . ." required value="{{ $item->status }}">
+                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                    <i class="fa-solid fa-caret-down"></i>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu">
+                                                                                    <li class="is-real" onclick="editStatus('Publish')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('img/view.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Publish
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-real" onclick="editStatus('Unpublish')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('img/hide.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Unpublish
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Jenis Layanan <span class="text-danger">*</span></div>
+                                                                            <div class="dropdown layanan">
+                                                                                <input type="text" readonly class="form-control" id="edit-layanan" placeholder="Pilih Layanan . . ." name="jenis" required value="{{ $item->jenis_layanan }}">
+                                                                                <button class="btn dropdown-toggle edi" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
+                                                                                    <i class="fa-solid fa-caret-down"></i>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu">
+                                                                                    <li class="is-item" onclick="editLayanan('Dry Cleaning')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/towels.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Dry Cleaning
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-item" onclick="editLayanan('Cuci Express')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Cuci Express
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-item" onclick="editLayanan('Cuci Basah')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/wet.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Cuci Basah
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-item" onclick="editLayanan('Cuci Kering')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/tshirt.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Cuci Kering
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-item" onclick="editLayanan('Cuci Lipat')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/laundry.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Cuci Lipat
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-item" onclick="editLayanan('Cuci Setrika')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/setrika.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Cuci Setrika
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
 
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
+                                                                                    <li class="is-item" onclick="editLayanan('Jasa Setrika')">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('gambar-kategori/ironing.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Jasa Setrika
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="items ps-2 for-img">
+                                                                            <div class="gmb">
+                                                                                <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
+                                                                                <input type="file" name="gambar_barang" class="form-control pic-mine" value="{{ $item->gambar_barang }}">
+                                                                            </div>
+                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
+                                                                            Batal
+                                                                        </button>
+                                                                        <button type="submit" class="btn waves-effect simpan" data-bs-dismiss="modal">
+                                                                            Simpan Perubahan
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
+
+
                         @endif
                         <div class="pagination d-flex justify-content-center mt-3">
                             {{ $cuciItems->links() }}
@@ -161,7 +318,7 @@
                     </h4>
                 </div>
                 <form action="{{ route('storeCuciUmum') }}" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
+                    <div class="modal-body body-tambah">
                         @csrf
                         <div class="items ps-2">
                             <div class="title pb-1">Nama Barang <span class="text-danger">*</span></div>
@@ -174,12 +331,12 @@
                         <div class="items ps-2">
                             <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
                             <div class="dropdown status" id="drop">
-                                <input type="text" readonly class="form-control" id="isis" name="status" placeholder="Pilih Status . . ." required>
+                                <input type="text" readonly class="form-control" id="add-status" name="status" placeholder="Pilih Status . . ." required>
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-real" onclick="its('Publish')">
+                                    <li class="is-real" onclick="addStatus('Publish')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/view.png') }}">
@@ -189,7 +346,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-real" onclick="its('Unpublish')">
+                                    <li class="is-real" onclick="addStatus('Unpublish')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/hide.png') }}">
@@ -205,12 +362,12 @@
                         <div class="items ps-2">
                             <div class="title pb-1">Jenis Layanan <span class="text-danger">*</span></div>
                             <div class="dropdown layanan">
-                                <input type="text" readonly class="form-control" id="isi" placeholder="Pilih Layanan . . ." name="jenis" required>
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
+                                <input type="text" readonly class="form-control" id="add-layanan" placeholder="Pilih Layanan . . ." name="jenis" required>
+                                <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-item" onclick="item('Dry Cleaning')">
+                                    <li class="is-item" onclick="addLayanan('Dry Cleaning')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/towels.png') }}">
@@ -220,7 +377,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="item('Cuci Express')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Express')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
@@ -230,7 +387,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="item('Cuci Basah')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Basah')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/wet.png') }}">
@@ -240,7 +397,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="item('Cuci Kering')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Kering')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/tshirt.png') }}">
@@ -250,7 +407,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="item('Cuci Lipat')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Lipat')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/laundry.png') }}">
@@ -260,7 +417,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="item('Cuci Setrika')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Setrika')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/setrika.png') }}">
@@ -271,7 +428,7 @@
                                         </div>
                                     </li>
 
-                                    <li class="is-item" onclick="item('Jasa Setrika')">
+                                    <li class="is-item" onclick="addLayanan('Jasa Setrika')">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/ironing.png') }}">
@@ -302,212 +459,57 @@
             <!-- /.modal-content -->
         </div>
     </div>
-    <div id="edit-data" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header d-flex align-items-center">
-                    <h4 class="modal-title" id="myModalLabel">
-                        Tambahkan Item Cuci
-                    </h4>
-                </div>
-                <form action="x" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="items ps-2">
-                            <div class="title pb-1">Nama Barang <span class="text-danger">*</span></div>
-                            <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target">
-                        </div>
-                        <div class="items ps-2">
-                            <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
-                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target">
-                        </div>
-                        <div class="items ps-2">
-                            <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
-                            <div class="dropdown status" id="drop">
-                                <input type="text" readonly class="form-control" id="isis" name="status" placeholder="Pilih Status . . ." required>
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-caret-down"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li class="is-real" onclick="its('Publish')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('img/view.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Publish
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-real" onclick="its('Unpublish')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('img/hide.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Unpublish
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="items ps-2">
-                            <div class="title pb-1">Jenis Layanan <span class="text-danger">*</span></div>
-                            <div class="dropdown layanan">
-                                <input type="text" readonly class="form-control" id="isi" placeholder="Pilih Layanan . . ." name="jenis" required>
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
-                                    <i class="fa-solid fa-caret-down"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li class="is-item" onclick="item('Dry Cleaning')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/towels.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Dry Cleaning
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-item" onclick="item('Cuci Express')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Cuci Express
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-item" onclick="item('Cuci Basah')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/wet.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Cuci Basah
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-item" onclick="item('Cuci Kering')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/tshirt.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Cuci Kering
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-item" onclick="item('Cuci Lipat')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/laundry.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Cuci Lipat
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-item" onclick="item('Cuci Setrika')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/setrika.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Cuci Setrika
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="is-item" onclick="item('Jasa Setrika')">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/ironing.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Jasa Setrika
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="items ps-2">
-                            <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
-                            <input type="file" name="gambar_barang" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
-                            Batal
-                        </button>
-                        <button type="submit" class="btn waves-effect simpan" data-bs-dismiss="modal">
-                            Tambahkan
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 
 @endsection
 
-@section('script')
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
-
+@section('internal-script')
+    <script src="{{ asset('package') }}/dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.edit-btn').click(function() {
-                var itemId = $(this).data('id');
-                $.get('/items/' + itemId, function(data) {
-                    $('#editItemId').val(data.id);
-                    $('#editNamaBarang').val(data.nama_barang);
-                    $('#editHargaBarang').val(data.harga_barang);
-                    $('#editStatusBarang').val(data.status_barang);
-                    // Tambahkan kode untuk menampilkan gambar barang jika perlu
-                    $('#editModal').modal('show');
-                });
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the file input element
+            var fileInput = document.querySelector('.pic-mine');
 
-            // Submit form untuk menyimpan perubahan
-            $('#editForm').submit(function(e) {
-                e.preventDefault();
-                var formData = new FormData(this);
-                $.ajax({
-                    url: '/items/' + $('#editItemId').val(),
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        $('#editModal').modal('hide');
-                        // Tambahkan kode untuk menampilkan notifikasi atau melakukan sesuatu setelah edit berhasil
-                    },
-                    error: function(xhr, status, error) {
-                        // Tambahkan kode untuk menampilkan pesan error jika perlu
+            var imagePreview = document.querySelector('.showimg');
+
+            // Add event listener to the file input
+            fileInput.addEventListener('change', function() {
+                // Check if any file is selected
+                if (fileInput.files && fileInput.files[0]) {
+                    // Create a FileReader object
+                    var reader = new FileReader();
+
+                    // Set up the FileReader onload function
+                    reader.onload = function(e) {
+                        // Update the src attribute of the image with the selected file's data URL
+                        imagePreview.src = e.target.result;
                     }
-                });
+
+                    // Read the selected file as a data URL
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
             });
         });
-    </script>
 
-    <script>
-        function item(itemName) {
-            var inputElement = document.getElementById('isi');
-            inputElement.setAttribute('value', itemName);
+        function addLayanan(item) {
+            var x = document.getElementById('add-layanan');
+            x.setAttribute('value', item);
             modal();
         }
 
-        function its(nims) {
-            var ins = document.getElementById('isis');
-            ins.setAttribute('value', nims);
+        function addStatus(item) {
+            var x = document.getElementById('add-status');
+            x.setAttribute('value', item);
+        }
+
+        function editStatus(item) {
+            var x = document.getElementById('edit-status');
+            x.setAttribute('value', item);
+        }
+
+        function editLayanan(item) {
+            var x = document.getElementById('edit-layanan');
+            x.setAttribute('value', item);
         }
 
         document.querySelectorAll('.is-item').forEach(function(item) {
@@ -515,14 +517,15 @@
         });
 
         function close() {
-            var modals = document.querySelector('.modal-body');
+            var modals = document.querySelector('.body-tambah');
             modals.classList.remove('active');
         }
 
         function modal() {
-            var btnyala = document.querySelector('.dropdown-toggle.show');
-            var modals = document.querySelector('.modal-body');
-            if (btnyala) {
+            var btnyala = document.querySelector('.dropdown-toggle.edi.show');
+            var btnadd = document.querySelector('.dropdown-toggle.add.show');
+            var modals = document.querySelector('.body-tambah');
+            if (btnyala || btnadd) {
                 modals.classList.add('active');
             } else {
                 modals.classList.remove('active');
@@ -531,20 +534,6 @@
 
         var tekt = document.querySelector('.small.text-muted');
         tekt.style.display = 'none';
-    </script>
-    <script>
-        status = document.querySelectorAll('.stat').forEach(function(stat) {
-            stat.addEventListener('DOMContentLoaded', function() {
-                if (stat.innerText === "Unpublish") {
-                    stat.classList.add('un');
-                } else {
-                    stat.classList.remove('un');
-                }
-            });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-
-        });
     </script>
     <script>
         // Select all delete buttons and attach event listener to each of them
@@ -584,18 +573,6 @@
         </script>
     @endif
 
-    @if (Session::has('berhasil'))
-        <script>
-            Swal.fire({
-                title: 'Sukses!',
-                text: '{{ Session::get('berhasil') }}',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        </script>
-    @endif
-
     <script>
         function formatNumber() {
             // Get the input element
@@ -615,4 +592,14 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('.form-check-input').click(function(event) {
+                var switch_id = $(this).attr("switch_id");
+                var myUrl = "/toggleStatus/" + $(this).attr('data-id').replace(/\W/g, '-');
+                window.location.href = myUrl;
+
+            });
+        });
+    </script>
 @endsection

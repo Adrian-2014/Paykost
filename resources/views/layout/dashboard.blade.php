@@ -151,10 +151,6 @@
             @yield('container')
         </div>
     </div>
-
-    <!--  Search Bar -->
-
-    @yield('script')
     <!--  Import Js Files -->
     <script src="{{ asset('package') }}/dist/libs/jquery/dist/jquery.min.js"></script>
     <script src="{{ asset('package') }}/dist/libs/simplebar/dist/simplebar.min.js"></script>
@@ -169,6 +165,8 @@
     <script src="{{ asset('package') }}/dist/libs/owl.carousel/dist/owl.carousel.min.js"></script>
     <script src="{{ asset('package') }}/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/dashboard.js"></script>
+
+    @yield('internal-script')
 </body>
 
 </html>

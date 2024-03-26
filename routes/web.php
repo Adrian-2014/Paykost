@@ -79,7 +79,10 @@ Route::get('/admin/create', [adminControll::class, 'create']);
 // layanan cuci umum
 Route::get('/admin/jasaCuciUmum', [adminControll::class, 'jasaCuciUmum'])->name('pageCuci');
 Route::post('cuciUmum', [adminControll::class, 'storeCuciUmum'])->name('storeCuciUmum');
-Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy');
+Route::get('/admin/jasaCuciUmum', [adminControll::class, 'jasaCuciUmum'])->name('pageCuci');
+Route::post('cuciUmumEdit', [adminControll::class, 'cuciUmumEdit'])->name('cuciUmumEdit');
+Route::get('toggleStatus/{id}', [adminControll::class, 'toggleStatus'])->name('toggleStatus');
+// Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy')
 // Route untuk mengambil data barang
 
 

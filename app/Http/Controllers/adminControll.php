@@ -78,9 +78,47 @@ class adminControll extends Controller
         $cuciItem->gambar_barang = $namaFile;
         $cuciItem->save();
         // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
-        return back()->with('berhasil', 'Barang berhasil ditambahkan.');
+        return back()->with('success', 'Barang berhasil ditambahkan.');
     }
 
+    public function cuciUmumEdit(Request $request)
+    {
+
+        $request->validate([
+            'nama_barang' => 'required',
+            'harga_barang' => 'required',
+            'gambar_barang' => 'nullable',
+            'status'=>'required',
+            'jenis'=>'required',
+        ]);
+
+        if($request->gambar_barang) {
+            $gambarBarang = $request->file('gambar_barang');
+            $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+            $gambarBarang->move(public_path('uploads'), $namaFile);
+        } else {
+            $namaFile = Cuci::find($request->id)->gambar_barang;
+        }
+
+        $CuciItems = Cuci::find($request->id);
+        $CuciItems->nama_barang = $request->nama_barang;
+        $CuciItems->harga_barang = $request->harga_barang;
+        $CuciItems->status = $request->status;
+        $CuciItems->jenis_layanan = $request->jenis;
+        // $CuciItems->layanan_barang = $request->layanan_barang;
+        $CuciItems->gambar_barang = $namaFile;
+        $CuciItems->save();
+        // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
+        // return back()->with('success', 'Kamar Telah Ditambahkan.');
+        return back()->with('success', 'Data Berhasil Dirubah');
+    }
+
+    public function toggleStatus($id) {
+        $cuci = Cuci::find($id);
+        $cuci->status = $cuci->status == 'Publish' ? 'Unpublish' : 'Publish';
+        $cuci->save();
+        return back()->with('success', 'Status Berhasil Dirubah');
+    }
 
     public function hapus($id)
     {
