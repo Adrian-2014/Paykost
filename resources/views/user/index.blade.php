@@ -139,15 +139,24 @@
                     <div class="splide">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                <li class="splide__slide">
-                                    <img src="{{ asset('img/satu.jpg') }}">
-                                </li>
-                                <li class="splide__slide">
-                                    <img src="{{ asset('img/dua.jpg') }}">
-                                </li>
-                                <li class="splide__slide">
-                                    <img src="{{ asset('img/tiga.jpg') }}">
-                                </li>
+                                @if ($bannerKost->isEmpty())
+                                    <li class="splide__slide">
+                                        <div class="empty-page">
+                                            <div class="one">
+                                                <img src="{{ asset('img/page.png') }}">
+                                            </div>
+                                            <div class="two">
+                                                Banner Belum Ditambahkan !
+                                            </div>
+                                        </div>
+                                    </li>
+                                @else
+                                    @foreach ($bannerKost as $item)
+                                        <li class="splide__slide">
+                                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -380,67 +389,24 @@
     <div class="splide" role="group" id="banner">
         <div class="splide__track">
             <ul class="splide__list">
-                <li class="splide__slide">
-                    <div class="banner container-fluid">
-                        <div class="row satu">
-                            <div class="col-11 mx-auto">
-                                <div class="header fw-medium">
-                                    Ajak Teman dan dapatkan
-                                </div>
-                                <div class="inti fw-bold">
-                                    <div class="disk">DISKON 5%</div>
-                                    <div class="jangka">Selama Tiga Bulan</div>
-                                </div>
-                                <div class="rinci fw-medium">
-                                    Untuk setiap teman yang kamu ajak
-                                </div>
+                @if ($bannerPro->isEmpty())
+                    <li class="splide__slide">
+                        <div class="empty-pro">
+                            <div class="one">
+                                <img src="{{ asset('img/page.png') }}">
+                            </div>
+                            <div class="two">
+                                Banner Belum Ditambahkan !
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="splide__slide">
-                    <div class="banner container-fluid">
-                        <div class="row dua">
-                            <div class="col-11 mx-auto">
-                                <div class="display">
-                                    <div class="header">
-                                        <div class="satu fw-medium">Rasakan Kemudahan</div>
-                                        <div class="dua">#BayarKost</div>
-                                        <div class="tiga fw-medium">Dengan Paykost</div>
-                                    </div>
-                                    <div class="bottom">
-                                        Kemudahan & keamanan dalam Transaksi.
-                                    </div>
-                                </div>
-                                <div class="icons">
-                                    <img src="{{ asset('img/family.png') }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="splide__slide">
-                    <div class="banner container-fluid">
-                        <div class="row tiga">
-                            <div class="col-11 mx-auto">
-                                <div class="content">
-                                    <div class="satu fw-semibold">
-                                        Proses Cepat
-                                    </div>
-                                    <div class="dua fw-semibold">
-                                        Pelayanan Mantap
-                                    </div>
-                                    <div class="tiga">
-                                        #PaykostAja
-                                    </div>
-                                </div>
-                                <div class="gambar">
-                                    <img src="{{ asset('img/celebrate.png') }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                @else
+                    @foreach ($bannerPro as $item)
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
     </div>

@@ -23,7 +23,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/dist/boxicons.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @yield('styles')
 
 </head>
@@ -69,6 +70,24 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/user" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-user"></i>
+                                </span>
+                                <span class="hide-menu">User</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/banner" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-app-window"></i>
+                                </span>
+                                <span class="hide-menu">Banner</span>
+                            </a>
+                        </li>
+
                         <li class="nav-small-cap">
                             <span class="hide-menu">Kategori</span>
                         </li>
@@ -76,7 +95,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
                                 <span class="d-flex">
-                                    <i class="ti ti-chart-donut-3"></i>
+                                    <i class="ti ti-wash-dry-1"></i>
                                 </span>
                                 <span class="hide-menu">Jasa Cuci Baju</span>
                             </a>
@@ -90,11 +109,19 @@
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="./blog-detail.html" class="sidebar-link">
+                                    <a href="/admin/jasaCuciKhusus" class="sidebar-link">
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
                                         </div>
                                         <span class="hide-menu">Jasa Cuci Khusus </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="/admin/jasaCuciSepatu" class="sidebar-link">
+                                        <div class="round-16 d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-circle"></i>
+                                        </div>
+                                        <span class="hide-menu">Jasa Cuci Sepatu </span>
                                     </a>
                                 </li>
                             </ul>

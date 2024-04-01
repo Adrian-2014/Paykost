@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <form action="" method="" class="form">
+    <div class="form">
         <div class="inform-umum">
             <div class="umum-item">
                 <div class="kiri">No. Transaksi</div>
@@ -35,7 +35,7 @@
             </div>
             <div class="umum-item">
                 <div class="kiri">Tanggal Laundry</div>
-                <div class="kanan">{{ $pemesanan->tgl_start }}</div>
+                <div class="kanan" id="start">{{ $pemesanan->tgl_start }}</div>
             </div>
             <div class="umum-item special">
                 <div class="kiri">Tanggal Pengambilan</div>
@@ -76,9 +76,21 @@
 
         <div class="kumpulan-button">
             <a href="/cuci" class="back">Halaman Utama</a>
-            <button type="submit" class="submit">Konfirmasi Pembayaran</button>
+            <form action="{{ route('proses') }}" method="POST">
+                @csrf
+                <input type="hidden" name="id" value="{{ $pemesanan->id_pembelian }}">
+                <input type="hidden" name="nama" value="{{ $pemesanan->nama_user }}">
+                <input type="hidden" name="no_kamar" value="{{ $pemesanan->no_kamar }}">
+                <input type="hidden" name="layanan" value="{{ $pemesanan->jenis_layanan }}">
+                <input type="hidden" name="tgl_start" value="{{ $pemesanan->tgl_start }}">
+                <input type="hidden" name="tgl_done" value="{{ $pemesanan->tgl_done }}">
+                <input type="hidden" name="jumlah" value="{{ $pemesanan->jumlah }}">
+                <input type="hidden" name="status" value="Dalam Antrean">
+                <input type="hidden" name="total_biaya" value="{{ $pemesanan->total_biaya }}">
+                <button type="submit" class="submit">Konfirmasi Pembayaran</button>
+            </form>
         </div>
-    </form>
+    </div>
     <div class="alert">
         <div class="menyala">
 
@@ -88,18 +100,24 @@
     <div class="splide banner" role="group" aria-label="Splide Basic HTML Example" id="label">
         <div class="splide__track">
             <ul class="splide__list">
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/Paykost-Laundry.png') }}">
-                </li>
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/laundry-banner-2.png') }}">
-                </li>
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/laundry-banner-3.png') }}">
-                </li>
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/laundry-banner-4.png') }}">
-                </li>
+                @if ($bannerPro->isEmpty())
+                    <li class="splide__slide">
+                        <div class="empty-pro">
+                            <div class="one">
+                                <img src="{{ asset('img/page.png') }}">
+                            </div>
+                            <div class="two">
+                                Banner Belum Ditambahkan !
+                            </div>
+                        </div>
+                    </li>
+                @else
+                    @foreach ($bannerPro as $item)
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
     </div>
@@ -188,6 +206,17 @@
         </div>
     </div>
 
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Transaksi Berhasil!',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2500 // Waktu penampilan Sweet Alert (dalam milidetik)
+            });
+        </script>
+    @endif
 
     <script>
         var splide = new Splide('.splide', {

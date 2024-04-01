@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('jenis_layanan');
             $table->string('ukuran_barang');
-            $table->string('detail_ukuran');
+            // $table->string('detail_ukuran');
             $table->timestamps();
         });
     }

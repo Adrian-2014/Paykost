@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Cuci;
 use App\Models\cuciBasah;
 use App\Models\cuciKering;
-use App\Models\cuciLipat;
 
+use App\Models\cuciLipat;
+use App\Models\cuciSepatu;
 use App\Models\cuciSetrika;
+use App\Models\cucisize;
 use App\Models\jasaSetrika;
 use App\Models\User;
 use Database\Seeders\CuciKeringSeeder;
@@ -27,33 +30,92 @@ class adminControll extends Controller
         return view('admin.index');
     }
 
-    public function create() {
-        return view('admin/create');
+    // For User
+    public function user() {
+        return view('admin.user');
+    }
+    // For User
+
+    // for Banner
+    public function banner() {
+        $banners = Banner::orderBy('id', 'desc')->get();
+        return view('admin.banner', compact('banners'));
     }
 
-    public function createStore(Request $req)
+    public function storeBanner(Request $request) {
+        $request->validate([
+            'gambar_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'lokasi_banner' => 'required',
+            'status'=>'required',
+            'jenis'=>'required',
+        ]);
+
+        $gambarBarang = $request->file('gambar_banner');
+        $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+        $gambarBarang->move(public_path('uploads'), $namaFile);
+
+        $banner = new Banner();
+        $banner->lokasi_banner = $request->lokasi_banner;
+        $banner->jenis_banner = $request->jenis;
+        $banner->status = $request->status;
+        $banner->gambar_banner = $namaFile;
+        $banner->save();
+        return back()->with('success', 'Banner berhasil ditambahkan.');
+    }
+    public function editBanner(Request $request)
     {
+        $request->validate([
+            'lokasi_banner' => 'required',
+            'gambar_banner' => 'nullable',
+            'status'=>'required',
+            'jenis'=>'required',
+        ]);
 
-       $createdData = $req->validate([
-            'name'=> 'required|max:255',
-            'email'=> 'required|email|unique:users',
-            'password'=> 'required|min:4'
-        ],
-    [
-        'email.unique' => 'Email sudah digunakan. Silakan gunakan email lain.'
-    ]);
+        if($request->gambar_banner) {
+            $gambar_banner = $request->file('gambar_banner');
+            $namaFile = time().'.'.$gambar_banner->getClientOriginalExtension();
+            $gambar_banner->move(public_path('uploads'), $namaFile);
+        } else {
+            $namaFile = Banner::find($request->id)->gambar_banner;
+        }
 
-    $createdData['password'] = bcrypt($createdData['password']);
-       User::create($createdData);
+        $baner = Banner::find($request->id);
+        $baner->lokasi_banner = $request->lokasi_banner;
+        $baner->jenis_banner = $request->jenis;
+        $baner->status = $request->status;
+        $baner->gambar_banner = $namaFile;
+        $baner->save();
 
-       return back()->with('success', 'creating success!, creating more users!');
+        if($baner->save()) {
+            return back()->with('success', 'Barang berhasil Di Ubah.');
+        } else {
+            return back()->with('fail', 'Mohon lengkapi Data sebelum Mengirim');
+        }
+
     }
 
+    public function bannerHapus($id) {
+        // Cari item berdasarkan ID
+        $item = Banner::findOrFail($id);
+        // Hapus item
+        $item->delete();
+        return back()->with('success', 'Barang Telah Dihapus.');
+    }
+
+    public function toggleBanner($id) {
+        $banner = Banner::find($id);
+        $banner->status = $banner->status == 'Publish' ? 'Unpublish' : 'Publish';
+        $banner->save();
+        return back()->with('success', 'Status Berhasil Dirubah');
+    }
+
+    // Layanan Laundry
+
+    // Umum
     public function jasaCuciUmum() {
-        $cuciItems = Cuci::orderBy('id', 'desc')->paginate(15);
+        $cuciItems = Cuci::orderBy('id', 'desc')->get();
         return view('admin.kategori.cuci.jasa-cuci-umum', compact('cuciItems'));
     }
-
     public function storeCuciUmum(Request $request)
     {
         $request->validate([
@@ -78,12 +140,14 @@ class adminControll extends Controller
         $cuciItem->gambar_barang = $namaFile;
         $cuciItem->save();
         // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
-        return back()->with('success', 'Barang berhasil ditambahkan.');
+        if($cuciItem->save()) {
+            return back()->with('success', 'Barang berhasil ditambahkan.');
+        } else {
+            return back()->with('fail', 'Mohon lengkapi Data sebelum Mengirim');
+        }
     }
-
     public function cuciUmumEdit(Request $request)
     {
-
         $request->validate([
             'nama_barang' => 'required',
             'harga_barang' => 'required',
@@ -108,18 +172,20 @@ class adminControll extends Controller
         // $CuciItems->layanan_barang = $request->layanan_barang;
         $CuciItems->gambar_barang = $namaFile;
         $CuciItems->save();
-        // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
-        // return back()->with('success', 'Kamar Telah Ditambahkan.');
-        return back()->with('success', 'Data Berhasil Dirubah');
-    }
 
+        if($CuciItems->save()) {
+            return back()->with('success', 'Barang berhasil Di Ubah.');
+        } else {
+            return back()->with('fail', 'Mohon lengkapi Data sebelum Mengirim');
+        }
+
+    }
     public function toggleStatus($id) {
         $cuci = Cuci::find($id);
         $cuci->status = $cuci->status == 'Publish' ? 'Unpublish' : 'Publish';
         $cuci->save();
         return back()->with('success', 'Status Berhasil Dirubah');
     }
-
     public function hapus($id)
     {
         // Cari item berdasarkan ID
@@ -131,4 +197,149 @@ class adminControll extends Controller
 
     }
 
+    // Khusus
+    public function jasaCuciKhusus() {
+        $cuciItems = cucisize::orderBy('id', 'desc')->get();
+        return view('admin.kategori.cuci.jasa-cuci-khusus', compact('cuciItems'));
+    }
+    public function storeCuciKhusus(Request $request) {
+        $request->validate([
+            'nama_barang' => 'required',
+            'harga_barang' => 'required',
+            'jenis'=>'required',
+            'status'=>'required',
+            'gambar_barang' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'ukuran' => 'required',
+        ]);
+
+        $gambarBarang = $request->file('gambar_barang');
+        $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+        $gambarBarang->move(public_path('uploads'), $namaFile);
+
+        $cuciItem = new cucisize();
+        $cuciItem->nama_barang = $request->nama_barang;
+        $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->jenis_layanan = $request->jenis;
+        $cuciItem->status = $request->status;
+        $cuciItem->ukuran_barang = $request->ukuran;
+        $cuciItem->gambar_barang = $namaFile;
+        $cuciItem->save();
+        // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
+        return back()->with('success', 'Barang berhasil ditambahkan.');
+    }
+
+    public function cuciKhususEdit(Request $request) {
+        $request->validate([
+            'nama_barang' => 'required',
+            'harga_barang' => 'required',
+            'jenis'=>'required',
+            'status'=>'required',
+            'gambar_barang' => 'nullable',
+            'ukuran' => 'required',
+        ]);
+
+        if($request->gambar_barang) {
+            $gambarBarang = $request->file('gambar_barang');
+            $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+            $gambarBarang->move(public_path('uploads'), $namaFile);
+        } else {
+            $namaFile = cucisize::find($request->id)->gambar_barang;
+        }
+
+        $cuciItem = cucisize::find($request->id);
+        $cuciItem->nama_barang = $request->nama_barang;
+        $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->jenis_layanan = $request->jenis;
+        $cuciItem->status = $request->status;
+        $cuciItem->ukuran_barang = $request->ukuran;
+        $cuciItem->gambar_barang = $namaFile;
+        $cuciItem->save();
+        // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
+        return back()->with('success', 'Barang berhasil di Edit.');
+    }
+
+    public function toggleKhusus($id) {
+        $cuci = cucisize::find($id);
+        $cuci->status = $cuci->status == 'Publish' ? 'Unpublish' : 'Publish';
+        $cuci->save();
+        return back()->with('success', 'Status Berhasil Dirubah');
+    }
+
+    public function khususHapus($id) {
+        // Cari item berdasarkan ID
+        $item = cucisize::findOrFail($id);
+        // Hapus item
+        $item->delete();
+        return back()->with('success', 'Barang Telah Dihapus.');
+    }
+
+    // Sepatu
+    public function jasaCuciSepatu() {
+        $cuciItems = cuciSepatu::orderBy('id', 'desc')->get();
+        return view('admin.kategori.cuci.jasa-cuci-sepatu', compact('cuciItems'));
+    }
+    public function storeCuciSepatu(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'harga_barang' => 'required',
+            'gambar_barang' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status'=>'required',
+            'jenis'=>'required',
+        ]);
+
+        $gambarBarang = $request->file('gambar_barang');
+        $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+        $gambarBarang->move(public_path('uploads'), $namaFile);
+
+        $cuciItem = new cuciSepatu();
+        $cuciItem->nama = $request->nama;
+        $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->jenis_layanan = $request->jenis;
+        $cuciItem->status = $request->status;
+        // $cuciItem->layanan_barang = $request->layanan_barang;
+        $cuciItem->gambar_barang = $namaFile;
+        $cuciItem->save();
+        // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
+        return back()->with('success', 'Barang berhasil ditambahkan.');
+    }
+    public function cuciSepatuEdit(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'harga_barang' => 'required',
+            'gambar_barang' => 'nullable',
+            'status'=>'required',
+            'jenis'=>'required',
+        ]);
+
+        if($request->gambar_barang) {
+            $gambarBarang = $request->file('gambar_barang');
+            $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+            $gambarBarang->move(public_path('uploads'), $namaFile);
+        } else {
+            $namaFile = cuciSepatu::find($request->id)->gambar_barang;
+        }
+
+        $CuciItems = cuciSepatu::find($request->id);
+        $CuciItems->nama = $request->nama;
+        $CuciItems->harga_barang = $request->harga_barang;
+        $CuciItems->status = $request->status;
+        $CuciItems->jenis_layanan = $request->jenis;
+        // $CuciItems->layanan_barang = $request->layanan_barang;
+        $CuciItems->gambar_barang = $namaFile;
+        $CuciItems->save();
+
+        if($CuciItems->save()) {
+            return back()->with('success', 'Data Berhasil Dirubah');
+        } else {
+            return back()->with('fail', 'Data Gagal Di Ubah');
+        }
+    }
+    public function toggleSepatu($id) {
+        $cuci = cuciSepatu::find($id);
+        $cuci->status = $cuci->status == 'Publish' ? 'Unpublish' : 'Publish';
+        $cuci->save();
+        return back()->with('success', 'Status Berhasil Dirubah');
+    }
 }

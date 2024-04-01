@@ -189,7 +189,6 @@
             checkValidation();
         });
 
-
         // dropdown
 
         function bagian(barangHilang) {

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class cucisize extends Model
 {
     use HasFactory;
-    protected $table = 'cuciSize';
+    protected $table = 'cucisize';
 }

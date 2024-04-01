@@ -20,25 +20,24 @@
     <div class="splide banner">
         <div class="splide__track">
             <ul class="splide__list">
-                <li class="splide__slide satu">
-                    <div class="isi">
-                        <div class="quote fw-semibold">
-                            CUCI BERSIH & WANGI
-                        </div>
-                        <div class="diskon">
-                            <div class="satu">
-                                Diskon 30%
+                @if ($bannerPro->isEmpty())
+                    <li class="splide__slide">
+                        <div class="empty-pro">
+                            <div class="one">
+                                <img src="{{ asset('img/page.png') }}">
                             </div>
-                            <div class="dua">
-                                untuk pesanan pertama
+                            <div class="two">
+                                Banner Belum Ditambahkan !
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="splide__slide dua"><img src="{{ asset('img-chategories/Paykost-Laundry.png') }}"></li>
-                <li class="splide__slide tiga">
-                    <img src="{{ asset('img-chategories/Kuning Ungu Ilustrasi Spanduk Jasa Cuci Baju Kilat.jpg') }}">
-                </li>
+                    </li>
+                @else
+                    @foreach ($bannerPro as $item)
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
     </div>
@@ -59,30 +58,6 @@
                                 </div>
                                 <div class="pelayanan-name fw-medium">
                                     Cuci Express
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="item-pelayanan">
-                            <a href="/cuci/cuci-jas/jas">
-                                <div class="gambar">
-                                    <img src="{{ asset('gambar-kategori/wedding-suit.png') }}">
-                                </div>
-                                <div class="pelayanan-name fw-medium">
-                                    Cuci Jas
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="item-pelayanan">
-                            <a href="/cuci/cuci-gaun/gaun">
-                                <div class="gambar">
-                                    <img src="{{ asset('gambar-kategori/dress.png') }}">
-                                </div>
-                                <div class="pelayanan-name fw-medium">
-                                    Cuci Gaun
                                 </div>
                             </a>
                         </div>
@@ -119,18 +94,6 @@
                                 </div>
                                 <div class="pelayanan-name fw-medium">
                                     Cuci Lipat
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="item-pelayanan">
-                            <a href="/gorden">
-                                <div class="gambar">
-                                    <img src="{{ asset('gambar-kategori/blinds.png') }}">
-                                </div>
-                                <div class="pelayanan-name fw-medium">
-                                    Cuci Gorden
                                 </div>
                             </a>
                         </div>
@@ -197,7 +160,7 @@
                     </div>
                     <div class="col">
                         <div class="item-pelayanan">
-                            <a href="/basah">
+                            <a href="/sepatu">
                                 <div class="gambar">
                                     <img src="{{ asset('gambar-kategori/running-shoe.png') }}">
                                 </div>
@@ -246,13 +209,13 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/kamarku" class="nav-link">
+                <a href="/proses" class="nav-link">
                     <i class='bx bxs-washer'></i>
                     <div class="isi fw-normal">Laundry</div>
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat" class="nav-link">
+                <a href="/riwayatCuci" class="nav-link">
                     <i class='bx bx-history'></i>
                     <div class="isi fw-normal">
                         Riwayat

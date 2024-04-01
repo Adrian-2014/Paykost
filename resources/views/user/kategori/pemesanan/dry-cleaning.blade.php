@@ -140,6 +140,7 @@
         <input type="hidden" name="jumlah" id="jumlah" value="">
         <input type="hidden" name="layanan" id="layanan" value="Dry Cleaning">
         <input type="hidden" name="total_biaya" id="tobi" value="">
+        <input type="hidden" name="no_kamar" id="no_kamar" value="5">
 
         <input type="hidden" name="gambar" id="img" value="">
         <input type="hidden" name="bank_name" id="bank_name" value="">

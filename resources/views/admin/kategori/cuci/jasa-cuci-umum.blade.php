@@ -3,7 +3,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Tambah Cuci Item')
-<link rel="stylesheet" href="{{ asset('css/admin-css/kategori/cuci.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin-css/kategori/cuci-umum.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 @section('container')
     <header class="app-header">
@@ -73,7 +74,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2 ps-2 pt-2">Data Item Jasa Cuci Umum</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Data Cuci Umum</h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-end">
@@ -92,54 +93,98 @@
                                 </div>
                             </div>
                         @else
-                            <div class="table-responsive">
-                                <table id="zero_config" class="table border table-bordered text-nowrap">
+                            <div class="tableku table-responsive">
+                                <table id="default_order" class="table border table-bordered text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th>Nama Produk</th>
-                                            <th>Harga Produk</th>
-                                            <th>Jenis Layanan</th>
-                                            <th>Gambar Produk</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
+                                            <th class="nama">
+                                                <div class="th-item">
+                                                    Nama Produk
+                                                </div>
+                                            </th>
+                                            <th class="harga">
+                                                <div class="th-item">
+                                                    Harga
+                                                </div>
+                                            </th>
+                                            <th class="layanan">
+                                                <div class="th-item">
+                                                    Jenis Layanan
+                                                </div>
+                                            </th>
+                                            <th class="img">
+                                                <div class="th-item">
+                                                    Gambar Produk
+                                                </div>
+                                            </th>
+                                            <th class="status">
+                                                <div class="th-item">
+                                                    Status
+                                                </div>
+                                            </th>
+                                            <th class="action">
+                                                <div class="th-item">
+                                                    Aksi
+                                                </div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($cuciItems as $item)
                                             <tr>
-                                                <td>{{ $item->nama_barang }}</td>
-                                                <td>{{ $item->harga_barang }}</td>
-                                                <td>{{ $item->jenis_layanan }}</td>
-                                                <td> <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="imgs"></td>
                                                 <td>
-                                                    <div class="item stat @if ($item->status == 'Publish') published @else Unpublish @endif">
-                                                        <div class="pengisi">
+                                                    <div class="td-item name">{{ $item->nama_barang }}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item">
+                                                        <div class="item">
+                                                            {{ $item->harga_barang }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item layanan">
+                                                        <div class="item">
+                                                            {{ $item->jenis_layanan }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item img">
+                                                        <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="item img">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item status">
+                                                        <div class="item stat @if ($item->status == 'Publish') published @else unpublish @endif">
                                                             {{ $item->status }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="delete-form">
-                                                        <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn delete">
-                                                                <i class="fa-solid fa-trash"></i>
-                                                            </button>
-                                                        </form>
+                                                    <div class="td-item action">
+                                                        <div class="toggle">
+                                                            <form id="edit-form" name="edit-form" method="post">
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="delete-form">
+                                                            <form action="{{ route('item.destroy', $item->id) }}" method="POST" id="delete-form">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn delete">
+                                                                    <i class="fa-solid fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                        <button type="button" class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#edit-data{{ $item->id }}">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </button>
                                                     </div>
-                                                    <div class="toggle">
-                                                        <form id="edit-form" name="edit-form" method="post">
-                                                            <div class="form-check form-switch">
-                                                                <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <button type="button" class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#edit-data{{ $item->id }}">
-                                                        <i class="fa-solid fa-pen-to-square"></i>
-                                                    </button>
-                                                    <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                    <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ nama_barang: '{{ $item->nama_barang }}', harga_barang: '{{ $item->harga_barang }}', status: '{{ $item->status }}', jenis: '{{ $item->jenis_layanan }}' }">
                                                             <div class="modal-content">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
@@ -152,21 +197,21 @@
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
                                                                             <div class="title pb-1">Nama Barang <span class="text-danger">*</span></div>
-                                                                            <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target" value="{{ $item->nama_barang }}">
+                                                                            <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target" value="" x-model="nama_barang">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
-                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target" value="{{ $item->harga_barang }}">
+                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberEdit" class="form-control target" value="" x-model="harga_barang" oninput="formatEdit()">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
                                                                             <div class="dropdown status" id="drop">
-                                                                                <input type="text" readonly class="form-control" id="edit-status" name="status" placeholder="Pilih Status . . ." required value="{{ $item->status }}">
+                                                                                <input type="text" readonly class="form-control" id="edit-status" name="status" placeholder="Pilih Status . . ." required value="" x-model="status">
                                                                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                     <i class="fa-solid fa-caret-down"></i>
                                                                                 </button>
                                                                                 <ul class="dropdown-menu">
-                                                                                    <li class="is-real" onclick="editStatus('Publish')">
+                                                                                    <li class="is-real" x-on:click = "status = 'Publish'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('img/view.png') }}">
@@ -176,7 +221,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-real" onclick="editStatus('Unpublish')">
+                                                                                    <li class="is-real" x-on:click = "status = 'Unpublish'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('img/hide.png') }}">
@@ -192,12 +237,12 @@
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Jenis Layanan <span class="text-danger">*</span></div>
                                                                             <div class="dropdown layanan">
-                                                                                <input type="text" readonly class="form-control" id="edit-layanan" placeholder="Pilih Layanan . . ." name="jenis" required value="{{ $item->jenis_layanan }}">
+                                                                                <input type="text" readonly class="form-control" id="edit-layanan" placeholder="Pilih Layanan . . ." name="jenis" required value="" x-model="jenis">
                                                                                 <button class="btn dropdown-toggle edi" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
                                                                                     <i class="fa-solid fa-caret-down"></i>
                                                                                 </button>
                                                                                 <ul class="dropdown-menu">
-                                                                                    <li class="is-item" onclick="editLayanan('Dry Cleaning')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Dry Cleaning'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/towels.png') }}">
@@ -207,7 +252,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-item" onclick="editLayanan('Cuci Express')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Cuci Express'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
@@ -217,7 +262,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-item" onclick="editLayanan('Cuci Basah')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Cuci Basah'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/wet.png') }}">
@@ -227,7 +272,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-item" onclick="editLayanan('Cuci Kering')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Cuci Kering'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/tshirt.png') }}">
@@ -237,7 +282,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-item" onclick="editLayanan('Cuci Lipat')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Cuci Lipat'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/laundry.png') }}">
@@ -247,7 +292,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-item" onclick="editLayanan('Cuci Setrika')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Cuci Setrika'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/setrika.png') }}">
@@ -258,7 +303,7 @@
                                                                                         </div>
                                                                                     </li>
 
-                                                                                    <li class="is-item" onclick="editLayanan('Jasa Setrika')">
+                                                                                    <li class="is-item" x-on:click="jenis = 'Jasa Setrika'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('gambar-kategori/ironing.png') }}">
@@ -274,16 +319,16 @@
                                                                         <div class="items ps-2 for-img">
                                                                             <div class="gmb">
                                                                                 <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
-                                                                                <input type="file" name="gambar_barang" class="form-control pic-mine" value="{{ $item->gambar_barang }}">
+                                                                                <input type="file" name="gambar_barang" id="gambar_barang" class="form-control pic-mine" value="{{ $item->gambar_barang }}" onchange="loadFile(event)">
                                                                             </div>
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg">
+                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg" id="showimg">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" data-bs-dismiss="modal">
+                                                                        <button type="submit" class="btn waves-effect simpan" data-bs-dismiss="modal" :disabled="nama_barang && harga_barang && status && jenis ? null : 'disabled'">
                                                                             Simpan Perubahan
                                                                         </button>
                                                                     </div>
@@ -297,20 +342,15 @@
                                     </tbody>
                                 </table>
                             </div>
-
-
                         @endif
-                        <div class="pagination d-flex justify-content-center mt-3">
-                            {{ $cuciItems->links() }}
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ nama_barang: '', harga_barang: '', status: '', jenis: '', gambar_barang: '' }">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
@@ -322,21 +362,21 @@
                         @csrf
                         <div class="items ps-2">
                             <div class="title pb-1">Nama Barang <span class="text-danger">*</span></div>
-                            <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target">
+                            <input type="text" name="nama_barang" placeholder="Nama Barang . . ." class="form-control target" x-model="nama_barang">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
-                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target">
+                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target" x-model="harga_barang">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
                             <div class="dropdown status" id="drop">
-                                <input type="text" readonly class="form-control" id="add-status" name="status" placeholder="Pilih Status . . ." required>
+                                <input type="text" readonly class="form-control" id="add-status" name="status" placeholder="Pilih Status . . ." required x-model="status">
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-real" onclick="addStatus('Publish')">
+                                    <li class="is-real" x-on:click="status = 'Publish'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/view.png') }}">
@@ -346,7 +386,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-real" onclick="addStatus('Unpublish')">
+                                    <li class="is-real" x-on:click="status = 'Unpublish'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/hide.png') }}">
@@ -362,12 +402,12 @@
                         <div class="items ps-2">
                             <div class="title pb-1">Jenis Layanan <span class="text-danger">*</span></div>
                             <div class="dropdown layanan">
-                                <input type="text" readonly class="form-control" id="add-layanan" placeholder="Pilih Layanan . . ." name="jenis" required>
+                                <input type="text" readonly class="form-control" id="add-layanan" placeholder="Pilih Layanan . . ." name="jenis" required x-model="jenis">
                                 <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-item" onclick="addLayanan('Dry Cleaning')">
+                                    <li class="is-item" onclick="addLayanan('Dry Cleaning')" x-on:click="jenis = 'Dry Cleaning'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/towels.png') }}">
@@ -377,7 +417,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="addLayanan('Cuci Express')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Express')" x-on:click="jenis = 'Cuci Express'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/express-delivery.png') }}">
@@ -387,7 +427,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="addLayanan('Cuci Basah')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Basah')" x-on:click="jenis = 'Cuci Basah'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/wet.png') }}">
@@ -397,7 +437,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="addLayanan('Cuci Kering')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Kering')" x-on:click="jenis = 'Cuci Kering'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/tshirt.png') }}">
@@ -407,7 +447,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="addLayanan('Cuci Lipat')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Lipat')" x-on:click="jenis = 'Cuci Lipat'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/laundry.png') }}">
@@ -417,7 +457,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" onclick="addLayanan('Cuci Setrika')">
+                                    <li class="is-item" onclick="addLayanan('Cuci Setrika')" x-on:click="jenis = 'Cuci Lipat'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/setrika.png') }}">
@@ -428,7 +468,7 @@
                                         </div>
                                     </li>
 
-                                    <li class="is-item" onclick="addLayanan('Jasa Setrika')">
+                                    <li class="is-item" onclick="addLayanan('Jasa Setrika')" x-on:click="jenis = 'Cuci Lipat'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('gambar-kategori/ironing.png') }}">
@@ -443,20 +483,19 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
-                            <input type="file" name="gambar_barang" class="form-control">
+                            <input type="file" name="gambar_barang" class="form-control" x-model="gambar_barang">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" data-bs-dismiss="modal">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama_barang && harga_barang && status && jenis && gambar_barang ? null : 'disabled'">
                             Tambahkan
                         </button>
                     </div>
                 </form>
             </div>
-            <!-- /.modal-content -->
         </div>
     </div>
 
@@ -467,51 +506,24 @@
     <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the file input element
-            var fileInput = document.querySelector('.pic-mine');
-
-            var imagePreview = document.querySelector('.showimg');
-
-            // Add event listener to the file input
-            fileInput.addEventListener('change', function() {
-                // Check if any file is selected
-                if (fileInput.files && fileInput.files[0]) {
-                    // Create a FileReader object
-                    var reader = new FileReader();
-
-                    // Set up the FileReader onload function
-                    reader.onload = function(e) {
-                        // Update the src attribute of the image with the selected file's data URL
-                        imagePreview.src = e.target.result;
-                    }
-
-                    // Read the selected file as a data URL
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            });
+            curs();
         });
 
-        function addLayanan(item) {
-            var x = document.getElementById('add-layanan');
-            x.setAttribute('value', item);
-            modal();
-        }
+        document.addEventListener('click', function() {
+            curs();
+        });
+        document.addEventListener('input', function() {
+            curs();
+        });
 
-        function addStatus(item) {
-            var x = document.getElementById('add-status');
-            x.setAttribute('value', item);
+        function curs() {
+            var prev = document.querySelector('.paginate_button.previous');
+            var next = document.querySelector('.paginate_button.next');
+            var length = document.querySelector('.dataTables_length label').innerHTML;
+            prev.innerHTML = '<i class="bi bi-chevron-left"></i>';
+            next.innerHTML = '<i class="bi bi-chevron-right"></i>';
+            length.replace('Show', 'Menampilkan').replace('entries', 'Data');
         }
-
-        function editStatus(item) {
-            var x = document.getElementById('edit-status');
-            x.setAttribute('value', item);
-        }
-
-        function editLayanan(item) {
-            var x = document.getElementById('edit-layanan');
-            x.setAttribute('value', item);
-        }
-
         document.querySelectorAll('.is-item').forEach(function(item) {
             item.addEventListener('click', close);
         });
@@ -531,10 +543,63 @@
                 modals.classList.remove('active');
             }
         }
-
-        var tekt = document.querySelector('.small.text-muted');
-        tekt.style.display = 'none';
     </script>
+    <script>
+        function formatNumber() {
+            // Get the input element
+            var inputElement = document.getElementById("numberInput");
+
+            // Get the current value of the input
+            var value = inputElement.value;
+
+            // Remove any existing dots
+            value = value.replace(/\./g, '');
+
+            // Add dots every three digits
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Update the input value with the formatted number
+            inputElement.value = value;
+        }
+        
+        document.addEventListener('click', function() {
+
+            function formatEdit() {
+                var input = document.getElementById("numberEdit");
+                var value = input.value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                input.value = value;
+                console.log('menyala');
+            }
+
+            function loadFile(event) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var output = document.getElementById('showimg');
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
+            $(document).ready(function() {
+                $('.pic-mine').change(function(event) {
+                    loadFile(event);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.form-check-input').click(function(event) {
+                var switch_id = $(this).attr("switch_id");
+                var myUrl = "/toggleStatus/" + $(this).attr('data-id').replace(/\W/g, '-');
+                window.location.href = myUrl;
+            });
+        });
+    </script>
+
+
+    {{-- Sweet Alert --}}
     <script>
         // Select all delete buttons and attach event listener to each of them
         document.querySelectorAll('.btn.delete').forEach(function(button) {
@@ -560,7 +625,6 @@
             });
         });
     </script>
-
     @if (Session::has('success'))
         <script>
             Swal.fire({
@@ -572,34 +636,15 @@
             });
         </script>
     @endif
-
-    <script>
-        function formatNumber() {
-            // Get the input element
-            var inputElement = document.getElementById("numberInput");
-
-            // Get the current value of the input
-            var value = inputElement.value;
-
-            // Remove any existing dots
-            value = value.replace(/\./g, '');
-
-            // Add dots every three digits
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            // Update the input value with the formatted number
-            inputElement.value = value;
-        }
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.form-check-input').click(function(event) {
-                var switch_id = $(this).attr("switch_id");
-                var myUrl = "/toggleStatus/" + $(this).attr('data-id').replace(/\W/g, '-');
-                window.location.href = myUrl;
-
+    @if (Session::has('fail'))
+        <script>
+            Swal.fire({
+                title: 'Gagal',
+                text: '{{ Session::get('fail') }}',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
             });
-        });
-    </script>
+        </script>
+    @endif
 @endsection

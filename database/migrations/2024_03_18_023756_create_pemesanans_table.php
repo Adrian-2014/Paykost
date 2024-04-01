@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_pembelian');
             $table->string('nama_user');
+            $table->string('no_kamar');
             $table->string('jumlah');
             $table->string('jenis_layanan');
             $table->string('total_biaya');

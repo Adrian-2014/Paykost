@@ -58,95 +58,37 @@
                 <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                     <div class="accordion-body container">
                         <div class="row" id="item-row">
-                            <div class="item col-12">
-                                <div class="item-desc">
-                                    <div class="gambar">
-                                        <img src="{{ asset('img-chategories/carpets.png') }}">
-                                    </div>
-                                    <div class="properties">
-                                        <div class="name">
-                                            <div class="names">
-                                                Karpet
+                            @foreach ($cuciItems as $item)
+                                <div class="item col-12">
+                                    <div class="item-desc">
+                                        <div class="gambar">
+                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}">
+                                        </div>
+                                        <div class="properties">
+                                            <div class="name">
+                                                <div class="names">
+                                                    {{ $item->nama_barang }}
+                                                </div>
+                                                <div class="uk">
+                                                    {{ $item->ukuran_barang }}
+                                                </div>
                                             </div>
-                                            <div class="uk">
-                                                Uk. 3 x 3m
+                                            <div class="cost">
+                                                Rp. {{ $item->harga_barang }}
                                             </div>
                                         </div>
-                                        <div class="cost">
-                                            Rp. 15.000
+                                    </div>
+                                    <div class="valuasi">
+                                        <div class="kurang" onclick="kurang(this)">
+                                            -
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="valuasi">
-                                    <div class="kurang" onclick="kurang(this)">
-                                        -
-                                    </div>
-                                    <input type="number" readonly value="0" class="nilai">
-                                    <div class="tambah" onclick="tambah(this)">
-                                        +
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item col-12">
-                                <div class="item-desc">
-                                    <div class="gambar">
-                                        <img src="{{ asset('img-chategories/doormat.png') }}">
-                                    </div>
-                                    <div class="properties">
-                                        <div class="name">
-                                            <div class="names">
-                                                Karpet
-                                            </div>
-                                            <div class="uk">
-                                                Uk. 1 x 1m
-                                            </div>
-                                        </div>
-
-                                        <div class="cost">
-                                            Rp. 5.000
+                                        <input type="number" readonly value="0" class="nilai">
+                                        <div class="tambah" onclick="tambah(this)">
+                                            +
                                         </div>
                                     </div>
                                 </div>
-                                <div class="valuasi">
-                                    <div class="kurang" onclick="kurang(this)">
-                                        -
-                                    </div>
-                                    <input type="number" readonly value="0" class="nilai">
-                                    <div class="tambah" onclick="tambah(this)">
-                                        +
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item col-12">
-                                <div class="item-desc">
-                                    <div class="gambar">
-                                        <img src="{{ asset('img-chategories/carpet.png') }}">
-                                    </div>
-                                    <div class="properties">
-                                        <div class="name">
-                                            <div class="names">
-                                                Karpet
-                                            </div>
-                                            <div class="uk">
-                                                Uk. 4 x 4m
-                                            </div>
-                                        </div>
-
-                                        <div class="cost">
-                                            Rp. 100.000
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="valuasi">
-                                    <div class="kurang" onclick="kurang(this)">
-                                        -
-                                    </div>
-                                    <input type="number" readonly value="0" class="nilai">
-                                    <div class="tambah" onclick="tambah(this)">
-                                        +
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="mores col-12">
                             <div class="more">
@@ -299,6 +241,7 @@
         <input type="hidden" name="jumlah" id="jumlah" value="">
         <input type="hidden" name="layanan" id="layanan" value="Cuci Sprei">
         <input type="hidden" name="total_biaya" id="tobi" value="">
+        <input type="hidden" name="no_kamar" id="no_kamar" value="5">
 
         <input type="hidden" name="gambar" id="img" value="">
         <input type="hidden" name="bank_name" id="bank_name" value="">
@@ -439,8 +382,8 @@
                 });
             });
 
-            var target = document.querySelector('.datepicker-days .table-condensed tbody tr .today');
-            target.scrollIntoView();
+            // var target = document.querySelector('.datepicker-days .table-condensed tbody tr .today');
+            // target.scrollIntoView();
 
             var bulan = document.querySelector('.picker-switch');
             bulan.addEventListener('click', function(event) {
@@ -517,7 +460,7 @@
                         <div class="properties">
                             <div class="name">
                                 <div class="names">
-                                    Karpet
+                                    Sprei
                                 </div>
                                 <div class="uku">
                                     <input type="number" class="f">
@@ -574,7 +517,7 @@
                     // Periksa apakah kedua input tidak kosong
                     if (!isNaN(valF) && !isNaN(valL)) {
                         const res = valF * valL;
-                        const result = res * 5000;
+                        const result = res * 4000;
                         costDiv.textContent = 'Rp. ' + result.toLocaleString().replaceAll(',', '.');
                         ukuran.innerHTML = ` Uk. ${valF} x ${valL}m`;
                         subtotal();

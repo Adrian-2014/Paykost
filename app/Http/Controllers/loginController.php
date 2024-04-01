@@ -27,7 +27,7 @@ class loginController extends Controller
 
     public function login(Request $request) {
 
-        $auth = $request->validate([  
+        $auth = $request->validate([
             'email'    => 'required',
             'password' => 'required'
         ]);
@@ -39,17 +39,11 @@ class loginController extends Controller
             if (Auth::user()->role_id == 1) {
 
                 return redirect('/admin/index');
-
-            } elseif(Auth::user()->role_id == 2) {
-
-                return redirect('/pemilik-kos/index');
-
                 // dd('success');
 
             } elseif(Auth::user()->role_id == 3) {
 
-                return redirect('/user/index');
-
+                return redirect()->route('userku');
             }
 
         }

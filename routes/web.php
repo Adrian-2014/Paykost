@@ -34,7 +34,7 @@ Route::get('/', [loginController::class, 'index']);
 Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
 Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
 Route::get('/user/profil', [userPageController::class, 'profil']);
-Route::get('/user/index', [loginController::class, 'user']);
+Route::get('/user/index', [userPageController::class, 'index'])->name('userku');
 // Menu
 
 // kategori
@@ -42,7 +42,7 @@ Route::get('/pindah', [userPageController::class, 'pindah']);
 Route::get('/laporanKerusakan', [userPageController::class, 'laporanKerusakan']);
 Route::get('/kebersihan', [userPageController::class, 'kebersihan']);
 Route::get('/kehilangan', [userPageController::class, 'kehilangan']);
-Route::get('/cuci', [userPageController::class, 'cuciBaju']);
+Route::get('/cuci', [userPageController::class, 'cuciBaju'])->name('layanancuci');
 // kategori
 
 // jasa cuci baju
@@ -53,6 +53,7 @@ Route::get('/cuciSetrika', [userPageController::class, 'cuciSetrika']);
 Route::get('/jasaSetrika', [userPageController::class, 'jasaSetrika']);
 Route::get('/cuciExpress', [userPageController::class, 'cuciExpress']);
 Route::get('/dryCleaning', [userPageController::class, 'dryCleaning']);
+Route::get('/sepatu', [userPageController::class, 'sepatu']);
 
 Route::get('/gorden', [userPageController::class, 'gorden']);
 Route::get('/karpet', [userPageController::class, 'karpet']);
@@ -62,6 +63,11 @@ Route::get('/selimut', [userPageController::class, 'selimut']);
 
 Route::post('/konfirmasiPay', [userPageController::class, 'konfirmasi'])->name('storeJasa');
 Route::get('/checkKonfirmasi', [userPageController::class, 'checkKonfirmasi'])->name('checkKonfirmasi');
+Route::post('/prosesCuci', [userPageController::class, 'prosesCuci'])->name('proses');
+Route::get('/proses', [userPageController::class, 'proses']);
+Route::get('/check/proses', [userPageController::class, 'checkPro'])->name('chek.proses');
+Route::get('/riwayatCuci', [userPageController::class, 'riwayatCuci']);
+Route::post('updateStatus', [userPageController::class, 'updateStatus'])->name('updateStatus');
 // jasa cuci baju
 
 // USER
@@ -71,30 +77,44 @@ Route::get('/checkKonfirmasi', [userPageController::class, 'checkKonfirmasi'])->
 
 Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index');
 
-// createUser
-Route::get('/admin/create', [adminControll::class, 'create']);
-// Route::post('storeCreate', [adminControll::class, 'createStore']);
-// createUser
 
-// layanan cuci umum
+// User
+Route::get('/admin/user', [adminControll::class, 'user'])->name('admin.user');
+// User
+
+// Banner
+
+Route::get('/admin/banner', [adminControll::class, 'banner']);
+Route::post('storeBanner', [adminControll::class, 'storeBanner'])->name('storeBanner');
+Route::delete('/bannerDelete/{id}', [adminControll::class, 'bannerHapus'])->name('banner.destroy');
+Route::get('toggleBanner/{id}', [adminControll::class, 'toggleBanner'])->name('toggleBanner');
+Route::post('/editBanner', [adminControll::class, 'editBanner'])->name('editBanner');
+// Banner
+
+
+// Jasa Cuci
+
+//  umum
 Route::get('/admin/jasaCuciUmum', [adminControll::class, 'jasaCuciUmum'])->name('pageCuci');
 Route::post('cuciUmum', [adminControll::class, 'storeCuciUmum'])->name('storeCuciUmum');
-Route::get('/admin/jasaCuciUmum', [adminControll::class, 'jasaCuciUmum'])->name('pageCuci');
 Route::post('cuciUmumEdit', [adminControll::class, 'cuciUmumEdit'])->name('cuciUmumEdit');
 Route::get('toggleStatus/{id}', [adminControll::class, 'toggleStatus'])->name('toggleStatus');
-// Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy')
-// Route untuk mengambil data barang
-
-
-
-
-// Khusus
-Route::get('/admin/jasaCuciKhusus', [adminControll::class, 'addCuciItem'])->name('pageCuci');
 Route::delete('/item/{id}', [adminControll::class, 'hapus'])->name('item.destroy');
-Route::post('cuciItem', [adminControll::class, 'storeCuciItem'])->name('storeCuciItem');
+// Khusus
+Route::get('/admin/jasaCuciKhusus', [adminControll::class, 'jasaCuciKhusus'])->name('pageKhusus');
+Route::post('cuciKhusus', [adminControll::class, 'storeCuciKhusus'])->name('storeCuciKhusus');
+Route::post('cuciKhususEdit', [adminControll::class, 'cuciKhususEdit'])->name('cuciKhususEdit');
+Route::get('toggleKhusus/{id}', [adminControll::class, 'toggleKhusus'])->name('toggleKhusus');
+Route::delete('/khusus/{id}', [adminControll::class, 'khususHapus'])->name('khusus.destroy');
+// sepatu
+Route::get('/admin/jasaCuciSepatu', [adminControll::class, 'jasaCuciSepatu'])->name('pageSepatu');
+Route::post('cuciSepatu', [adminControll::class, 'storeCuciSepatu'])->name('storeCuciSepatu');
+Route::post('cuciSepatuEdit', [adminControll::class, 'cuciSepatuEdit'])->name('cuciSepatuEdit');
+Route::get('toggleSepatu/{id}', [adminControll::class, 'toggleSepatu'])->name('toggleSepatu');
+Route::delete('/sepatu/{id}', [adminControll::class, 'sepatuHapus'])->name('sepatu.destroy');
 
+// Jasa Cuci
 
-// Route::post('')
 
 // A D M I N
 
