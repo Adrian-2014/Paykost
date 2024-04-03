@@ -68,7 +68,7 @@
                                             </div>
                                             <div class="body-item">
                                                 <div class="kiri">Jumlah Item</div>
-                                                <div class="kanan">{{ $item->jumlah }}</div>
+                                                <div class="kanan">{{ $item->jumlah }} Potong</div>
                                             </div>
                                             <div class="body-item special">
                                                 <div class="img">

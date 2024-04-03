@@ -17,7 +17,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BanksSeeder::class,
             CuciKeringSeeder::class,
-            // ItemCuciSeeder::class
+            cuciKhususSeeder::class,
+            cuciSepatuSeeder::class,
+            bannerSeeder::class,
+            fasilitasSeeder::class,
         ]);
     }
 }

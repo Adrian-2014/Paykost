@@ -1,4 +1,4 @@
-@extends('layout.main')
+a@extends('layout.main')
 @section('title', 'Jasa Cuci Baju')
 <link rel="stylesheet" href="{{ asset('/css/user-css/kategori/bersih.css') }}">
 @section('container')

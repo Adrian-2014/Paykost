@@ -157,6 +157,20 @@ body {
             gap: .3rem !important;
             /* background-color: chartreuse; */
         }
+
+        .bukti {
+            padding: 0 .7rem;
+            font-size: .85rem;
+
+            input {
+                width: 100%;
+            }
+
+            /* label {
+                height: 1.8rem !important;
+                background: linear-gradient();
+            } */
+        }
     }
 
 
@@ -195,6 +209,10 @@ body {
             background: linear-gradient(rgb(21, 75, 224), rgb(32, 156, 205));
             color: white;
             border-radius: .4rem;
+        }
+
+        .submit:disabled {
+            background: rgb(194, 194, 194);
         }
     }
 

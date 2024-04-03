@@ -184,7 +184,7 @@
                                                         </button>
                                                     </div>
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ nama: '{{ $item->nama }}', status: '{{ $item->status }}', harga_barang: '{{ $item->harga_barang }}'">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ nama: '{{ $item->nama }}', status: '{{ $item->status }}', harga_barang: '{{ $item->harga_barang }}' }">
                                                             <div class="modal-content">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
@@ -195,7 +195,7 @@
                                                                     @csrf
                                                                     <div class="modal-body">
                                                                         <input type="hidden" value="{{ $item->id }}" name="id">
-                                                                        <input type="hidden" name="jenis" placeholder="Nama Barang . . ." class="form-control target" value="{{ $item->jenis_layanan }}">
+                                                                        <input type="hidden" name="jenis" class="form-control target" value="{{ $item->jenis_layanan }}">
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Nama Layanan <span class="text-danger">*</span></div>
                                                                             <div class="dropdown layanan">
@@ -249,7 +249,7 @@
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
-                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="num" oninput="formatEdit()" class="form-control target edit-input" value="" x-model="harga_barang">
+                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="num" class="form-control target edit-input" value="" x-model="harga_barang">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
@@ -294,7 +294,7 @@
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="edit-save" data-bs-dismiss="modal" :disabled="nama && harga_barang && status && gambar_barang ? null : 'disabled'">
+                                                                        <button type="submit" class="btn waves-effect simpan" id="edit-save" data-bs-dismiss="modal" :disabled="nama && harga_barang && status ? null : 'disabled'">
                                                                             Simpan Perubahan
                                                                         </button>
                                                                     </div>
@@ -478,6 +478,16 @@
         }
     </script>
     <script>
+        $(document).ready(function() {
+            $('.form-check-input').click(function(event) {
+                var switch_id = $(this).attr("switch_id");
+                var myUrl = "/toggleStatus/" + $(this).attr('data-id').replace(/\W/g, '-');
+                window.location.href = myUrl;
+            });
+        });
+    </script>
+
+    <script>
         // Select all delete buttons and attach event listener to each of them
         document.querySelectorAll('.btn.delete').forEach(function(button) {
             button.addEventListener('click', function(e) {
@@ -502,7 +512,6 @@
             });
         });
     </script>
-
     @if (Session::has('success'))
         <script>
             Swal.fire({
@@ -525,69 +534,4 @@
             });
         </script>
     @endif
-
-    <script>
-        function formatNumber() {
-            // Get the input element
-            var inputElement = document.getElementById("numberInput");
-
-            // Get the current value of the input
-            var value = inputElement.value;
-
-            // Remove any existing dots
-            value = value.replace(/\./g, '');
-
-            // Add dots every three digits
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            // Update the input value with the formatted number
-            inputElement.value = value;
-        }
-
-        function formatEdit() {
-            // Get the input element
-            var inputElement = document.getElementById("numberEdit");
-
-            // Get the current value of the input
-            var value = inputElement.value;
-
-            // Remove any existing dots
-            value = value.replace(/\./g, '');
-
-            // Add dots every three digits
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            // Update the input value with the formatted number
-            inputElement.value = value;
-        }
-
-        var loadFile = function(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('showimg');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        };
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.form-check-input').click(function(event) {
-                var switch_id = $(this).attr("switch_id");
-                var myUrl = "/toggleStatus/" + $(this).attr('data-id').replace(/\W/g, '-');
-                window.location.href = myUrl;
-            });
-        });
-
-        function change(event) {
-            if (event.target.files && event.target.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#showimg').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        }
-    </script>
 @endsection

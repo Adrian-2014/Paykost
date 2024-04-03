@@ -107,11 +107,6 @@
                                                     Lokasi Banner
                                                 </div>
                                             </th>
-                                            <th class="jenis">
-                                                <div class="th-item">
-                                                    Jenis Banner
-                                                </div>
-                                            </th>
                                             <th class="status">
                                                 <div class="th-item">
                                                     Status
@@ -140,13 +135,6 @@
                                                     <div class="td-item lokasi">
                                                         <div class="item">
                                                             {{ $item->lokasi_banner }}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="td-item jenis">
-                                                        <div class="item">
-                                                            {{ $item->jenis_banner }}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -180,7 +168,7 @@
                                                         </button>
                                                     </div>
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ status: '{{ $item->status }}', jenis: '{{ $item->jenis_banner }}', lokasi_banner: '{{ $item->lokasi_banner }}' }">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ status: '{{ $item->status }}', lokasi_banner: '{{ $item->lokasi_banner }}' }">
                                                             <div class="modal-content">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
@@ -191,12 +179,12 @@
                                                                     <div class="modal-body body-tambah">
                                                                         @csrf
                                                                         <div class="preview">
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                                                                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}" id="showimg-{{ $item->id }}">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
                                                                             <div class="title pb-1">Gambar Banner<span class="text-danger">*</span></div>
-                                                                            <input type="file" name="gambar_banner" class="form-control add-input" value="{{ $item->gambar_banner }}">
+                                                                            <input type="file" name="gambar_banner" class="form-control add-input" value="{{ $item->gambar_banner }}" id="gambar_barang-{{ $item->id }}" onchange="loading(event, {{ $item->id }})">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Lokasi Banner <span class="text-danger">*</span></div>
@@ -270,48 +258,16 @@
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="items ps-2">
-                                                                            <div class="title pb-1">Jenis Banner<span class="text-danger">*</span></div>
-                                                                            <div class="dropdown layanan">
-                                                                                <input type="text" readonly class="form-control add-input" id="add-jenis" placeholder="Jenis Banner" name="jenis" required x-model="jenis">
-                                                                                <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
-                                                                                    <i class="fa-solid fa-caret-down"></i>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li class="is-item" x-on:click ="jenis='Banner Utama'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/grid.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Banner Utama
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-item" x-on:click = "jenis ='Banner Promosi'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/promotion.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Banner Promosi
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="status && jenis && lokasi_banner ? null : 'disabled'">
+                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="status && lokasi_banner ? null : 'disabled'">
                                                                             Tambahkan
                                                                         </button>
                                                                     </div>
                                                                 </form>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -330,7 +286,7 @@
 
     <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content" x-data= "{gambar_banner: '', lokasi_banner: '', status: '', jenis: ''}">
+            <div class="modal-content" x-data= "{gambar_banner: '', lokasi_banner: '', status: ''}">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
                         Tambahkan Item Cuci
@@ -339,9 +295,12 @@
                 <form action="{{ route('storeBanner') }}" method="POST" enctype="multipart/form-data" class="fors">
                     <div class="modal-body body-tambah">
                         @csrf
+                        <div class="preview">
+                            <img src="" id="showimg" class="d-none">
+                        </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Gambar Banner<span class="text-danger">*</span></div>
-                            <input type="file" name="gambar_banner" class="form-control add-input" x-model="gambar_banner" onchange="loadFile(event)">
+                            <input type="file" name="gambar_banner" class="form-control add-input" id="gambar_add" onchange="loadFile(event)" x-model="gambar_banner">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Lokasi Banner <span class="text-danger">*</span></div>
@@ -388,11 +347,11 @@
                             <div class="title pb-1">Status Banner <span class="text-danger">*</span></div>
                             <div class="dropdown status" id="drop">
                                 <input type="text" readonly class="form-control add-input" id="add-status" name="status" placeholder="Pilih Status . . ." required x-model="status">
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-real" x-on:click = "status ='Publish'">
+                                    <li class="is-real" x-on:click = "status ='Publish';close()">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/view.png') }}">
@@ -402,7 +361,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-real" x-on:click = "status ='Unpublish'">
+                                    <li class="is-real" x-on:click = "status ='Unpublish';close()">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/hide.png') }}">
@@ -415,53 +374,21 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="items ps-2">
-                            <div class="title pb-1">Jenis Banner<span class="text-danger">*</span></div>
-                            <div class="dropdown layanan">
-                                <input type="text" readonly class="form-control add-input" id="add-jenis" placeholder="Jenis Banner" name="jenis" required x-model="jenis">
-                                <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
-                                    <i class="fa-solid fa-caret-down"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li class="is-item" x-on:click ="jenis='Banner Utama'">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/grid.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Banner Utama
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-item" x-on:click = "jenis ='Banner Promosi'">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/promotion.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Banner Promosi
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="gambar_banner && lokasi_banner && jenis && status ? null : 'disabled'">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="status && lokasi_banner && gambar_banner ? null : 'disabled'">
                             Tambahkan
                         </button>
                     </div>
+
                 </form>
             </div>
             <!-- /.modal-content -->
         </div>
     </div>
-
-
 
 @endsection
 
@@ -475,6 +402,7 @@
 
         document.addEventListener('click', function() {
             curs();
+            modal();
         });
 
         document.addEventListener('input', function() {
@@ -492,21 +420,26 @@
         document.querySelectorAll('.is-item').forEach(function(item) {
             item.addEventListener('click', close);
         });
+    </script>
 
-        function close() {
-            var modals = document.querySelector('.body-tambah');
-            modals.classList.remove('active');
+    <script>
+        $(document).ready(function() {
+            $('.form-check-input').click(function(event) {
+                var switch_id = $(this).attr("switch_id");
+                var myUrl = "/toggleBanner/" + $(this).attr('data-id').replace(/\W/g, '-');
+                window.location.href = myUrl;
+            });
+        });
+
+        function loading(event, itemId) {
+            var image = document.getElementById('showimg-' + itemId);
+            image.src = URL.createObjectURL(event.target.files[0]);
         }
 
-        function modal() {
-            var btnyala = document.querySelector('.dropdown-toggle.edi.show');
-            var btnadd = document.querySelector('.dropdown-toggle.add.show');
-            var modals = document.querySelector('.body-tambah');
-            if (btnyala || btnadd) {
-                modals.classList.add('active');
-            } else {
-                modals.classList.remove('active');
-            }
+        function loadFile(event) {
+            var image = document.getElementById('showimg');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.classList.remove('d-none');
         }
     </script>
 
@@ -557,23 +490,4 @@
             });
         </script>
     @endif
-
-    <script>
-        $(document).ready(function() {
-            $('.form-check-input').click(function(event) {
-                var switch_id = $(this).attr("switch_id");
-                var myUrl = "/toggleBanner/" + $(this).attr('data-id').replace(/\W/g, '-');
-                window.location.href = myUrl;
-            });
-        });
-
-        var loadFile = function(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('showimg');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        };
-    </script>
 @endsection

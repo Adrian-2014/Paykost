@@ -16,13 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profil');
-            $table->string('tanggal_masuk');
-            $table->string('no_kamar');
-            $table->string('durasi_ngekost');
-            $table->string('perkerjaan');
-            $table->string('status_bayar');
-            $table->string('status');
+            $table->string('profil')->nullable();
+            $table->string('tanggal_masuk')->nullable();
+            $table->string('no_kamar')->nullable();
+            $table->string('no_telpon')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->string('durasi_ngekost')->nullable();
+            $table->string('pekerjaan')->nullable();
+            $table->string('status_bayar')->nullable();
+            $table->string('status')->nullable();
 
             $table->foreignId('role_id');
             $table->rememberToken();

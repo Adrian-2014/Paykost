@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/', [loginController::class, 'login']);
 Route::get('/logout', [loginController::class, 'logout']);
-Route::get('/', [loginController::class, 'index']);
+Route::get('/', [loginController::class, 'index'])->name('login');
 
 // LOGIN
 
@@ -35,6 +35,7 @@ Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
 Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
 Route::get('/user/profil', [userPageController::class, 'profil']);
 Route::get('/user/index', [userPageController::class, 'index'])->name('userku');
+
 // Menu
 
 // kategori
@@ -77,20 +78,23 @@ Route::post('updateStatus', [userPageController::class, 'updateStatus'])->name('
 
 Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index');
 
+// Kamar Kost
+Route::get('/admin/kost', [adminControll::class, 'kamarKost']);
+Route::post('storeKamar', [adminControll::class, 'storeKamar'])->name('storeKamar');
+// Kamar Kost
 
 // User
 Route::get('/admin/user', [adminControll::class, 'user'])->name('admin.user');
+Route::post('/admin/add/user', [adminControll::class, 'storeUser'])->name('storeUser');
 // User
 
 // Banner
-
 Route::get('/admin/banner', [adminControll::class, 'banner']);
 Route::post('storeBanner', [adminControll::class, 'storeBanner'])->name('storeBanner');
 Route::delete('/bannerDelete/{id}', [adminControll::class, 'bannerHapus'])->name('banner.destroy');
 Route::get('toggleBanner/{id}', [adminControll::class, 'toggleBanner'])->name('toggleBanner');
 Route::post('/editBanner', [adminControll::class, 'editBanner'])->name('editBanner');
 // Banner
-
 
 // Jasa Cuci
 
@@ -112,6 +116,9 @@ Route::post('cuciSepatu', [adminControll::class, 'storeCuciSepatu'])->name('stor
 Route::post('cuciSepatuEdit', [adminControll::class, 'cuciSepatuEdit'])->name('cuciSepatuEdit');
 Route::get('toggleSepatu/{id}', [adminControll::class, 'toggleSepatu'])->name('toggleSepatu');
 Route::delete('/sepatu/{id}', [adminControll::class, 'sepatuHapus'])->name('sepatu.destroy');
+
+
+Route::get('/admin/prosesCuci', [adminControll::class, 'prosesPencucian']);
 
 // Jasa Cuci
 

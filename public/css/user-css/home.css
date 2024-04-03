@@ -845,7 +845,6 @@ body {
         }
     }
 }
-
 /* R E C O M E N D A T I O N  E */
 
 /* M E N U  S */
@@ -856,7 +855,6 @@ body {
     background-color: rgb(255, 255, 255);
     border-top: .5px solid rgba(128, 128, 128, 0.4);
 }
-
 
 .navbar.fixed-bottom .container-fluid {
     justify-content: space-between !important;

@@ -46,8 +46,8 @@
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
                     <a href="./index.html" class="text-nowrap logo-img">
-                        <img src="{{ asset('package') }}/dist/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="" />
-                        <img src="{{ asset('package') }}/dist/images/logos/light-logo.svg" class="light-logo" width="180" alt="" />
+                        <img src="{{ asset('img/logo.png') }}" class="dark-logo" width="150" alt="" />
+                        <img src="{{ asset('img/logo.png') }}" class="light-logo" width="150" alt="" />
                     </a>
                     <div class="close-btn d-lg-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8 text-muted"></i>
@@ -76,6 +76,14 @@
                                     <i class="ti ti-user"></i>
                                 </span>
                                 <span class="hide-menu">User</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/kost" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-door"></i>
+                                </span>
+                                <span class="hide-menu">Kamar Kost</span>
                             </a>
                         </li>
 
@@ -121,10 +129,51 @@
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
                                         </div>
-                                        <span class="hide-menu">Jasa Cuci Sepatu </span>
+                                        <span class="hide-menu">Jasa Cuci Sepatu</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="/admin/prosesCuci" class="sidebar-link">
+                                        <div class="round-16 d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-circle"></i>
+                                        </div>
+                                        <span class="hide-menu">Proses Cuci</span>
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/pindah" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-door-exit"></i>
+                                </span>
+                                <span class="hide-menu">Pindah Kamar</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/kerusakan" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-home-exclamation"></i>
+                                </span>
+                                <span class="hide-menu">Laporan kerusakan</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/kebersihan" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-paint"></i>
+                                </span>
+                                <span class="hide-menu">Tenaga Kebersihan </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/kehilangan" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-alert-circle"></i>
+                                </span>
+                                <span class="hide-menu">Laporan Kehilangan</span>
+                            </a>
                         </li>
 
                     </ul>

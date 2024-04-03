@@ -28,7 +28,7 @@
                     <div class="bungkus">
                         <div class="item">
                             <div class="header">
-                                <div class="status @if ($item->status == 'Dalam Proses') processing @endif"">
+                                <div class="status @if ($item->status == 'Proses Cuci') processing @endif">
                                     {{ $item->status }}
                                 </div>
                                 <div class="layanan">

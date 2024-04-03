@@ -13,6 +13,8 @@ use App\Models\cuciSepatu;
 use App\Models\cuciSetrika;
 use App\Models\cucisize;
 use App\Models\jasaSetrika;
+use App\Models\kamarKost;
+use App\Models\ProsesCuci;
 use App\Models\User;
 use Database\Seeders\CuciKeringSeeder;
 use Illuminate\Http\Request;
@@ -30,9 +32,45 @@ class adminControll extends Controller
         return view('admin.index');
     }
 
+
+    // For Kamar Kost
+    public function kamarKost() {
+        $kost = kamarKost::orderBy('id', 'desc')->get();
+        return view('admin.kamar-kost', compact('kost'));
+    }
+    // For Kamar Kost
+
     // For User
     public function user() {
-        return view('admin.user');
+        $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
+        return view('admin.user', compact('user'));
+    }
+    public function storeUser(Request $request) {
+        // dd($request->all());
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:4',
+            'tanggal_masuk' => 'required',
+            'no_kamar' => 'required',
+            'jenis_kelamin'=>'required',
+            'pekerjaan'=>'required',
+            'status'=>'required',
+            'role_id'=>'required',
+        ]);
+
+        $user = new User();
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->tanggal_masuk = $request->tanggal_masuk;
+        $user->no_kamar = $request->no_kamar;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->pekerjaan = $request->pekerjaan;
+        $user->status = $request->status;
+        $user->role_id = $request->role_id;
+        $user->save();
+        return back()->with('success', 'user Berhasil Di Tambahkan.');
     }
     // For User
 
@@ -41,13 +79,11 @@ class adminControll extends Controller
         $banners = Banner::orderBy('id', 'desc')->get();
         return view('admin.banner', compact('banners'));
     }
-
     public function storeBanner(Request $request) {
         $request->validate([
             'gambar_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
             'lokasi_banner' => 'required',
             'status'=>'required',
-            'jenis'=>'required',
         ]);
 
         $gambarBarang = $request->file('gambar_banner');
@@ -56,7 +92,6 @@ class adminControll extends Controller
 
         $banner = new Banner();
         $banner->lokasi_banner = $request->lokasi_banner;
-        $banner->jenis_banner = $request->jenis;
         $banner->status = $request->status;
         $banner->gambar_banner = $namaFile;
         $banner->save();
@@ -68,7 +103,6 @@ class adminControll extends Controller
             'lokasi_banner' => 'required',
             'gambar_banner' => 'nullable',
             'status'=>'required',
-            'jenis'=>'required',
         ]);
 
         if($request->gambar_banner) {
@@ -81,7 +115,6 @@ class adminControll extends Controller
 
         $baner = Banner::find($request->id);
         $baner->lokasi_banner = $request->lokasi_banner;
-        $baner->jenis_banner = $request->jenis;
         $baner->status = $request->status;
         $baner->gambar_banner = $namaFile;
         $baner->save();
@@ -93,7 +126,6 @@ class adminControll extends Controller
         }
 
     }
-
     public function bannerHapus($id) {
         // Cari item berdasarkan ID
         $item = Banner::findOrFail($id);
@@ -101,7 +133,6 @@ class adminControll extends Controller
         $item->delete();
         return back()->with('success', 'Barang Telah Dihapus.');
     }
-
     public function toggleBanner($id) {
         $banner = Banner::find($id);
         $banner->status = $banner->status == 'Publish' ? 'Unpublish' : 'Publish';
@@ -121,7 +152,6 @@ class adminControll extends Controller
         $request->validate([
             'nama_barang' => 'required',
             'harga_barang' => 'required',
-            // 'layanan_barang' => 'required',
             'gambar_barang' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status'=>'required',
             'jenis'=>'required',
@@ -133,7 +163,8 @@ class adminControll extends Controller
 
         $cuciItem = new Cuci();
         $cuciItem->nama_barang = $request->nama_barang;
-        $cuciItem->harga_barang = $request->harga_barang;
+        // $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->harga_barang = number_format($request->harga_barang, 0, ',', '.');
         $cuciItem->jenis_layanan = $request->jenis;
         $cuciItem->status = $request->status;
         // $cuciItem->layanan_barang = $request->layanan_barang;
@@ -166,7 +197,8 @@ class adminControll extends Controller
 
         $CuciItems = Cuci::find($request->id);
         $CuciItems->nama_barang = $request->nama_barang;
-        $CuciItems->harga_barang = $request->harga_barang;
+        // $CuciItems->harga_barang = $request->harga_barang;
+        $CuciItems->harga_barang = number_format($request->harga_barang, 0, ',', '.');
         $CuciItems->status = $request->status;
         $CuciItems->jenis_layanan = $request->jenis;
         // $CuciItems->layanan_barang = $request->layanan_barang;
@@ -218,7 +250,8 @@ class adminControll extends Controller
 
         $cuciItem = new cucisize();
         $cuciItem->nama_barang = $request->nama_barang;
-        $cuciItem->harga_barang = $request->harga_barang;
+        // $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->harga_barang = number_format($request->harga_barang, 0, ',', '.');
         $cuciItem->jenis_layanan = $request->jenis;
         $cuciItem->status = $request->status;
         $cuciItem->ukuran_barang = $request->ukuran;
@@ -227,7 +260,6 @@ class adminControll extends Controller
         // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
         return back()->with('success', 'Barang berhasil ditambahkan.');
     }
-
     public function cuciKhususEdit(Request $request) {
         $request->validate([
             'nama_barang' => 'required',
@@ -248,7 +280,8 @@ class adminControll extends Controller
 
         $cuciItem = cucisize::find($request->id);
         $cuciItem->nama_barang = $request->nama_barang;
-        $cuciItem->harga_barang = $request->harga_barang;
+        // $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->harga_barang = number_format($request->harga_barang, 0, ',', '.');
         $cuciItem->jenis_layanan = $request->jenis;
         $cuciItem->status = $request->status;
         $cuciItem->ukuran_barang = $request->ukuran;
@@ -257,14 +290,12 @@ class adminControll extends Controller
         // return redirect()->route('admin.index')->with('success', 'Barang berhasil ditambahkan.');
         return back()->with('success', 'Barang berhasil di Edit.');
     }
-
     public function toggleKhusus($id) {
         $cuci = cucisize::find($id);
         $cuci->status = $cuci->status == 'Publish' ? 'Unpublish' : 'Publish';
         $cuci->save();
         return back()->with('success', 'Status Berhasil Dirubah');
     }
-
     public function khususHapus($id) {
         // Cari item berdasarkan ID
         $item = cucisize::findOrFail($id);
@@ -272,6 +303,7 @@ class adminControll extends Controller
         $item->delete();
         return back()->with('success', 'Barang Telah Dihapus.');
     }
+
 
     // Sepatu
     public function jasaCuciSepatu() {
@@ -294,7 +326,9 @@ class adminControll extends Controller
 
         $cuciItem = new cuciSepatu();
         $cuciItem->nama = $request->nama;
-        $cuciItem->harga_barang = $request->harga_barang;
+        // $cuciItem->harga_barang = $request->harga_barang;
+        $cuciItem->harga_barang = number_format($request->harga_barang, 0, ',', '.');
+
         $cuciItem->jenis_layanan = $request->jenis;
         $cuciItem->status = $request->status;
         // $cuciItem->layanan_barang = $request->layanan_barang;
@@ -323,7 +357,8 @@ class adminControll extends Controller
 
         $CuciItems = cuciSepatu::find($request->id);
         $CuciItems->nama = $request->nama;
-        $CuciItems->harga_barang = $request->harga_barang;
+        // $CuciItems->harga_barang = $request->harga_barang;
+        $CuciItems->harga_barang = number_format($request->harga_barang, 0, ',', '.');
         $CuciItems->status = $request->status;
         $CuciItems->jenis_layanan = $request->jenis;
         // $CuciItems->layanan_barang = $request->layanan_barang;
@@ -341,5 +376,19 @@ class adminControll extends Controller
         $cuci->status = $cuci->status == 'Publish' ? 'Unpublish' : 'Publish';
         $cuci->save();
         return back()->with('success', 'Status Berhasil Dirubah');
+    }
+    public function sepatuHapus($id) {
+          // Cari item berdasarkan ID
+          $item = cuciSepatu::findOrFail($id);
+          // Hapus item
+          $item->delete();
+          return back()->with('success', 'Barang Telah Dihapus.');
+    }
+
+    // Proses Cuci
+
+    public function prosesPencucian() {
+        $proses = ProsesCuci::whereIn('status', ['Proses Pengambilan', 'Proses Cuci'])->get();
+        return view('admin.kategori.cuci.proses-cuci', compact('proses'));
     }
 }

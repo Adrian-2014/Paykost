@@ -1,0 +1,5 @@
+"id","nama","harga_barang","gambar_barang","status","jenis_layanan","created_at","updated_at"
+"1","Whitening","15.000","1712061776.png","Publish","Cuci Sepatu","2024-04-02 19:42:56","2024-04-02 20:04:46"
+"2","Fast Cleaning","15.000","1712061969.png","Publish","Cuci Sepatu","2024-04-02 19:46:09","2024-04-02 20:04:39"
+"3","Repaint","20.000","1712061993.png","Publish","Cuci Sepatu","2024-04-02 19:46:33","2024-04-02 20:04:33"
+"4","Deep Cleaning","25.000","1712062015.png","Publish","Cuci Sepatu","2024-04-02 19:46:55","2024-04-02 20:04:26"

@@ -319,9 +319,9 @@
                                                                         <div class="items ps-2 for-img">
                                                                             <div class="gmb">
                                                                                 <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
-                                                                                <input type="file" name="gambar_barang" id="gambar_barang" class="form-control pic-mine" value="{{ $item->gambar_barang }}" onchange="loadFile(event)">
+                                                                                <input type="file" name="gambar_barang" id="gambar_barang-{{ $item->id }}" class="form-control pic-mine" value="{{ $item->gambar_barang }}" onchange="loadFile(event, {{ $item->id }})">
                                                                             </div>
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg" id="showimg">
+                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg" id="showimg-{{ $item->id }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -545,50 +545,6 @@
         }
     </script>
     <script>
-        function formatNumber() {
-            // Get the input element
-            var inputElement = document.getElementById("numberInput");
-
-            // Get the current value of the input
-            var value = inputElement.value;
-
-            // Remove any existing dots
-            value = value.replace(/\./g, '');
-
-            // Add dots every three digits
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            // Update the input value with the formatted number
-            inputElement.value = value;
-        }
-        
-        document.addEventListener('click', function() {
-
-            function formatEdit() {
-                var input = document.getElementById("numberEdit");
-                var value = input.value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                input.value = value;
-                console.log('menyala');
-            }
-
-            function loadFile(event) {
-                var reader = new FileReader();
-                reader.onload = function() {
-                    var output = document.getElementById('showimg');
-                    output.src = reader.result;
-                };
-                reader.readAsDataURL(event.target.files[0]);
-            }
-
-            $(document).ready(function() {
-                $('.pic-mine').change(function(event) {
-                    loadFile(event);
-                });
-            });
-        });
-    </script>
-
-    <script>
         $(document).ready(function() {
             $('.form-check-input').click(function(event) {
                 var switch_id = $(this).attr("switch_id");
@@ -596,6 +552,12 @@
                 window.location.href = myUrl;
             });
         });
+
+        // Fungsi untuk menampilkan gambar yang dipilih dari input file
+        function loadFile(event, itemId) {
+            var image = document.getElementById('showimg-' + itemId);
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
     </script>
 
 

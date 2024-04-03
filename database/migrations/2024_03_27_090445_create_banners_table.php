@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('gambar_banner');
             $table->string('lokasi_banner');
             $table->string('status');
-            $table->string('jenis_banner');
             $table->timestamps();
         });
     }

@@ -2,8 +2,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-@section('title', 'Admin Banner')
-<link rel="stylesheet" href="{{ asset('css/admin-css/banner.css') }}">
+@section('title', 'Admin User')
+<link rel="stylesheet" href="{{ asset('css/admin-css/user.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 @section('container')
@@ -50,14 +50,14 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Banner</h4>
+                        <h4 class="fw-semibold mb-8">User</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a class="text-muted " href="./index.html">Admin</a>
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">
-                                    Banner
+                                    User
                                 </li>
                             </ol>
                         </nav>
@@ -74,22 +74,22 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2 ps-2 pt-2">Data Banner</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Data User</h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-rounded m-t-10 mb-2 text-light tambah" data-bs-toggle="modal" data-bs-target="#add-item">
                                 <i class="fa-solid fa-plus"></i>
-                                <div class="te">Tambahkan Banner</div>
+                                <div class="te">Tambahkan User</div>
                             </button>
                         </div>
-                        @if ($banners->isEmpty())
+                        @if ($user->isEmpty())
                             <div class="illustration d-flex flex-column">
                                 <div class="image">
                                     <img src="{{ asset('img/people.png') }}">
                                 </div>
                                 <div class="text">
-                                    Banner tidak di Temukan, Silahkan tambahkan banner
+                                    User tidak di Temukan, Silahkan tambahkan User
                                 </div>
                             </div>
                         @else
@@ -99,17 +99,17 @@
                                         <tr>
                                             <th class="gambar">
                                                 <div class="th-item">
-                                                    Banner
+                                                    Nama
                                                 </div>
                                             </th>
                                             <th class="lokasi">
                                                 <div class="th-item">
-                                                    Lokasi Banner
+                                                    Email
                                                 </div>
                                             </th>
                                             <th class="jenis">
                                                 <div class="th-item">
-                                                    Jenis Banner
+                                                    No Kamar
                                                 </div>
                                             </th>
                                             <th class="status">
@@ -125,195 +125,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($banners as $item)
+                                        @foreach ($user as $item)
                                             <tr>
                                                 <td>
-                                                    <div class="td-item img-banner">
+                                                    <div class="td-item username">
                                                         <div class="item">
-                                                            <div class="imgs">
-                                                                <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
-                                                            </div>
+                                                            {{ $item->name }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item lokasi">
                                                         <div class="item">
-                                                            {{ $item->lokasi_banner }}
+                                                            {{ $item->email }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item jenis">
                                                         <div class="item">
-                                                            {{ $item->jenis_banner }}
+                                                            Kamar No. {{ $item->no_kamar }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item status">
-                                                        <div class="item stat @if ($item->status == 'Publish') published @else unpublish @endif">
+                                                        <div class="item stat @if ($item->status == 'aktif') aktif @else nonaktif @endif">
                                                             {{ $item->status }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item action">
-                                                        <div class="toggle">
-                                                            <form id="edit-form" name="edit-form" method="post">
-                                                                <div class="form-check form-switch">
-                                                                    <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        <div class="delete-form">
-                                                            <form action="{{ route('banner.destroy', $item->id) }}" method="POST" id="delete-form">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn delete">
-                                                                    <i class="fa-solid fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                        <button type="button" class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#edit-data{{ $item->id }}">
-                                                            <i class="fa-solid fa-pen-to-square"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ status: '{{ $item->status }}', jenis: '{{ $item->jenis_banner }}', lokasi_banner: '{{ $item->lokasi_banner }}' }">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header d-flex align-items-center">
-                                                                    <h4 class="modal-title" id="myModalLabel">
-                                                                        Edit Data Cuci
-                                                                    </h4>
-                                                                </div>
-                                                                <form action="{{ route('editBanner') }}" method="POST" enctype="multipart/form-data" class="fors">
-                                                                    <div class="modal-body body-tambah">
-                                                                        @csrf
-                                                                        <div class="preview">
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
-                                                                        </div>
-                                                                        <div class="items ps-2">
-                                                                            <input type="hidden" value="{{ $item->id }}" name="id">
-                                                                            <div class="title pb-1">Gambar Banner<span class="text-danger">*</span></div>
-                                                                            <input type="file" name="gambar_banner" class="form-control add-input" value="{{ $item->gambar_banner }}">
-                                                                        </div>
-                                                                        <div class="items ps-2">
-                                                                            <div class="title pb-1">Lokasi Banner <span class="text-danger">*</span></div>
-                                                                            <div class="dropdown lokasi" id="drop">
-                                                                                <input type="text" readonly class="form-control add-input" id="add-lokasi" name="lokasi_banner" placeholder="Pilih Lokasi" required x-model= 'lokasi_banner'>
-                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                    <i class="fa-solid fa-caret-down"></i>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li class="is-real" x-on:click = "lokasi_banner = 'Home User'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/house.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Home User
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-real" x-on:click = "lokasi_banner = 'Jasa Cuci User'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/washing-machine.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Jasa Cuci User
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-real" x-on:click = "lokasi_banner = 'Pembayaran Jasa Cuci'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/cashless-payment.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Pembayaran Jasa Cuci
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="items ps-2">
-                                                                            <div class="title pb-1">Status Banner <span class="text-danger">*</span></div>
-                                                                            <div class="dropdown status" id="drop">
-                                                                                <input type="text" readonly class="form-control add-input" id="add-status" name="status" placeholder="Pilih Status . . ." required x-model="status">
-                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                    <i class="fa-solid fa-caret-down"></i>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li class="is-real" x-on:click = "status ='Publish'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('img/view.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Publish
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-real" x-on:click = "status ='Unpublish'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('img/hide.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Unpublish
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="items ps-2">
-                                                                            <div class="title pb-1">Jenis Banner<span class="text-danger">*</span></div>
-                                                                            <div class="dropdown layanan">
-                                                                                <input type="text" readonly class="form-control add-input" id="add-jenis" placeholder="Jenis Banner" name="jenis" required x-model="jenis">
-                                                                                <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
-                                                                                    <i class="fa-solid fa-caret-down"></i>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li class="is-item" x-on:click ="jenis='Banner Utama'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/grid.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Banner Utama
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-item" x-on:click = "jenis ='Banner Promosi'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/promotion.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Banner Promosi
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
-                                                                            Batal
-                                                                        </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="status && jenis && lokasi_banner ? null : 'disabled'">
-                                                                            Tambahkan
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
 
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -329,86 +173,85 @@
     </div>
 
     <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content" x-data= "{gambar_banner: '', lokasi_banner: '', status: '', jenis: ''}">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{
+            nama: '',
+            email: '',
+            password: '',
+            tanggal_masuk: '',
+            no_kamar: '',
+            jenis_kelamin: '',
+            pekerjaan: ''
+        }">
+            <div class="modal-content">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
-                        Tambahkan Item Cuci
+                        Tambahkan User
                     </h4>
                 </div>
-                <form action="{{ route('storeBanner') }}" method="POST" enctype="multipart/form-data" class="fors">
+                <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
                     <div class="modal-body body-tambah">
                         @csrf
                         <div class="items ps-2">
-                            <div class="title pb-1">Gambar Banner<span class="text-danger">*</span></div>
-                            <input type="file" name="gambar_banner" class="form-control add-input" x-model="gambar_banner" onchange="loadFile(event)">
+                            <div class="title pb-1">Nama User<span class="text-danger">*</span></div>
+                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama">
                         </div>
                         <div class="items ps-2">
-                            <div class="title pb-1">Lokasi Banner <span class="text-danger">*</span></div>
-                            <div class="dropdown lokasi" id="drop">
-                                <input type="text" readonly class="form-control add-input" id="add-lokasi" name="lokasi_banner" placeholder="Pilih Lokasi" required x-model= 'lokasi_banner'>
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-caret-down"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li class="is-real" x-on:click = "lokasi_banner = 'Home User'">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/house.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Home User
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-real" x-on:click = "lokasi_banner = 'Jasa Cuci User'">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/washing-machine.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Jasa Cuci User
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="is-real" x-on:click = "lokasi_banner = 'Pembayaran Jasa Cuci'">
-                                        <div class="item">
-                                            <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/cashless-payment.png') }}">
-                                            </div>
-                                            <div class="value">
-                                                Pembayaran Jasa Cuci
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <div class="title pb-1">Email<span class="text-danger">*</span></div>
+                            <input type="email" name="email" placeholder="Email . . ." class="form-control target" x-model="email">
                         </div>
                         <div class="items ps-2">
-                            <div class="title pb-1">Status Banner <span class="text-danger">*</span></div>
+                            <div class="title pb-1">Password<span class="text-danger">*</span></div>
+                            <input type="text" name="password" placeholder="Password . . ." class="form-control target" x-model="password" min="4">
+                        </div>
+                        <div class="items ps-2">
+                            <div class="title pb-1">Tanggal Masuk<span class="text-danger">*</span></div>
+                            <input type="date" name="tanggal_masuk" placeholder="tanggal_masuk . . ." class="form-control target" x-model="tanggal_masuk">
+                        </div>
+                        <div class="items ps-2">
+                            <div class="title pb-1">No Kamar<span class="text-danger">*</span></div>
                             <div class="dropdown status" id="drop">
-                                <input type="text" readonly class="form-control add-input" id="add-status" name="status" placeholder="Pilih Status . . ." required x-model="status">
+                                <input type="text" readonly class="form-control" id="add-status" name="no_kamar" placeholder="Pilih Status . . ." required x-model="no_kamar">
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-real" x-on:click = "status ='Publish'">
+                                    <li class="is-real" x-on:click="no_kamar = '1'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/view.png') }}">
                                             </div>
                                             <div class="value">
-                                                Publish
+                                                Kamar No. 1
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-real" x-on:click = "status ='Unpublish'">
+                                    <li class="is-real" x-on:click="no_kamar = '2'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/hide.png') }}">
                                             </div>
                                             <div class="value">
-                                                Unpublish
+                                                Kamar No. 2
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="is-real" x-on:click="no_kamar = '3'">
+                                        <div class="item">
+                                            <div class="icons">
+                                                <img src="{{ asset('img/hide.png') }}">
+                                            </div>
+                                            <div class="value">
+                                                Kamar No. 3
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="is-real" x-on:click="no_kamar = '4'">
+                                        <div class="item">
+                                            <div class="icons">
+                                                <img src="{{ asset('img/hide.png') }}">
+                                            </div>
+                                            <div class="value">
+                                                Kamar No. 4
                                             </div>
                                         </div>
                                     </li>
@@ -416,59 +259,65 @@
                             </div>
                         </div>
                         <div class="items ps-2">
-                            <div class="title pb-1">Jenis Banner<span class="text-danger">*</span></div>
-                            <div class="dropdown layanan">
-                                <input type="text" readonly class="form-control add-input" id="add-jenis" placeholder="Jenis Banner" name="jenis" required x-model="jenis">
-                                <button class="btn dropdown-toggle add" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="modal()">
+                            <div class="title pb-1">Jenis Kelamin<span class="text-danger">*</span></div>
+                            <div class="dropdown jeniskelamin" id="drop">
+                                <input type="text" readonly class="form-control" id="add-jenis-kelamin" name="jenis_kelamin" placeholder="Pilih jenis kelamin . . ." required x-model="jenis_kelamin">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-item" x-on:click ="jenis='Banner Utama'">
+                                    <li class="is-real" x-on:click="jenis_kelamin = 'laki laki'">
                                         <div class="item">
                                             <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/grid.png') }}">
+                                                <img src="{{ asset('img/view.png') }}">
                                             </div>
                                             <div class="value">
-                                                Banner Utama
+                                                laki laki
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-item" x-on:click = "jenis ='Banner Promosi'">
+                                    <li class="is-real" x-on:click="jenis_kelamin = 'perempuan'">
                                         <div class="item">
                                             <div class="icons">
-                                                <img src="{{ asset('gambar-kategori/promotion.png') }}">
+                                                <img src="{{ asset('img/hide.png') }}">
                                             </div>
                                             <div class="value">
-                                                Banner Promosi
+                                                perempuan
                                             </div>
                                         </div>
                                     </li>
+
                                 </ul>
                             </div>
+                        </div>
+                        <div class="items ps-2">
+                            <div class="title pb-1">Pekerjaan<span class="text-danger">*</span></div>
+                            <input type="text" name="pekerjaan" placeholder="Pekerjaan . . ." class="form-control target" x-model="pekerjaan">
+                        </div>
+                        <div class="items ps-2">
+                            <input type="hidden" name="status" class="form-control target" value="Aktif">
+                            <input type="hidden" name="role_id" class="form-control target" value="2">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="gambar_banner && lokasi_banner && jenis && status ? null : 'disabled'">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && (password.length < 4)">
                             Tambahkan
                         </button>
                     </div>
                 </form>
             </div>
-            <!-- /.modal-content -->
         </div>
     </div>
-
-
 
 @endsection
 
 @section('internal-script')
     <script src="{{ asset('package') }}/dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
-    {{-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             curs();
         });
@@ -508,7 +357,7 @@
                 modals.classList.remove('active');
             }
         }
-    </script> --}}
+    </script>
 
     <script>
         // Select all delete buttons and attach event listener to each of them
@@ -562,7 +411,7 @@
         $(document).ready(function() {
             $('.form-check-input').click(function(event) {
                 var switch_id = $(this).attr("switch_id");
-                var myUrl = "/toggleBanner/" + $(this).attr('data-id').replace(/\W/g, '-');
+                var myUrl = "/toggleUser/" + $(this).attr('data-id').replace(/\W/g, '-');
                 window.location.href = myUrl;
             });
         });

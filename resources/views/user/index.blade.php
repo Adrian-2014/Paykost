@@ -139,7 +139,7 @@
                     <div class="splide">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                @if ($bannerKost->isEmpty())
+                                {{-- @if ($bannerKost->isEmpty())
                                     <li class="splide__slide">
                                         <div class="empty-page">
                                             <div class="one">
@@ -156,7 +156,10 @@
                                             <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
                                         </li>
                                     @endforeach
-                                @endif
+                                @endif --}}
+                                <li class="splide__slide">
+                                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -411,7 +414,6 @@
         </div>
     </div>
 
-
     <div class="recomendation container-fluid">
         <div class="splide" role="group" id="slider-2">
             <div class="splide__track">
@@ -525,7 +527,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/profil/profil" class="nav-link">
+                <a href="/user/profil" class="nav-link">
                     <i class='fas fa-user-alt'></i>
                     <div class="isi fw-normal">Profil</div>
                 </a>

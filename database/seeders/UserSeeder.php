@@ -19,20 +19,18 @@ class UserSeeder extends Seeder
                 'name'     => 'Adrian',
                 'email'    => 'admin@gmail.com',
                 'password' => Hash::make('password'),
+                'no_kamar' => null,
+                'status' => null,
                 'role_id'  => 1
-            ],
-            [
-                'name'     => 'Pemilik Kos',
-                'email'    => 'pemilik_kos@gmail.com',
-                'password' => Hash::make('paykost'),
-                'role_id'  => 2
             ],
             [
                 'name'     => 'doditya ramadhana',
                 'email'    => 'user@gmail.com',
                 'password' => Hash::make('12345678'),
-                'role_id'  => 3
-            ],
+                'no_kamar' => 5,
+                'status' => 'Aktif',
+                'role_id'  => 2
+            ]
         ];
 
         foreach ($datas as $value) {
@@ -42,6 +40,8 @@ class UserSeeder extends Seeder
                 'email'    => $value['email'],
                 'password' => $value['password'],
                 'role_id'  => $value['role_id'],
+                'no_kamar'  => $value['no_kamar'],
+                'status'  => $value['status'],
             ]);
 
         }

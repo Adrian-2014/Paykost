@@ -16,68 +16,73 @@
     </div>
 
     <div class="form">
-        <div class="inform-umum">
-            <div class="umum-item">
-                <div class="kiri">No. Transaksi</div>
-                <div class="kanan">{{ $pemesanan->id_pembelian }}</div>
-            </div>
-            <div class="umum-item">
-                <div class="kiri">Nama User</div>
-                <div class="kanan">{{ auth()->user()->name }}</div>
-            </div>
-            <div class="umum-item">
-                <div class="kiri">No. Kamar</div>
-                <div class="kanan">Kamar No. 5</div>
-            </div>
-            <div class="umum-item">
-                <div class="kiri">Layanan</div>
-                <div class="kanan">{{ $pemesanan->jenis_layanan }}</div>
-            </div>
-            <div class="umum-item">
-                <div class="kiri">Tanggal Laundry</div>
-                <div class="kanan" id="start">{{ $pemesanan->tgl_start }}</div>
-            </div>
-            <div class="umum-item special">
-                <div class="kiri">Tanggal Pengambilan</div>
-                <div class="kanan">{{ $pemesanan->tgl_done }}</div>
-            </div>
-            <div class="umum-item">
-                <div class="kiri">Jumlah Barang</div>
-                <div class="kanan">{{ $pemesanan->jumlah }} potong</div>
-            </div>
-        </div>
-        <div class="inform-total">
-            <div class="info">Total Biaya</div>
-            <div class="value fw-medium">{{ $pemesanan->total_biaya }}</div>
-        </div>
-        <div class="inform-pay">
-            <div class="media">
-                <div class="logo">
-                    <img src="{{ asset('img/' . $bank->gambar) }}">
+        <form action="{{ route('proses') }}" method="POST" enctype="multipart/form-data" x-data = "{img: ''}">
+            @csrf
+            <div class="inform-umum">
+                <div class="umum-item">
+                    <div class="kiri">No. Transaksi</div>
+                    <div class="kanan">{{ $pemesanan->id_pembelian }}</div>
                 </div>
-                <div class="nama-bank">
-                    {{ $bank->nama }}
+                <div class="umum-item">
+                    <div class="kiri">Nama User</div>
+                    <div class="kanan">{{ auth()->user()->name }}</div>
+                </div>
+                <div class="umum-item">
+                    <div class="kiri">No. Kamar</div>
+                    <div class="kanan">Kamar No. 5</div>
+                </div>
+                <div class="umum-item">
+                    <div class="kiri">Layanan</div>
+                    <div class="kanan">{{ $pemesanan->jenis_layanan }}</div>
+                </div>
+                <div class="umum-item">
+                    <div class="kiri">Tanggal Laundry</div>
+                    <div class="kanan" id="start">{{ $pemesanan->tgl_start }}</div>
+                </div>
+                <div class="umum-item special">
+                    <div class="kiri">Tanggal Pengambilan</div>
+                    <div class="kanan">{{ $pemesanan->tgl_done }}</div>
+                </div>
+                <div class="umum-item">
+                    <div class="kiri">Jumlah Barang</div>
+                    <div class="kanan">{{ $pemesanan->jumlah }} potong</div>
                 </div>
             </div>
-            <div class="message">Mohon transfer ke No. Rekening ini</div>
-            <div class="rekening">
-                <div class="no-rek" id="no-rek">065722313040</div>
-                <div class="copy" onclick="salinTeks()">
-                    <img src="{{ asset('img-chategories/copy.png') }}" class="ico">
+            <div class="inform-total">
+                <div class="info">Total Biaya</div>
+                <div class="value fw-medium">{{ $pemesanan->total_biaya }}</div>
+            </div>
+            <div class="inform-pay">
+                <div class="media">
+                    <div class="logo">
+                        <img src="{{ asset('img/' . $bank->gambar) }}">
+                    </div>
+                    <div class="nama-bank">
+                        {{ $bank->nama }}
+                    </div>
+                </div>
+                <div class="message">Mohon transfer ke No. Rekening ini</div>
+                <div class="rekening">
+                    <div class="no-rek" id="no-rek">065722313040</div>
+                    <div class="copy" onclick="salinTeks()">
+                        <img src="{{ asset('img-chategories/copy.png') }}" class="ico">
+                    </div>
+                </div>
+                <div class="atas-nama fw-medium d-flex">
+                    <div class="a fw-bold">
+                        A/N
+                    </div>
+                    <div class="n">ADRIAN</div>
+                </div>
+                <div class="bukti">
+                    <div class="tekt-input">Sertakan Bukti <span class="text-danger">*</span></div>
+                    <input type="file" id="inp" name="bukti_bayar" class="form-control" x-model="img">
+                    {{-- <label for="inp"><i class="bi bi-folder2-open"></i></label> --}}
                 </div>
             </div>
-            <div class="atas-nama fw-medium d-flex">
-                <div class="a fw-bold">
-                    A/N
-                </div>
-                <div class="n">ADRIAN</div>
-            </div>
-        </div>
 
-        <div class="kumpulan-button">
-            <a href="/cuci" class="back">Halaman Utama</a>
-            <form action="{{ route('proses') }}" method="POST">
-                @csrf
+            <div class="kumpulan-button">
+                <a href="/cuci" class="back">Halaman Utama</a>
                 <input type="hidden" name="id" value="{{ $pemesanan->id_pembelian }}">
                 <input type="hidden" name="nama" value="{{ $pemesanan->nama_user }}">
                 <input type="hidden" name="no_kamar" value="{{ $pemesanan->no_kamar }}">
@@ -85,11 +90,11 @@
                 <input type="hidden" name="tgl_start" value="{{ $pemesanan->tgl_start }}">
                 <input type="hidden" name="tgl_done" value="{{ $pemesanan->tgl_done }}">
                 <input type="hidden" name="jumlah" value="{{ $pemesanan->jumlah }}">
-                <input type="hidden" name="status" value="Dalam Antrean">
+                <input type="hidden" name="status" value="Proses Pengambilan">
                 <input type="hidden" name="total_biaya" value="{{ $pemesanan->total_biaya }}">
-                <button type="submit" class="submit">Konfirmasi Pembayaran</button>
-            </form>
-        </div>
+                <button type="submit" class="submit" :disabled="img ? null : 'disabled'">Konfirmasi Pembayaran</button>
+            </div>
+        </form>
     </div>
     <div class="alert">
         <div class="menyala">

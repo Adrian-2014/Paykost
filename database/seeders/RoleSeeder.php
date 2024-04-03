@@ -18,15 +18,12 @@ class RoleSeeder extends Seeder
                 'name' => 'admin'
             ],
             [
-                'name' => 'pemilik-kos'
-            ],
-            [
                 'name' => 'user'
             ],
         ];
 
         foreach ($items as $item) {
-            
+
             Role::create([
                 'name' => $item['name'],
             ]);

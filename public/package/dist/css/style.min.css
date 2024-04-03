@@ -47187,9 +47187,12 @@ html[dir=rtl] .welcome-bg-img {
 }
 
 .brand-logo {
-    min-height: 70px;
+    min-height: 50px;
     padding: 0 20px;
     padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    display: flex !important;
+    justify-content: center !important;
 }
 
 .unlimited-access {
@@ -55958,6 +55961,16 @@ ul {
 
 .title-part-padding {
     padding: 15px 30px
+}
+
+.mini-sidebar {
+    .left-sidebar {
+        .brand-logo {
+            img {
+                display: none !important;
+            }
+        }
+    }
 }
 
 @keyframes load {

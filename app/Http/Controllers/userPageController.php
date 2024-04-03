@@ -25,9 +25,8 @@ class userPageController extends Controller
 {
 
     public function index() {
-        $bannerKost = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->where('jenis_banner', 'Banner Utama')->get();
-        $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->where('jenis_banner', 'Banner Promosi')->get();
-        return view('user.index',compact('bannerKost', 'bannerPro'));
+        $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
+        return view('user.index',compact('bannerPro'));
     }
     public function kamarku() {
         return view('user.kamarku');
@@ -51,7 +50,7 @@ class userPageController extends Controller
         return view('user.kategori.kebersihan');
     }
     public function cuciBaju() {
-        $bannerPro = Banner::where('lokasi_banner', 'Jasa Cuci User')->where('status', 'Publish')->where('jenis_banner', 'Banner Promosi')->get();
+        $bannerPro = Banner::where('lokasi_banner', 'Jasa Cuci User')->where('status', 'Publish')->get();
         return view('user.kategori.cuci', compact('bannerPro'));
     }
     public function kehilangan() {
@@ -161,15 +160,19 @@ class userPageController extends Controller
         return redirect('/checkKonfirmasi');
     }
     public function checkKonfirmasi() {
-        $bannerPro = Banner::where('lokasi_banner', 'Pembayaran Jasa Cuci')->where('status', 'Publish')->where('jenis_banner', 'Banner Promosi')->get();
+        $bannerPro = Banner::where('lokasi_banner', 'Pembayaran Jasa Cuci')->where('status', 'Publish')->get();
         $pemesanan = pemesanan::find(session()->get('pemesanan_id'));
         $bank = Bank::find($pemesanan->bank_id);
         return view('user.kategori.pemesanan.kofirmasi-pesan',compact('pemesanan','bank', 'bannerPro'));
     }
 
     public function prosesCuci(Request $request) {
+
+        // dd($request->all());
+
         $request->validate([
             'id' => 'required',
+            'bukti_bayar' => 'required|image|mimes:jpeg,png,jpg,gif',
             'nama' => 'required',
             'no_kamar' => 'required',
             'jumlah'=> 'required',
@@ -184,22 +187,25 @@ class userPageController extends Controller
         $date_start = date('m/d/Y', strtotime($pemesanan->tgl_start));
         // dd($date_start);
         $tgl_start = Str::replace(', ','',Str::replace($date_start,'',$pemesanan->tgl_start));
-
         $date = $date_start . ' '.$tgl_start;
-
         $date_now = date('Y-m-d H:i:s');
         $date_start = date('Y-d-m', strtotime($date));
+
+        $gambarBarang = $request->file('bukti_bayar');
+        $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+        $gambarBarang->move(public_path('uploads'), $namaFile);
 
         $proses = new ProsesCuci();
         $proses->id_pembelian = $request->id;
         $proses->nama_user = $request->nama;
         $proses->jumlah = $request->jumlah;
-        $proses->status = $date_now <= $date_start. ' '.$tgl_start ? 'Dalam Antrean' : 'Dalam Proses';
+        $proses->status = $date_now <= $date_start. ' '.$tgl_start ? 'Proses Pengambilan' : 'Proses Cuci';
         $proses->no_kamar = $request->no_kamar;
         $proses->jenis_layanan = $request->layanan;
         $proses->total_biaya = $request->total_biaya;
         $proses->tgl_start = $request->tgl_start;
         $proses->tgl_done = $request->tgl_done;
+        $proses->bukti =  $namaFile;
         $proses->bank_id = $pemesanan->bank_id;
         $proses->save();
 
@@ -208,7 +214,7 @@ class userPageController extends Controller
 
     public function proses() {
         $username = auth()->user()->name; // Ganti 'username' dengan nama kolom yang sesuai dalam model pengguna Anda
-        $pemesanans = ProsesCuci::where('nama_user', $username)->whereIn('status', ['Dalam Proses', 'Dalam Antrean'])->orderBy('id', 'desc')->get();
+        $pemesanans = ProsesCuci::where('nama_user', $username)->whereIn('status', ['Proses Cuci', 'Proses Pengambilan'])->orderBy('id', 'desc')->get();
         foreach ($pemesanans as $pemesanan) {
             $date_start = date('m/d/Y', strtotime($pemesanan->tgl_start));
             // dd($date_start);
@@ -218,17 +224,22 @@ class userPageController extends Controller
             // dd($date);
             $date_now = date('Y-m-d H:i:s');
             $date_start = date('Y-d-m', strtotime($date));
-            $pemesanan->status = $date_now <= $date_start. ' '.$tgl_start ? 'Dalam Antrean' : 'Dalam Proses';
+            $pemesanan->status = $date_now <= $date_start. ' '.$tgl_start ? 'Proses Pengambilan' : 'Proses Cuci';
             $pemesanan->save();
         }
         return view('user.kategori.pemesanan.proses' ,compact('pemesanans'));
     }
     public function riwayatCuci() {
         $username = auth()->user()->name;
+
         $pemesanan = pemesanan::find(session()->get('pemesanan_id'));
-        $bank = Bank::find($pemesanan->bank_id);
-        $done = ProsesCuci::where('nama_user', $username)->where('status', ['Selesai'])->orderBy('id', 'desc')->get();
-        return view('user.kategori.pemesanan.riwayat' ,compact('done', 'bank'));
+
+
+        $bank = $pemesanan ? Bank::find($pemesanan->bank_id) : null;
+
+        $done = ProsesCuci::where('nama_user', $username)->where('status', 'Selesai')->orderBy('id', 'desc')->get();
+
+        return view('user.kategori.pemesanan.riwayat', compact('done', 'bank'));
     }
 
     public function updateStatus(Request $request)

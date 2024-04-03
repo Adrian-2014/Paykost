@@ -20,7 +20,6 @@ body {
                         text-align: center;
                         font-weight: 500;
                     }
-
                 }
 
                 .gambar {
@@ -160,6 +159,7 @@ body {
     gap: .5rem;
 }
 
+
 #add-item {
     .modal-dialog {
         .modal-content {
@@ -168,15 +168,26 @@ body {
             transform: translate(-50%, -50%);
             width: 80%;
 
-            /* overflow: auto; */
             form {
-
                 .modal-body {
                     display: flex;
                     flex-direction: column;
                     gap: .65rem;
-                    /* height: 80vh; */
                     height: fit-content;
+
+                    .preview {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+
+                        img {
+                            height: 8rem;
+                            width: auto;
+                            border-radius: .6rem;
+                            border: 1px solid rgb(220, 216, 216);
+                        }
+                    }
 
                     .items {
                         .form-control {
@@ -214,6 +225,7 @@ body {
 
                             .dropdown-menu.show {
                                 height: fit-content;
+
                                 display: flex;
                                 flex-direction: column;
                                 padding-top: 0 !important;
@@ -256,11 +268,27 @@ body {
                                 color: white;
                             }
                         }
-                    }
-                }
 
-                .modal-body.active {
-                    height: 53vh !important;
+                        .dropdown.status {
+                            margin-bottom: 1rem !important;
+                        }
+                    }
+
+                    .for-img {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        .gmb {
+                            width: 86%;
+                        }
+
+                        img {
+                            height: 3.6rem;
+                            width: 3.6rem;
+                            /* padding: .5rem; */
+                        }
+                    }
                 }
 
                 .modal-footer {
@@ -391,6 +419,10 @@ body {
                                 background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
                                 color: white;
                             }
+                        }
+
+                        .dropdown.status {
+                            margin-bottom: 1rem !important;
                         }
                     }
 

@@ -138,7 +138,7 @@
                                         @foreach ($cuciItems as $item)
                                             <tr>
                                                 <td>
-                                                    <div class="td-item">{{ $item->nama_barang }}</div>
+                                                    <div class="td-item name">{{ $item->nama_barang }}</div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item">
@@ -197,7 +197,7 @@
                                                     </div>
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                                                            <div class="modal-content" x-data="{ nama_barang: '{{ $item->nama_barang }}', harga_barang: '{{ $item->harga_barang }}', jenis: '{{ $item->jenis_layanan }}', status: '{{ $item->status }}' }">
+                                                            <div class="modal-content" x-data="{ nama_barang: '{{ $item->nama_barang }}', harga_barang: '{{ $item->harga_barang }}', jenis: '{{ $item->jenis_layanan }}', status: '{{ $item->status }}', ukuran: '{{ $item->ukuran_barang }}' }">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
                                                                         Edit Data Cuci
@@ -300,22 +300,14 @@
                                                                         </div>
                                                                         <div class="items ps-2 ukuran">
                                                                             <div class="title pb-1">Ukuran <span class="text-danger">*</span></div>
-                                                                            <div class="inputs">
-                                                                                <input type="number" id="e1" class="form-control">
-                                                                                <div class="eks">
-                                                                                    x
-                                                                                </div>
-                                                                                <input type="number" id="e2" class="form-control">
-                                                                                (Meter)
-                                                                            </div>
-                                                                            <input type="hidden" name="ukuran" id="edit-real" class="form-control" value="{{ $item->ukuran }}">
+                                                                            <input type="text" name="ukuran" id="edit-real" class="form-control" x-model="ukuran">
                                                                         </div>
                                                                         <div class="items ps-2 for-img">
                                                                             <div class="gmb">
                                                                                 <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
-                                                                                <input type="file" name="gambar_barang" id="gambar_barang" class="form-control pic-mine" value="{{ $item->gambar_barang }}" class="editimg" onchange="loadFile(event)">
+                                                                                <input type="file" name="gambar_barang" id="gambar_barang-{{ $item->id }}" class="form-control pic-mine" value="{{ $item->gambar_barang }}" class="editimg" onchange="loadFile(event, {{ $item->id }})">
                                                                             </div>
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg" id="showimg">
+                                                                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}" class="showimg" id="showimg-{{ $item->id }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -344,7 +336,7 @@
     </div>
 
     <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data = "{nama_barang: '', harga_barang: '', jenis: '', status: '', u1: '', u2:'', gambar_barang: ''}">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data = "{nama_barang: '', harga_barang: '', jenis: '', status: '', gambar_barang: '', ukuran:''}">
             <div class="modal-content">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
@@ -447,15 +439,7 @@
 
                         <div class="items ps-2 ukuran">
                             <div class="title pb-1">Ukuran <span class="text-danger">*</span></div>
-                            <div class="inputs">
-                                <input type="number" id="u1" class="form-control" x-model= "u1">
-                                <div class="eks">
-                                    x
-                                </div>
-                                <input type="number" id="u2" class="form-control" x-model="u2">
-                                (Meter)
-                            </div>
-                            <input type="hidden" name="ukuran" id="real" class="form-control add-input">
+                            <input type="text" name="ukuran" id="real" class="form-control add-input" x-model="ukuran">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Gambar Barang <span class="text-danger">*</span></div>
@@ -466,7 +450,7 @@
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama_barang && harga_barang && status && jenis && gambar_barang && u1 && u2 ? null : 'disabled'">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama_barang && harga_barang && status && jenis && gambar_barang && ukuran ? null : 'disabled'">
                             Tambahkan
                         </button>
                     </div>
@@ -482,33 +466,6 @@
     <script src="{{ asset('package') }}/dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
     <script>
-        function gabungInput() {
-            // Mendapatkan nilai dari masing-masing input
-            var nilaiInput1 = document.getElementById('u1').value;
-            var nilaiInput2 = document.getElementById('u2').value;
-            var teksGabung = document.getElementById('real');
-            var val = nilaiInput1 + ' ' + 'x' + ' ' + nilaiInput2 + 'm';
-            teksGabung.setAttribute('value', val);
-            console.log('for real');
-        }
-
-        document.getElementById('u1').addEventListener('input', gabungInput);
-        document.getElementById('u2').addEventListener('input', gabungInput);
-
-        function gabungEdit() {
-            // Mendapatkan nilai dari masing-masing input
-            var nilaiInput1 = document.getElementById('e1').value;
-            var nilaiInput2 = document.getElementById('e2').value;
-            var teksGabung = document.getElementById('edit-real');
-            var val = nilaiInput1 + ' ' + 'x' + ' ' + nilaiInput2 + 'm';
-            teksGabung.setAttribute('value', val);
-            console.log('for real');
-        }
-
-        document.getElementById('e1').addEventListener('input', gabungEdit);
-        document.getElementById('e2').addEventListener('input', gabungEdit);
-
-
         document.addEventListener('DOMContentLoaded', function() {
             curs();
         });
@@ -550,6 +507,21 @@
         }
     </script>
     <script>
+        $(document).ready(function() {
+            $('.form-check-input').click(function(event) {
+                var switch_id = $(this).attr("switch_id");
+                var myUrl = "/toggleKhusus/" + $(this).attr('data-id').replace(/\W/g, '-');
+                window.location.href = myUrl;
+            });
+        });
+
+        // Fungsi untuk menampilkan gambar yang dipilih dari input file
+        function loadFile(event, itemId) {
+            var image = document.getElementById('showimg-' + itemId);
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+    <script>
         // Select all delete buttons and attach event listener to each of them
         document.querySelectorAll('.btn.delete').forEach(function(button) {
             button.addEventListener('click', function(e) {
@@ -574,7 +546,6 @@
             });
         });
     </script>
-
     @if (Session::has('success'))
         <script>
             Swal.fire({
@@ -586,64 +557,4 @@
             });
         </script>
     @endif
-
-    <script>
-        function formatNumber() {
-            // Get the input element
-            var inputElement = document.getElementById("numberInput");
-            // var inputElement = document.getElementById("numberEdit");
-
-            var value = inputElement.value;
-
-            value = value.replace(/\./g, '');
-
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            inputElement.value = value;
-        }
-
-        function formatEdit() {
-
-            var inputElement = document.getElementById("numberEdit");
-
-            var value = inputElement.value;
-
-            value = value.replace(/\./g, '');
-
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            inputElement.value = value;
-        }
-
-        var loadFile = function(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('showimg');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        };
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.form-check-input').click(function(event) {
-                var switch_id = $(this).attr("switch_id");
-                var myUrl = "/toggleKhusus/" + $(this).attr('data-id').replace(/\W/g, '-');
-                window.location.href = myUrl;
-            });
-        });
-
-        $('document').ready(function() {
-            $("#gambar_barang").change(function() {
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#showimg').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(this.files[0]);
-                }
-            });
-        });
-    </script>
 @endsection
