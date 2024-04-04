@@ -44,6 +44,13 @@ class fasilitasSeeder extends Seeder
                 'tipe'     => 'kamar',
                 'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
 
+            ],
+            [
+                'nama'     => 'Lemari',
+                'gambar'   => 'lemari.jpeg',
+                'tipe'     => 'kamar',
+                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+
             ]
 
         ];

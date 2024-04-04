@@ -30,6 +30,10 @@ Route::get('/', [loginController::class, 'index'])->name('login');
 
 // USER
 
+// Profil
+Route::post('updateProfil', [userPageController::class, 'updateProfil'])->name('profil.update');
+// Profil
+
 // Menu
 Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
 Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
@@ -81,6 +85,8 @@ Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index')
 // Kamar Kost
 Route::get('/admin/kost', [adminControll::class, 'kamarKost']);
 Route::post('storeKamar', [adminControll::class, 'storeKamar'])->name('storeKamar');
+Route::post('editKamar', [adminControll::class, 'editKamar'])->name('editKamar');
+Route::get('/toggleKamar/{id}', [adminControll::class, 'toggleKamar'])->name('toggleKamar');
 // Kamar Kost
 
 // User

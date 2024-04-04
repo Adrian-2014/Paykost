@@ -1,13 +1,3 @@
-:root {
-    --theme: linear-gradient(rgb(0, 140, 255), white, skyblue);
-    /* --theme: linear-gradient(
-        rgb(86, 176, 249),
-        blue,
-        rgb(0, 64, 255),
-        rgb(174, 227, 248)
-    ); */
-}
-
 *,
 html,
 body {
@@ -21,6 +11,9 @@ body {
     background-color: rgb(227, 227, 227) !important;
 }
 
+input:focus {
+    box-shadow: unset !important;
+}
 
 /* Section */
 
@@ -178,6 +171,10 @@ body {
                         font-size: 1.0rem;
                         font-weight: 400;
                     }
+
+                    .info.logout {
+                        color: red;
+                    }
                 }
 
                 .chev {
@@ -199,6 +196,94 @@ body {
 }
 
 /* Section */
+
+
+/* Modal Profil */
+
+.modal.fade {
+    .modal-dialog {
+        .modal-content {
+            color: rgba(0, 0, 0, 0.7) !important;
+
+            form {
+                .modal-body {
+                    .for-edit-profil {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: .6rem;
+
+                        .pp {
+                            position: relative;
+
+                            img {
+                                /* border: 3px rgb(199, 199, 199) solid; */
+                                height: 5.5rem;
+                                width: 5.5rem;
+                                border-radius: 50%;
+                            }
+
+                            .my-btn {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                height: 5.5rem;
+                                width: 5.5rem;
+                                border-radius: 50%;
+                                border: none !important;
+                                background-color: rgba(0, 0, 0, 0.3);
+
+                                input {
+                                    display: none;
+                                    /* transform: scale(0); */
+                                }
+
+                                i {
+                                    color: white;
+                                    font-size: 2rem;
+                                }
+                            }
+
+                        }
+
+                        .users {
+                            color: rgba(0, 0, 0, 0.7) !important;
+
+                            label {
+                                padding-left: .15rem;
+                                font-size: .9rem;
+                            }
+
+                            input {
+                                color: rgba(0, 0, 0, 0.7) !important;
+                            }
+                        }
+                    }
+
+                }
+
+                .modal-footer {
+                    padding: 0.3rem 0.7rem !important;
+                    display: flex;
+                    gap: .32rem;
+
+                    .cancel {
+                        color: white;
+                        border: 1.2px solid rgb(181, 181, 181);
+                        color: rgb(146, 146, 146);
+                    }
+
+                    .save {
+                        background: linear-gradient(to bottom right, rgb(4, 139, 249), rgb(74, 188, 233));
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Modal Profil */
 
 .navbar.fixed-bottom {
     padding: .3rem .4rem;

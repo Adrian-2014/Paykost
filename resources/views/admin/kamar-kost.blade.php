@@ -83,7 +83,7 @@
                                 <div class="te">Tambahkan Kamar</div>
                             </button>
                         </div>
-                        @if ($kost->isEmpty())
+                        @if ($kosts->isEmpty())
                             <div class="illustration d-flex flex-column">
                                 <div class="image">
                                     <img src="{{ asset('img/people.png') }}">
@@ -102,9 +102,14 @@
                                                     Kamar
                                                 </div>
                                             </th>
-                                            <th class="lokasi">
+                                            <th class="nomor">
                                                 <div class="th-item">
-                                                    Lokasi Kamar
+                                                    Nomor Kamar
+                                                </div>
+                                            </th>
+                                            <th class="harga">
+                                                <div class="th-item">
+                                                    Harga Kamar
                                                 </div>
                                             </th>
                                             <th class="status">
@@ -112,7 +117,7 @@
                                                     Status
                                                 </div>
                                             </th>
-                                            <th class="action">
+                                            <th class="aksi">
                                                 <div class="th-item">
                                                     Aksi
                                                 </div>
@@ -120,21 +125,38 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($kost as $item)
+                                        @foreach ($kosts as $item)
                                             <tr>
                                                 <td>
                                                     <div class="td-item img-Kamar">
                                                         <div class="item">
                                                             <div class="imgs">
-                                                                <img src="{{ asset('uploads/' . $item->gambar_Kamar) }}">
+                                                                <img src="{{ asset('uploads/' . $item->gambar_kamar) }}">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="td-item lokasi">
+                                                    <div class="td-item nomor">
                                                         <div class="item">
-                                                            {{ $item->lokasi_Kamar }}
+                                                            Kamar No.
+                                                            <span class="fw-bold"> {{ $item->nomor_kamar }}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                {{-- <td>
+                                                    <div class="td-item fasilitas">
+                                                        @foreach ($item->kamarKostFasilitas as $kamar_kost_fasilitas)
+                                                            <ul>
+                                                                <li>{{ $loop->iteration }}. {{ $kamar_kost_fasilitas->fasilitas->nama }}</li>
+                                                            </ul>
+                                                        @endforeach
+                                                    </div>
+                                                </td> --}}
+                                                <td>
+                                                    <div class="td-item fasilitas">
+                                                        <div class="item">
+                                                            Rp. {{ $item->harga_kamar }}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -154,8 +176,12 @@
                                                                 </div>
                                                             </form>
                                                         </div>
+                                                        <div class="target-modal" data-bs-toggle="modal" data-bs-target="#detail{{ $item->id }}">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </div>
                                                         <div class="delete-form">
-                                                            <form action="{{ route('Kamar.destroy', $item->id) }}" method="POST" id="delete-form">
+                                                            {{-- action="{{ route('Kamar.destroy', $item->id) }}" --}}
+                                                            <form method="POST" id="delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn delete">
@@ -167,95 +193,145 @@
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </button>
                                                     </div>
+
+                                                    {{-- Detail Item --}}
+                                                    <div id="detail{{ $item->id }}" class="modal fade in det" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                            <div class="modal-content" x-data= "{nomor_kamar: '', ukuran_kamar: '', gambar_kamar: '', harga_kamar: ''}">
+                                                                <div class="modal-header d-flex align-items-center">
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        Detail Kamar Kost
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="container foto-kost">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <img src="{{ asset('uploads/' . $item->gambar_kamar) }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="container">
+                                                                        <div class="row row-cols-2 row-cols-lg-2 g-1 g-lg-3">
+                                                                            <div class="col">
+                                                                                <div class="p-2">
+                                                                                    <label class="px-1 py-1">No. Kamar</label>
+                                                                                    <input type="text" disabled value="Kamar No. {{ $item->nomor_kamar }}" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="p-2">
+                                                                                    <label class="px-1 py-1">Harga Kamar</label>
+                                                                                    <input type="text" disabled value="Rp. {{ $item->harga_kamar }}" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                <div class="p-2">
+                                                                                    <label class="px-1 py-1">Status Kamar</label>
+                                                                                    <input type="text" disabled value= "{{ $item->status }}" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            {{-- <div class="col">
+                                                                                <div class="p-2">
+                                                                                    <label class="px-1 py-1">Kondisi Kamar</label>
+                                                                                    <input type="text" disabled value="{{ $item->kondisi }}" class="form-control">
+                                                                                </div>
+                                                                            </div> --}}
+                                                                            <div class="col">
+                                                                                <div class="p-2">
+                                                                                    <label class="px-1 py-1">Ukuran Kamar</label>
+                                                                                    <input type="text" disabled value="{{ $item->ukuran_kamar }}" class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="container fasilitas">
+                                                                        <label>Fasilitas Kamar</label>
+                                                                        <div class="for-fas">
+                                                                            @foreach ($facilites as $facilite)
+                                                                                @php
+                                                                                    $kamar_kost = \App\Models\KamarKostFasilitas::where('kamar_kost_id', $item->id)
+                                                                                        ->where('fasilitas_id', $facilite->id)
+                                                                                        ->first();
+                                                                                @endphp
+                                                                                @if ($kamar_kost)
+                                                                                    <div class="fas-item">
+                                                                                        <div class="for-img">
+                                                                                            <img src="{{ asset('img/' . $facilite->gambar) }}">
+                                                                                        </div>
+                                                                                        <div class="name">
+                                                                                            {{ $facilite->nama }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
+                                                                        Tutup
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                    </div>
+                                                    {{-- Detail Item --}}
+
+                                                    {{-- Edit Item --}}
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ status: '{{ $item->status }}', lokasi_Kamar: '{{ $item->lokasi_Kamar }}' }">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ ukuran: '{{ $item->ukuran_kamar }}', nomor: '{{ $item->nomor_kamar }}', harga: '{{ number_format($item->harga_kamar) }}' }">
                                                             <div class="modal-content">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
-                                                                        Edit Data Cuci
+                                                                        Edit Data Kamar Kost
                                                                     </h4>
                                                                 </div>
-                                                                <form action="{{ route('editKamar') }}" method="POST" enctype="multipart/form-data" class="fors">
+                                                                <form method="POST" action="{{ route('editKamar') }}" enctype="multipart/form-data" class="fors">
                                                                     <div class="modal-body body-tambah">
                                                                         @csrf
                                                                         <div class="preview">
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_Kamar) }}" id="showimg-{{ $item->id }}">
+                                                                            <img src="{{ asset('uploads/' . $item->gambar_kamar) }}" id="showimg-{{ $item->id }}">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
                                                                             <div class="title pb-1">Gambar Kamar<span class="text-danger">*</span></div>
-                                                                            <input type="file" name="gambar_Kamar" class="form-control add-input" value="{{ $item->gambar_Kamar }}" id="gambar_barang-{{ $item->id }}" onchange="loading(event, {{ $item->id }})">
+                                                                            <input type="file" name="gambar_kamar" class="form-control add-input" id="gambar_barang-{{ $item->id }}" onchange="loading(event, {{ $item->id }})">
                                                                         </div>
-                                                                        <div class="items ps-2">
-                                                                            <div class="title pb-1">Lokasi Kamar <span class="text-danger">*</span></div>
-                                                                            <div class="dropdown lokasi" id="drop">
-                                                                                <input type="text" readonly class="form-control add-input" id="add-lokasi" name="lokasi_Kamar" placeholder="Pilih Lokasi" required x-model= 'lokasi_Kamar'>
-                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                    <i class="fa-solid fa-caret-down"></i>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li class="is-real" x-on:click = "lokasi_Kamar = 'Home User'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/house.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Home User
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-real" x-on:click = "lokasi_Kamar = 'Jasa Cuci User'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/washing-machine.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Jasa Cuci User
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                    <li class="is-real" x-on:click = "lokasi_Kamar = 'Pembayaran Jasa Cuci'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('gambar-kategori/cashless-payment.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Pembayaran Jasa Cuci
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
+                                                                        <div class="items ps-2 fasilitas">
+                                                                            <div class="title pb-1">Ukuran Kamar<span class="text-danger">*</span></div>
+                                                                            <input type="text" name="ukuran_kamar" class="form-control add-input" x-model="ukuran">
                                                                         </div>
-                                                                        <div class="items ps-2">
-                                                                            <div class="title pb-1">Status Kamar <span class="text-danger">*</span></div>
-                                                                            <div class="dropdown status" id="drop">
-                                                                                <input type="text" readonly class="form-control add-input" id="add-status" name="status" placeholder="Pilih Status . . ." required x-model="status">
-                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                    <i class="fa-solid fa-caret-down"></i>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li class="is-real" x-on:click = "status ='Publish'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('img/view.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Publish
-                                                                                            </div>
+                                                                        <div class="items ps-2 fasilitas">
+                                                                            <div class="title pb-1">Nomor Kamar<span class="text-danger">*</span></div>
+                                                                            <input type="text" name="nomor_kamar" class="form-control add-input" x-model="nomor">
+                                                                        </div>
+                                                                        <div class="items ps-2 fasilitas">
+                                                                            <div class="title pb-1">Harga Kamar<span class="text-danger">*</span></div>
+                                                                            <input type="text" name="harga_kamar" class="form-control add-input" x-model="harga">
+                                                                        </div>
+                                                                        <div class="items ps-2 fasilitas">
+                                                                            <div class="title pb-1">Fasilitas Kamar<span class="text-danger">*</span></div>
+                                                                            <input type="hidden" name="status" class="form-control add-input" x-model="status" value="kosong">
+                                                                        </div>
+                                                                        <div class="items ps-2 fasilitas">
+                                                                            <div class="row">
+                                                                                @foreach ($facilites as $facilite)
+                                                                                    @php
+                                                                                        $kamar_kost = \App\Models\KamarKostFasilitas::where('kamar_kost_id', $item->id)
+                                                                                            ->where('fasilitas_id', $facilite->id)
+                                                                                            ->first();
+                                                                                    @endphp
+                                                                                    <div class="col-4">
+                                                                                        <div class="form-check mt-2">
+                                                                                            <input class="form-check-input" type="checkbox" name="fasilitas[]" {{ $kamar_kost ? ($facilite->id == $kamar_kost->fasilitas_id ? 'checked' : null) : null }} value="{{ $facilite->id }}" id="fasilits-{{ $facilite->id }}" />
+                                                                                            <label class="form-check-label" for="fasilits-{{ $facilite->id }}">
+                                                                                                {{ $facilite->nama }}
+                                                                                            </label>
                                                                                         </div>
-                                                                                    </li>
-                                                                                    <li class="is-real" x-on:click = "status ='Unpublish'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                <img src="{{ asset('img/hide.png') }}">
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Unpublish
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
+                                                                                    </div>
+                                                                                @endforeach
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -263,7 +339,7 @@
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="status && lokasi_Kamar ? null : 'disabled'">
+                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="ukuran && nomor && harga ? null : 'disabled'">
                                                                             Simpan Perubahn
                                                                         </button>
                                                                     </div>
@@ -271,6 +347,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    {{-- Edit Item --}}
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -286,13 +364,13 @@
 
     <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content" x-data= "{nomor_kamar: '', ukuran_kamar: '', gambar_kamar: '', harga_kamar: '', status: ''}">
+            <div class="modal-content" x-data= "{nomor_kamar: '', ukuran_kamar: '', gambar_kamar: '', harga_kamar: ''}">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
                         Tambahkan Kamar Kost
                     </h4>
                 </div>
-                <form action="{{ route('storeKamar') }}" method="POST" enctype="multipart/form-data" class="fors">
+                <form action="{{ route('storeKamar') }}" method="POST" enctype="multipart/form-data" class="fors" style="overflow: auto; max-height: 500px;">
                     <div class="modal-body body-tambah">
                         @csrf
                         <div class="preview">
@@ -304,26 +382,41 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Ukuran Kamar<span class="text-danger">*</span></div>
-                            <input type="text" name="ukuran_kamar" class="form-control add-input" x-model="ukuran_kamar">
+                            <input type="text" name="ukuran_kamar" placeholder="Ukuran kamar . . ." class="form-control add-input" x-model="ukuran_kamar">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Nomor Kamar<span class="text-danger">*</span></div>
-                            <input type="text" name="nomor_kamar" class="form-control add-input" x-model="nomor_kamar">
+                            <input type="text" name="nomor_kamar" placeholder="No    kamar . . ." class="form-control add-input" x-model="nomor_kamar">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Harga Kamar<span class="text-danger">*</span></div>
-                            <input type="text" name="harga_kamar" class="form-control add-input" x-model="harga_kamar">
+                            <input type="text" name="harga_kamar" placeholder="Ukuran kamar . . ." class="form-control add-input" x-model="harga_kamar">
                         </div>
                         <div class="items ps-2 fasilitas">
-                            <div class="title pb-1">Fasilitas Kamar<span class="text-danger">*</span></div>
-                            <input type="file" name="status" class="form-control add-input" x-model="status" value="kosong">
+                            <div class="title pb-1">Fasilitas Kamar</div>
+                            <input type="hidden" name=" kondisi" class="form-control add-input" value="kosong">
+                            <input type="hidden" name="" class="form-control add-input" value="Publish">
+                        </div>
+                        <div class="items ps-2 fasilitas">
+                            <div class="row">
+                                @foreach ($facilites as $facilite)
+                                    <div class="col-4">
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="fasilitas[]" x-model="fasilitas[]" value="{{ $facilite->id }}" id="fasilits-{{ $facilite->id }}" />
+                                            <label class="form-check-label" for="fasilits-{{ $facilite->id }}">
+                                                {{ $facilite->nama }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="gambar_kamar && ukuran_kamar && nomor_kamar && harga_kamar && status ? null : 'disabled'">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="gambar_kamar && ukuran_kamar && nomor_kamar && harga_kamar ? null : 'disabled'">
                             Tambahkan
                         </button>
                     </div>
@@ -333,6 +426,8 @@
             <!-- /.modal-content -->
         </div>
     </div>
+
+
 
 @endsection
 

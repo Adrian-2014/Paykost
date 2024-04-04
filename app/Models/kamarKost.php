@@ -9,5 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class kamarKost extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
     protected $table = 'kamar_kost';
+
+    public function kamarKostFasilitas() {
+        return $this->hasMany(KamarKostFasilitas::class,'kamar_kost_id', 'id');
+    }
 }

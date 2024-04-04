@@ -12,8 +12,10 @@ use App\Models\cuciLipat;
 use App\Models\cuciSepatu;
 use App\Models\cuciSetrika;
 use App\Models\cucisize;
+use App\Models\fasilitas;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
+use App\Models\KamarKostFasilitas;
 use App\Models\ProsesCuci;
 use App\Models\User;
 use Database\Seeders\CuciKeringSeeder;
@@ -23,6 +25,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Termwind\Components\Raw;
 
 class adminControll extends Controller
 {
@@ -36,9 +39,87 @@ class adminControll extends Controller
     // For Kamar Kost
     public function kamarKost() {
         $kost = kamarKost::orderBy('id', 'desc')->get();
-        return view('admin.kamar-kost', compact('kost'));
+        $facilites = fasilitas::get();
+        return view('admin.kamar-kost', [
+            'kosts'=>$kost,
+            'facilites'=>$facilites,
+        ]);
     }
-    // For Kamar Kost
+
+    public function storeKamar(Request $request) {
+        $request->validate([
+            'nomor_kamar' => 'required',
+            'ukuran_kamar' => 'required',
+            'kondisi' => 'required',
+            'gambar_kamar' => 'required',
+            'harga_kamar'=>'required',
+        ]);
+
+        $gambarBarang = $request->file('gambar_kamar');
+        $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+        $gambarBarang->move(public_path('uploads'), $namaFile);
+
+        $kamar_kost = kamarKost::updateOrCreate(
+            [
+                'gambar_kamar'=>$namaFile,
+                'nomor_kamar'=>$request->nomor_kamar,
+                'ukuran_kamar'=>$request->ukuran_kamar,
+                'harga_kamar'=>$request->harga_kamar,
+                'status' =>'Publish',
+                'kondisi'=>'Kosong'
+            ]
+        );
+
+        foreach($request->fasilitas as $fasilitas) {
+            KamarKostFasilitas::create([
+                'fasilitas_id'=>$fasilitas,
+                'kamar_kost_id'=>$kamar_kost->id
+            ]);
+        }
+
+        return back()->with('success', 'Barang berhasil ditambahkan.');
+    }
+    public function editKamar(Request $request) {
+        KamarKostFasilitas::where('kamar_kost_id', $request->id)->delete();
+        $request->validate([
+            'nomor_kamar' => 'required',
+            'ukuran_kamar' => 'required',
+            'gambar_kamar' => 'nullable',
+            'harga_kamar'=>'required',
+        ]);
+
+        if ($request->gambar_kamar) {
+            $gambarBarang = $request->file('gambar_kamar');
+            $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+            $gambarBarang->move(public_path('uploads'), $namaFile);
+        } else {
+            $namaFile = kamarKost::find($request->id)->gambar_kamar;
+        }
+
+        $kamar_kost = kamarKost::updateOrCreate([
+            'id'=>$request->id
+        ],[
+            'gambar_kamar'=>$namaFile,
+            'nomor_kamar'=>$request->nomor_kamar,
+            'ukuran_kamar'=>$request->ukuran_kamar,
+            'harga_kamar'=>$request->harga_kamar,
+        ]);
+
+        foreach($request->fasilitas as $fasilitas) {
+            KamarKostFasilitas::create([
+                'fasilitas_id'=>$fasilitas,
+                'kamar_kost_id'=>$kamar_kost->id
+            ]);
+        }
+
+        return back()->with('success', 'Kamar Berhasil Di Edit.');
+    }
+    public function toggleKamar($id) {
+        $kost = kamarKost::find($id);
+        $kost->status = $kost->status == 'Publish' ? 'Unpublish' : 'Publish';
+        $kost->save();
+        return back()->with('success', 'Status Berhasil Dirubah');
+    }
 
     // For User
     public function user() {

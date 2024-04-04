@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('ukuran_kamar');
             $table->string('gambar_kamar');
             $table->string('harga_kamar');
+            $table->string('kondisi');
             $table->string('status');
-            $table->string('fasilitas');
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'email'    => 'admin@gmail.com',
                 'password' => Hash::make('password'),
                 'no_kamar' => null,
+                'no_telpon' => null,
                 'status' => null,
                 'role_id'  => 1
             ],
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('12345678'),
                 'no_kamar' => 5,
                 'status' => 'Aktif',
+                'no_telpon' => '089287002341',
                 'role_id'  => 2
             ]
         ];
@@ -41,6 +43,7 @@ class UserSeeder extends Seeder
                 'password' => $value['password'],
                 'role_id'  => $value['role_id'],
                 'no_kamar'  => $value['no_kamar'],
+                'no_telpon'  => $value['no_telpon'],
                 'status'  => $value['status'],
             ]);
 

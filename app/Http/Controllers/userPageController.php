@@ -16,10 +16,12 @@ use App\Models\cucisize;
 use App\Models\jasaSetrika;
 use App\Models\pemesanan;
 use App\Models\ProsesCuci;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Mpdf\Mpdf;
 
 class userPageController extends Controller
 {
@@ -56,6 +58,38 @@ class userPageController extends Controller
     public function kehilangan() {
         return view('user.kategori.kehilangan');
     }
+
+
+    // Update Profil
+    public function updateProfil(Request $request)  {
+
+        //  dd($request);
+        $request->validate([
+            'username' => 'required',
+            'photo' => 'nullable',
+            'no_telpon' => 'required',
+        ]);
+
+        $user_id = auth()->id();
+
+        if($request->photo) {
+            $photo = $request->file('photo');
+            $namaFile = time().'.'.$photo->getClientOriginalExtension();
+            $photo->move(public_path('uploads'), $namaFile);
+        } else {
+            $namaFile = User::find($user_id)->photo;
+        }
+
+        $user = User::find($user_id);
+        $user->name = $request->username;
+        $user->no_telpon = $request->no_telpon;
+        $user->profil = $namaFile;
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui.');
+    }
+
+    // Update Profil
 
     // For Layanan Laundry
 
