@@ -34,7 +34,7 @@ input:focus {
     height: 35vh;
 
     .profil-prof {
-        height: 33vh;
+        height: 30vh;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -76,14 +76,14 @@ input:focus {
 }
 
 .detail-prof {
-    margin-top: -2rem;
+    margin-top: -2.7rem;
     display: flex;
     justify-content: center;
     /* align-items: center; */
 
     .beta {
         width: 90%;
-        gap: 1.4rem;
+        gap: .8rem;
         display: flex;
         flex-direction: column;
 
@@ -103,7 +103,7 @@ input:focus {
                 justify-content: space-between;
                 border-top: 1px solid rgba(213, 213, 213, 0.77);
                 align-items: center;
-                padding: .65rem .5rem;
+                padding: .6rem .5rem;
 
                 .details {
                     display: flex;
@@ -150,7 +150,7 @@ input:focus {
                 justify-content: space-between;
                 border-top: 1px solid rgba(213, 213, 213, 0.77);
                 align-items: center;
-                padding: .65rem .5rem;
+                padding: .6rem .5rem;
 
                 .details {
                     display: flex;
@@ -202,6 +202,11 @@ input:focus {
 
 .modal.fade {
     .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
         .modal-content {
             color: rgba(0, 0, 0, 0.7) !important;
 

@@ -15,4 +15,7 @@ class kamarKost extends Model
     public function kamarKostFasilitas() {
         return $this->hasMany(KamarKostFasilitas::class,'kamar_kost_id', 'id');
     }
+    public function gambarKamar() {
+        return $this->hasMany(gambarKamar::class,'kamar_kost_id', 'id');
+    }
 }

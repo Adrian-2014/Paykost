@@ -13,6 +13,7 @@ use App\Models\cuciSepatu;
 use App\Models\cuciSetrika;
 use App\Models\cucisize;
 use App\Models\fasilitas;
+use App\Models\gambarKamar;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\KamarKostFasilitas;
@@ -35,7 +36,6 @@ class adminControll extends Controller
         return view('admin.index');
     }
 
-
     // For Kamar Kost
     public function kamarKost() {
         $kost = kamarKost::orderBy('id', 'desc')->get();
@@ -45,31 +45,73 @@ class adminControll extends Controller
             'facilites'=>$facilites,
         ]);
     }
-
     public function storeKamar(Request $request) {
+
+        // $request->validate([
+        //     'nomor_kamar' => 'required',
+        //     'ukuran_kamar' => 'required',
+        //     'kondisi' => 'required',
+        //     'gambar_kamar' => 'required',
+        //     'harga_kamar'=>'required',
+        // ]);
+
+        // $gambarBarang = $request->file('gambar_kamar');
+        // $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
+        // $gambarBarang->move(public_path('uploads'), $namaFile);
+
+        // $kamar_kost = kamarKost::updateOrCreate(
+        //     [
+        //         'gambar_kamar'=>$namaFile,
+        //         'nomor_kamar'=>$request->nomor_kamar,
+        //         'ukuran_kamar'=>$request->ukuran_kamar,
+        //         'harga_kamar'=>$request->harga_kamar,
+        //         'status' =>'Publish',
+        //         'kondisi'=>'Kosong'
+        //     ]
+        // );
+
+        // foreach($request->fasilitas as $fasilitas) {
+        //     KamarKostFasilitas::create([
+        //         'fasilitas_id'=>$fasilitas,
+        //         'kamar_kost_id'=>$kamar_kost->id
+        //     ]);
+        // }
+        // return back()->with('success', 'Barang berhasil ditambahkan.');
+
+
         $request->validate([
             'nomor_kamar' => 'required',
             'ukuran_kamar' => 'required',
             'kondisi' => 'required',
-            'gambar_kamar' => 'required',
+            'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif', // Validasi untuk banyak gambar
             'harga_kamar'=>'required',
         ]);
 
-        $gambarBarang = $request->file('gambar_kamar');
-        $namaFile = time().'.'.$gambarBarang->getClientOriginalExtension();
-        $gambarBarang->move(public_path('uploads'), $namaFile);
+        $kamar_kost = kamarKost::create([
+            'nomor_kamar'=>$request->nomor_kamar,
+            'ukuran_kamar'=>$request->ukuran_kamar,
+            'harga_kamar'=>$request->harga_kamar,
+            'status' =>'Publish',
+            'kondisi'=>'Kosong'
+        ]);
 
-        $kamar_kost = kamarKost::updateOrCreate(
-            [
-                'gambar_kamar'=>$namaFile,
-                'nomor_kamar'=>$request->nomor_kamar,
-                'ukuran_kamar'=>$request->ukuran_kamar,
-                'harga_kamar'=>$request->harga_kamar,
-                'status' =>'Publish',
-                'kondisi'=>'Kosong'
-            ]
-        );
 
+
+        if ($request->hasFile('gambar_kamar')) {
+            foreach($request->file('gambar_kamar') as $image) {
+                $namaFile = time().'.'.$image->getClientOriginalName();
+                $image->move(public_path('uploads'), $namaFile);
+
+                // Simpan nama file ke dalam tabel gambar_kamars
+                $gambar = new gambarKamar();
+                $gambar->gambar = $namaFile;
+                $gambar->kamar_kost_id = $kamar_kost->id;
+                $gambar->save();
+            }
+        }
+
+
+        // Simpan fasilitas
         foreach($request->fasilitas as $fasilitas) {
             KamarKostFasilitas::create([
                 'fasilitas_id'=>$fasilitas,
@@ -78,6 +120,22 @@ class adminControll extends Controller
         }
 
         return back()->with('success', 'Barang berhasil ditambahkan.');
+    }
+    public function hapusKamar($id) {
+        // Cari item berdasarkan ID
+        $kamar = kamarKost::findOrFail($id);
+        $kamar->gambarKamar()->delete();
+
+        // Hapus semua entri terkait dari tabel fasilitas_kamars
+        $kamar->kamarKostFasilitas()->delete();
+
+        // Hapus semua entri terkait dari tabel lain yang memiliki relasi dengan kamarKost
+        // Misalnya:
+        // $kamar->namaTabelRelasi()->delete();
+
+        // Hapus item kamar itu sendiri
+        $kamar->delete();
+        return back()->with('success', 'Barang Telah Dihapus.');
     }
     public function editKamar(Request $request) {
         KamarKostFasilitas::where('kamar_kost_id', $request->id)->delete();
@@ -245,7 +303,7 @@ class adminControll extends Controller
         $cuciItem = new Cuci();
         $cuciItem->nama_barang = $request->nama_barang;
         // $cuciItem->harga_barang = $request->harga_barang;
-        $cuciItem->harga_barang = number_format($request->harga_barang, 0, ',', '.');
+        $cuciItem->harga_barang = $request->harga_barang;
         $cuciItem->jenis_layanan = $request->jenis;
         $cuciItem->status = $request->status;
         // $cuciItem->layanan_barang = $request->layanan_barang;
@@ -279,7 +337,7 @@ class adminControll extends Controller
         $CuciItems = Cuci::find($request->id);
         $CuciItems->nama_barang = $request->nama_barang;
         // $CuciItems->harga_barang = $request->harga_barang;
-        $CuciItems->harga_barang = number_format($request->harga_barang, 0, ',', '.');
+        $CuciItems->harga_barang = $request->harga_barang;
         $CuciItems->status = $request->status;
         $CuciItems->jenis_layanan = $request->jenis;
         // $CuciItems->layanan_barang = $request->layanan_barang;
@@ -471,5 +529,21 @@ class adminControll extends Controller
     public function prosesPencucian() {
         $proses = ProsesCuci::whereIn('status', ['Proses Pengambilan', 'Proses Cuci'])->get();
         return view('admin.kategori.cuci.proses-cuci', compact('proses'));
+    }
+
+    public function editTanggal(Request $request) {
+        $request->validate([
+            "tanggal_selesai" =>'required'
+        ]);
+
+        $CuciItems = ProsesCuci::find($request->id);
+        $CuciItems->tgl_done = $request->tanggal_selesai;
+        $CuciItems->save();
+
+        if($CuciItems->save()) {
+            return back()->with('success', 'Data Berhasil Dirubah');
+        } else {
+            return back()->with('fail', 'Data Gagal Di Ubah');
+        }
     }
 }

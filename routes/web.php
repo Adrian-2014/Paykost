@@ -87,6 +87,7 @@ Route::get('/admin/kost', [adminControll::class, 'kamarKost']);
 Route::post('storeKamar', [adminControll::class, 'storeKamar'])->name('storeKamar');
 Route::post('editKamar', [adminControll::class, 'editKamar'])->name('editKamar');
 Route::get('/toggleKamar/{id}', [adminControll::class, 'toggleKamar'])->name('toggleKamar');
+Route::delete('/hapusKamar/{id}', [adminControll::class, 'hapusKamar'])->name('kamar.destroy');
 // Kamar Kost
 
 // User
@@ -125,6 +126,7 @@ Route::delete('/sepatu/{id}', [adminControll::class, 'sepatuHapus'])->name('sepa
 
 
 Route::get('/admin/prosesCuci', [adminControll::class, 'prosesPencucian']);
+Route::post('edits', [adminControll::class, 'editTanggal'])->name('editTanggal');
 
 // Jasa Cuci
 

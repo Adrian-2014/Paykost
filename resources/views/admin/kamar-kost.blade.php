@@ -1,10 +1,14 @@
 @extends('layout.dashboard')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Admin Kamar')
 <link rel="stylesheet" href="{{ asset('css/admin-css/kamar.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
 
 @section('container')
     <header class="app-header">
@@ -131,7 +135,11 @@
                                                     <div class="td-item img-Kamar">
                                                         <div class="item">
                                                             <div class="imgs">
-                                                                <img src="{{ asset('uploads/' . $item->gambar_kamar) }}">
+                                                                @if ($item->gambarKamar->isNotEmpty())
+                                                                    <img src="{{ asset('uploads/' . $item->gambarKamar->first()->gambar) }}">
+                                                                @else
+                                                                    <span>Tidak ada gambar</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -181,7 +189,7 @@
                                                         </div>
                                                         <div class="delete-form">
                                                             {{-- action="{{ route('Kamar.destroy', $item->id) }}" --}}
-                                                            <form method="POST" id="delete-form">
+                                                            <form action="{{ route('kamar.destroy', $item->id) }}" method="POST" id="delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn delete">
@@ -204,11 +212,18 @@
                                                                     </h4>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <div class="container foto-kost">
-                                                                        <div class="row">
-                                                                            <div class="col-12">
-                                                                                <img src="{{ asset('uploads/' . $item->gambar_kamar) }}">
-                                                                            </div>
+                                                                    <div class="splide" role="group" id="details" aria-label="Splide Basic HTML Example">
+                                                                        <div class="splide__track">
+                                                                            <ul class="splide__list">
+                                                                                @if ($item->gambarKamar->isNotEmpty())
+                                                                                    @foreach ($item->gambarKamar as $gambar)
+                                                                                        <li class="splide__slide">
+                                                                                            <img src="{{ asset('uploads/' . $gambar->gambar) }}">
+                                                                                        </li>
+                                                                                        {{-- {{ $gambar->gambar }} --}}
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </ul>
                                                                         </div>
                                                                     </div>
                                                                     <div class="container">
@@ -231,12 +246,6 @@
                                                                                     <input type="text" disabled value= "{{ $item->status }}" class="form-control">
                                                                                 </div>
                                                                             </div>
-                                                                            {{-- <div class="col">
-                                                                                <div class="p-2">
-                                                                                    <label class="px-1 py-1">Kondisi Kamar</label>
-                                                                                    <input type="text" disabled value="{{ $item->kondisi }}" class="form-control">
-                                                                                </div>
-                                                                            </div> --}}
                                                                             <div class="col">
                                                                                 <div class="p-2">
                                                                                     <label class="px-1 py-1">Ukuran Kamar</label>
@@ -281,7 +290,7 @@
 
                                                     {{-- Edit Item --}}
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ ukuran: '{{ $item->ukuran_kamar }}', nomor: '{{ $item->nomor_kamar }}', harga: '{{ number_format($item->harga_kamar) }}' }">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ ukuran: '{{ $item->ukuran_kamar }}', nomor: '{{ $item->nomor_kamar }}', harga: '{{ $item->harga_kamar }}' }">
                                                             <div class="modal-content">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
@@ -378,7 +387,7 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Gambar Kamar<span class="text-danger">*</span></div>
-                            <input type="file" name="gambar_kamar" class="form-control add-input" id="gambar_add" onchange="loadFile(event)" x-model="gambar_kamar">
+                            <input type="file" name="gambar_kamar[]" class="form-control add-input" id="gambar_add" onchange="loadFile(event)" x-model="gambar_kamar" multiple>
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Ukuran Kamar<span class="text-danger">*</span></div>
@@ -386,7 +395,7 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Nomor Kamar<span class="text-danger">*</span></div>
-                            <input type="text" name="nomor_kamar" placeholder="No    kamar . . ." class="form-control add-input" x-model="nomor_kamar">
+                            <input type="text" name="nomor_kamar" placeholder="No kamar . . ." class="form-control add-input" x-model="nomor_kamar">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Harga Kamar<span class="text-danger">*</span></div>
@@ -402,7 +411,7 @@
                                 @foreach ($facilites as $facilite)
                                     <div class="col-4">
                                         <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" name="fasilitas[]" x-model="fasilitas[]" value="{{ $facilite->id }}" id="fasilits-{{ $facilite->id }}" />
+                                            <input class="form-check-input" type="checkbox" name="fasilitas[]" value="{{ $facilite->id }}" id="fasilits-{{ $facilite->id }}" />
                                             <label class="form-check-label" for="fasilits-{{ $facilite->id }}">
                                                 {{ $facilite->nama }}
                                             </label>
@@ -428,12 +437,21 @@
     </div>
 
 
-
 @endsection
 
 @section('internal-script')
     <script src="{{ asset('package') }}/dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
+    <script>
+        var splide = new Splide('.splide', {
+            type: 'loop',
+            drag: true,
+            arrows: false,
+            pagination: true,
+        });
+
+        splide.mount();
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             curs();
@@ -441,7 +459,6 @@
 
         document.addEventListener('click', function() {
             curs();
-            modal();
         });
 
         document.addEventListener('input', function() {
@@ -456,9 +473,6 @@
             next.innerHTML = '<i class="bi bi-chevron-right"></i>';
             // length.replace('Show', 'Menampilkan').replace('entries', 'Data');
         }
-        document.querySelectorAll('.is-item').forEach(function(item) {
-            item.addEventListener('click', close);
-        });
     </script>
 
     <script>
@@ -481,6 +495,29 @@
             image.classList.remove('d-none');
         }
     </script>
+    <script>
+        const inputs = document.querySelectorAll('input[type="text"][name="harga_kamar"]');
+
+        // Menambahkan event listener ke setiap input
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Memanggil fungsi formatNumberWithDot untuk memformat nilai input
+                this.value = formatNumberWithDot(this.value);
+            });
+        });
+
+        // Fungsi untuk memformat nomor dengan menambahkan titik sebagai pemisah ribuan setiap tiga digit
+        function formatNumberWithDot(input) {
+            // Mengonversi input menjadi string dan menghapus semua karakter non-digit
+            let formattedInput = input.toString().replace(/\D/g, '');
+
+            // Menambahkan titik sebagai pemisah ribuan setiap tiga digit
+            formattedInput = formattedInput.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            return formattedInput;
+        }
+    </script>
+
 
     <script>
         document.querySelectorAll('.btn.delete').forEach(function(button) {

@@ -98,6 +98,17 @@
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
+                <div class="item-choice">
+                    <div class="details">
+                        <i class="ti ti-at"></i>
+                        <div class="info">
+                            Akun
+                        </div>
+                    </div>
+                    <div class="chev">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
                 <div class="item-choice" id="logoutBtn">
                     <div class="details">
                         <i class="ti ti-logout"></i>

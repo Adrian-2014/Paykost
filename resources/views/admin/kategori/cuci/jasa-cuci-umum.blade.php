@@ -201,7 +201,7 @@
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
-                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberEdit" class="form-control target" value="" x-model="harga_barang" oninput="formatEdit()">
+                                                                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberEdit" class="form-control cost" value="" x-model="harga_barang">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
@@ -366,7 +366,7 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Harga Barang <span class="text-danger">*</span></div>
-                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" oninput="formatNumber()" class="form-control target" x-model="harga_barang">
+                            <input type="text" name="harga_barang" placeholder="Harga Barang . . ." id="numberInput" class="form-control cost" x-model="harga_barang">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Status Barang <span class="text-danger">*</span></div>
@@ -559,7 +559,28 @@
             image.src = URL.createObjectURL(event.target.files[0]);
         }
     </script>
+    <script>
+        const inputs = document.querySelectorAll('input[type="text"][name="harga_barang"]');
 
+        // Menambahkan event listener ke setiap input
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Memanggil fungsi formatNumberWithDot untuk memformat nilai input
+                this.value = formatNumberWithDot(this.value);
+            });
+        });
+
+        // Fungsi untuk memformat nomor dengan menambahkan titik sebagai pemisah ribuan setiap tiga digit
+        function formatNumberWithDot(input) {
+            // Mengonversi input menjadi string dan menghapus semua karakter non-digit
+            let formattedInput = input.toString().replace(/\D/g, '');
+
+            // Menambahkan titik sebagai pemisah ribuan setiap tiga digit
+            formattedInput = formattedInput.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            return formattedInput;
+        }
+    </script>
 
     {{-- Sweet Alert --}}
     <script>

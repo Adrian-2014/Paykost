@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('profil')->nullable();
             $table->string('tanggal_masuk')->nullable();
             $table->string('no_kamar')->nullable();
+            $table->string('durasi_ngekost')->nullable();
             $table->string('no_telpon')->nullable();
             $table->string('jenis_kelamin')->nullable();
-            $table->string('durasi_ngekost')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->string('status_bayar')->nullable();
             $table->string('status')->nullable();

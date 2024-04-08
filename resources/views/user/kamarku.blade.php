@@ -1,40 +1,210 @@
 @extends('layout.main')
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-<link rel="stylesheet" href="{{ asset('css/user-css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user-css/kamarku.css') }}">
 
-@section('title', 'Home')
+@section('title', 'Kamarku')
 
 @section('container')
 
+    <div class="splide" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container umum">
+        <div class="wrap">
+            <div class="status">
+                <div class="kamar-info">
+                    Kamar No. 5
+                </div>
+                <div class="sparate">
+                    <i class="ti ti-point-filled"></i>
+                </div>
+                <div class="stat">
+                    Kost Sudah Terbayar
+                </div>
+            </div>
+            <div class="tanggal">
+                <div class="item kiri">
+                    <div class="desk-tgl">
+                        Tanggal Masuk Kost
+                    </div>
+                    <div class="real-tgl">
+                        17 Agustus 2017
+                    </div>
+                </div>
+                <div class="item kanan">
+                    <div class="desk-tgl">
+                        Durasi Ngekost
+                    </div>
+                    <div class="real-tgl">
+                        9 Bulan 6 Hari
+                    </div>
+                </div>
+            </div>
+            <div class="bayar">
+                <div class="above">
+                    Harga / Bulan
+                </div>
+                <div class="bottom">
+                    <span>Rp. </span> 1.800.000
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- <div class="container spesifikasi">
+        <div class="head">
+            Spesifikasi Kamar
+        </div>
+        <div class="spec-item">
+            <div class="items">
+                <div class="top">Ukuran Kamar</div>
+                <div class="bottom"></div>
+            </div>
+            <div class="items">
+                <div class="top"> Kamar</div>
+                <div class="bottom"></div>
+            </div>
+            <div class="items">
+                <div class="top">Ukuran Kamar</div>
+                <div class="bottom"></div>
+            </div>
+            <div class="items">
+                <div class="top">Ukuran Kamar</div>
+                <div class="bottom"></div>
+            </div>
+        </div>
+    </div> --}}
+
+    <div class="container fasilitas">
+        <div class="head">
+            Fasilitas Kamar
+        </div>
+        <div class="mycontent">
+            <div class="item">
+                <img src="{{ asset('img/kulkas.jpeg') }}">
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/kulkas.jpeg') }}">
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/kulkas.jpeg') }}">
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/kulkas.jpeg') }}">
+            </div>
+            <div class="item">
+                <img src="{{ asset('img/kulkas.jpeg') }}">
+            </div>
+        </div>
+    </div>
+
+    <div class="container rules">
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Peraturan Kost
+            </button>
+            <ul class="dropdown-menu">
+                <li class="first">1. Buang Sampah pada tempatnya</li>
+                <li>2. Dilarang Membawa Miras / Narkoba</li>
+                <li>3. Dilarang Membuat Suara Kencang di malam hari</li>
+                <li>4. Di larang Berkunjung di atas jam 21:00</li>
+                <li>5. Pagar wajib di kunci kembali setelah di buka</li>
+                <li>6. Wajib mengganti Properti kost yang di rusak</li>
+                <li>7. Boleh Membawa bayi</li>
+                <li>8. Tidak boleh Membawa hewan peliharaan</li>
+                <li>9. Bayar sewa tepat waktu</li>
+                <li>10. Dilarang merokok di dalam kamar</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container upload">
+        <div class="head">
+            Kamar Kost Kamu
+        </div>
+        <div class="mycontent">
+            <div class="item">
+                <input type="file" class="form-control d-none">
+                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
+            </div>
+            <div class="item">
+                <input type="file" class="form-control d-none">
+                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
+            </div>
+            <div class="item">
+                <input type="file" class="form-control d-none">
+                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
+            </div>
+            <div class="item">
+                <input type="file" class="form-control d-none">
+                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
+            </div>
+            <div class="item">
+                <input type="file" class="form-control d-none">
+                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar fixed-bottom">
-        <div class="container-fluid d-flex px-lg-5">
+        <div class="container-fluid d-flex my-1 px-3">
             <div class="nav-item">
                 <a href="/user/index" class="nav-link">
-                    <i class="bi bi-house-fill"></i>
-                    <div class="isi">Beranda</div>
+                    {{-- <i class="bi bi-house-fill"></i> --}}
+                    <i class='fas fa-home'></i>
+                    <div class="isi fw-normal">Beranda</div>
                 </a>
             </div>
             <div class="nav-item active">
                 <a href="/user/kamarku" class="nav-link">
-                    <i class="fa fa-bed" style="font-size:16px"></i>
-                    <div class="isi">Kamarku</div>
+                    <i class='fas fa-door-open'></i>
+                    <div class="isi fw-normal">Kamarku</div>
                 </a>
             </div>
             <div class="nav-item">
                 <a href="/user/riwayat" class="nav-link">
-                    <i class="bi bi-clock-fill"></i>
-                    <div class="isi">
+                    <i class="fa fa-history"></i>
+                    <div class="isi fw-normal">
                         Riwayat
                     </div>
                 </a>
             </div>
             <div class="nav-item">
                 <a href="/user/profil" class="nav-link">
-                    <i class="bi bi-people-fill"></i>
-                    <div class="isi">Profil</div>
+                    <i class='fas fa-user-alt'></i>
+                    <div class="isi fw-normal">Profil</div>
                 </a>
             </div>
+
         </div>
     </nav>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
+    <script>
+        var splide = new Splide('.splide', {
+            type: 'loop',
+            perPage: 1,
+            autoplay: true,
+            interval: 4000,
+            arrows: false,
+        });
+
+        splide.mount();
+    </script>
 @endsection

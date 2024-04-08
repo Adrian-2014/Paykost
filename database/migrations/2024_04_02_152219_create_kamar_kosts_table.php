@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('kamar_kost', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_kamar');
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->string('nomor_kamar')->unique();
             $table->string('ukuran_kamar');
-            $table->string('gambar_kamar');
             $table->string('harga_kamar');
-            $table->string('kondisi');
+            $table->tinyInteger('kondisi')->default(0);
             $table->string('status');
             $table->timestamps();
         });

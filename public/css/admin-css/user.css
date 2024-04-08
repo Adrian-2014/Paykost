@@ -79,14 +79,14 @@ body {
                 }
 
                 .td-item.status {
-                    .item.stat.published {
+                    .item.stat.aktif {
                         padding: .35rem 1rem;
                         border-radius: .3rem;
                         background-color: rgba(0, 162, 255, 0.3);
                         color: rgb(0, 89, 255);
                     }
 
-                    .item.stat.unpublish {
+                    .item.stat.nonaktif {
                         background-color: rgba(255, 21, 0, 0.3);
                         color: rgb(255, 0, 0);
                         padding: .35rem 1rem;

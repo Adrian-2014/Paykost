@@ -486,6 +486,28 @@
             });
         });
     </script>
+    <script>
+        const inputs = document.querySelectorAll('input[type="text"][name="harga_barang"]');
+
+        // Menambahkan event listener ke setiap input
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Memanggil fungsi formatNumberWithDot untuk memformat nilai input
+                this.value = formatNumberWithDot(this.value);
+            });
+        });
+
+        // Fungsi untuk memformat nomor dengan menambahkan titik sebagai pemisah ribuan setiap tiga digit
+        function formatNumberWithDot(input) {
+            // Mengonversi input menjadi string dan menghapus semua karakter non-digit
+            let formattedInput = input.toString().replace(/\D/g, '');
+
+            // Menambahkan titik sebagai pemisah ribuan setiap tiga digit
+            formattedInput = formattedInput.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            return formattedInput;
+        }
+    </script>
 
     <script>
         // Select all delete buttons and attach event listener to each of them

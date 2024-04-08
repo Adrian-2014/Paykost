@@ -170,7 +170,7 @@
                                                         </button>
                                                     </div>
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ tanggal_selesai: '{{ $item->tanggal_selesai }}' }">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ tanggal_selesai: '{{ $item->tgl_done }}' }">
                                                             <div class="modal-content">
                                                                 <div class="modal-header d-flex align-items-center">
                                                                     <h4 class="modal-title" id="myModalLabel">
@@ -183,7 +183,7 @@
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
                                                                             <div class="title pb-1">Tanggal Selesai <span class="text-danger">*</span></div>
-                                                                            <input type="text" name="tanggal_selesai" placeholder="Nama Barang . . ." class="form-control target" value="" x-model="tanggal_selesai">
+                                                                            <input type="text" id="tgl_done" name="tanggal_selesai" placeholder="DD/MM/YYYY, SS:SS:SS" class="form-control target" value="" x-model="tanggal_selesai">
                                                                         </div>
                                                                     </div>
                                                                     <div class="modal-footer">
@@ -241,7 +241,6 @@
             item.addEventListener('click', close);
         });
     </script>
-
     <script>
         $(document).ready(function() {
             $('.form-check-input').click(function(event) {

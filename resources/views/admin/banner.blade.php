@@ -175,8 +175,8 @@
                                                                         Edit Data Cuci
                                                                     </h4>
                                                                 </div>
-                                                                <form action="{{ route('editBanner') }}" method="POST" enctype="multipart/form-data" class="fors">
-                                                                    <div class="modal-body body-tambah">
+                                                                <form action="{{ route('editBanner') }}" method="POST" enctype="multipart/form-data">
+                                                                    <div class="modal-body">
                                                                         @csrf
                                                                         <div class="preview">
                                                                             <img src="{{ asset('uploads/' . $item->gambar_banner) }}" id="showimg-{{ $item->id }}">
@@ -402,7 +402,6 @@
 
         document.addEventListener('click', function() {
             curs();
-            modal();
         });
 
         document.addEventListener('input', function() {
@@ -417,9 +416,6 @@
             next.innerHTML = '<i class="bi bi-chevron-right"></i>';
             // length.replace('Show', 'Menampilkan').replace('entries', 'Data');
         }
-        document.querySelectorAll('.is-item').forEach(function(item) {
-            item.addEventListener('click', close);
-        });
     </script>
 
     <script>
@@ -434,6 +430,8 @@
         function loading(event, itemId) {
             var image = document.getElementById('showimg-' + itemId);
             image.src = URL.createObjectURL(event.target.files[0]);
+            var modal = document.querySelector('.modal-body.body-tambah');
+            modal.classList.add('active');
         }
 
         function loadFile(event) {

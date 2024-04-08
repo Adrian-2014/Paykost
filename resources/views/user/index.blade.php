@@ -374,7 +374,7 @@
                     </a>
                     <div class="keterangan">
                         <p class="pe">Jasa</p>
-                        <p class="pi">Cuci Baju</p>
+                        <p class="pi">Laundry</p>
                     </div>
                 </div>
                 <div class="kategori-item end">

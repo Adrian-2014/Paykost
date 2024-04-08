@@ -6,6 +6,9 @@ body {
     padding: 0;
 }
 
+.splide:not(.is-overflow) .splide__pagination {
+    display: flex !important;
+}
 
 .container-fluid.main {
     padding-bottom: 0 !important;
@@ -157,7 +160,6 @@ body {
     }
 }
 
-
 .card-body {
     padding-top: .5rem !important;
     padding-bottom: .5rem !important;
@@ -173,7 +175,6 @@ body {
     align-items: center !important;
     gap: .5rem;
 }
-
 
 #add-item {
     .modal-dialog {
@@ -199,7 +200,7 @@ body {
                         width: 100%;
 
                         img {
-                            height: 8rem;
+                            height: 15rem;
                             width: auto;
                             border-radius: .6rem;
                             border: 1px solid rgb(220, 216, 216);
@@ -353,7 +354,7 @@ body {
                         width: 100%;
 
                         img {
-                            height: 8rem;
+                            height: 15rem;
                             width: auto;
                             border-radius: .6rem;
                             border: 1px solid rgb(220, 216, 216);
@@ -489,20 +490,32 @@ body {
 
 .det {
     .modal-dialog {
-        .modal-content {
-            .modal-body {
-                .foto-kost {
-                    .row {
-                        .col-12 {
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-                            img {
-                                height: 15rem;
-                                width: auto;
-                                border-radius: .5rem;
+        .modal-content {
+            width: 80%;
+
+            .modal-body {
+
+                #details {
+                    .splide__track {
+                        .splide__list {
+
+                            .splide__slide {
+
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                img {
+                                    height: 15rem;
+                                    width: auto;
+                                    border-radius: .5rem;
+                                }
                             }
+
                         }
                     }
                 }

@@ -182,7 +182,7 @@ body {
                         width: 100%;
 
                         img {
-                            height: 8rem;
+                            height: 15rem;
                             width: auto;
                             border-radius: .6rem;
                             border: 1px solid rgb(220, 216, 216);
@@ -291,6 +291,11 @@ body {
                     }
                 }
 
+                .active {
+                    height: 75vh !important;
+                    overflow-y: auto !important;
+                }
+
                 .modal-footer {
                     .cancel {
                         color: rgb(99, 99, 99);
@@ -325,7 +330,8 @@ body {
                     display: flex;
                     flex-direction: column;
                     gap: .65rem;
-                    height: fit-content;
+                    height: 70vh;
+                    overflow-y: auto;
 
                     .preview {
                         display: flex;
@@ -334,7 +340,7 @@ body {
                         width: 100%;
 
                         img {
-                            height: 8rem;
+                            height: 15rem;
                             width: auto;
                             border-radius: .6rem;
                             border: 1px solid rgb(220, 216, 216);
