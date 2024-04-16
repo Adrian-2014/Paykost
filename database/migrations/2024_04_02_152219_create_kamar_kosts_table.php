@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nomor_kamar')->unique();
             $table->string('ukuran_kamar');
             $table->string('harga_kamar');
-            $table->tinyInteger('kondisi')->default(0);
+            $table->string('kondisi');
             $table->string('status');
             $table->timestamps();
         });

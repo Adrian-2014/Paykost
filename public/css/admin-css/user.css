@@ -24,7 +24,7 @@ body {
                 }
 
                 .nama {
-                    width: 8rem !important;
+                    width: 10rem !important;
                 }
 
                 .harga {
@@ -66,11 +66,14 @@ body {
                     text-align: center !important;
                     width: 100%;
 
-                    img {
-                        height: 2.5rem;
-                        width: auto;
-                    }
+                }
 
+                .pp {
+                    img {
+                        height: 3rem;
+                        width: 3rem;
+                        border-radius: 50%;
+                    }
                 }
 
                 .name {
@@ -123,6 +126,18 @@ body {
 
                     }
 
+                    .detail-btn {
+                        padding: .5rem;
+                        /* height: 1.5rem; */
+                        /* width: 1.5rem; */
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: rgb(30, 149, 9);
+                        border-radius: .4rem;
+                        color: white;
+                    }
+
                     .btn.edit-btn {
                         /* padding: .2rem; */
                         /* height: 1.5rem; */
@@ -139,8 +154,6 @@ body {
         }
     }
 }
-
-
 
 .card-body {
     padding-top: .5rem !important;
@@ -296,9 +309,12 @@ body {
                     display: flex;
                     flex-direction: column;
                     gap: .65rem;
-                    height: fit-content;
+                    height: 80rem;
+                    overflow: auto;
+                    max-height: 65vh;
 
                     .items {
+
                         .form-control {
                             width: 100%;
                         }
@@ -334,7 +350,6 @@ body {
 
                             .dropdown-menu.show {
                                 height: fit-content;
-
                                 display: flex;
                                 flex-direction: column;
                                 padding-top: 0 !important;
@@ -379,22 +394,6 @@ body {
                             }
                         }
                     }
-
-                    .for-img {
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-
-                        .gmb {
-                            width: 86%;
-                        }
-
-                        img {
-                            height: 3.6rem;
-                            width: 3.6rem;
-                            /* padding: .5rem; */
-                        }
-                    }
                 }
 
                 .modal-body.active {
@@ -416,6 +415,44 @@ body {
                     .simpan:disabled {
                         background: rgb(181, 181, 181);
                     }
+                }
+            }
+        }
+    }
+}
+
+
+.det {
+    .modal-content {
+        width: 80%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: .7rem;
+
+            .for-profil-img {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                gap: .7rem;
+                justify-content: center;
+
+                .myImg {
+                    img {
+                        height: 10rem;
+                        width: 10rem;
+                        border-radius: 50%;
+                    }
+                }
+
+                .name {
+                    font-size: 1.2rem;
+                    font-weight: 500 !important;
+
                 }
             }
         }

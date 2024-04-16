@@ -14,8 +14,12 @@
             <div class="navbar-brand">
                 <img src="{{ asset('img/two.png') }}">
             </div>
-            <div class="profil">
-                <img src="{{ asset('img/person-1.jpg') }}" id="profil">
+            <div class="profil" id="profil">
+                @if (Auth::user()->profil)
+                    <img src="{{ asset('uploads/' . Auth::user()->profil) }}">
+                @else
+                    <img src="{{ asset('img/user.png') }}">
+                @endif
             </div>
         </nav>
     </div>
@@ -43,7 +47,11 @@
 
             <div class="profil-item">
                 <div class="logo">
-                    <i class="bi bi-person-circle"></i>
+                    @if (Auth::user()->profil)
+                        <img src="{{ asset('uploads/' . Auth::user()->profil) }}">
+                    @else
+                        <img src="{{ asset('img/user.png') }}">
+                    @endif
                 </div>
                 <div class="value">
                     <div class="judul">
@@ -61,7 +69,7 @@
                         Nomor Kamar
                     </div>
                     <div class="nama-v">
-                        5
+                        Kamar No. {{ auth()->user()->no_kamar }}
                     </div>
                 </div>
             </div>
@@ -71,8 +79,9 @@
                     <div class="judul">
                         Tanggal Masuk
                     </div>
-                    <div class="nama-v">
-                        20 November 2023
+                    <input type="hidden" name="tm" id="tm" value="{{ auth()->user()->tanggal_masuk }}">
+                    <div class="nama-v" id="tgl-masuk">
+
                     </div>
                 </div>
             </div>
@@ -94,7 +103,7 @@
                         Pekerjaan
                     </div>
                     <div class="nama-v">
-                        Mahasiswa
+                        {{ auth()->user()->pekerjaan }}
                     </div>
                 </div>
             </div>
@@ -136,30 +145,14 @@
                 </div>
 
                 <div class="gambar">
-                    <div class="splide">
+                    <div class="splide" id="splide-kost">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                {{-- @if ($bannerKost->isEmpty())
+                                @foreach ($gambarsKamars as $item)
                                     <li class="splide__slide">
-                                        <div class="empty-page">
-                                            <div class="one">
-                                                <img src="{{ asset('img/page.png') }}">
-                                            </div>
-                                            <div class="two">
-                                                Banner Belum Ditambahkan !
-                                            </div>
-                                        </div>
+                                        <img src="{{ asset('uploads/' . $item->gambar) }}">
                                     </li>
-                                @else
-                                    @foreach ($bannerKost as $item)
-                                        <li class="splide__slide">
-                                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
-                                        </li>
-                                    @endforeach
-                                @endif --}}
-                                <li class="splide__slide">
-                                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -296,7 +289,12 @@
                 </div>
             </div>
             <div class="col-5">
-                <button type="submit">Bayar sekarang</button>
+                <form action="/pembayaran">
+                    <button type="submit">
+                        Bayar sekarang
+                    </button>
+                </form>
+                </button>
             </div>
         </div>
     </div>
@@ -401,12 +399,12 @@
                             <div class="two">
                                 Banner Belum Ditambahkan !
                             </div>
-                        </div>
+                        </div>h
                     </li>
                 @else
-                    @foreach ($bannerPro as $item)
+                    @foreach ($bannerPro as $banner)
                         <li class="splide__slide">
-                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                            <img src="{{ asset('uploads/' . $banner->gambar_banner) }}">
                         </li>
                     @endforeach
                 @endif
@@ -415,92 +413,46 @@
     </div>
 
     <div class="recomendation container-fluid">
-        <div class="splide" role="group" id="slider-2">
-            <div class="splide__track">
-                <ul class="splide__list">
-
-                    <li class="splide__slide">
-                        <div class="card" style="width: 16rem;">
-                            <img src="{{ asset('img-chategories/room-1.jpg') }}" class="card-img-top">
-                            <div class="card-body">
-                                <div class="card-text">Kamar kost No. 08 - Uk. 3,5m x 3,5m
-                                </div>
-                                <div class="tambahan">
-                                    <div class="harga">
-                                        Rp. 1.600.000
-                                    </div>
-                                    <div class="lihat">
-                                        <a href="/rekomendasi">
-                                            Lihat
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="splide__slide">
-                        <div class="card" style="width: 16rem;">
-                            <img src="{{ asset('img-chategories/room-2.jpg') }}" class="card-img-top">
-                            <div class="card-body">
-                                <div class="card-text">Kamar kost No. 07 - Uk. 3,1m x 3,1m </div>
-                                <div class="tambahan">
-                                    <div class="harga">
-                                        Rp. 1.300.000
-                                    </div>
-                                    <div class="lihat">
-                                        <a href="/rekomendasi">
-                                            Lihat
-                                        </a>
+        @if ($kamarKost->isNotEmpty())
+            <div class="splide" role="group" id="slider-2">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        @foreach ($kamarKost as $item)
+                            <li class="splide__slide">
+                                <div class="card">
+                                    @if ($item->gambarKamar->isNotEmpty())
+                                        <img src="{{ asset('uploads/' . $item->gambarKamar->first()->gambar) }}">
+                                    @endif
+                                    <div class="card-body">
+                                        <div class="card-text">Kamar Kost No. {{ $item->nomor_kamar }} - Uk. {{ $item->ukuran_kamar }}
+                                        </div>
+                                        <div class="tambahan">
+                                            <div class="harga">
+                                                Rp. {{ $item->harga_kamar }}
+                                            </div>
+                                            <div class="lihat">
+                                                <a href="/rekomendasi">
+                                                    Lihat
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="splide__slide">
-                        <div class="card" style="width: 16rem;">
-                            <img src="{{ asset('img-chategories/room-3.jpg') }}" class="card-img-top">
-                            <div class="card-body">
-                                <div class="card-text">Kamar kost No. 06 - Uk. 5m x 5m
-                                </div>
-                                <div class="tambahan">
-                                    <div class="harga">
-                                        Rp. 2.000.000
-                                    </div>
-                                    <div class="lihat">
-                                        <a href="/rekomendasi">
-                                            Lihat
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="splide__slide">
-                        <div class="card" style="width: 16rem;">
-                            <img src="{{ asset('img/tyler.jpg') }}" class="card-img-top">
-                            <div class="card-body">
-                                <div class="card-text">Kamar kost No. 02 - Uk. 3m x 4.5m
-                                </div>
-                                <div class="tambahan">
-                                    <div class="harga">
-                                        Rp. 1.650.000
-                                    </div>
-                                    <div class="lihat">
-                                        <a href="/rekomendasi">
-                                            Lihat
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-        </div>
+        @else
+            <div class="no-recomendation">
+                <div class="i-img">
+                    <img src="{{ asset('img/confused.png') }}">
+                </div>
+                <div class="text">
+                    Rekomendasi Kamar Kost Belum Tersedia
+                </div>
+            </div>
+        @endif
     </div>
 
     <nav class="navbar fixed-bottom">
@@ -541,30 +493,67 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script>
-        var splide = new Splide('.splide', {
+        // Fungsi untuk mengubah format tanggal
+        function ubahFormatTanggal(tanggal) {
+            // Array untuk nama bulan
+            var namaBulan = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+
+            // Pisahkan tanggal, bulan, dan tahun
+            var tanggalSplit = tanggal.split('-');
+            // Pastikan terdapat tiga elemen setelah split
+            if (tanggalSplit.length !== 3) {
+                return "Format tanggal tidak valid";
+            }
+            var tahun = tanggalSplit[0];
+            var bulan = parseInt(tanggalSplit[1], 10);
+            var tanggal = parseInt(tanggalSplit[2], 10);
+
+            // Periksa apakah tanggal, bulan, dan tahun valid
+            if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
+                return "Format tanggal tidak valid";
+            }
+
+            // Buat string dengan format yang diinginkan
+            var tanggalBaru = tanggal + " " + namaBulan[bulan - 1] + " " + tahun;
+
+            return tanggalBaru;
+        }
+
+        // Dapatkan nilai input
+        var input = document.querySelector('#tm');
+        if (input) {
+            var tanggalAwal = input.value;
+            var tanggalBaru = ubahFormatTanggal(tanggalAwal);
+            var targetTanggal = document.querySelector('#tgl-masuk');
+            targetTanggal.innerHTML = tanggalBaru;
+            console.log(tanggalBaru);
+        } else {
+            console.error("Elemen input dengan id '#tm' tidak ditemukan.");
+        }
+    </script>
+    <script>
+        @if ($kamarKost->isNotEmpty())
+            var splideSlider2 = new Splide('#slider-2', {
+                autoplay: false,
+                gap: '.5rem',
+                padding: '0rem',
+                drag: 'free',
+                arrows: false,
+                pagination: false,
+            });
+            splideSlider2.mount();
+        @endif
+
+        var splide = new Splide('#splide-kost', {
             type: 'loop',
             autoplay: true,
             perPage: 1,
             arrows: false,
             interval: 4000,
             pauseOnHover: false,
-
-        });
-        splide.mount();
-
-        var splide = new Splide('#slider-2', {
-            // type: 'loop',
-            autoplay: false,
-            gap: '.5rem',
-            padding: '0rem',
-            drag: 'free',
-            // perPage: 1,
-            // perMove: 1,
-            arrows: false,
-            pagination: false,
-            // interval: 4000,
-            // pauseOnHover: false,
-
         });
         splide.mount();
 
@@ -578,7 +567,6 @@
             // prev: '<i class="bi bi-chevron-left"></i>',
             pagination: false,
             gap: '1rem',
-
         });
         splide.mount();
 

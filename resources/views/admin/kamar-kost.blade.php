@@ -136,9 +136,7 @@
                                                         <div class="item">
                                                             <div class="imgs">
                                                                 @if ($item->gambarKamar->isNotEmpty())
-                                                                    <img src="{{ asset('uploads/' . $item->gambarKamar->first()->gambar) }}">
-                                                                @else
-                                                                    <span>Tidak ada gambar</span>
+                                                                    <img src="{{ asset('uploads/' . $item->gambarKamar->random()->gambar) }}">
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -152,15 +150,6 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                {{-- <td>
-                                                    <div class="td-item fasilitas">
-                                                        @foreach ($item->kamarKostFasilitas as $kamar_kost_fasilitas)
-                                                            <ul>
-                                                                <li>{{ $loop->iteration }}. {{ $kamar_kost_fasilitas->fasilitas->nama }}</li>
-                                                            </ul>
-                                                        @endforeach
-                                                    </div>
-                                                </td> --}}
                                                 <td>
                                                     <div class="td-item fasilitas">
                                                         <div class="item">
@@ -266,7 +255,7 @@
                                                                                 @if ($kamar_kost)
                                                                                     <div class="fas-item">
                                                                                         <div class="for-img">
-                                                                                            <img src="{{ asset('img/' . $facilite->gambar) }}">
+                                                                                            <img src="{{ asset('uploads/' . $facilite->gambar) }}">
                                                                                         </div>
                                                                                         <div class="name">
                                                                                             {{ $facilite->nama }}
@@ -288,7 +277,6 @@
                                                     </div>
                                                     {{-- Detail Item --}}
 
-                                                    {{-- Edit Item --}}
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ ukuran: '{{ $item->ukuran_kamar }}', nomor: '{{ $item->nomor_kamar }}', harga: '{{ $item->harga_kamar }}' }">
                                                             <div class="modal-content">
@@ -306,7 +294,7 @@
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
                                                                             <div class="title pb-1">Gambar Kamar<span class="text-danger">*</span></div>
-                                                                            <input type="file" name="gambar_kamar" class="form-control add-input" id="gambar_barang-{{ $item->id }}" onchange="loading(event, {{ $item->id }})">
+                                                                            <input type="file" name="gambar_kamar[]" class="form-control add-input" id="gambar_barang-{{ $item->id }}" multiple>
                                                                         </div>
                                                                         <div class="items ps-2 fasilitas">
                                                                             <div class="title pb-1">Ukuran Kamar<span class="text-danger">*</span></div>
@@ -348,14 +336,15 @@
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="ukuran && nomor && harga ? null : 'disabled'">
-                                                                            Simpan Perubahn
+                                                                        <button type="submit" class="btn waves-effect simpan" id="edit-save" data-bs-dismiss="modal">
+                                                                            Simpan Perubahan
                                                                         </button>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     {{-- Edit Item --}}
 
                                                 </td>
@@ -399,7 +388,7 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Harga Kamar<span class="text-danger">*</span></div>
-                            <input type="text" name="harga_kamar" placeholder="Ukuran kamar . . ." class="form-control add-input" x-model="harga_kamar">
+                            <input type="text" name="harga_kamar" placeholder="Harga Kamar . . ." class="form-control add-input" x-model="harga_kamar">
                         </div>
                         <div class="items ps-2 fasilitas">
                             <div class="title pb-1">Fasilitas Kamar</div>
@@ -443,14 +432,18 @@
     <script src="{{ asset('package') }}/dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
     <script>
-        var splide = new Splide('.splide', {
-            type: 'loop',
-            drag: true,
-            arrows: false,
-            pagination: true,
+        document.addEventListener('DOMContentLoaded', function() {
+            var splides = document.querySelectorAll('.splide');
+            splides.forEach(function(splide) {
+                var splideInstance = new Splide(splide, {
+                    type: 'loop',
+                    drag: true,
+                    arrows: false,
+                    pagination: true,
+                });
+                splideInstance.mount();
+            });
         });
-
-        splide.mount();
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

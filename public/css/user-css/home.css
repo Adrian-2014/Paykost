@@ -14,6 +14,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
     font-family: "Poppins", sans-serif;
 }
 
@@ -99,13 +100,14 @@ body {
 
             .logo {
                 /* background-color: black; */
-                width: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
 
-                i {
-                    font-size: 24px;
+                img {
+                    height: 2rem;
+                    width: 2rem;
+                    border-radius: 50%;
                 }
             }
 
@@ -519,16 +521,22 @@ body {
             button {
                 border: none;
                 outline: none;
-                color: rgb(109, 108, 108);
                 padding: 0.6rem 0.8rem;
-                /* background: linear-gradient(
-                    to left,
-                    rgb(138, 217, 249),
-                    rgb(30, 148, 250)
-                ); */
-                background-color: rgba(128, 128, 128, 0.295);
+                background: linear-gradient(to left,
+                        rgb(87, 189, 229),
+                        rgb(30, 148, 250));
                 border-radius: 18px;
                 letter-spacing: 0.5px;
+                color: white;
+                text-decoration: none;
+
+            }
+
+            button:disabled {
+                background: rgba(128, 128, 128, 0.295);
+                color: rgb(109, 108, 108);
+                text-decoration: none;
+
             }
         }
     }
@@ -758,7 +766,7 @@ body {
 /* R E C O M E N D A T I O N  S */
 .recomendation.container-fluid {
     height: 14.5rem;
-    margin-top: 2.3rem !important;
+    margin-top: 1.7rem;
     margin-bottom: 4rem;
     /* background: black; */
     padding: 0 .5rem !important;
@@ -777,6 +785,7 @@ body {
                     width: auto !important;
 
                     .card {
+                        width: 16rem;
                         border-radius: 20px;
                         overflow: hidden;
                         background-color: white;
@@ -845,7 +854,35 @@ body {
         }
     }
 }
+
 /* R E C O M E N D A T I O N  E */
+
+.no-recomendation {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 15rem;
+    margin-top: 0 !important;
+    margin-bottom: 2rem !important;
+    gap: .3rem;
+    padding-bottom: 2rem;
+
+    .i-img {
+
+        img {
+            height: 7rem;
+            width: auto;
+        }
+    }
+
+    .text {
+        color: rgba(0, 0, 0, 0.5);
+        width: 80%;
+        font-size: .9rem;
+        text-align: center;
+    }
+}
 
 /* M E N U  S */
 

@@ -10,15 +10,13 @@
     <div class="splide" aria-label="Splide Basic HTML Example">
         <div class="splide__track">
             <ul class="splide__list">
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
-                </li>
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
-                </li>
-                <li class="splide__slide">
-                    <img src="{{ asset('img-chategories/room-1.jpg') }}">
-                </li>
+                @foreach ($kamar_kost as $kamar)
+                    @foreach ($kamar->gambarKamar as $gambar)
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/' . $gambar->gambar) }}">
+                        </li>
+                    @endforeach
+                @endforeach
             </ul>
         </div>
     </div>
@@ -27,7 +25,7 @@
         <div class="wrap">
             <div class="status">
                 <div class="kamar-info">
-                    Kamar No. 5
+                    Kamar No. {{ auth()->user()->no_kamar }}
                 </div>
                 <div class="sparate">
                     <i class="ti ti-point-filled"></i>
@@ -59,7 +57,10 @@
                     Harga / Bulan
                 </div>
                 <div class="bottom">
-                    <span>Rp. </span> 1.800.000
+                    <span>Rp. </span>
+                    @foreach ($kamar_kost as $kamar)
+                        {{ $kamar->harga_kamar }}
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -94,7 +95,41 @@
             Fasilitas Kamar
         </div>
         <div class="mycontent">
-            <div class="item">
+            @foreach ($kamar_kost as $item)
+                @foreach ($facilites as $facilite)
+                    @php
+                        $kamar_kost = \App\Models\KamarKostFasilitas::where('kamar_kost_id', $item->id)
+                            ->where('fasilitas_id', $facilite->id)
+                            ->first();
+                    @endphp
+                    @if ($kamar_kost)
+                        <div class="item" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $facilite->id }}">
+                            <div class="for-img">
+                                <img src="{{ asset('uploads/' . $facilite->gambar) }}">
+                            </div>
+                        </div>
+                    @endif
+                    <div class="modal fade" id="exampleModal{{ $facilite->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="{{ asset('uploads/' . $facilite->gambar) }}">
+                                    <div class="desk">
+                                        <div class="top">
+                                            {{ $facilite->nama }}
+                                        </div>
+                                        <div class="bottom">
+                                            {{ $facilite->deskripsi }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
+
+            {{-- <div class="item">
                 <img src="{{ asset('img/kulkas.jpeg') }}">
             </div>
             <div class="item">
@@ -105,10 +140,7 @@
             </div>
             <div class="item">
                 <img src="{{ asset('img/kulkas.jpeg') }}">
-            </div>
-            <div class="item">
-                <img src="{{ asset('img/kulkas.jpeg') }}">
-            </div>
+            </div> --}}
         </div>
     </div>
 

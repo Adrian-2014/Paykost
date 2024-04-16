@@ -231,7 +231,7 @@
         <input type="hidden" name="nama" id="nama" value="">
         <input type="hidden" name="id" id="id" value="">
         <input type="hidden" name="jumlah" id="jumlah" value="">
-        <input type="hidden" name="layanan" id="layanan" value="Cuci Selimut">
+        <input type="hidden" name="layanan" id="layanan" value="Cuci Sepatu">
         <input type="hidden" name="total_biaya" id="tobi" value="">
         <input type="hidden" name="no_kamar" id="no_kamar" value="5">
 

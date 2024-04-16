@@ -9,6 +9,7 @@ body {
 
 body {
     background-color: rgba(236, 233, 233, 0.881) !important;
+    padding-bottom: 3.5rem;
 }
 
 
@@ -479,6 +480,29 @@ body {
                                         font-weight: 500;
                                     }
                                 }
+
+                                .bukti {
+                                    display: flex;
+                                    flex-direction: column;
+                                    width: 100%;
+
+                                    .bukti-text {
+                                        width: 100%;
+                                        text-align: left !important;
+                                    }
+
+                                    .img-bukti {
+                                        width: 100%;
+                                        height: auto;
+
+                                        img {
+                                            border-radius: .3rem;
+                                            width: 100%;
+                                            height: auto;
+
+                                        }
+                                    }
+                                }
                             }
 
                         }
@@ -548,4 +572,13 @@ body {
         color: rgba(0, 0, 0, 0.5);
 
     }
+}
+
+.swal2-title {
+    font-weight: 500;
+    font-size: 1.5rem !important;
+}
+
+.swal2-html-container {
+    font-size: .9rem !important;
 }

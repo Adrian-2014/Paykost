@@ -23,15 +23,6 @@ class UserSeeder extends Seeder
                 'no_telpon' => null,
                 'status' => null,
                 'role_id'  => 1
-            ],
-            [
-                'name'     => 'doditya ramadhana',
-                'email'    => 'user@gmail.com',
-                'password' => Hash::make('12345678'),
-                'no_kamar' => 5,
-                'status' => 'Aktif',
-                'no_telpon' => '089287002341',
-                'role_id'  => 2
             ]
         ];
 

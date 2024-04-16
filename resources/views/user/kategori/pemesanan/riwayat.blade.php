@@ -78,6 +78,14 @@
                                                     {{ $bank->nama }}
                                                 </div>
                                             </div>
+                                            <div class="body-item bukti">
+                                                <div class="bukti-text">
+                                                    Bukti Bayar
+                                                </div>
+                                                <div class="img-bukti">
+                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="accordion-header" id="flush-headingOne">

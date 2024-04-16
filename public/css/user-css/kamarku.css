@@ -143,7 +143,7 @@ body {
     padding: 1rem;
     padding-top: .5rem !important;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     height: fit-content;
     background-color: white;
     font-size: 1.2rem;
@@ -152,16 +152,24 @@ body {
     .mycontent {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: .5rem;
         overflow-x: auto;
         margin-top: .3rem;
 
         .item {
-            img {
-                height: 5.5rem;
-                width: 5.5rem;
+            .for-img {
+                width: 5.5rem !important;
+                overflow: hidden;
                 border-radius: .5rem;
-                border: 1px solid rgb(198, 198, 198);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                img {
+                    height: 5.5rem;
+                    width: auto;
+                    border: 1px solid rgb(198, 198, 198);
+                }
             }
         }
     }
@@ -216,7 +224,7 @@ body {
     .mycontent {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: .5rem;
         overflow-x: auto;
         margin-top: .3rem;
 
@@ -238,6 +246,56 @@ body {
         }
     }
 }
+
+.modal {
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        .modal-content {
+
+            .modal-body {
+                display: flex;
+                flex-direction: column;
+                gap: .5rem !important;
+                justify-content: center;
+                padding: .5rem;
+                align-items: center;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    max-height: 12rem;
+                    overflow: hidden;
+                    border-radius: .5rem;
+                }
+
+                .desk {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .3rem;
+
+                    .top {
+                        text-align: center;
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                        color: rgba(0, 0, 0, 0.75);
+                    }
+
+                    .bottom {
+                        font-size: .8rem;
+                        color: rgba(0, 0, 0, 0.7);
+                        font-weight: 400;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
 
 /* M E N U  S */
 

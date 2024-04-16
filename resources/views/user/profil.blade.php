@@ -13,14 +13,14 @@
                 @if (Auth::user()->profil)
                     <img src="{{ asset('uploads/' . Auth::user()->profil) }}">
                 @else
-                    <img src="{{ asset('img/person-1.jpg') }}">
+                    <img src="{{ asset('img/user.jpg') }}">
                 @endif
             </div>
             <div class="name">
                 {{ auth()->user()->name }}
             </div>
             <div class="kamar">
-                Kamar No. 5
+                Kamar No. {{ auth()->user()->no_kamar }}
             </div>
         </div>
     </section>
@@ -55,14 +55,13 @@
             <div class="last-choice">
                 <div class="item-choice first">
                     <div class="details">
-                        <i class="bi bi-person-fill"></i>
-                        <div class="info">
-                            Profil
+                        <div class="icon">
+                            <i class="bi bi-calendar-range"></i>
                         </div>
-                    </div>
-                    <div class="chev">
-                        {{-- <i class="bi bi-chevron-right"></i> --}}
-                        <i class="fa-solid fa-chevron-right"></i>
+                        <div class="info">
+                            <div class="heads">Tanggal Masuk</div>
+                            <div class="values">{{ auth()->user()->tanggal_masuk }}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="item-choice">

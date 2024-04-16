@@ -225,6 +225,18 @@
         </div>
     </nav>
 
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Transaksi Berhasil!',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2500 // Waktu penampilan Sweet Alert (dalam milidetik)
+            });
+        </script>
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var splide = new Splide('.splide', {
@@ -244,6 +256,5 @@
             splide.mount();
         });
     </script>
-
 
 @endsection

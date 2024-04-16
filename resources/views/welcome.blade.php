@@ -3,14 +3,6 @@
 <link rel="stylesheet" href="css/style.css">
 
 @section('container')
-
-    @if (session()->has('error'))
-        <div class="alert alert-danger alert-dismissible mx-auto">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
-
     <div class="body">
         <div class="container">
             <div class="row d-flex align-items-center justify-content-center">
@@ -46,7 +38,17 @@
 
     </div>
 
-
+    @if (Session::has('error'))
+        <script>
+            Swal.fire({
+                title: 'Gagal!',
+                text: '{{ Session::get('error') }}',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
+            });
+        </script>
+    @endif
 
     <script>
         let waduh = document.getElementById("waduh");

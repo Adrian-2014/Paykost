@@ -78,12 +78,22 @@
                                 <span class="hide-menu">User</span>
                             </a>
                         </li>
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/kost" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-door"></i>
                                 </span>
                                 <span class="hide-menu">Kamar Kost</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('fasilitas') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-table"></i>
+                                </span>
+                                <span class="hide-menu">Fasilitas Kost</span>
                             </a>
                         </li>
 
@@ -173,6 +183,19 @@
                                     <i class="ti ti-alert-circle"></i>
                                 </span>
                                 <span class="hide-menu">Laporan Kehilangan</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-small-cap">
+                            <span class="hide-menu">Lainnya</span>
+                        </li>
+
+                        <li class="sidebar-item logout">
+                            <a class="sidebar-link" href="/logout" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-logout"></i>
+                                </span>
+                                <span class="hide-menu">Logout</span>
                             </a>
                         </li>
 

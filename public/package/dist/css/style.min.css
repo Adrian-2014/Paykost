@@ -55963,6 +55963,16 @@ ul {
     padding: 15px 30px
 }
 
+
+/* Style ku */
+
+.sidebar-item.logout {
+    margin-bottom: 2rem;
+    a {
+        color: red !important;
+    }
+}
+
 .mini-sidebar {
     .left-sidebar {
         .brand-logo {

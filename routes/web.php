@@ -30,6 +30,11 @@ Route::get('/', [loginController::class, 'index'])->name('login');
 
 // USER
 
+
+// Payment
+
+Route::get('/pembayaran', [userPageController::class, 'pembayaran']);
+
 // Profil
 Route::post('updateProfil', [userPageController::class, 'updateProfil'])->name('profil.update');
 // Profil
@@ -82,6 +87,20 @@ Route::post('updateStatus', [userPageController::class, 'updateStatus'])->name('
 
 Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index');
 
+// User
+
+Route::get('/admin/user', [adminControll::class, 'user'])->name('admin.user');
+Route::post('/admin/add/user', [adminControll::class, 'storeUser'])->name('storeUser');
+// User
+
+// Fasilitas kost
+Route::get('/admin/fasilitas', [adminControll::class, 'fasilitas'])->name('fasilitas');
+Route::post('tambahkeun/fasilitas', [adminControll::class, 'storeFasilitas'])->name('storeFasilitas');
+Route::post('editfasilitas', [adminControll::class, 'editFasilitas'])->name('editFasilitas');
+Route::delete('fasilitas/destroy/{id}', [adminControll::class, 'hapusFasilitas'])->name('fasilitas.destroy');
+// Fasilitas kost
+
+
 // Kamar Kost
 Route::get('/admin/kost', [adminControll::class, 'kamarKost']);
 Route::post('storeKamar', [adminControll::class, 'storeKamar'])->name('storeKamar');
@@ -89,11 +108,6 @@ Route::post('editKamar', [adminControll::class, 'editKamar'])->name('editKamar')
 Route::get('/toggleKamar/{id}', [adminControll::class, 'toggleKamar'])->name('toggleKamar');
 Route::delete('/hapusKamar/{id}', [adminControll::class, 'hapusKamar'])->name('kamar.destroy');
 // Kamar Kost
-
-// User
-Route::get('/admin/user', [adminControll::class, 'user'])->name('admin.user');
-Route::post('/admin/add/user', [adminControll::class, 'storeUser'])->name('storeUser');
-// User
 
 // Banner
 Route::get('/admin/banner', [adminControll::class, 'banner']);
@@ -127,6 +141,8 @@ Route::delete('/sepatu/{id}', [adminControll::class, 'sepatuHapus'])->name('sepa
 
 Route::get('/admin/prosesCuci', [adminControll::class, 'prosesPencucian']);
 Route::post('edits', [adminControll::class, 'editTanggal'])->name('editTanggal');
+Route::post('updateStat', [adminControll::class, 'updateStat'])->name('updateStat');
+
 
 // Jasa Cuci
 

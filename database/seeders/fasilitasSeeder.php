@@ -13,57 +13,57 @@ class fasilitasSeeder extends Seeder
      */
     public function run(): void
     {
-        $datas = [
-            [
-                'nama'     => 'AC',
-                'gambar'   => 'ac.jpeg',
-                'tipe'     => 'kamar',
-                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-            ],
-            [
-                'nama'     => 'Kipas Angin',
-                'gambar'   => 'kipas-angin.jpeg',
-                'tipe'     => 'kamar',
-                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-            ],
-            [
-                'nama'     => 'Kulkas',
-                'gambar'   => 'kulkas.jpeg',
-                'tipe'     => 'kamar',
-                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-            ],
-            [
-                'nama'     => 'Dispenser',
-                'gambar'   => 'dispenser.jpeg',
-                'tipe'     => 'kamar',
-                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-            ],
-            [
-                'nama'     => 'Wifi',
-                'gambar'   => 'wifi.jpeg',
-                'tipe'     => 'kamar',
-                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        // $datas = [
+        //     [
+        //         'nama'     => 'AC',
+        //         'gambar'   => 'ac.jpeg',
+        //         'tipe'     => 'kamar',
+        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        //     ],
+        //     [
+        //         'nama'     => 'Kipas Angin',
+        //         'gambar'   => 'kipas-angin.jpeg',
+        //         'tipe'     => 'kamar',
+        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        //     ],
+        //     [
+        //         'nama'     => 'Kulkas',
+        //         'gambar'   => 'kulkas.png',
+        //         'tipe'     => 'kamar',
+        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        //     ],
+        //     [
+        //         'nama'     => 'Dispenser',
+        //         'gambar'   => 'dispenser.jpeg',
+        //         'tipe'     => 'kamar',
+        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        //     ],
+        //     [
+        //         'nama'     => 'Wifi',
+        //         'gambar'   => 'wifi.jpeg',
+        //         'tipe'     => 'kamar',
+        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
 
-            ],
-            [
-                'nama'     => 'Lemari',
-                'gambar'   => 'lemari.jpeg',
-                'tipe'     => 'kamar',
-                'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        //     ],
+        //     [
+        //         'nama'     => 'Lemari',
+        //         'gambar'   => 'lemari.jpeg',
+        //         'tipe'     => 'kamar',
+        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
 
-            ]
+        //     ]
 
-        ];
+        // ];
 
-        foreach ($datas as $value) {
+        // foreach ($datas as $value) {
 
-            fasilitas::create([
-                'nama'       => $value['nama'],
-                'gambar'     => $value['gambar'],
-                'tipe'       => $value['tipe'],
-                'deskripsi'  => $value['deskripsi'],
-            ]);
+        //     fasilitas::create([
+        //         'nama'       => $value['nama'],
+        //         'gambar'     => $value['gambar'],
+        //         'tipe'       => $value['tipe'],
+        //         'deskripsi'  => $value['deskripsi'],
+        //     ]);
 
-        }
+        // }
     }
 }

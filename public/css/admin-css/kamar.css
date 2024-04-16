@@ -498,8 +498,10 @@ body {
             width: 80%;
 
             .modal-body {
+                overflow-x: hidden;
 
                 #details {
+
                     .splide__track {
                         .splide__list {
 
@@ -509,9 +511,11 @@ body {
                                 align-items: center;
                                 justify-content: center;
 
+
                                 img {
                                     height: 15rem;
                                     width: auto;
+                                    /* max-width: 20rem; */
                                     border-radius: .5rem;
                                 }
                             }
@@ -523,6 +527,7 @@ body {
                 .fasilitas {
                     margin-top: .8rem;
                     padding-left: 1.4rem !important;
+                    overflow-x: auto;
 
                     label {
                         padding-bottom: .7rem;
