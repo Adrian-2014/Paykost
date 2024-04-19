@@ -185,184 +185,180 @@
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </button>
                                                     </div>
-                                                </td>
-
-                                                <div id="edit-data{{ $item->id }}" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                    <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{
-                                                        nama: '',
-                                                        email: '',
-                                                        password: '',
-                                                        tanggal_masuk: '',
-                                                        no_kamar: '',
-                                                        jenis_kelamin: '',
-                                                        pekerjaan: '',
-                                                        no_telpon: ''
-                                                    }">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header d-flex align-items-center">
-                                                                <h4 class="modal-title" id="myModalLabel">
-                                                                    Tambahkan User
-                                                                </h4>
-                                                            </div>
-                                                            <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
-                                                                <div class="modal-body body-tambah">
-                                                                    @csrf
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">Nama User<span class="text-danger">*</span></div>
-                                                                        <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama">
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">Email<span class="text-danger">*</span></div>
-                                                                        <input type="email" name="email" placeholder="Email . . ." class="form-control target" x-model="email">
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">Password<span class="text-danger">*</span></div>
-                                                                        <input type="text" name="password" placeholder="Password . . ." class="form-control target" x-model="password" min="4">
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">Tanggal Masuk<span class="text-danger">*</span></div>
-                                                                        <input type="date" name="tanggal_masuk" placeholder="tanggal_masuk . . ." class="form-control target" x-model="tanggal_masuk">
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">No Kamar<span class="text-danger">*</span></div>
-                                                                        <div class="dropdown status" id="drop">
-                                                                            <input type="text" readonly class="form-control" id="add-status" name="no_kamar" placeholder="No Kamar . . ." required x-model="no_kamar">
-                                                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <i class="fa-solid fa-caret-down"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu">
-                                                                                @foreach ($kamars as $item)
-                                                                                    <li class="is-real" x-on:click="no_kamar = '{{ $item->nomor_kamar }}'">
-                                                                                        <div class="item">
-                                                                                            <div class="icons">
-                                                                                                @if ($item->gambarKamar->isNotEmpty())
-                                                                                                    <img src="{{ asset('uploads/' . $item->gambarKamar->first()->gambar) }}">
-                                                                                                @endif
-                                                                                            </div>
-                                                                                            <div class="value">
-                                                                                                Kamar No. {{ $item->nomor_kamar }}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                @endforeach
-                                                                            </ul>
+                                                    <div id="detail{{ $item->id }}" class="modal fade in det" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header d-flex align-items-center">
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        Detail User
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="item for-profil-img">
+                                                                        <div class="myImg">
+                                                                            @if (is_null($item->profil) || empty($item->profil))
+                                                                                <img src="{{ asset('img/person-1.jpg') }}">
+                                                                            @else
+                                                                                <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="name">
+                                                                            {{ $item->name }}
                                                                         </div>
                                                                     </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">Jenis Kelamin<span class="text-danger">*</span></div>
-                                                                        <div class="dropdown jeniskelamin" id="drop">
-                                                                            <input type="text" readonly class="form-control" id="add-jenis-kelamin" name="jenis_kelamin" placeholder="Pilih jenis kelamin . . ." required x-model="jenis_kelamin">
-                                                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <i class="fa-solid fa-caret-down"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li class="is-real" x-on:click="jenis_kelamin = 'laki laki'">
-                                                                                    <div class="item">
-                                                                                        <div class="icons">
-                                                                                            <img src="{{ asset('img/male.png') }}">
-                                                                                        </div>
-                                                                                        <div class="value">
-                                                                                            laki laki
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                                <li class="is-real" x-on:click="jenis_kelamin = 'perempuan'">
-                                                                                    <div class="item">
-                                                                                        <div class="icons">
-                                                                                            <img src="{{ asset('img/female.png') }}">
-                                                                                        </div>
-                                                                                        <div class="value">
-                                                                                            perempuan
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
 
-                                                                            </ul>
+                                                                    <div class="row for-common">
+                                                                        <div class="col-6 mt-2">
+                                                                            <label class="px-1">Nama User</label>
+                                                                            <input type="text" disabled value="{{ $item->name }}" class="form-control">
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">No Telephone<span class="text-danger">*</span></div>
-                                                                        <input type="text" name="no_telpon" placeholder="No Telepone . . ." class="form-control target" x-model="no_telpon">
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <div class="title pb-1">Pekerjaan<span class="text-danger">*</span></div>
-                                                                        <input type="text" name="pekerjaan" placeholder="Pekerjaan . . ." class="form-control target" x-model="pekerjaan">
-                                                                    </div>
-                                                                    <div class="items ps-2">
-                                                                        <input type="hidden" name="status" class="form-control target" value="Aktif">
-                                                                        <input type="hidden" name="role_id" class="form-control target" value="2">
+                                                                        <div class="col-6 mt-2">
+                                                                            <label class="px-1">No. Kamar</label>
+                                                                            <input type="text" disabled value="Kamar No. {{ $item->no_kamar }}" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-6 mt-2">
+                                                                            <label class="px-1">Tanggal Masuk</label>
+                                                                            <input type="text" disabled value="{{ $item->tanggal_masuk }}" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-6 mt-2">
+                                                                            <label class="px-1">Durasi Ngekost</label>
+                                                                            <input type="text" disabled value="{{ $item->durasi_ngekost }}" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-6 mt-2">
+                                                                            <label class="px-1">Jenis Kelamin</label>
+                                                                            <input type="text" disabled value="{{ $item->jenis_kelamin }}" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-6 mt-2 status">
+                                                                            <label class="px-1">Status Bayar</label>
+                                                                            <input type="text" disabled value="Lunas" class="form-control">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
-                                                                        Batal
-                                                                    </button>
-                                                                    <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon && (password.length < 4)">
-                                                                        Tambahkan
+                                                                        Tutup
                                                                     </button>
                                                                 </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div id="detail{{ $item->id }}" class="modal fade in det" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header d-flex align-items-center">
-                                                                <h4 class="modal-title" id="myModalLabel">
-                                                                    Detail User
-                                                                </h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="item for-profil-img">
-                                                                    <div class="myImg">
-                                                                        @if (is_null($item->profil) || empty($item->profil))
-                                                                            <img src="{{ asset('img/person-1.jpg') }}">
-                                                                        @else
-                                                                            <img src="{{ asset('uploads/' . $item->profil) }}">
-                                                                        @endif
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        {{ $item->name }}
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row for-common">
-                                                                    <div class="col-6 mt-2">
-                                                                        <label class="px-1">Nama User</label>
-                                                                        <input type="text" disabled value="{{ $item->name }}" class="form-control">
-                                                                    </div>
-                                                                    <div class="col-6 mt-2">
-                                                                        <label class="px-1">No. Kamar</label>
-                                                                        <input type="text" disabled value="Kamar No. {{ $item->no_kamar }}" class="form-control">
-                                                                    </div>
-                                                                    <div class="col-6 mt-2">
-                                                                        <label class="px-1">Tanggal Masuk</label>
-                                                                        <input type="text" disabled value="{{ $item->tanggal_masuk }}" class="form-control">
-                                                                    </div>
-                                                                    <div class="col-6 mt-2">
-                                                                        <label class="px-1">Durasi Ngekost</label>
-                                                                        <input type="text" disabled value="{{ $item->durasi_ngekost }}" class="form-control">
-                                                                    </div>
-                                                                    <div class="col-6 mt-2">
-                                                                        <label class="px-1">Jenis Kelamin</label>
-                                                                        <input type="text" disabled value="{{ $item->jenis_kelamin }}" class="form-control">
-                                                                    </div>
-                                                                    <div class="col-6 mt-2 status">
-                                                                        <label class="px-1">Status Bayar</label>
-                                                                        <input type="text" disabled value="Lunas" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
-                                                                    Tutup
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+
+                                                    <div id="edit-data{{ $item->id }}" class="modal-edit modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{
+                                                            nama: '{{ $item->name }}',
+                                                            email: '{{ $item->email }}',
+                                                            password: '',
+                                                            tanggal_masuk: '{{ $item->tanggal_masuk }}',
+                                                            no_kamar: '{{ $item->no_kamar }}',
+                                                            jenis_kelamin: '{{ $item->jenis_kelamin }}',
+                                                            pekerjaan: '{{ $item->pekerjaan }}',
+                                                            no_telpon: '{{ $item->no_telpon }}'
+                                                        }">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header d-flex align-items-center">
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        Edit User
+                                                                    </h4>
+                                                                </div>
+                                                                <form action="{{ route('update.user') }}" method="POST" enctype="multipart/form-data">
+                                                                    <div class="modal-body body-tambah">
+                                                                        @csrf
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Nama User<span class="text-danger">*</span></div>
+                                                                            <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Email<span class="text-danger">*</span></div>
+                                                                            <input type="email" name="email" placeholder="Email . . ." class="form-control target" x-model="email">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Tanggal Masuk<span class="text-danger">*</span></div>
+                                                                            <input type="date" name="tanggal_masuk" placeholder="tanggal_masuk . . ." class="form-control target" x-model="tanggal_masuk">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">No Kamar<span class="text-danger">*</span></div>
+                                                                            <div class="dropdown status" id="drop">
+                                                                                <input type="text" readonly class="form-control" id="add-status" name="no_kamar" placeholder="No Kamar . . ." required x-model="no_kamar">
+                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                    <i class="fa-solid fa-caret-down"></i>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu">
+                                                                                    @foreach ($kamars as $item)
+                                                                                        <li class="is-real" x-on:click="no_kamar = '{{ $item->nomor_kamar }}'">
+                                                                                            <div class="item">
+                                                                                                <div class="icons">
+                                                                                                    @if ($item->gambarKamar->isNotEmpty())
+                                                                                                        <img src="{{ asset('uploads/' . $item->gambarKamar->first()->gambar) }}">
+                                                                                                    @endif
+                                                                                                </div>
+                                                                                                <div class="value">
+                                                                                                    Kamar No. {{ $item->nomor_kamar }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    @endforeach
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Jenis Kelamin<span class="text-danger">*</span></div>
+                                                                            <div class="dropdown jeniskelamin" id="drop">
+                                                                                <input type="text" readonly class="form-control" id="add-jenis-kelamin" name="jenis_kelamin" placeholder="Pilih jenis kelamin . . ." required x-model="jenis_kelamin">
+                                                                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                    <i class="fa-solid fa-caret-down"></i>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu">
+                                                                                    <li class="is-real" x-on:click="jenis_kelamin = 'laki laki'">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('img/male.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                laki laki
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="is-real" x-on:click="jenis_kelamin = 'perempuan'">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('img/female.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                perempuan
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">No Telephone<span class="text-danger">*</span></div>
+                                                                            <input type="text" name="no_telpon" placeholder="No Telepone . . ." class="form-control target" x-model="no_telpon">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <div class="title pb-1">Pekerjaan<span class="text-danger">*</span></div>
+                                                                            <input type="text" name="pekerjaan" placeholder="Pekerjaan . . ." class="form-control target" x-model="pekerjaan">
+                                                                        </div>
+                                                                        <div class="items ps-2">
+                                                                            <input type="hidden" name="status" class="form-control target" value="Aktif">
+                                                                            <input type="hidden" name="role_id" class="form-control target" value="2">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
+                                                                            Batal
+                                                                        </button>
+                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon &&">
+                                                                            Simpan
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

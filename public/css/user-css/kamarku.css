@@ -96,7 +96,7 @@ body {
             .item {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+
 
                 .desk-tgl {
                     font-size: .7rem;
@@ -105,35 +105,58 @@ body {
 
                 .real-tgl {
                     font-size: .95rem;
-                    /* color: rgba(0, 0, 0, 0.8); */
-                    color: #009dff;
+                    color: rgba(0, 0, 0, 0.8);
                     font-weight: 500;
                 }
             }
         }
 
-        .bayar {
+        .for-detail {
             display: flex;
             align-items: center;
-            flex-direction: column;
+            justify-content: space-between;
 
-            .above {
-                font-size: .7rem;
-                color: rgba(0, 0, 0, 0.6);
+            .item {
+                display: flex;
+
+                flex-direction: column;
+
+                .above {
+                    font-size: .7rem;
+                    color: rgba(0, 0, 0, 0.6);
+                }
+
+                .bottom {
+                    font-size: 1.1rem;
+                    color: rgba(0, 0, 0, 0.7);
+                    font-weight: 500;
+                }
             }
 
-            .bottom {
-                font-size: 1.1rem;
-                /* color: rgba(0, 0, 0, 0.8); */
-                color: #009dff;
-                font-weight: 600;
+            .bayar {
+                display: flex;
 
-                span {
-                    font-size: 1rem;
-                    color: rgba(0, 0, 0, 0.7);
+                flex-direction: column;
+
+                .above {
+                    font-size: .7rem;
+                    color: rgba(0, 0, 0, 0.6);
+                }
+
+                .bottom {
+                    font-size: 1.1rem;
+                    /* color: rgba(0, 0, 0, 0.8); */
+                    color: #009dff;
+                    font-weight: 600;
+
+                    span {
+                        font-size: 1rem;
+                        color: rgba(0, 0, 0, 0.7);
+                    }
                 }
             }
         }
+
     }
 }
 
@@ -149,7 +172,7 @@ body {
     font-size: 1.2rem;
     font-weight: 500;
 
-    .mycontent {
+    /* .mycontent {
         display: flex;
         align-items: center;
         gap: .5rem;
@@ -169,6 +192,73 @@ body {
                     height: 5.5rem;
                     width: auto;
                     border: 1px solid rgb(198, 198, 198);
+                }
+            }
+        }
+    } */
+
+    .mycontent {
+        display: flex;
+        flex-direction: column;
+        margin-top: .5rem;
+
+        .jud-kamar {
+            font-weight: 500;
+            margin-bottom: .15rem;
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .jud-umum {
+            font-weight: 500;
+            margin-top: .4rem;
+            margin-bottom: .15rem;
+            margin-top: .5rem;
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .fasilitas {
+            display: flex;
+            width: 100%;
+            overflow: auto;
+            gap: .5rem;
+        }
+
+        .kamar {
+            .item {
+                .for-img {
+                    width: 6rem !important;
+                    overflow: hidden;
+                    border-radius: .5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        height: 6rem;
+                        width: auto;
+                        border: 1px solid rgb(198, 198, 198);
+                    }
+                }
+            }
+        }
+
+        .umum {
+            .item {
+                .for-img {
+                    width: 12rem !important;
+                    overflow: hidden;
+                    border-radius: .5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        height: 8rem;
+                        width: auto;
+                        border: 1px solid rgb(198, 198, 198);
+                    }
                 }
             }
         }
@@ -293,6 +383,33 @@ body {
             }
 
         }
+    }
+}
+
+.no-recomendation {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 10rem;
+    margin-top: 0 !important;
+    margin-bottom: 2rem !important;
+    gap: .3rem;
+    padding-bottom: 2rem;
+
+    .i-img {
+
+        img {
+            height: 6rem;
+            width: auto;
+        }
+    }
+
+    .text {
+        color: rgba(0, 0, 0, 0.5);
+        width: 80%;
+        font-size: .9rem;
+        text-align: center;
     }
 }
 

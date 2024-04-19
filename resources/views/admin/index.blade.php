@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="text-center">
                             <img src="{{ asset('package') }}/dist/images/svgs/icon-user-male.svg" width="50" height="50" class="mb-3" alt="" />
-                            <p class="fw-semibold fs-3 text-primary mb-1"> Employees </p>
+                            <p class="fw-semibold fs-3 text-primary mb-1">Employees</p>
                             <h5 class="fw-semibold text-primary mb-0">96</h5>
                         </div>
                     </div>

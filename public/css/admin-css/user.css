@@ -53,6 +53,7 @@ body {
 
     tbody {
         tr {
+
             td {
                 height: fit-content;
                 /* padding: unset; */
@@ -296,7 +297,50 @@ body {
     }
 }
 
-.edit-data {
+.det {
+    .modal-content {
+        width: 80%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: .7rem;
+
+            .for-profil-img {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                gap: .7rem;
+                justify-content: center;
+
+                .myImg {
+                    img {
+                        height: 10rem;
+                        width: 10rem;
+                        border-radius: 50%;
+                    }
+                }
+
+                .name {
+                    font-size: 1.2rem;
+                    font-weight: 500 !important;
+
+                }
+            }
+        }
+
+        .modal-footer {
+            .cancel {
+                border: 1px solid rgb(190, 190, 190);
+            }
+        }
+    }
+}
+
+.modal-edit {
     .modal-dialog {
         .modal-content {
             top: 50%;
@@ -419,45 +463,9 @@ body {
             }
         }
     }
-}
+}   
 
 
-.det {
-    .modal-content {
-        width: 80%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        .modal-body {
-            display: flex;
-            flex-direction: column;
-            gap: .7rem;
-
-            .for-profil-img {
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                gap: .7rem;
-                justify-content: center;
-
-                .myImg {
-                    img {
-                        height: 10rem;
-                        width: 10rem;
-                        border-radius: 50%;
-                    }
-                }
-
-                .name {
-                    font-size: 1.2rem;
-                    font-weight: 500 !important;
-
-                }
-            }
-        }
-    }
-}
 
 /* Dropdown */
 

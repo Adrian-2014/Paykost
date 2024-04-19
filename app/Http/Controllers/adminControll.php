@@ -17,6 +17,7 @@ use App\Models\gambarKamar;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\KamarKostFasilitas;
+use App\Models\pembayaranKost;
 use App\Models\ProsesCuci;
 use App\Models\User;
 use Database\Seeders\CuciKeringSeeder;
@@ -37,37 +38,16 @@ class adminControll extends Controller
     }
 
     // For User
+    public function pembayaranPage() {
+        $pembayaran = pembayaranKost::orderBy('id', 'desc')->get();
+        return view('admin.pembayaran', compact('pembayaran'));
+    }
     public function user() {
         $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
         $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->get();
         return view('admin.user', compact('user', 'kamars'));
     }
     public function storeUser(Request $request) {
-        // dd($request->all());
-        // $request->validate([
-        //     'nama' => 'required',
-        //     'email' => 'required',
-        //     'password' => 'required|min:4',
-        //     'tanggal_masuk' => 'required',
-        //     'no_kamar' => 'required',
-        //     'jenis_kelamin'=>'required',
-        //     'pekerjaan'=>'required',
-        //     'status'=>'required',
-        //     'role_id'=>'required',
-        // ]);
-
-        // $user = new User();
-        // $user->name = $request->nama;
-        // $user->email = $request->email;
-        // $user->password = Hash::make($request->password);
-        // $user->tanggal_masuk = $request->tanggal_masuk;
-        // $user->no_kamar = $request->no_kamar;
-        // $user->jenis_kelamin = $request->jenis_kelamin;
-        // $user->pekerjaan = $request->pekerjaan;
-        // $user->status = $request->status;
-        // $user->role_id = $request->role_id;
-        // $user->save();
-        // return back()->with('success', 'user Berhasil Di Tambahkan.');
 
         $request->validate([
             'nama' => 'required',
@@ -94,6 +74,7 @@ class adminControll extends Controller
         $user->pekerjaan = $request->pekerjaan;
         $user->status = $request->status;
         $user->role_id = $request->role_id;
+        $user->status_bayar = 'Belum Bayar';
         $user->save();
         // Ubah kondisi kamar menjadi 'Dihuni'
         $kamar = KamarKost::findOrFail($request->no_kamar);
@@ -103,7 +84,51 @@ class adminControll extends Controller
 
         return back()->with('success', 'User berhasil ditambahkan.');
     }
-    // For User
+    public function updateUser(Request $request) {
+
+        $request->validate([
+            'id' => 'required', // tambahkan validasi untuk id
+            'nama' => 'required',
+            'email' => 'required',
+            'tanggal_masuk' => 'required',
+            'no_kamar' => 'required',
+            'no_telpon' => 'required',
+            'jenis_kelamin' => 'required',
+            'pekerjaan' => 'required',
+            'status' => 'required',
+            'role_id' => 'required',
+        ]);
+
+        // Simpan data user ke tabel users
+        $user = User::find($request->id);
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->tanggal_masuk = $request->tanggal_masuk;
+        $user->no_kamar = $request->no_kamar;
+        $user->no_telpon = $request->no_telpon;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->pekerjaan = $request->pekerjaan;
+        $user->status = $request->status;
+        $user->role_id = $request->role_id;
+        $user->status_bayar = 'Belum Bayar';
+        $user->save();
+
+        // Ubah kondisi kamar yang lama
+        $old_kamar = KamarKost::where('user_id', $user->id)->first();
+        if ($old_kamar) {
+            $old_kamar->user_id = null;
+            $old_kamar->kondisi = 'Kosong'; // Kamar kosong
+            $old_kamar->save();
+        }
+
+        // Ubah kondisi kamar yang baru
+        $new_kamar = KamarKost::findOrFail($request->no_kamar);
+        $new_kamar->user_id = $user->id;
+        $new_kamar->kondisi = 'Dihuni'; // Kamar dihuni
+        $new_kamar->save();
+
+        return back()->with('success', 'Data pengguna berhasil diperbarui.');
+    }
 
     // For Fasilitas Kamar
     public function fasilitas() {
@@ -141,23 +166,25 @@ class adminControll extends Controller
        $relasi->delete();
         return back()->with('success', 'Fasiitas Berhasil Dihapus.');
     }
-
     public function editFasilitas(Request $request) {
+        // dd($request->all());
+
         $request->validate([
             'gambar_fasilitas' => 'nullable',
             'nama_fasilitas' => 'required',
-            'jenis_fasilitas'=>'required',
-            'deskripsi_fasilitas'=>'required',
-
+            'jenis_fasilitas'=> 'required',
+            'deskripsi_fasilitas'=> 'required',
         ]);
 
-        if($request->gambar_fasilitas) {
-            $gambar_fasilitas = $request->file('gambar_fasilitas');
-            $namaFile = time().'.'.$gambar_fasilitas->getClientOriginalExtension();
-            $gambar_fasilitas->move(public_path('uploads'), $namaFile);
+        if($request->hasFile('gambar_fasilitas')) {
+            $gambar = $request->file('gambar_fasilitas');
+            $namaFile = time().'.'.$gambar->getClientOriginalExtension();
+            $gambar->move(public_path('uploads'), $namaFile);
         } else {
-            $namaFile = fasilitas::find($request->id)->gambar_fasilitas;
+            $namaFile = fasilitas::find($request->id)->gambar;
         }
+
+
 
         $fasilitas = fasilitas::find($request->id);
         $fasilitas->nama = $request->nama_fasilitas;
@@ -172,7 +199,6 @@ class adminControll extends Controller
             return back()->with('fail', 'Mohon lengkapi Data sebelum Mengirim');
         }
     }
-
     // For Fasilitas Kamar
 
     // For Kamar Kost
@@ -197,7 +223,7 @@ class adminControll extends Controller
 
         // Cek apakah nomor kamar sudah ada sebelumnya
         if (kamarKost::where('nomor_kamar', $request->nomor_kamar)->exists()) {
-            return back()->with('fail', 'Kamar Kost sudah ada');
+            return back()->with('fail', 'Kamar Kost No. ' .$request->nomor_kamar. '  sudah ada');
         }
 
         $kamar_kost = kamarKost::create([
@@ -277,20 +303,35 @@ class adminControll extends Controller
         // }
 
         // return back()->with('success', 'Kamar Berhasil Di Edit.');
-        KamarKostFasilitas::where('kamar_kost_id', $request->id)->delete();
-
         $request->validate([
             'nomor_kamar' => 'required',
             'ukuran_kamar' => 'required',
-            'harga_kamar' => 'required',
+            'harga_kamar'=>'required',
         ]);
 
+        // Cek apakah kamar dengan ID yang diberikan ada
         $kamar_kost = kamarKost::find($request->id);
+        if (!$kamar_kost) {
+            return back()->with('fail', 'Kamar Kost tidak ditemukan.');
+        }
 
-        // Update gambar jika ada yang diunggah
+        // Update data kamar
+        $kamar_kost->nomor_kamar = $request->nomor_kamar;
+        $kamar_kost->ukuran_kamar = $request->ukuran_kamar;
+        $kamar_kost->harga_kamar = $request->harga_kamar;
+        $kamar_kost->save();
+
+        // Update gambar kamar jika ada perubahan
         if ($request->hasFile('gambar_kamar')) {
-            foreach ($request->file('gambar_kamar') as $image) {
-                $namaFile = time() . '_' . $image->getClientOriginalName();
+            // Hapus gambar-gambar sebelumnya
+            foreach($kamar_kost->gambarKamar as $gambar) {
+                Storage::delete(public_path('uploads/'.$gambar->gambar));
+                $gambar->delete();
+            }
+
+            // Upload dan simpan gambar yang baru
+            foreach($request->file('gambar_kamar') as $image) {
+                $namaFile = time().'.'.$image->getClientOriginalName();
                 $image->move(public_path('uploads'), $namaFile);
 
                 // Simpan nama file ke dalam tabel gambar_kamars
@@ -300,26 +341,17 @@ class adminControll extends Controller
                 $gambar->save();
             }
         }
-
-        // Update data kamar
-        $kamar_kost->update([
-            'nomor_kamar' => $request->nomor_kamar,
-            'ukuran_kamar' => $request->ukuran_kamar,
-            'harga_kamar' => $request->harga_kamar,
-        ]);
-
-        // Simpan fasilitas
-        if ($request->has('fasilitas')) {
-            foreach ($request->fasilitas as $fasilitas) {
-                KamarKostFasilitas::create([
-                    'fasilitas_id' => $fasilitas,
-                    'kamar_kost_id' => $kamar_kost->id
-                ]);
-            }
+        // Update fasilitas kamar
+        $kamar_kost->kamarKostFasilitas()->delete(); // Delete existing fasilitas
+        foreach($request->fasilitas as $fasilitas) {
+            KamarKostFasilitas::create([
+                'fasilitas_id'=>$fasilitas,
+                'kamar_kost_id'=>$kamar_kost->id
+            ]);
         }
 
-        return back()->with('success', 'Kamar berhasil diperbarui.');
 
+        return back()->with('success', 'Kamar Kost berhasil diperbarui.');
     }
     public function toggleKamar($id) {
         $kost = kamarKost::find($id);
@@ -353,6 +385,8 @@ class adminControll extends Controller
     }
     public function editBanner(Request $request)
     {
+
+        // dd($request->all());
         $request->validate([
             'lokasi_banner' => 'required',
             'gambar_banner' => 'nullable',

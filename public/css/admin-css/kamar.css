@@ -340,6 +340,7 @@ body {
 
             form {
                 .modal-body {
+
                     display: flex;
                     flex-direction: column;
                     gap: .65rem;
@@ -347,17 +348,26 @@ body {
                     max-height: 60vh;
                     overflow: auto;
 
-                    .preview {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        width: 100%;
+                    #details {
 
-                        img {
-                            height: 15rem;
-                            width: auto;
-                            border-radius: .6rem;
-                            border: 1px solid rgb(220, 216, 216);
+                        .splide__track {
+                            .splide__list {
+
+                                .splide__slide {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+
+
+                                    img {
+                                        height: 15rem;
+                                        width: auto;
+                                        /* max-width: 20rem; */
+                                        border-radius: .5rem;
+                                    }
+                                }
+
+                            }
                         }
                     }
 
@@ -506,7 +516,6 @@ body {
                         .splide__list {
 
                             .splide__slide {
-
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
@@ -528,6 +537,7 @@ body {
                     margin-top: .8rem;
                     padding-left: 1.4rem !important;
                     overflow-x: auto;
+                    scrollbar-width: thin;
 
                     label {
                         padding-bottom: .7rem;
@@ -540,15 +550,21 @@ body {
 
                         .fas-item {
                             display: flex;
-                            flex-direction: column;
                             align-items: center;
+                            flex-direction: column;
                             gap: .2rem;
 
                             .for-img {
+                                width: 5.5rem;
+                                overflow: hidden;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border-radius: .5rem;
+
                                 img {
                                     height: 5.5rem;
-                                    width: 5.5rem;
-                                    border-radius: .5rem;
+                                    width: auto;
                                     border: 1.5px solid rgb(225, 225, 225);
                                 }
                             }

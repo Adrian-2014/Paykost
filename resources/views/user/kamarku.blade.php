@@ -39,108 +39,127 @@
                     <div class="desk-tgl">
                         Tanggal Masuk Kost
                     </div>
-                    <div class="real-tgl">
-                        17 Agustus 2017
+                    <div class="real-tgl" id="tgl-masuk">
+
                     </div>
                 </div>
                 <div class="item kanan">
+                    <input type="hidden" name="tm" id="tm" value="{{ auth()->user()->tanggal_masuk }}">
                     <div class="desk-tgl">
                         Durasi Ngekost
                     </div>
-                    <div class="real-tgl">
-                        9 Bulan 6 Hari
+                    <div class="real-tgl" id="durasi">
+
                     </div>
                 </div>
             </div>
-            <div class="bayar">
-                <div class="above">
-                    Harga / Bulan
+            <div class="for-detail">
+                <div class="item">
+                    <div class="above">
+                        Ukuran Kamar
+                    </div>
+                    <div class="bottom">
+                        @foreach ($kamar_kost as $kamar)
+                            {{ $kamar->ukuran_kamar }}
+                        @endforeach
+                    </div>
                 </div>
-                <div class="bottom">
-                    <span>Rp. </span>
-                    @foreach ($kamar_kost as $kamar)
-                        {{ $kamar->harga_kamar }}
-                    @endforeach
+                <div class="bayar">
+                    <div class="above">
+                        Harga / Bulan
+                    </div>
+                    <div class="bottom">
+                        <span>Rp. </span>
+                        @foreach ($kamar_kost as $kamar)
+                            {{ $kamar->harga_kamar }}
+                        @endforeach
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
-    {{-- <div class="container spesifikasi">
-        <div class="head">
-            Spesifikasi Kamar
-        </div>
-        <div class="spec-item">
-            <div class="items">
-                <div class="top">Ukuran Kamar</div>
-                <div class="bottom"></div>
-            </div>
-            <div class="items">
-                <div class="top"> Kamar</div>
-                <div class="bottom"></div>
-            </div>
-            <div class="items">
-                <div class="top">Ukuran Kamar</div>
-                <div class="bottom"></div>
-            </div>
-            <div class="items">
-                <div class="top">Ukuran Kamar</div>
-                <div class="bottom"></div>
-            </div>
-        </div>
-    </div> --}}
-
     <div class="container fasilitas">
         <div class="head">
-            Fasilitas Kamar
+            Fasilitas Kost
         </div>
         <div class="mycontent">
             @foreach ($kamar_kost as $item)
-                @foreach ($facilites as $facilite)
-                    @php
-                        $kamar_kost = \App\Models\KamarKostFasilitas::where('kamar_kost_id', $item->id)
-                            ->where('fasilitas_id', $facilite->id)
-                            ->first();
-                    @endphp
-                    @if ($kamar_kost)
-                        <div class="item" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $facilite->id }}">
-                            <div class="for-img">
-                                <img src="{{ asset('uploads/' . $facilite->gambar) }}">
-                            </div>
-                        </div>
-                    @endif
-                    <div class="modal fade" id="exampleModal{{ $facilite->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
+                <div class="jud-kamar">
+                    Fasilitas Kamar
+                </div>
+                <div class="fasilitas kamar">
+                    @foreach ($fasKamar as $facilite)
+                        @php
+                            $kamar_kost = \App\Models\KamarKostFasilitas::where('kamar_kost_id', $item->id)
+                                ->where('fasilitas_id', $facilite->id)
+                                ->first();
+                        @endphp
+                        @if ($kamar_kost)
+                            <div class="item" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $facilite->id }}">
+                                <div class="for-img">
                                     <img src="{{ asset('uploads/' . $facilite->gambar) }}">
-                                    <div class="desk">
-                                        <div class="top">
-                                            {{ $facilite->nama }}
-                                        </div>
-                                        <div class="bottom">
-                                            {{ $facilite->deskripsi }}
+                                </div>
+                            </div>
+                        @endif
+                        <div class="modal fade" id="exampleModal{{ $facilite->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <img src="{{ asset('uploads/' . $facilite->gambar) }}">
+                                        <div class="desk">
+                                            <div class="top">
+                                                {{ $facilite->nama }}
+                                            </div>
+                                            <div class="bottom">
+                                                {{ $facilite->deskripsi }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            @endforeach
+                    @endforeach
+                </div>
 
-            {{-- <div class="item">
-                <img src="{{ asset('img/kulkas.jpeg') }}">
-            </div>
-            <div class="item">
-                <img src="{{ asset('img/kulkas.jpeg') }}">
-            </div>
-            <div class="item">
-                <img src="{{ asset('img/kulkas.jpeg') }}">
-            </div>
-            <div class="item">
-                <img src="{{ asset('img/kulkas.jpeg') }}">
-            </div> --}}
+                <div class="jud-umum">
+                    Fasilitas Umum
+                </div>
+                <div class="fasilitas umum">
+                    @foreach ($fasUmum as $facilite)
+                        @php
+                            $kamar_kost = \App\Models\KamarKostFasilitas::where('kamar_kost_id', $item->id)
+                                ->where('fasilitas_id', $facilite->id)
+                                ->first();
+                        @endphp
+                        @if ($kamar_kost)
+                            <div class="item" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $facilite->id }}">
+                                <div class="for-img">
+                                    <img src="{{ asset('uploads/' . $facilite->gambar) }}">
+                                </div>
+                            </div>
+                        @endif
+                        <div class="modal fade" id="exampleModal{{ $facilite->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <img src="{{ asset('uploads/' . $facilite->gambar) }}">
+                                        <div class="desk">
+                                            <div class="top">
+                                                {{ $facilite->nama }}
+                                            </div>
+                                            <div class="bottom">
+                                                {{ $facilite->deskripsi }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -225,8 +244,8 @@
         </div>
     </nav>
 
-
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="{{ asset('tanggal.js') }}"></script>
 
     <script>
         var splide = new Splide('.splide', {

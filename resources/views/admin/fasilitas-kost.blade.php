@@ -2,7 +2,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-@section('title', 'Admin Banner')
+@section('title', 'Admin Fasilitas')
 <link rel="stylesheet" href="{{ asset('css/admin-css/fasilitas.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -50,14 +50,14 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Banner</h4>
+                        <h4 class="fw-semibold mb-8">Fasilitas Kost</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a class="text-muted " href="./index.html">Admin</a>
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">
-                                    Banner
+                                    Fasilitas Kost
                                 </li>
                             </ol>
                         </nav>
@@ -74,13 +74,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2 ps-2 pt-2">Data Banner</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Data Fasilitas Kost</h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-rounded m-t-10 mb-2 text-light tambah" data-bs-toggle="modal" data-bs-target="#add-item">
                                 <i class="fa-solid fa-plus"></i>
-                                <div class="te">Tambahkan Banner</div>
+                                <div class="te">Tambahkan Fasilitas</div>
                             </button>
                         </div>
                         @if ($fasilitas->isEmpty())
@@ -191,7 +191,7 @@
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
                                                                             <div class="title pb-1">Gambar Fasilitas<span class="text-danger">*</span></div>
-                                                                            <input type="file" name="gambar_fasilitas" class="form-control add-input" value="{{ $item->gambar }}" id="gambar_barang-{{ $item->id }}" onchange="loading(event, {{ $item->id }})">
+                                                                            <input type="file" name="gambar_fasilitas" class="form-control add-input" id="gambar_barang-{{ $item->id }}" onchange="loading(event, {{ $item->id }})">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Nama Fasilitas<span class="text-danger">*</span></div>
@@ -230,7 +230,7 @@
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Deskripsi<span class="text-danger">*</span></div>
-                                                                            <input type="hidden" readonly id="specialDesk" name="deskripsi_fasilitas" placeholder="Jenis Fasilitas . . ." required>
+                                                                            <input type="hidden" readonly id="specialDesk" name="deskripsi_fasilitas" placeholder="Jenis Fasilitas . . ." required x-model="Deskripsi">
                                                                             <textarea class="form-control add-input" rows="8" x-model="Deskripsi" onkeyup="move()" id="textarea"></textarea>
                                                                         </div>
                                                                     </div>
@@ -264,7 +264,7 @@
             <div class="modal-content" x-data= "{gambar_fasilitas: '', jenis_fasilitas: '', Deskripsi: '', nama: ''}">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
-                        Tambahkan Item Cuci
+                        Tambahkan Fasilitas Kost
                     </h4>
                 </div>
                 <form action="{{ route('storeFasilitas') }}" method="POST" enctype="multipart/form-data" class="fors">
@@ -372,7 +372,7 @@
         $(document).ready(function() {
             $('.form-check-input').click(function(event) {
                 var switch_id = $(this).attr("switch_id");
-                var myUrl = "/toggleBanner/" + $(this).attr('data-id').replace(/\W/g, '-');
+                var myUrl = "/toggleFasilitas Kost/" + $(this).attr('data-id').replace(/\W/g, '-');
                 window.location.href = myUrl;
             });
         });

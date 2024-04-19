@@ -277,6 +277,7 @@
                                                     </div>
                                                     {{-- Detail Item --}}
 
+                                                    {{-- Edit Item --}}
                                                     <div id="edit-data{{ $item->id }}" class="modal fade in edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{ ukuran: '{{ $item->ukuran_kamar }}', nomor: '{{ $item->nomor_kamar }}', harga: '{{ $item->harga_kamar }}' }">
                                                             <div class="modal-content">
@@ -288,8 +289,19 @@
                                                                 <form method="POST" action="{{ route('editKamar') }}" enctype="multipart/form-data" class="fors">
                                                                     <div class="modal-body body-tambah">
                                                                         @csrf
-                                                                        <div class="preview">
-                                                                            <img src="{{ asset('uploads/' . $item->gambar_kamar) }}" id="showimg-{{ $item->id }}">
+                                                                        <div class="splide" role="group" id="details" aria-label="Splide Basic HTML Example">
+                                                                            <div class="splide__track">
+                                                                                <ul class="splide__list">
+                                                                                    @if ($item->gambarKamar->isNotEmpty())
+                                                                                        @foreach ($item->gambarKamar as $gambar)
+                                                                                            <li class="splide__slide">
+                                                                                                <img src="{{ asset('uploads/' . $gambar->gambar) }}">
+                                                                                            </li>
+                                                                                            {{-- {{ $gambar->gambar }} --}}
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <input type="hidden" value="{{ $item->id }}" name="id">
@@ -310,7 +322,6 @@
                                                                         </div>
                                                                         <div class="items ps-2 fasilitas">
                                                                             <div class="title pb-1">Fasilitas Kamar<span class="text-danger">*</span></div>
-                                                                            <input type="hidden" name="status" class="form-control add-input" x-model="status" value="kosong">
                                                                         </div>
                                                                         <div class="items ps-2 fasilitas">
                                                                             <div class="row">
@@ -344,9 +355,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     {{-- Edit Item --}}
-
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -362,7 +371,7 @@
 
     <div id="add-item" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content" x-data= "{nomor_kamar: '', ukuran_kamar: '', gambar_kamar: '', harga_kamar: ''}">
+            <div class="modal-content" x-data= "{nomor_kamar: '', ukuran_kamar: '', gambar_kamar: '', harga_kamar: '', selectedFacilities: []}">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
                         Tambahkan Kamar Kost
@@ -400,7 +409,7 @@
                                 @foreach ($facilites as $facilite)
                                     <div class="col-4">
                                         <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" name="fasilitas[]" value="{{ $facilite->id }}" id="fasilits-{{ $facilite->id }}" />
+                                            <input class="form-check-input" type="checkbox" name="fasilitas[]" value="{{ $facilite->id }}" id="fasilits-{{ $facilite->id }}" x-model="selectedFacilities" />
                                             <label class="form-check-label" for="fasilits-{{ $facilite->id }}">
                                                 {{ $facilite->nama }}
                                             </label>
@@ -414,7 +423,7 @@
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="gambar_kamar && ukuran_kamar && nomor_kamar && harga_kamar ? null : 'disabled'">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="selectedFacilities.length === 0 || !(gambar_kamar && ukuran_kamar && nomor_kamar && harga_kamar)">
                             Tambahkan
                         </button>
                     </div>
@@ -510,7 +519,6 @@
             return formattedInput;
         }
     </script>
-
 
     <script>
         document.querySelectorAll('.btn.delete').forEach(function(button) {

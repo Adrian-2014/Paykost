@@ -17,6 +17,7 @@ use App\Models\fasilitas;
 use App\Models\gambarKamar;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
+use App\Models\pembayaranKost;
 use App\Models\pemesanan;
 use App\Models\ProsesCuci;
 use Illuminate\Foundation\Auth\User;
@@ -30,36 +31,89 @@ use Mpdf\Mpdf;
 class userPageController extends Controller
 {
 
+    // M A I N  M E N U
+
+    // Pembayaran Kost
+    public function pembayaran() {
+        $no_kamar = auth()->user()->no_kamar;
+        $kamarKost = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
+        $pembayaran = pembayaranKost::where('name', auth()->user()->name)->where('status', 'Diterima')->get();
+        $banks = Bank::get();
+        return view('user.pembayaran', compact('kamarKost', 'banks', 'pembayaran'));
+    }
+
+    public function bayarKost(Request $request) {
+        // dd($request);
+        $request->validate([
+            'id_pembayaran' => 'required',
+            'nama_user' => 'required',
+            'no_kamar' => 'required',
+            'bulan_tagihan' => 'required',
+            'tanggal_masuk' => 'required',
+            'durasi_ngekost'=> 'required',
+            'total_tagihan'=> 'required',
+            'bukti'=> 'required|image|mimes:jpeg,png,jpg,gif',
+            'bank_name'=> 'required',
+            'tagihan_selanjutnya'=>'required',
+        ]);
+
+        $fotoBukti = $request->file('bukti');
+        $namaFile = time().'.'.$fotoBukti->getClientOriginalExtension();
+        $fotoBukti->move(public_path('uploads'), $namaFile);
+
+        $bank = Bank::where('nama',$request->bank_name)->first();
+
+        // dd($bank);
+        $bayar = new pembayaranKost();
+        $bayar->id_pembayaran = $request->id_pembayaran;
+        $bayar->name = $request->nama_user;
+        $bayar->no_kamar = $request->no_kamar;
+        $bayar->bulan_tagihan = $request->bulan_tagihan;
+        $bayar->total_tagihan = $request->total_tagihan;
+        $bayar->tagihan_selanjutnya = $request->tagihan_selanjutnya;
+        $bayar->tanggal_masuk = $request->tanggal_masuk;
+        $bayar->durasi_ngekost	 = $request->durasi_ngekost;
+        $bayar->bukti =  $namaFile;
+        $bayar->bank_id = $bank->id;
+        $bayar->status = 'Proses';
+        $bayar->save();
+
+        // dd($bayar->all());
+        // $user = User::where('name', $request->nama_user);
+        $user = User::where('name', $request->nama_user)->first();
+
+        if ($user) {
+            $user->status_bayar = 'Proses Validasi';
+            $user->save();
+        }
+
+        return redirect()->route('userku')->with('success', 'Permintaan Kamu akan Segera di Proses');
+    }
+    // Pembayaran Kost
+
+    // HOME
     public function index() {
+        $no_kamar = auth()->user()->no_kamar;
+        $hamas = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
+        $pembayaran = pembayaranKost::where('name', auth()->user()->name)->where('status', 'Diterima')->get();
         $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
         $kamarKost = kamarKost::where('status', 'Publish')->where('kondisi', 'Kosong')->get();
         $gambarsKamars = gambarKamar::inRandomOrder()->take(4)->get();
-        return view('user.index',compact('bannerPro', 'kamarKost', 'gambarsKamars'));
+        return view('user.index',compact('bannerPro', 'kamarKost', 'gambarsKamars', 'pembayaran', 'hamas'));
     }
-
-    public function pembayaran() {
-        $no_kamar = auth()->user()->no_kamar;
-
-        $banks = Bank::get();
-        $kamarKost = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
-        return view('user.pembayaran', compact('kamarKost', 'banks'));
+    // rekomendasi
+    public function rekomendasi($id) {
+        $data = kamarKost::find($id);
+        $fasKamar = fasilitas::where('tipe', 'Fasilitas Kamar')->get();
+        $fasUmum = fasilitas::where('tipe', 'Fasilitas Umum ')->get();
+        return view('user.rekomendasi', compact('data', 'fasKamar', 'fasUmum'));
     }
-
-    public function kamarku() {
-        $no_kamar = auth()->user()->no_kamar;
-        $kamar_kost = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
-        $facilites = fasilitas::get();
-        return view('user.kamarku', compact('kamar_kost', 'facilites'));
-    }
-    public function riwayat() {
-        return view('user.riwayat');
-    }
-    public function profil() {
-        return view('user.profil');
-    }
+    // pdf
     public function pdf() {
         return view('user.pdf');
     }
+
+    // kategori
     public function pindah() {
         return view('user.kategori.pindah');
     }
@@ -76,7 +130,26 @@ class userPageController extends Controller
     public function kehilangan() {
         return view('user.kategori.kehilangan');
     }
-    // Update Profil
+
+    // HOME
+
+
+    public function kamarku() {
+
+        $no_kamar = auth()->user()->no_kamar;
+        $kamar_kost = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
+        $fasKamar = fasilitas::where('tipe', 'Fasilitas Kamar')->get();
+        $fasUmum = fasilitas::where('tipe', 'Fasilitas Umum ')->get();
+        return view('user.kamarku', compact('kamar_kost', 'fasKamar', 'fasUmum'));
+    }
+    public function riwayat() {
+        return view('user.riwayat');
+    }
+
+    // PROFIL
+    public function profil() {
+        return view('user.profil');
+    }
     public function updateProfil(Request $request)  {
 
         //  dd($request);
@@ -104,11 +177,11 @@ class userPageController extends Controller
 
         return back()->with('success', 'Profil berhasil diperbarui.');
     }
+    // PROFIL
 
-    // Update Profil
+    // M A I N  M E N U
 
     // For Layanan Laundry
-
     public function cuciBasah() {
         $cuciItems = Cuci::where('jenis_layanan','Cuci Basah')->where('status', 'Publish')->get();
         $banks = Bank::get();
@@ -169,7 +242,6 @@ class userPageController extends Controller
         $banks = Bank::get();
         return view('user.kategori.pemesanan.cuci-sprei', compact( 'cuciItems','banks'));
     }
-
     public function konfirmasi(Request $request) {
 
         $request->validate([

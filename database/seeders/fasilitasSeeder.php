@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\fasilitas;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,57 +14,23 @@ class fasilitasSeeder extends Seeder
      */
     public function run(): void
     {
-        // $datas = [
-        //     [
-        //         'nama'     => 'AC',
-        //         'gambar'   => 'ac.jpeg',
-        //         'tipe'     => 'kamar',
-        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-        //     ],
-        //     [
-        //         'nama'     => 'Kipas Angin',
-        //         'gambar'   => 'kipas-angin.jpeg',
-        //         'tipe'     => 'kamar',
-        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-        //     ],
-        //     [
-        //         'nama'     => 'Kulkas',
-        //         'gambar'   => 'kulkas.png',
-        //         'tipe'     => 'kamar',
-        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-        //     ],
-        //     [
-        //         'nama'     => 'Dispenser',
-        //         'gambar'   => 'dispenser.jpeg',
-        //         'tipe'     => 'kamar',
-        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-        //     ],
-        //     [
-        //         'nama'     => 'Wifi',
-        //         'gambar'   => 'wifi.jpeg',
-        //         'tipe'     => 'kamar',
-        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
+        $csvFile   = fopen(base_path("/database/seeders/csvs/fasilitas.csv"), "r");
+        $firstline = true;
 
-        //     ],
-        //     [
-        //         'nama'     => 'Lemari',
-        //         'gambar'   => 'lemari.jpeg',
-        //         'tipe'     => 'kamar',
-        //         'deskripsi'=> 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium neque pariatur est autem ullam sunt assumenda nisi sit odio eos!'
-
-        //     ]
-
-        // ];
-
-        // foreach ($datas as $value) {
-
-        //     fasilitas::create([
-        //         'nama'       => $value['nama'],
-        //         'gambar'     => $value['gambar'],
-        //         'tipe'       => $value['tipe'],
-        //         'deskripsi'  => $value['deskripsi'],
-        //     ]);
-
-        // }
+        while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+                fasilitas::create([
+                    'id'                   => $data[0],
+                    'nama'                 => $data[1],
+                    'gambar'               => $data[2],
+                    'tipe'                 => $data[3],
+                    'deskripsi'            => $data[4],
+                    'created_at'           => Carbon::now(),
+                    'updated_at'           => Carbon::now()
+                ]);
+            }
+            $firstline = false;
+        }
+        fclose($csvFile);
     }
 }

@@ -22,6 +22,9 @@ class UserSeeder extends Seeder
                 'no_kamar' => null,
                 'no_telpon' => null,
                 'status' => null,
+                'pekerjaan' => null,
+                'jenis_kelamin' => null,
+                'tanggal_masuk' => null,
                 'role_id'  => 1
             ]
         ];
@@ -36,6 +39,8 @@ class UserSeeder extends Seeder
                 'no_kamar'  => $value['no_kamar'],
                 'no_telpon'  => $value['no_telpon'],
                 'status'  => $value['status'],
+                'pekerjaan'  => $value['pekerjaan'],
+                'tanggal_masuk'  => $value['tanggal_masuk'],
             ]);
 
         }

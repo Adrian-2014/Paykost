@@ -13,7 +13,7 @@
                 @if (Auth::user()->profil)
                     <img src="{{ asset('uploads/' . Auth::user()->profil) }}">
                 @else
-                    <img src="{{ asset('img/user.jpg') }}">
+                    <img src="{{ asset('img/user.png') }}">
                 @endif
             </div>
             <div class="name">
@@ -139,7 +139,7 @@
                                 @if (Auth::user()->profil)
                                     <img src="{{ asset('uploads/' . auth()->user()->profil) }}" class="photo">
                                 @else
-                                    <img src="{{ asset('img/person-1.jpg') }}" class="photo">
+                                    <img src="{{ asset('img/user.png') }}" class="photo">
                                 @endif
                                 <button type="button" class="my-btn">
                                     <input type="file" name="photo" id="profils" onchange="loadFile(event)">

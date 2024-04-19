@@ -74,7 +74,7 @@ body {
 /* Profil Bar */
 .body {
     transform: scale(0);
-    height: 23.7vh;
+    height: 24vh;
     position: fixed;
     width: 66.7vw;
     background-color: white;
@@ -209,19 +209,41 @@ body {
 
                     .isi {
                         border-radius: 15px;
+
                         /* background: linear-gradient(
                             to right,
                             rgb(138, 217, 249),
                             rgb(30, 148, 250)
                         ); */
-                        background-color: rgba(0, 255, 0, 0.3);
-                        border: 1.7px solid rgba(0, 128, 0, 0.812);
+                        .not-lun {
+                            font-size: 0.65rem;
+                            padding: 0.4rem 0.55rem;
+                            color: rgba(255, 0, 0, 0.812) !important;
+                            font-weight: bold;
+                            background-color: rgba(238, 29, 29, 0.3);
+                            border-radius: 15px;
+                            border: 1.7px solid rgba(255, 4, 4, 0.812);
+                        }
+
+                        .proses {
+                            font-size: 0.65rem;
+                            padding: 0.4rem 0.55rem;
+                            color: rgba(255, 157, 0, 0.812) !important;
+                            font-weight: bold;
+                            background-color: rgba(255, 157, 0, 0.3);
+                            border-radius: 15px;
+                            border: 1.7px solid rgba(255, 157, 0, 0.812);
+                        }
 
                         .lun {
+                            border: 1.7px solid rgba(0, 128, 0, 0.812);
                             font-size: 0.65rem;
                             padding: 0.4rem 0.55rem;
                             color: rgba(0, 128, 0, 0.812) !important;
                             font-weight: bold;
+                            background-color: rgba(0, 255, 0, 0.3);
+                            border-radius: 15px;
+
                         }
                     }
 
@@ -947,3 +969,13 @@ body {
 }
 
 /* M E N U  E*/
+
+
+.swal2-title {
+    font-weight: 500;
+    font-size: 1.5rem !important;
+}
+
+.swal2-html-container {
+    font-size: .9rem !important;
+}

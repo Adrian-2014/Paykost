@@ -71,6 +71,15 @@
                         </li>
 
                         <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/requestPembayaran" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-cash"></i>
+                                </span>
+                                <span class="hide-menu">Pembayaran Kost</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/user" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-user"></i>

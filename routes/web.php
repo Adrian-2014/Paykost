@@ -30,10 +30,9 @@ Route::get('/', [loginController::class, 'index'])->name('login');
 
 // USER
 
-
 // Payment
-
 Route::get('/pembayaran', [userPageController::class, 'pembayaran']);
+Route::post('bayar', [userPageController::class, 'bayarKost'])->name('bayarKost');
 
 // Profil
 Route::post('updateProfil', [userPageController::class, 'updateProfil'])->name('profil.update');
@@ -44,8 +43,11 @@ Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
 Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
 Route::get('/user/profil', [userPageController::class, 'profil']);
 Route::get('/user/index', [userPageController::class, 'index'])->name('userku');
-
 // Menu
+
+// Rekomendasi
+Route::get('/rekomendasi/{id}', [userPageController::class, 'rekomendasi']);
+// Rekomendasi
 
 // kategori
 Route::get('/pindah', [userPageController::class, 'pindah']);
@@ -83,14 +85,18 @@ Route::post('updateStatus', [userPageController::class, 'updateStatus'])->name('
 // USER
 
 
+
 // A D M I N
 
 Route::get('/admin/index', [adminControll::class, 'index'])->name('admin.index');
+Route::get('/admin/requestPembayaran', [adminControll::class, 'pembayaranPage'])->name('pembayaranPage');
+
 
 // User
 
 Route::get('/admin/user', [adminControll::class, 'user'])->name('admin.user');
 Route::post('/admin/add/user', [adminControll::class, 'storeUser'])->name('storeUser');
+Route::post('/admin/updateUser', [adminControll::class, 'updateUser'])->name('update.user');
 // User
 
 // Fasilitas kost

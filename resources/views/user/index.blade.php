@@ -1,9 +1,7 @@
 @extends('layout.main')
 
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 <link rel="stylesheet" href="{{ asset('css/user-css/home.css') }}">
-
 
 @section('title', 'Home')
 
@@ -44,7 +42,6 @@
 
     <div class="body">
         <div class="profil-content">
-
             <div class="profil-item">
                 <div class="logo">
                     @if (Auth::user()->profil)
@@ -79,7 +76,7 @@
                     <div class="judul">
                         Tanggal Masuk
                     </div>
-                    <input type="hidden" name="tm" id="tm" value="{{ auth()->user()->tanggal_masuk }}">
+                    <input type="hidden" name="tanggal_masuk" id="tm" value="{{ auth()->user()->tanggal_masuk }}">
                     <div class="nama-v" id="tgl-masuk">
 
                     </div>
@@ -91,13 +88,12 @@
                     <div class="judul">
                         Durasi Ngekost
                     </div>
-                    <div class="nama-v">
-                        5 Bulan 13 Hari
+                    <div class="nama-v durability" id="durasi">
+                        kosong
                     </div>
                 </div>
             </div>
             <div class="profil-item">
-
                 <div class="value">
                     <div class="judul">
                         Pekerjaan
@@ -112,6 +108,13 @@
     </div>
 
     <section class="section d-flex justify-content-center text-align-center">
+        @if ($pembayaran->isEmpty())
+            <input type="hidden" id="acuan" value="{{ auth()->user()->name }}">
+        @else
+            @foreach ($pembayaran as $item)
+                <input type="hidden" id="acuan" value="{{ $item->pembayran_selanjutnya }}">
+            @endforeach
+        @endif
         <div class="row">
             <div class="col-11">
                 <div class="tag-top">
@@ -119,11 +122,21 @@
                         Pembayaran Kost Bulan :
                     </div>
                     <div class="inf">
-                        <div class="month">
-                            NOVEMBER 2024
-                        </div>
+                        @if ($pembayaran->isEmpty())
+                            <div class="month paijo" id="paynow">
+                                no data
+                            </div>
+                        @else
+                            @foreach ($pembayaran as $item)
+                                <div class="month paijo" id="reells">
+                                    {{ $item->pembayaran_selanjutnya }}
+                                </div>
+                            @endforeach
+                        @endif
                         <div class="harga">
-                            Rp 1.500.000
+                            @foreach ($hamas as $kamar)
+                                Rp. {{ $kamar->harga_kamar }}
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -134,9 +147,20 @@
                     </div>
                     <div class="value">
                         <div class="isi">
-                            <div class="lun">
-                                SUDAH LUNAS
-                            </div>
+                            @if (auth()->user()->status_bayar === 'Belum Bayar')
+                                <div class="not-lun">
+                                    Belum Bayar
+                                </div>
+                            @elseif (auth()->user()->status_bayar === 'Proses Validasi')
+                                <div class="proses">
+                                    Proses Validasi
+                                </div>
+                            @else
+                                <div class="lun">
+                                    SUDAH LUNAS
+                                </div>
+                            @endif
+
                         </div>
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class='fas fa-chevron-down'></i>
@@ -284,13 +308,14 @@
                 <div class="head">
                     Tagihan berikutnya :
                 </div>
-                <div class="value">
+
+                <div class="value" id="next-pay">
                     08 DESEMBER 2024
                 </div>
             </div>
             <div class="col-5">
                 <form action="/pembayaran">
-                    <button type="submit">
+                    <button type="submit" @if (auth()->user()->status_bayar == 'Sudah Lunas' || auth()->user()->status_bayar == 'Proses Validasi') disabled @else enabled @endif>
                         Bayar sekarang
                     </button>
                 </form>
@@ -431,7 +456,7 @@
                                                 Rp. {{ $item->harga_kamar }}
                                             </div>
                                             <div class="lihat">
-                                                <a href="/rekomendasi">
+                                                <a href="/rekomendasi/{{ $item->id }}">
                                                     Lihat
                                                 </a>
                                             </div>
@@ -491,48 +516,168 @@
     <script>
         feather.replace();
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Sukses!',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
+            });
+        </script>
+    @endif
     <script>
-        // Fungsi untuk mengubah format tanggal
-        function ubahFormatTanggal(tanggal) {
-            // Array untuk nama bulan
-            var namaBulan = [
-                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-            ];
+        document.addEventListener('DOMContentLoaded', function() {
+            function ubahFormatTanggal(tanggal) {
+                // Array untuk nama bulan
+                var namaBulan = [
+                    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                ];
 
-            // Pisahkan tanggal, bulan, dan tahun
-            var tanggalSplit = tanggal.split('-');
-            // Pastikan terdapat tiga elemen setelah split
-            if (tanggalSplit.length !== 3) {
-                return "Format tanggal tidak valid";
+                // Pisahkan tanggal, bulan, dan tahun
+                var tanggalSplit = tanggal.split('-');
+                // Pastikan terdapat tiga elemen setelah split
+                if (tanggalSplit.length !== 3) {
+                    return "Format tanggal tidak valid";
+                }
+                var tahun = tanggalSplit[0];
+                var bulan = parseInt(tanggalSplit[1], 10);
+                var tanggal = parseInt(tanggalSplit[2], 10);
+
+                // Periksa apakah tanggal, bulan, dan tahun valid
+                if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
+                    return "Format tanggal tidak valid";
+                }
+
+                var tanggalFormatted = tanggal.toString().padStart(2, '0');
+                // Buat string dengan format yang diinginkan
+                var tanggalBaru = tanggalFormatted + " " + namaBulan[bulan - 1] + " " + tahun;
+                var tanggalUntukBayar = namaBulan[bulan - 1] + " " + tahun;
+                // var nextBayar = tanggalFormatted + " " + namaBulan[bulan] + " " + tahun;
+
+                return {
+                    tanggalBaru: tanggalBaru,
+                    // nextBayar: nextBayar,
+                    // tanggalUntukBayar: tanggalUntukBayar
+                };
             }
-            var tahun = tanggalSplit[0];
-            var bulan = parseInt(tanggalSplit[1], 10);
-            var tanggal = parseInt(tanggalSplit[2], 10);
+            var input = document.querySelector('#tm');
+            if (input) {
+                var tanggalAwal = input.value;
+                var tanggalBaruObj = ubahFormatTanggal(tanggalAwal);
+                var targetTanggal = document.querySelector('#tgl-masuk');
+                targetTanggal.innerHTML = tanggalBaruObj.tanggalBaru;
+                console.log(tanggalBaruObj.tanggalBaru);
+            } else {
+                console.error("Elemen input dengan id '#tm' tidak ditemukan.");
+            }
+            // Ambil nilai dari elemen HTML
+            var tanggalDiberikan = document.getElementById('tm').value;
+            // Buat objek tanggal dari nilai yang diambil
+            var tanggalDiberikanObj = new Date(tanggalDiberikan);
+            // Tanggal hari ini
+            var tanggalHariIni = new Date();
+            // Hitung selisih dalam milidetik
+            var selisihWaktu = tanggalHariIni - tanggalDiberikanObj;
+            // Konversi selisih waktu ke hari
+            var selisihHari = Math.floor(selisihWaktu / (1000 * 60 * 60 * 24));
+            // Hitung selisih bulan dan hari
+            var selisihBulan = tanggalHariIni.getMonth() - tanggalDiberikanObj.getMonth() + (12 * (tanggalHariIni.getFullYear() - tanggalDiberikanObj.getFullYear()));
+            var selisihHariSisa = tanggalHariIni.getDate() - tanggalDiberikanObj.getDate();
+            // Jika selisih hari negatif, kurangi satu bulan
+            if (selisihHariSisa < 0) {
+                selisihBulan--;
+                selisihHariSisa += new Date(tanggalHariIni.getFullYear(), tanggalHariIni.getMonth(), 0).getDate();
+            }
+            // Tampilkan hasil
+            console.log(selisihBulan + " bulan " + selisihHariSisa + " hari.");
+            var durasi = document.getElementById('durasi');
+            durasi.innerHTML = selisihBulan + " bulan " + selisihHariSisa + " hari.";
 
-            // Periksa apakah tanggal, bulan, dan tahun valid
-            if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
-                return "Format tanggal tidak valid";
+            // Bualan Tagihan
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function ubahFormatTanggal(tanggal) {
+                // Array untuk nama bulan
+                var namaBulan = [
+                    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                ];
+
+                // Pisahkan tanggal, bulan, dan tahun
+                var tanggalSplit = tanggal.split('-');
+                // Pastikan terdapat tiga elemen setelah split
+                if (tanggalSplit.length !== 3) {
+                    return "Format tanggal tidak valid";
+                }
+                var tahun = tanggalSplit[0];
+                var bulan = parseInt(tanggalSplit[1], 10);
+                var tanggal = parseInt(tanggalSplit[2], 10);
+
+                // Periksa apakah tanggal, bulan, dan tahun valid
+                if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
+                    return "Format tanggal tidak valid";
+                }
+
+                var tanggalFormatted = tanggal.toString().padStart(2, '0');
+                // Buat string dengan format yang diinginkan
+                var tanggalBaru = tanggalFormatted + " " + namaBulan[bulan - 1] + " " + tahun;
+                var tanggalUntukBayar = namaBulan[bulan - 1] + " " + tahun;
+                var nextBayar = tanggalFormatted + " " + namaBulan[bulan] + " " + tahun;
+
+                return {
+                    tanggalBaru: tanggalBaru,
+                    nextBayar: nextBayar,
+                    tanggalUntukBayar: tanggalUntukBayar
+                };
+            }
+            var input = document.querySelector('#tm');
+            if (input) {
+                var tanggalAwal = input.value;
+                var tanggalBaruObj = ubahFormatTanggal(tanggalAwal);
+                var targetTanggal = document.querySelector('#tgl-masuk');
+                targetTanggal.innerHTML = tanggalBaruObj.tanggalBaru;
+                var now = document.querySelector('#paynow');
+                now.innerHTML = tanggalBaruObj.tanggalUntukBayar;
+                var nextBayar = document.querySelector('#next-pay');
+                nextBayar.innerHTML = tanggalBaruObj.nextBayar;
+                console.log(tanggalBaruObj.tanggalBaru);
+            } else {
+                console.error("Elemen input dengan id '#tm' tidak ditemukan.");
             }
 
-            // Buat string dengan format yang diinginkan
-            var tanggalBaru = tanggal + " " + namaBulan[bulan - 1] + " " + tahun;
 
-            return tanggalBaru;
-        }
+            var tanggalDiberikan = document.getElementById('tm').value;
 
-        // Dapatkan nilai input
-        var input = document.querySelector('#tm');
-        if (input) {
-            var tanggalAwal = input.value;
-            var tanggalBaru = ubahFormatTanggal(tanggalAwal);
-            var targetTanggal = document.querySelector('#tgl-masuk');
-            targetTanggal.innerHTML = tanggalBaru;
-            console.log(tanggalBaru);
-        } else {
-            console.error("Elemen input dengan id '#tm' tidak ditemukan.");
-        }
+            var tanggalDiberikanObj = new Date(tanggalDiberikan);
+            // Tanggal hari ini
+            var tanggalHariIni = new Date();
+            // Hitung selisih dalam milidetik
+            var selisihWaktu = tanggalHariIni - tanggalDiberikanObj;
+            // Konversi selisih waktu ke hari
+            var selisihHari = Math.floor(selisihWaktu / (1000 * 60 * 60 * 24));
+            // Hitung selisih bulan dan hari
+            var selisihBulan = tanggalHariIni.getMonth() - tanggalDiberikanObj.getMonth() + (12 * (tanggalHariIni.getFullYear() - tanggalDiberikanObj.getFullYear()));
+            var selisihHariSisa = tanggalHariIni.getDate() - tanggalDiberikanObj.getDate();
+            // Jika selisih hari negatif, kurangi satu bulan
+            if (selisihHariSisa < 0) {
+                selisihBulan--;
+                selisihHariSisa += new Date(tanggalHariIni.getFullYear(), tanggalHariIni.getMonth(), 0).getDate();
+            }
+            // Tampilkan hasil
+            console.log(selisihBulan + " bulan " + selisihHariSisa + " hari.");
+            var durasi = document.getElementById('durasi');
+            durasi.innerHTML = selisihBulan + " bulan " + selisihHariSisa + " hari.";
+
+            // Bualan Tagihan
+        });
     </script>
     <script>
         @if ($kamarKost->isNotEmpty())
@@ -608,3 +753,4 @@
     </script>
 
 @endsection
+`
