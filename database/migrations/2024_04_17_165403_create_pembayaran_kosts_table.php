@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('tanggal_masuk');
             $table->string('durasi_ngekost');
             $table->string('status');
-            $table->string('pesan', 1500);
+            $table->string('pesan', 1500)->nullable();
             $table->timestamps();
         });
     }

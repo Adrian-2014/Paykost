@@ -50,14 +50,14 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Pembayaran</h4>
+                        <h4 class="fw-semibold mb-8">Pembayaran Kost</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a class="text-muted " href="./index.html">Admin</a>
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">
-                                    Pembayaran
+                                    Pembayaran Kost
                                 </li>
                             </ol>
                         </nav>
@@ -74,7 +74,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2 ps-2 pt-2">Data Pembayaran</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Data Pembayaran Kost</h4>
                     </div>
                     <div class="card-body">
                         @if ($pembayaran->isEmpty())
@@ -83,91 +83,456 @@
                                     <img src="{{ asset('img/people.png') }}">
                                 </div>
                                 <div class="text">
-                                    Data tidak di Temukan, Silahkan tambahkan Data
+                                    Tidak ada user yang melakukan Pembayaran
                                 </div>
                             </div>
                         @else
-                            <div class="container-fluid head">
-                                <div class="pembungkus">
-                                    <div class="item">
-                                        User
-                                    </div>
-                                    <div class="item">
-                                        Tanggal Bayar
-                                    </div>
-                                    <div class="item">
-                                        View
-                                    </div>
+                            <div class="tableku table-responsive">
+                                <table id="zero_config" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="nama">
+                                                <div class="th-item">
+                                                    User
+                                                </div>
+                                            </th>
+                                            <th class="no-kamar">
+                                                <div class="th-item">
+                                                    No. Kamar
+                                                </div>
+                                            </th>
+                                            <th class="b-tag">
+                                                <div class="th-item">
+                                                    Bulan tagihan
+                                                </div>
+                                            </th>
+                                            <th class="t-bayar">
+                                                <div class="th-item">
+                                                    Tanggal Bayar
+                                                </div>
+                                            </th>
+                                            <th class="action">
+                                                <div class="th-item">
+                                                    Aksi
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pembayaran as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="td-item user">
+                                                        <div class="item">
+                                                            <div class="imgs">
+                                                                @php
+                                                                    $user = DB::table('users')
+                                                                        ->where('name', $item->name)
+                                                                        ->first();
+                                                                @endphp
+                                                                @if ($user)
+                                                                    @if ($user->profil)
+                                                                        <img src="{{ asset('uploads/' . $user->profil) }}">
+                                                                    @else
+                                                                        <img src="{{ asset('img/user.png') }}">
+                                                                    @endif
+                                                                @endif
+                                                            </div>
+                                                            <div class="username">
+                                                                {{ $item->name }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item n-kamar">
+                                                        <div class="item">
+                                                            Kamar No. {{ $item->no_kamar }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item b-tag">
+                                                        <div class="item">
+                                                            {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item t-bayar">
+                                                        <div class="item">
+                                                            {{ $item->created_at->isoFormat('D MMMM Y') }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td x-data="{ check: false }">
+                                                    <div class="td-item aksi">
+                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#persetujuan{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
+                                                            Lihat
+                                                        </div>
+                                                        <div class="for-tolak">
+                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->name }}">Tolak!</button>
+                                                        </div>
+                                                        <div class="for-setuju">
+                                                            <form action="{{ route('SETUJU') }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                <button type="submit" class="yes setuju" :disabled="check ? false : 'disabled'">Approve</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div id="penolakan{{ $item->name }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    Penolakan Pembayaran {{ $item->name }}
+                                                                </div>
+                                                                <form action="{{ route('tolak') }}" x-data="{ alasan: '' }" method="POST">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
+                                                                        <textarea name="pesan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
+                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="persetujuan{{ $item->id }}" class="modal fade in lihat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <div class="logo">
+                                                                        <img src="{{ asset('img/two.png') }}">
+                                                                    </div>
+                                                                    <div class="pay">
+                                                                        Data Pembayaran <span>{{ $item->name }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="first-content">
+                                                                        <div class="fc">
+                                                                            <div class="top">
+                                                                                Pembayaran Pada:
+                                                                            </div>
+                                                                            <div class="bot">
+                                                                                {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }} <span>WIB</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fl">
+                                                                            <div class="the-content">
+                                                                                Rp. <span>{{ $item->total_tagihan }}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="main-content">
+                                                                        <div class="kumpulan-data">
+                                                                            <div class="data">
+                                                                                <div class="kiri">ID Transaksi</div>
+                                                                                <div class="kanan transksi-special">{{ $item->id_pembayaran }}</div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">Tagihan Bulan</div>
+                                                                                <div class="kanan special">
+                                                                                    {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">Nama User</div>
+                                                                                <div class="kanan">{{ $item->name }}</div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">No.Kamar</div>
+                                                                                <div class="kanan">Kamar No. {{ $item->no_kamar }}</div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">Metode Bayar</div>
+                                                                                @php
+                                                                                    $bank = DB::table('banks')
+                                                                                        ->where('id', $item->bank_id)
+                                                                                        ->first();
+                                                                                @endphp
+                                                                                <div class="kanan">Transfer {{ $bank->nama }}</div>
+                                                                            </div>
+                                                                            <div class="data-bukti">
+                                                                                <div class="kiri">Bukti Bayar:</div>
+                                                                                <div class="kanan bukti">
+                                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                                                </div>
+                                                                            </div>
+                                                                            {{-- <div class="data-bukti">
+                                                                                <div class="text-atas">
+                                                                                    Bukti Bayar
+                                                                                </div>
+                                                                                <div class="for-img">
+                                                                                    <div class="imgs">
+                                                                                        <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> --}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn" data-bs-dismiss="modal">Tutup</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade proof" id="bukti{{ $item->id }}" tabindex="-1" data-bs-backdrop="false">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="border-bottom">
+                        <h4 class="card-title mb-2 ps-2 pt-2">Riwayat Pembayaran Kost</h4>
+                    </div>
+                    <div class="card-body">
+                        @if ($riwayat->isEmpty())
+                            <div class="illustration d-flex flex-column">
+                                <div class="image">
+                                    <img src="{{ asset('img/people.png') }}">
+                                </div>
+                                <div class="text">
+                                    Tidak ada Riwayat Pembayaran
                                 </div>
                             </div>
-                            <div class="container-fluid payment-request">
-                                @foreach ($pembayaran as $item)
-                                    <div class="request">
-                                        <div class="text">
-                                            <span>{{ $item->name }}</span>
-                                        </div>
-                                        <div class="view">
-                                            <div class="lihat" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">
-                                                Lihat
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade in" id="exampleModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Data Pebayaran dari {{ $item->name }}</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        @else
+                            <div class="tableku table-responsive riwayat">
+                                <table id="default_order" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="nama">
+                                                <div class="th-item">
+                                                    User
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-6 pt-2">
-                                                            <label for="">Nama User</label>
-                                                            <input type="text" readonly class="form-control" value="{{ $item->name }}" name="name">
-                                                        </div>
-                                                        <div class="col-6 pt-2">
-                                                            <label for="">No. Kamar</label>
-                                                            <input type="text" readonly class="form-control" value="{{ $item->no_kamar }}" name="no_kamar">
-                                                        </div>
-                                                        <div class="col-6 pt-2">
-                                                            <label for="">Bulan Tagihan</label>
-                                                            <input type="text" readonly class="form-control" value="{{ $item->bulan_tagihan }}" name="bulan_tagihan">
-                                                        </div>
-                                                        <div class="col-6 pt-2">
-                                                            <label for="">Total Tagihan</label>
-                                                            <input type="text" readonly class="form-control" value="{{ $item->total_tagihan }}" name="total_tagihan">
-                                                        </div>
-                                                        <input type="hidden" readonly class="form-control" value="{{ $item->bukti }}" name="bukti">
-                                                        <div class="col-6 pt-2">
-                                                            <label for="">Tanggal Masuk</label>
-                                                            <input type="text" readonly class="form-control" value="{{ $item->tanggal_masuk }}" name="tanggal_masuk">
-                                                        </div>
-                                                        <div class="col-6 pt-2">
-                                                            <label for="">Durasi Ngekost</label>
-                                                            <input type="text" readonly class="form-control" value="{{ $item->durasi_ngekost }}" name="tanggal_masuk">
+                                            </th>
+                                            <th class="no-kamar">
+                                                <div class="th-item">
+                                                    No. Kamar
+                                                </div>
+                                            </th>
+                                            <th class="b-tag">
+                                                <div class="th-item">
+                                                    Bulan tagihan
+                                                </div>
+                                            </th>
+                                            <th class="t-bayar">
+                                                <div class="th-item">
+                                                    Tanggal bayar
+                                                </div>
+                                            </th>
+                                            <th class="b-tag">
+                                                <div class="th-item">
+                                                    Status
+                                                </div>
+                                            </th>
+                                            <th class="action">
+                                                <div class="th-item">
+                                                    Aksi
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($riwayat as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="td-item user">
+                                                        <div class="item">
+                                                            <div class="imgs">
+                                                                @php
+                                                                    $user = DB::table('users')
+                                                                        ->where('name', $item->name)
+                                                                        ->first();
+                                                                @endphp
+                                                                @if ($user)
+                                                                    @if ($user->profil)
+                                                                        <img src="{{ asset('uploads/' . $user->profil) }}">
+                                                                    @else
+                                                                        <img src="{{ asset('img/user.png') }}">
+                                                                    @endif
+                                                                @endif
+                                                            </div>
+                                                            <div class="username">
+                                                                {{ $item->name }}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="for-img">
-                                                        <label class="buk">Bukti Pembayaran</label>
-                                                        <div class="bukti">
-                                                            <img src="{{ asset('uploads/' . $item->bukti) }}">
-                                                            <input type="hidden" value="{{ $item->status }}" name="status">
+                                                </td>
+                                                <td>
+                                                    <div class="td-item n-kamar">
+                                                        <div class="item">
+                                                            Kamar No. {{ $item->no_kamar }}
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn cancel" data-bs-dismiss="modal">tutup</button>
-                                                    <div class="choice">
-                                                        <form action="">
-                                                            <button type="submit" class="btn tolak">Tolak Pengajuan</button>
-                                                        </form>
-                                                        <button type="submit" class="btn accept">Terima Pengajuan</button>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item b-tag">
+                                                        <div class="item">
+                                                            {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                                </td>
+                                                <td>
+                                                    <div class="td-item bayar">
+                                                        <div class="item">
+                                                            {{ $item->created_at->isoFormat('D MMMM Y') }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item stat">
+                                                        <div class="item @if ($item->status === 'Diterima') diterima @else ditolak @endif">
+                                                            {{ $item->status }}
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                <td x-data="{ check: false }">
+                                                    <div class="td-item aksi">
+                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#riwayat{{ $item->id }}" x-on:click="check = true">
+                                                            Lihat
+                                                        </div>
+                                                    </div>
+                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    Penolakan Pembayaran <span> {{ $item->name }}</span>
+                                                                </div>
+                                                                <form action="{{ route('tolak') }}" x-data="{ alasan: '' }" method="POST">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
+                                                                        <textarea name="pesan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
+                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="riwayat{{ $item->id }}" class="modal fade in lihat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <div class="logo">
+                                                                        <img src="{{ asset('img/two.png') }}">
+                                                                    </div>
+                                                                    <div class="pay">
+                                                                        Data Pembayaran <span>{{ $item->name }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="first-content">
+                                                                        <div class="fc">
+                                                                            <div class="top">
+                                                                                Pembayaran Pada:
+                                                                            </div>
+                                                                            <div class="bot">
+                                                                                {{ $item->created_at->isoFormat('D MMMM Y') }} <span>WIB</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fl">
+                                                                            <div class="the-content">
+                                                                                Rp. <span>{{ $item->total_tagihan }}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="main-content">
+                                                                        <div class="kumpulan-data">
+                                                                            <div class="data">
+                                                                                <div class="kiri">ID Transaksi</div>
+                                                                                <div class="kanan transksi-special">{{ $item->id_pembayaran }}</div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">Tagihan Bulan</div>
+                                                                                <div class="kanan special">
+                                                                                    {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">Nama User</div>
+                                                                                <div class="kanan">{{ $item->name }}</div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">No.Kamar</div>
+                                                                                <div class="kanan">Kamar No. {{ $item->no_kamar }}</div>
+                                                                            </div>
+                                                                            <div class="data">
+                                                                                <div class="kiri">Metode Bayar</div>
+                                                                                @php
+                                                                                    $bank = DB::table('banks')
+                                                                                        ->where('id', $item->bank_id)
+                                                                                        ->first();
+                                                                                @endphp
+                                                                                <div class="kanan">Transfer {{ $bank->nama }}</div>
+                                                                            </div>
+                                                                            <div class="data-bukti">
+                                                                                <div class="kiri">Bukti Bayar:</div>
+                                                                                <div class="kanan bukti">
+                                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                                                </div>
+                                                                            </div>
+                                                                            {{-- <div class="data-bukti">
+                                                                                <div class="text-atas">
+                                                                                    Bukti Bayar
+                                                                                </div>
+                                                                                <div class="for-img">
+                                                                                    <div class="imgs">
+                                                                                        <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> --}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn" data-bs-dismiss="modal">Tutup</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade proof" id="bukti{{ $item->id }}" tabindex="-1" data-bs-backdrop="false">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         @endif
                     </div>
@@ -175,14 +540,132 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('internal-script')
     <script src="{{ asset('package') }}/dist/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/datatable/datatable-basic.init.js"></script>
 
+
+    @if ($pembayaran->isNotEmpty())
+        <script>
+            document.querySelectorAll('.no.tolak').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    var itemName = button.getAttribute('data-id');
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Tolak Pengajuan dari ' + itemName + '?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, Tolak!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#penolakan' + itemName).modal('show');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                curs();
+            });
+
+            document.addEventListener('click', function() {
+                curs();
+            });
+            document.addEventListener('input', function() {
+                curs();
+            });
+
+            function curs() {
+                var prev = document.querySelectorAll('.paginate_button.previous');
+                var next = document.querySelectorAll('.paginate_button.next');
+
+                next.forEach(function(item) {
+                    item.innerHTML = '<i class="bi bi-chevron-right"></i>';
+                });
+                prev.forEach(function(item) {
+                    item.innerHTML = '<i class="bi bi-chevron-left"></i>';
+                });
+            }
+        </script>
+    @endif
+
+    @if ($riwayat->isNotEmpty())
+        <script>
+            document.querySelectorAll('.no.tolak').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    var itemName = button.getAttribute('data-id');
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Tolak Pengajuan dari ' + itemName + '?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, Tolak!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#penolakan' + itemName).modal('show');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                curs();
+            });
+
+            document.addEventListener('click', function() {
+                curs();
+            });
+            document.addEventListener('input', function() {
+                curs();
+            });
+
+            function curs() {
+                var prev = document.querySelectorAll('.paginate_button.previous');
+                var next = document.querySelectorAll('.paginate_button.next');
+
+                next.forEach(function(item) {
+                    item.innerHTML = '<i class="bi bi-chevron-right"></i>';
+                });
+                prev.forEach(function(item) {
+                    item.innerHTML = '<i class="bi bi-chevron-left"></i>';
+                });
+            }
+        </script>
+    @endif
     {{-- Sweet Alert --}}
+    <script>
+        document.querySelectorAll('.yes.setuju').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var form = this.closest('form');
+                // Display Sweet Alert for confirmation
+                Swal.fire({
+                    title: 'Setujui Permintaan?',
+                    text: 'Baca data dengan teliti sebelum Menyetujui!',
+                    icon: 'info',
+                    showCancelButton: false,
+                    confirmButtonColor: '#17A1FD',
+                    confirmButtonText: 'Ya, Setujui!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
     @if (Session::has('success'))
         <script>
             Swal.fire({
@@ -190,7 +673,7 @@
                 text: '{{ Session::get('success') }}',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
+                timer: 3000
             });
         </script>
     @endif
@@ -201,7 +684,7 @@
                 text: '{{ Session::get('fail') }}',
                 icon: 'error',
                 showConfirmButton: false,
-                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
+                timer: 3000
             });
         </script>
     @endif

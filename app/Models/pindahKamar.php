@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pembayaranKost extends Model
+class pindahKamar extends Model
 {
     use HasFactory;
-    protected $table = 'pembayaran_kosts';
-    protected $casts = [
-        'bulan_tagihan' => 'date:d-m-Y',
+    protected $casts =  [
+        'waktu_pindah' => 'date:Y-m-d H:i',
         'created_at' => 'date:Y-m-d H:i:s'
     ];
 }

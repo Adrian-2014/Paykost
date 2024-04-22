@@ -124,83 +124,79 @@ body {
             }
 
             .dropdown {
-                min-width: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
 
-                .dropdown-toggle {
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
-                    border: none !important;
-                    color: white;
+                input {
+                    border-bottom-right-radius: 0;
+                    border-top-right-radius: 0;
+                    border-right: none;
+                    background-color: var(--bgCerah);
                 }
 
-                .dropdown-toggle:after {
+                button {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+                    color: white;
+                    padding: 0 1rem;
+                    border: none;
+                }
+
+                button:after {
                     display: none;
                 }
 
                 .dropdown-menu {
-                    width: 100%;
-                    background-color: white;
-                    border: var(--borderInputActive);
-                    color: black;
-
+                    min-width: 100%;
                 }
 
                 .dropdown-menu.show {
-                    height: 10rem;
+                    height: fit-content;
+
                     display: flex;
                     flex-direction: column;
                     padding-top: 0 !important;
                     padding-bottom: 0 !important;
                     overflow: hidden;
                     overflow-y: auto;
+                    transform: translate(0, 40px) !important;
                 }
 
                 .dropdown-menu li {
-                    padding: .5rem .7rem;
+                    padding: .5rem 1rem !important;
                     transition: .3s ease;
+                    cursor: pointer;
 
                     .item {
                         display: flex;
-                        /* justify-content: center; */
+                        gap: 1rem;
                         align-items: center;
 
-                        img {
-                            height: 35px;
-                            width: 38px;
-                            border-radius: 5px;
-                            overflow: hidden;
-
+                        .icons {
+                            img {
+                                border-radius: .4rem;
+                                height: 30px;
+                                width: 30px;
+                            }
                         }
-
-                        .nomor {
-                            margin-left: .8rem;
-                            font-size: 1.05rem;
-                            /* background-color: cyan; */
-                            width: 8rem;
-
-                        }
-
-                        .ukuran {
-                            margin-left: .5rem;
-                            font-size: .8rem;
-                            color: gray;
-                            /* background-color: blue; */
-                            width: 8rem;
-                        }
-
                     }
+
+                }
+
+                .dropdown-menu li.first {
+                    padding-top: .6rem !important;
+                }
+
+                .dropdown-menu li.last {
+                    padding-bottom: .6rem !important;
                 }
 
                 .dropdown-menu li:hover {
                     background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
                     color: white;
-
-                    .ukuran {
-                        color: rgba(255, 255, 255, 0.8);
-                    }
                 }
             }
 

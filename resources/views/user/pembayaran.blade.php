@@ -20,7 +20,7 @@
     </div>
     <form action="{{ route('bayarKost') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        [ ] <div class="container-fluid for-explained">
+        <div class="container-fluid for-explained">
             <div class="container for-banner-kost">
                 <div class="splide" aria-label="Splide Basic HTML Example">
                     <div class="splide__track">
@@ -43,7 +43,11 @@
                         Pembayaran Kost Bulan :
                     </div>
                     <div class="bottom" id="paynows">
-                        NOVEMBER 2024
+                        @if ($pembayaran)
+                            {{ $setCarbon->translatedFormat('F Y') }}
+                        @else
+                            {{ $tanggalMasuk->translatedFormat('F Y') }}
+                        @endif
                     </div>
                 </div>
                 <div class="right">
@@ -63,16 +67,14 @@
                     <div class="left">
                         ID Transaksi
                     </div>
-                    <div class="right">
-                        <input type="text" name="id_pembayaran" value="" readonly id="id_pembayaran">
+                    <div class="right" id="pembayaran">
                     </div>
                 </div>
                 <div class="form-item">
                     <div class="left">
                         Nama User
                     </div>
-                    <div class="right">
-                        <input type="text" name="nama_user" value="{{ auth()->user()->name }}" readonly>
+                    <div class="right">{{ auth()->user()->name }}
                     </div>
                 </div>
                 <div class="form-item">
@@ -80,7 +82,6 @@
                         No. Kamar
                     </div>
                     <div class="right">
-                        <input type="hidden" name="no_kamar" value="{{ auth()->user()->no_kamar }}">
                         Kamar No. {{ auth()->user()->no_kamar }}
                     </div>
                 </div>
@@ -89,12 +90,10 @@
                         Bulan Tagihan
                     </div>
                     <div class="right">
-                        @if ($pembayaran->isEmpty())
-                            <input type="text" class="bulanTagihan" id="reells" readonly name="bulan_tagihan">
+                        @if ($pembayaran)
+                            {{ $setCarbon->translatedFormat('F Y') }}
                         @else
-                            @foreach ($pembayaran as $item)
-                                <input type="text" class="bulanTagihan" id="bts" readonly name="bulan_tagihan" value="{{ $item->pembayran_selanjutnya }}">
-                            @endforeach
+                            {{ $tanggalMasuk->translatedFormat('F Y') }}
                         @endif
                     </div>
                 </div>
@@ -102,15 +101,8 @@
                     <div class="left">
                         Tanggal Masuk
                     </div>
-                    @if ($pembayaran->isEmpty())
-                        <input type="hidden" name="tanggal_masuk" id="tm" value="{{ auth()->user()->tanggal_masuk }}">
-                    @else
-                        @foreach ($pembayaran as $item)
-                            <input type="hidden" name="tanggal_masuk" id="tm" value="{{ $item->pembayran_selanjutnya }}">
-                        @endforeach
-                    @endif
                     <div class="right">
-                        <input type="text" name="tm" id="tgl-masuk" value="" readonly>
+                        {{ $tanggalMasuk->translatedFormat('j F Y') }}
                     </div>
                 </div>
                 <div class="form-item">
@@ -118,7 +110,7 @@
                         Durasi Ngekost
                     </div>
                     <div class="right">
-                        <input type="text" name="durasi_ngekost" id="durasi" value="" readonly>
+                        {{ $hasil }}
                     </div>
                 </div>
             </div>
@@ -190,8 +182,22 @@
                 </label>
             </div>
         </div>
+        <input type="hidden" name="no_kamar" value="{{ auth()->user()->no_kamar }}">
+        <input type="hidden" name="nama_user" value="{{ auth()->user()->name }}">
+        <input type="hidden" name="tanggal_masuk" value="{{ $tanggalMasuk->translatedFormat('j F Y') }}">
+        <input type="hidden" name="id_pembayaran" value="" readonly id="id_pembayaran">
+        <input type="hidden" name="durasi_ngekost" value="{{ $hasil }}" readonly>
+        @if ($pembayaran)
+            <input type="hidden" name="bulan_tagihan" value="{{ $setCarbon->translatedFormat('d-m-Y') }}">
+        @else
+            <input type="hidden" name="bulan_tagihan" value="{{ $tanggalMasuk->translatedFormat('d-m-Y') }}">
+        @endif
         <input type="hidden" name="bank_name" id="bank_name">
-        <input type="hidden" name="tagihan_selanjutnya" id="next-pay">
+        @if ($pembayaran)
+            <input type="hidden" name="tagihan_selanjutnya" value="{{ $next }}">
+        @else
+            <input type="hidden" name="tagihan_selanjutnya" value="{{ $sementara }}">
+        @endif
         <div class="confirm">
             <div class="container-fluid">
                 <button type="submit" class="btn" id="nextPage">Bayar Sekarang</button>
@@ -199,116 +205,6 @@
         </div>
     </form>
 
-    {{-- SCRIPT --}}
-    <script>
-        var input = document.querySelector('input'); // get the input element
-        input.addEventListener('input', resizeInput); // bind the "resizeInput" callback on "input" event
-        resizeInput.call(input); // immediately call the function
-
-        function resizeInput() {
-            this.style.width = this.value.length + "ch";
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            var sumber = getElementById('bts');
-            if (sumber) {
-                sumber.slice(2);
-                console.log('sukses');
-            }
-        });
-
-        function ubahFormatTanggal(tanggal) {
-            // Array untuk nama bulan
-            var namaBulan = [
-                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-            ];
-
-            // Pisahkan tanggal, bulan, dan tahun
-            var tanggalSplit = tanggal.split('-');
-            // Pastikan terdapat tiga elemen setelah split
-            if (tanggalSplit.length !== 3) {
-                return "Format tanggal tidak valid";
-            }
-            var tahun = tanggalSplit[0];
-            var bulan = parseInt(tanggalSplit[1], 10);
-            var tanggal = parseInt(tanggalSplit[2], 10);
-
-            // Periksa apakah tanggal, bulan, dan tahun valid
-            if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
-                return "Format tanggal tidak valid";
-            }
-
-            var tanggalFormatted = tanggal.toString().padStart(2, '0');
-            // Buat string dengan format yang diinginkan
-            var tanggalBaru = tanggalFormatted + " " + namaBulan[bulan - 1] + " " + tahun;
-            var tanggalUntukBayar = namaBulan[bulan - 1] + " " + tahun;
-            var nextBayar = tanggalFormatted + " " + namaBulan[bulan] + " " + tahun;
-
-            return {
-                tanggalBaru: tanggalBaru,
-                nextBayar: nextBayar,
-                tanggalUntukBayar: tanggalUntukBayar
-            };
-        }
-        var input = document.querySelector('#tm');
-        if (input) {
-            var tanggalAwal = input.value;
-            var tanggalBaruObj = ubahFormatTanggal(tanggalAwal);
-            var targetTanggal = document.querySelector('#tgl-masuk');
-            targetTanggal.value = tanggalBaruObj.tanggalBaru;
-            console.log(tanggalBaruObj.tanggalBaru);
-
-            // For Not pembayaran
-            // var nextpembayaran = document.getElementById('next-pay');
-            var now = document.getElementById('reells');
-            now.value = tanggalBaruObj.tanggalUntukBayar;
-            var nows = document.getElementById('paynows');
-            nows.innerHTML = tanggalBaruObj.tanggalUntukBayar;
-            // nextpembayaran.value = tanggalBaruObj.nextBayar;
-        } else {
-            console.error("Elemen input dengan id '#tm' tidak ditemukan.");
-        }
-        // Ambil nilai dari elemen HTML
-        var tanggalDiberikan = document.getElementById('tm').value;
-        // Buat objek tanggal dari nilai yang diambil
-        var tanggalDiberikanObj = new Date(tanggalDiberikan);
-        // Tanggal hari ini
-        var tanggalHariIni = new Date();
-        // Hitung selisih dalam milidetik
-        var selisihWaktu = tanggalHariIni - tanggalDiberikanObj;
-        // Konversi selisih waktu ke hari
-        var selisihHari = Math.floor(selisihWaktu / (1000 * 60 * 60 * 24));
-        // Hitung selisih bulan dan hari
-        var selisihBulan = tanggalHariIni.getMonth() - tanggalDiberikanObj.getMonth() + (12 * (tanggalHariIni.getFullYear() - tanggalDiberikanObj.getFullYear()));
-        var selisihHariSisa = tanggalHariIni.getDate() - tanggalDiberikanObj.getDate();
-        // Jika selisih hari negatif, kurangi satu bulan
-        if (selisihHariSisa < 0) {
-            selisihBulan--;
-            selisihHariSisa += new Date(tanggalHariIni.getFullYear(), tanggalHariIni.getMonth(), 0).getDate();
-        }
-        // Tampilkan hasil
-        console.log(selisihBulan + " bulan " + selisihHariSisa + " hari.");
-        var durasi = document.getElementById('durasi');
-        durasi.value = selisihBulan + " bulan " + selisihHariSisa + " hari.";
-
-        // Bualan Tagihan
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            var tanggalInput = document.getElementById('tm').value;
-
-            // Membuat objek Date dari tanggal input
-            var tanggalDiberikan = new Date(tanggalInput);
-
-            // Mendapatkan tanggal 1 bulan setelah tanggal yang diberikan
-            var tanggalSatuBulanSetelah = new Date(tanggalDiberikan.getFullYear(), tanggalDiberikan.getMonth() + 1, tanggalDiberikan.getDate());
-
-            var tglNext = document.querySelector('#next-pay');
-            tglNext.value = tanggalSatuBulanSetelah.toISOString().split('T')[0];
-            // Output tanggal 1 bulan setelah tanggal yang diberikan
-            console.log(tanggalSatuBulanSetelah.toISOString().split('T')[0]); // Format tanggal YYYY-MM-DD
-        });
-    </script>
     <script>
         function generateRandomString(length) {
             const characters = '1ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -323,7 +219,9 @@
 
         const randomString = generateRandomString(12);
         var target = document.getElementById('id_pembayaran');
+        var targets = document.getElementById('pembayaran');
         target.value = randomString;
+        targets.innerHTML = randomString;
         console.log(randomString);
     </script>
     <script>

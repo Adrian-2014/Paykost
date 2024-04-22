@@ -1,42 +1,67 @@
 @extends('layout.main')
 @section('title', 'login page')
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 @section('container')
-    <div class="body">
-        <div class="container">
-            <div class="row d-flex align-items-center justify-content-center">
-                <div class="col-lg-6 col-11">
-                    <form action="/" method="POST" id="log-form">
-                        @csrf
-                        <div class="image d-flex justify-content-center mt-2">
-                            <img src="{{ asset('img/logo-old.png') }}" class="mb-lg-1 mb-4">
-                        </div>
 
-                        <div class="w-100 mt-5">
-                            <input class="form-control form-control-sm" type="email" placeholder="Masukkan email anda..." name="email" value="{{ old('email') }}" autocomplete="off">
+    <section class="splide" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                {{-- @if ($background->isNotEmpty())
+                    @foreach ($background as $item)
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
+                        </li>
+                    @endforeach
+                @else --}}
+                    <li class="splide__slide">
+                        <img src="{{ asset('img/exterior.jpg') }}">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="{{ asset('img/kost.jpeg') }}">
+                    </li>
+                {{-- @endif --}}
+            </ul>
+        </div>
+    </section>
 
-                        </div>
-                        <div class="w-100 mt-3 position-relative">
-                            <input class="form-control form-control-sm" type="password" placeholder="Masukkan kata sandi anda..." name="password" id="password" autocomplete="off">
-                            <i class="bi bi-eye-slash" id="waduh" style="position: absolute; top: 32%; left: 91% !important;"></i>
-                        </div>
-                        <div class="link mt-2 text-white text-end" style="text-shadow: 0 0 1.2px black;">
-                            Lupa password?
-                            <a href="/pengajuan" class="text-white"> Klik disini</a>
-                        </div>
-                        <button type="submit" class="w-100 mt-4" id="tombol" disabled>Masuk</button>
-                    </form>
-                </div>
-
-            </div>
+    <form action="/masuk" method="POST" id="log-form" x-data="{ input1: '', input2: '' }">
+        @csrf
+        <div class="image">
+            <img src="{{ asset('img/logo-old.png') }}">
         </div>
 
+        <div class="kumpulan-input container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <label for="" class="ps-1">Email</label>
+                    <input type="email" placeholder="Masukkan email anda . . ." name="email" value="{{ old('email') }}" autocomplete="off" x-model="input1">
+                </div>
+                <div class="col-12 password">
+                    <label for="" class="ps-1">Password </label>
+                    <div class="input-password">
+                        <input type="password" placeholder="Masukkan kata sandi anda . . ." name="password" id="password" autocomplete="off" x-model="input2">
+                        <div class="icon">
+                            <i class="bi-eye-slash" id="waduh"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="link">
+                <div class="fs">
+                    Lupa password?
+                </div>
+                <a href="/pengajuan" class="text-white"> Klik disini</a>
+            </div>
+        </div>
+        <div class="for-tombol">
+            <button type="submit" id="tombol" :disabled="input1 && input2 ? null : 'disabled'">Masuk</button>
+        </div>
         <div class="bot">
             Idea by Burning Room Technology
         </div>
+    </form>
 
-    </div>
 
     @if (Session::has('error'))
         <script>
@@ -65,40 +90,17 @@
             }
         }
 
-
-        function enableSubmit() {
-            var requiredInputs = document.getElementById("log-form").querySelectorAll("input");
-            let btn = document.getElementById('tombol');
-            let isValid = true;
-
-            for (var i = 0; i < requiredInputs.length; i++) {
-                let changedInput = requiredInputs[i];
-
-                if (changedInput.value.trim() === "" || changedInput.value === null) {
-                    changedInput.classList.remove("mati");
-                    isValid = false;
-                    break;
-                } else {
-                    changedInput.classList.add("mati");
-                }
-            }
-            btn.disabled = !isValid;
-
-            if (isValid) {
-                btn.classList.remove("mati");
-                btn.classList.add("active");
-            } else {
-
-                btn.classList.remove("active");
-                btn.classList.add("mati");
-            }
-        }
-
-        // Attach the function to input events (e.g., input, change)
-        var formInputs = document.getElementById("log-form").querySelectorAll("input");
-        formInputs.forEach(function(input) {
-            input.addEventListener("input", enableSubmit);
+        var splide = new Splide('.splide', {
+            type: 'fade',
+            rewind: true,
+            arrows: false,
+            autoplay: true,
+            interval: 15000,
+            speed: 10000,
+            pagination: false,
         });
+
+        splide.mount();
     </script>
 
 @endsection

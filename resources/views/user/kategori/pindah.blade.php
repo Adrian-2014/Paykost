@@ -15,112 +15,81 @@
         </div>
     </div>
 
-    <form action="" method="" class="form" id="form">
+    <form action="{{ route('ajukan.pindah') }}" method="post" class="form" id="form" x-data="{ new_kamar: '', real_new_kamar: '', new_harga: '', new_real_harga: '', new_ukuran_kamar: '' }">
+        @csrf
         <div class="formulir first" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama User</label>
-                <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
+                <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}" readonly>
             </div>
             <div class="form-item">
                 <label for="k-now" class="form-label fw-medium">No. Kamar saat ini</label>
-                <input type="text" id="k-now" class="form-control" value="Kamar No. 5" disabled>
+                <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" disabled>
+                <input type="hidden" name="no_kamar" class="form-control" value="{{ auth()->user()->no_kamar }}">
             </div>
             <div class="form-item">
                 <label for="h-now" class="form-label fw-medium">Harga Kamar saat ini</label>
-                <input type="text" id="h-now" class="form-control" value="Rp. 1.500.000" disabled>
+                <input type="text" id="h-now" class="form-control" value="Rp. {{ $kamar->harga_kamar }}" disabled>
+                <input type="hidden" name="harga_kamar" class="form-control" value="{{ $kamar->harga_kamar }}">
             </div>
         </div>
 
         <div class="formulir sec">
             <div class="form-item">
                 <label for="k-new" class="form-label fw-medium">Kamar Baru</label>
-                <div class="dropdown">
+                <div class="dropdown lokasi" id="drop">
+                    <input type="text" readonly class="form-control add-input" id="add-lokasi" placeholder="Pilih Kamar . . ." required x-model= 'new_kamar'>
+                    <input type="hidden" readonly name="kamar_baru" required x-model= 'real_new_kamar'>
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div clas="isi">
-                            Pilih Kamar Baru Kamu
-                        </div>
-                        <i class="bi bi-caret-down-fill"></i>
+                        <i class="fa-solid fa-caret-down"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li class="first">
-                            <div class="item" onclick="changeValue('Kamar No. 1', 'Rp. 1.300.000', 'Uk. 3,5 x 3m')">
-                                <img src="{{ asset('img-chategories/room-1.jpg') }}">
-                                <div class="nomor">Kamar No. 1</div>
-                                <div class="ukuran">Uk. 3,5 x 3m</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item" onclick="changeValue('Kamar No. 2', 'Rp. 1.450.000', 'Uk. 3,5 x 3,5m')">
-                                <img src="{{ asset('img-chategories/room-4.jpg') }}">
-                                <div class="nomor">Kamar No. 2</div>
-                                <div class="ukuran">Uk. 3,5 x 3,5m</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item" onclick="changeValue('Kamar No. 3', 'Rp. 1.200.000', 'Uk. 3 x 2,8m')">
-                                <img src="{{ asset('img-chategories/room-3.jpg') }}">
-                                <div class="nomor">Kamar No. 3</div>
-                                <div class="ukuran">Uk. 3 x 2,8m</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item" onclick="changeValue('Kamar No. 4', 'Rp. 1.60.000', 'Uk. 4 x 3,5m')">
-                                <img src="{{ asset('img/tyler.jpg') }}">
-                                <div class="nomor">Kamar No. 4</div>
-                                <div class="ukuran">Uk. 4 x 3,5m</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item" onclick="changeValue('Kamar No. 5', 'Rp. 1.250.000', 'Uk. 3,5 x 2,3m')">
-                                <img src="{{ asset('img/satu.jpg') }}">
-                                <div class="nomor">Kamar No. 5</div>
-                                <div class="ukuran">Uk. 3,5 x 2,3m</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item" onclick="changeValue('Kamar No. 6', 'Rp. 1.100.000', 'Uk. 2,5 x 2,5m')">
-                                <img src="{{ asset('img-chategories/room-6.jpg') }}">
-                                <div class="nomor">Kamar No. 6</div>
-                                <div class="ukuran">Uk. 2,5 x 2,5m</div>
-                            </div>
-                        </li>
-                        <li class="last">
-                            <div class="item" onclick="changeValue('Kamar No. 7', 'Rp. 1.450.000', 'Uk. 3,5 x 3,5m')">
-                                <img src="{{ asset('img-chategories/room-1`.jpg') }}">
-                                <div class="nomor">Kamar No. 7</div>
-                                <div class="ukuran">Uk. 3,5 x 3,5mm</div>
-                            </div>
-                        </li>
+                    <ul class="dropdown-menu">
+                        @foreach ($pindahKamar as $item)
+                            <li class="is-real" x-on:click ="new_kamar = 'Kamar No. {{ $item->nomor_kamar }}',
+                            real_new_kamar='{{ $item->nomor_kamar }}',
+                            new_harga='Rp. {{ $item->harga_kamar }}',
+                            new_real_harga='{{ $item->harga_kamar }}',
+                            new_ukuran_kamar='{{ $item->ukuran_kamar }}'">
+                                <div class="item">
+                                    <div class="icons">
+                                        @if ($item->gambarKamar->isNotEmpty())
+                                            <img src="{{ asset('uploads/' . $item->gambarKamar->random()->gambar) }}">
+                                        @endif
+                                    </div>
+                                    <div class="value">
+                                        Kamar No. {{ $item->nomor_kamar }}
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
             <div class="form-item">
-                <label for="p" class="form-label fw-medium">No. Kamar Baru</label>
-                <input type="text" id="p" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!">
-            </div>
-            <div class="form-item">
                 <label for="p" class="form-label fw-medium">Harga Kamar Baru</label>
-                <input type="text" id="d" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!">
+                <input type="text" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!" x-model ="new_harga">
+                <input type="hidden" name="harga_kamar_baru" placeholder="Mohon pilih kamar dahulu!" x-model ="new_real_harga">
             </div>
             <div class="form-item">
                 <label for="i" class="form-label fw-medium">Ukuran Kamar</label>
-                <input type="text" id="i" class="form-control" disabled placeholder="Mohon pilih kamar dahulu!">
+                <input type="text" name="ukuran_kamar_baru" class="form-control" readonly placeholder="Mohon pilih kamar dahulu!" x-model="new_ukuran_kamar">
             </div>
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
-                <input type="date" id="tanggal" class="form-control">
+                <input type="date" name="tanggal_pindah" class="form-control">
             </div>
             <div class="form-item">
                 <label for="jam" class="form-label fw-medium">Jam Pindah</label>
-                <input type="time" id="jam" class="form-control">
+                <input type="time" name="jam_pindah" class="form-control">
             </div>
+            {{-- <input type="hidden" name="waktu_pindah" x-model="waktu_pindah"> --}}
         </div>
 
         <div class="formulir last">
             <div class="form-item">
                 {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
                 <label for="exampleFormControlTextarea1" class="form-label fw-medium">Alasan Pindah (Opsional)</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan alasan kamu pindah..."></textarea>
+                <textarea class="form-control" name="alasan" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan alasan kamu pindah..."></textarea>
             </div>
         </div>
 
@@ -131,19 +100,19 @@
         </div>
     </form>
     <script>
-        function changeValue(nomor, kamar, ukuran) {
-            document.getElementById('p').value = nomor;
-            document.getElementById('d').value = kamar;
-            document.getElementById('i').value = ukuran;
-            var dropdownButton = document.querySelector('.btn.dropdown-toggle');
-            dropdownButton.classList.add('selected');
-            var inputItemp = document.getElementById('p');
-            var inputItemd = document.getElementById('d');
-            var inputItemi = document.getElementById('i');
-            inputItemp.classList.add('nyalaOi');
-            inputItemd.classList.add('nyalaOi');
-            inputItemi.classList.add('nyalaOi');
-        }
+        // function changeValue(nomor, kamar, ukuran) {
+        //     document.getElementById('p').value = nomor;
+        //     document.getElementById('d').value = kamar;
+        //     document.getElementById('i').value = ukuran;
+        //     var dropdownButton = document.querySelector('.btn.dropdown-toggle');
+        //     dropdownButton.classList.add('selected');
+        //     var inputItemp = document.getElementById('p');
+        //     var inputItemd = document.getElementById('d');
+        //     var inputItemi = document.getElementById('i');
+        //     inputItemp.classList.add('nyalaOi');
+        //     inputItemd.classList.add('nyalaOi');
+        //     inputItemi.classList.add('nyalaOi');
+        // }
     </script>
 
     <script>

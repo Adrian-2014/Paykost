@@ -14,16 +14,19 @@ class authMid
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $role)
     {
-        // Cek apakah pengguna sudah login
-        if (!Auth::check()) {
-            // Jika belum login, redirect ke halaman login
+        if (!auth()->check()) {
             return redirect()->route('login');
         }
 
-        // Jika sudah login, lanjutkan ke halaman yang diminta
+        $userRoleId = auth()->user()->role_id;
+        if ($userRoleId != $role) {
+            return redirect('/');
+        }
+
         return $next($request);
     }
+
 }
 

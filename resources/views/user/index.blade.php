@@ -22,24 +22,6 @@
         </nav>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pesan Penting</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Isi Pesan di sini -->
-                    Terima kasih atas laporan Anda!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="body">
         <div class="profil-content">
             <div class="profil-item">
@@ -71,14 +53,13 @@
                 </div>
             </div>
             <div class="profil-item">
-
                 <div class="value">
                     <div class="judul">
                         Tanggal Masuk
                     </div>
-                    <input type="hidden" name="tanggal_masuk" id="tm" value="{{ auth()->user()->tanggal_masuk }}">
+                    <input type="hidden" name="tanggal_masuk" id="tm" value="">
                     <div class="nama-v" id="tgl-masuk">
-
+                        {{ $tanggalMasuk->translatedFormat('j F Y') }}
                     </div>
                 </div>
             </div>
@@ -89,7 +70,7 @@
                         Durasi Ngekost
                     </div>
                     <div class="nama-v durability" id="durasi">
-                        kosong
+                        {{ $hasil }}
                     </div>
                 </div>
             </div>
@@ -108,13 +89,6 @@
     </div>
 
     <section class="section d-flex justify-content-center text-align-center">
-        @if ($pembayaran->isEmpty())
-            <input type="hidden" id="acuan" value="{{ auth()->user()->name }}">
-        @else
-            @foreach ($pembayaran as $item)
-                <input type="hidden" id="acuan" value="{{ $item->pembayran_selanjutnya }}">
-            @endforeach
-        @endif
         <div class="row">
             <div class="col-11">
                 <div class="tag-top">
@@ -122,17 +96,13 @@
                         Pembayaran Kost Bulan :
                     </div>
                     <div class="inf">
-                        @if ($pembayaran->isEmpty())
-                            <div class="month paijo" id="paynow">
-                                no data
-                            </div>
-                        @else
-                            @foreach ($pembayaran as $item)
-                                <div class="month paijo" id="reells">
-                                    {{ $item->pembayaran_selanjutnya }}
-                                </div>
-                            @endforeach
-                        @endif
+                        <div class="month paijo">
+                            @if ($pembayaran)
+                                {{ $next->translatedFormat('F Y') }}
+                            @else
+                                {{ $tanggalMasuk->translatedFormat('F Y') }}
+                            @endif
+                        </div>
                         <div class="harga">
                             @foreach ($hamas as $kamar)
                                 Rp. {{ $kamar->harga_kamar }}
@@ -155,16 +125,24 @@
                                 <div class="proses">
                                     Proses Validasi
                                 </div>
+                            @elseif (auth()->user()->status_bayar === 'Ditolak')
+                                <div class="not-lun">
+                                    Pembayaran Ditolak
+                                </div>
                             @else
                                 <div class="lun">
                                     SUDAH LUNAS
                                 </div>
                             @endif
-
                         </div>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        @if ($pembayaran)
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class='fas fa-chevron-down'></i>
+                            </button>
+                        @endif
+                        {{-- <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class='fas fa-chevron-down'></i>
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
 
@@ -251,7 +229,7 @@
                                     Bulan Tagihan
                                 </div>
                                 <div class="value">
-                                    November 2023
+                                    igi ogOO ogoigo
                                 </div>
                             </div>
                             <div class="info-item">
@@ -310,7 +288,11 @@
                 </div>
 
                 <div class="value" id="next-pay">
-                    08 DESEMBER 2024
+                    @if ($pembayaran)
+                        {{ $next->translatedFormat('j F Y') }}
+                    @else
+                        {{ $sementara->translatedFormat('j F Y') }}
+                    @endif
                 </div>
             </div>
             <div class="col-5">
@@ -367,14 +349,27 @@
     <div class="kategori container-fluid mt-4">
         <div class="row">
             <div class="col-12">
-                <div class="kategori-item">
-                    <a href="/pindah" class="log">
-                        <i class="fi fi-ss-leave"></i>
-                    </a>
-                    <div class="keterangan">
-                        Pindah Kamar Kost
+                @if ($pindah_kamar)
+                    @if ($pindah_kamar->status === 'Dalam Proses')
+                        <div class="kategori-item proses">
+                            <div class="log">
+                                <i class="fi fi-ss-leave"></i>
+                            </div>
+                            <div class="keterangan">
+                                Pindah Kamar Kost
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <div class="kategori-item">
+                        <a href="/pindah" class="log">
+                            <i class="fi fi-ss-leave"></i>
+                        </a>
+                        <div class="keterangan">
+                            Pindah Kamar Kost
+                        </div>
                     </div>
-                </div>
+                @endif
                 <div class="kategori-item">
                     <a href="/laporanKerusakan" class="log">
                         <i class="fi fi-ss-house-chimney-crack"></i>
@@ -530,156 +525,6 @@
         </script>
     @endif
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function ubahFormatTanggal(tanggal) {
-                // Array untuk nama bulan
-                var namaBulan = [
-                    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                ];
-
-                // Pisahkan tanggal, bulan, dan tahun
-                var tanggalSplit = tanggal.split('-');
-                // Pastikan terdapat tiga elemen setelah split
-                if (tanggalSplit.length !== 3) {
-                    return "Format tanggal tidak valid";
-                }
-                var tahun = tanggalSplit[0];
-                var bulan = parseInt(tanggalSplit[1], 10);
-                var tanggal = parseInt(tanggalSplit[2], 10);
-
-                // Periksa apakah tanggal, bulan, dan tahun valid
-                if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
-                    return "Format tanggal tidak valid";
-                }
-
-                var tanggalFormatted = tanggal.toString().padStart(2, '0');
-                // Buat string dengan format yang diinginkan
-                var tanggalBaru = tanggalFormatted + " " + namaBulan[bulan - 1] + " " + tahun;
-                var tanggalUntukBayar = namaBulan[bulan - 1] + " " + tahun;
-                // var nextBayar = tanggalFormatted + " " + namaBulan[bulan] + " " + tahun;
-
-                return {
-                    tanggalBaru: tanggalBaru,
-                    // nextBayar: nextBayar,
-                    // tanggalUntukBayar: tanggalUntukBayar
-                };
-            }
-            var input = document.querySelector('#tm');
-            if (input) {
-                var tanggalAwal = input.value;
-                var tanggalBaruObj = ubahFormatTanggal(tanggalAwal);
-                var targetTanggal = document.querySelector('#tgl-masuk');
-                targetTanggal.innerHTML = tanggalBaruObj.tanggalBaru;
-                console.log(tanggalBaruObj.tanggalBaru);
-            } else {
-                console.error("Elemen input dengan id '#tm' tidak ditemukan.");
-            }
-            // Ambil nilai dari elemen HTML
-            var tanggalDiberikan = document.getElementById('tm').value;
-            // Buat objek tanggal dari nilai yang diambil
-            var tanggalDiberikanObj = new Date(tanggalDiberikan);
-            // Tanggal hari ini
-            var tanggalHariIni = new Date();
-            // Hitung selisih dalam milidetik
-            var selisihWaktu = tanggalHariIni - tanggalDiberikanObj;
-            // Konversi selisih waktu ke hari
-            var selisihHari = Math.floor(selisihWaktu / (1000 * 60 * 60 * 24));
-            // Hitung selisih bulan dan hari
-            var selisihBulan = tanggalHariIni.getMonth() - tanggalDiberikanObj.getMonth() + (12 * (tanggalHariIni.getFullYear() - tanggalDiberikanObj.getFullYear()));
-            var selisihHariSisa = tanggalHariIni.getDate() - tanggalDiberikanObj.getDate();
-            // Jika selisih hari negatif, kurangi satu bulan
-            if (selisihHariSisa < 0) {
-                selisihBulan--;
-                selisihHariSisa += new Date(tanggalHariIni.getFullYear(), tanggalHariIni.getMonth(), 0).getDate();
-            }
-            // Tampilkan hasil
-            console.log(selisihBulan + " bulan " + selisihHariSisa + " hari.");
-            var durasi = document.getElementById('durasi');
-            durasi.innerHTML = selisihBulan + " bulan " + selisihHariSisa + " hari.";
-
-            // Bualan Tagihan
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function ubahFormatTanggal(tanggal) {
-                // Array untuk nama bulan
-                var namaBulan = [
-                    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                ];
-
-                // Pisahkan tanggal, bulan, dan tahun
-                var tanggalSplit = tanggal.split('-');
-                // Pastikan terdapat tiga elemen setelah split
-                if (tanggalSplit.length !== 3) {
-                    return "Format tanggal tidak valid";
-                }
-                var tahun = tanggalSplit[0];
-                var bulan = parseInt(tanggalSplit[1], 10);
-                var tanggal = parseInt(tanggalSplit[2], 10);
-
-                // Periksa apakah tanggal, bulan, dan tahun valid
-                if (isNaN(tahun) || isNaN(bulan) || isNaN(tanggal)) {
-                    return "Format tanggal tidak valid";
-                }
-
-                var tanggalFormatted = tanggal.toString().padStart(2, '0');
-                // Buat string dengan format yang diinginkan
-                var tanggalBaru = tanggalFormatted + " " + namaBulan[bulan - 1] + " " + tahun;
-                var tanggalUntukBayar = namaBulan[bulan - 1] + " " + tahun;
-                var nextBayar = tanggalFormatted + " " + namaBulan[bulan] + " " + tahun;
-
-                return {
-                    tanggalBaru: tanggalBaru,
-                    nextBayar: nextBayar,
-                    tanggalUntukBayar: tanggalUntukBayar
-                };
-            }
-            var input = document.querySelector('#tm');
-            if (input) {
-                var tanggalAwal = input.value;
-                var tanggalBaruObj = ubahFormatTanggal(tanggalAwal);
-                var targetTanggal = document.querySelector('#tgl-masuk');
-                targetTanggal.innerHTML = tanggalBaruObj.tanggalBaru;
-                var now = document.querySelector('#paynow');
-                now.innerHTML = tanggalBaruObj.tanggalUntukBayar;
-                var nextBayar = document.querySelector('#next-pay');
-                nextBayar.innerHTML = tanggalBaruObj.nextBayar;
-                console.log(tanggalBaruObj.tanggalBaru);
-            } else {
-                console.error("Elemen input dengan id '#tm' tidak ditemukan.");
-            }
-
-
-            var tanggalDiberikan = document.getElementById('tm').value;
-
-            var tanggalDiberikanObj = new Date(tanggalDiberikan);
-            // Tanggal hari ini
-            var tanggalHariIni = new Date();
-            // Hitung selisih dalam milidetik
-            var selisihWaktu = tanggalHariIni - tanggalDiberikanObj;
-            // Konversi selisih waktu ke hari
-            var selisihHari = Math.floor(selisihWaktu / (1000 * 60 * 60 * 24));
-            // Hitung selisih bulan dan hari
-            var selisihBulan = tanggalHariIni.getMonth() - tanggalDiberikanObj.getMonth() + (12 * (tanggalHariIni.getFullYear() - tanggalDiberikanObj.getFullYear()));
-            var selisihHariSisa = tanggalHariIni.getDate() - tanggalDiberikanObj.getDate();
-            // Jika selisih hari negatif, kurangi satu bulan
-            if (selisihHariSisa < 0) {
-                selisihBulan--;
-                selisihHariSisa += new Date(tanggalHariIni.getFullYear(), tanggalHariIni.getMonth(), 0).getDate();
-            }
-            // Tampilkan hasil
-            console.log(selisihBulan + " bulan " + selisihHariSisa + " hari.");
-            var durasi = document.getElementById('durasi');
-            durasi.innerHTML = selisihBulan + " bulan " + selisihHariSisa + " hari.";
-
-            // Bualan Tagihan
-        });
-    </script>
-    <script>
         @if ($kamarKost->isNotEmpty())
             var splideSlider2 = new Splide('#slider-2', {
                 autoplay: false,
@@ -753,4 +598,3 @@
     </script>
 
 @endsection
-`

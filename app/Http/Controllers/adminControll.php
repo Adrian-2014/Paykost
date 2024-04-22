@@ -18,8 +18,10 @@ use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\KamarKostFasilitas;
 use App\Models\pembayaranKost;
+use App\Models\pindahKamar;
 use App\Models\ProsesCuci;
 use App\Models\User;
+use Carbon\Carbon;
 use Database\Seeders\CuciKeringSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -37,11 +39,59 @@ class adminControll extends Controller
         return view('admin.index');
     }
 
-    // For User
-    public function pembayaranPage() {
-        $pembayaran = pembayaranKost::orderBy('id', 'desc')->get();
-        return view('admin.pembayaran', compact('pembayaran'));
+    // Setuju
+    public function pembayaranPage()
+    {
+        $pembayaran = pembayaranKost::orderBy('id', 'desc')->where('status', 'Proses Validasi')->get();
+        $riwayat = pembayaranKost::orderBy('id', 'desc')->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        $dataBulanFormat = [];
+        $dataPay = [];
+        $tanggalBayar =[];
+
+        return view('admin.pembayaran', compact('pembayaran','riwayat', 'dataBulanFormat', 'dataPay', 'tanggalBayar'));
     }
+    public function payTolak(Request $request) {
+        $request->validate([
+            'id'=>'required',
+            'pesan' => 'required',
+        ]);
+
+        $pay = pembayaranKost::find($request->id);
+        $pay->pesan = $request->pesan;
+        $pay->status = 'Ditolak';
+        $pay->save();
+
+        $user = User::where('name', $pay->name)->first();
+        $user->status_bayar = 'Ditolak';
+        $user->save();
+        return back()->with('success', 'Data Berhasil Dikirim.');
+    }
+
+    public function paySetuju(Request $request) {
+        $request->validate([
+            'id'=>'required',
+        ]);
+        $pay = pembayaranKost::find($request->id);
+        $pay->status = 'Diterima';
+        $pay->save();
+
+        $user = User::where('name', $pay->name)->first();
+        $tagihan_selanjutnya = $pay->tagihan_selanjutnya;
+
+        if (strtotime($tagihan_selanjutnya) > time()) {
+            $user->status_bayar = 'Sudah Lunas';
+            // $user->save();
+            // return back()->with('success', 'Data Berhasil Dikirim.');
+        }else {
+            $user->status_bayar = 'Belum Bayar';
+        }
+        $user->save();
+        return back()->with('success', 'Data Berhasil Dikirim.');
+
+    }
+    // Setuju
+
+    // For User
     public function user() {
         $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
         $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->get();
@@ -385,7 +435,6 @@ class adminControll extends Controller
     }
     public function editBanner(Request $request)
     {
-
         // dd($request->all());
         $request->validate([
             'lokasi_banner' => 'required',
@@ -592,7 +641,6 @@ class adminControll extends Controller
         return back()->with('success', 'Barang Telah Dihapus.');
     }
 
-
     // Sepatu
     public function jasaCuciSepatu() {
         $cuciItems = cuciSepatu::orderBy('id', 'desc')->get();
@@ -674,7 +722,6 @@ class adminControll extends Controller
     }
 
     // Proses Cuci
-
     public function prosesPencucian() {
         $proses = ProsesCuci::whereIn('status', ['Proses Pengambilan', 'Proses Cuci'])->get();
         return view('admin.kategori.cuci.proses-cuci', compact('proses'));
@@ -709,4 +756,15 @@ class adminControll extends Controller
         $data->save();
         return redirect()->back();
     }
+
+
+    // Pindah Kamar
+    public function pagePindah() {
+        $PengajuanPindah = pindahKamar::where('status', 'Dalam Proses')->get();
+        $riwayat =  pindahKamar::whereIn('status', ['Ditolak', 'Disetujui'])->get();
+        $waktuPindah = [];
+        $tanggalPengajuan = [];
+        return view('admin.kategori.pindah-kamar', compact('PengajuanPindah', 'riwayat'));
+    }
+    // Pindah Kamar
 }

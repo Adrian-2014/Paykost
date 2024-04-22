@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 <link rel="stylesheet" href="{{ asset('css/user-css/profil.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css">
 
 @section('title', 'Home')
 
@@ -28,7 +29,7 @@
     <section class="detail-prof">
         <div class="beta">
             <div class="first-choice">
-                <div class="item-choice first" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <div class="item-choice first" data-bs-toggle="modal" data-bs-target="#profil">
                     <div class="details">
                         <i class="bi bi-person-fill"></i>
                         <div class="info">
@@ -36,7 +37,7 @@
                         </div>
                     </div>
                     <div class="chev">
-                        {{-- <i class="bi bi-chevron-right"></i> --}}
+                        ubah
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
@@ -48,6 +49,7 @@
                         </div>
                     </div>
                     <div class="chev">
+                        ubah
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
@@ -56,58 +58,84 @@
                 <div class="item-choice first">
                     <div class="details">
                         <div class="icon">
-                            <i class="bi bi-calendar-range"></i>
+                            <i class="ti ti-door"></i>
+                        </div>
+                        <div class="info">
+                            <div class="heads">No Kamar</div>
+                            <div class="values">Kamar No. {{ auth()->user()->no_kamar }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-choice">
+                    <div class="details">
+                        <div class="icon">
+                            <i class="ti ti-calendar-stats"></i>
                         </div>
                         <div class="info">
                             <div class="heads">Tanggal Masuk</div>
-                            <div class="values">{{ auth()->user()->tanggal_masuk }}</div>
+                            <div class="values">{{ $tanggalMasuk->translatedFormat('j F Y') }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="item-choice">
                     <div class="details">
-                        <i class="ti ti-at"></i>
+                        <div class="icon">
+                            <i class="ti ti-clock-hour-2"></i>
+                        </div>
                         <div class="info">
-                            Akun
+                            <div class="heads">Durasi Ngekost</div>
+                            <div class="values">{{ $hasil }}</div>
                         </div>
                     </div>
-                    <div class="chev">
+                </div>
+
+                <div class="item-edit" data-bs-toggle="modal" data-bs-target="#no_telpon">
+                    <div class="deskripsi-singkat">
+                        <div class="icons">
+                            <i class="ti ti-phone"></i>
+                        </div>
+                        <div class="value-change">
+                            {{ auth()->user()->no_telpon }}
+                        </div>
+                    </div>
+                    <div class="icon-change">
+                        ubah
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
-                <div class="item-choice">
-                    <div class="details">
-                        <i class="ti ti-at"></i>
-                        <div class="info">
-                            Akun
+                <div class="item-edit" data-bs-toggle="modal" data-bs-target="#kelamin">
+                    <div class="deskripsi-singkat">
+                        <div class="icons">
+                            @if (Auth::user()->jenis_kelamin === 'Laki Laki')
+                                <i class="ti ti-gender-male"></i>
+                            @else
+                                <i class="ti ti-gender-female"></i>
+                            @endif
+                        </div>
+                        <div class="value-change">
+                            {{ auth()->user()->jenis_kelamin }}
                         </div>
                     </div>
-                    <div class="chev">
+                    <div class="icon-change">
+                        ubah
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
-                <div class="item-choice">
-                    <div class="details">
-                        <i class="ti ti-at"></i>
-                        <div class="info">
-                            Akun
+                <div class="item-edit" data-bs-toggle="modal" data-bs-target="#pekerjaan">
+                    <div class="deskripsi-singkat">
+                        <div class="icons">
+                            <i class="ti ti-world"></i>
+                        </div>
+                        <div class="value-change">
+                            {{ auth()->user()->pekerjaan }}
                         </div>
                     </div>
-                    <div class="chev">
+                    <div class="icon-change">
+                        ubah
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
-                <div class="item-choice">
-                    <div class="details">
-                        <i class="ti ti-at"></i>
-                        <div class="info">
-                            Akun
-                        </div>
-                    </div>
-                    <div class="chev">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                </div>
+
                 <div class="item-choice" id="logoutBtn">
                     <div class="details">
                         <i class="ti ti-logout"></i>
@@ -125,13 +153,10 @@
     </section>
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="profil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ubah Profil</h1>
-                </div>
-                <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data" x-data="{ profil: '', name: '{{ Auth::user()->name }}' }">
                     @csrf
                     <div class="modal-body">
                         <div class="for-edit-profil">
@@ -142,7 +167,7 @@
                                     <img src="{{ asset('img/user.png') }}" class="photo">
                                 @endif
                                 <button type="button" class="my-btn">
-                                    <input type="file" name="photo" id="profils" onchange="loadFile(event)">
+                                    <input type="file" name="photo" id="profils" x-on:change="loadFile(event);" x-model="profil">
                                     <label for="profils">
                                         <i class="bi bi-cloud-arrow-up"></i>
                                     </label>
@@ -150,15 +175,98 @@
                             </label>
                             <div class="users">
                                 <label>Nama User</label>
-                                <input type="text" name="username" class="form-control" value="{{ Auth::user()->name }}">
-                                <label class="mt-2">No Telephone</label>
-                                <input type="text" name="no_telpon" class="form-control" value="{{ Auth::user()->no_telpon }}">
+                                <input type="text" name="username" class="form-control" value="{{ Auth::user()->name }}" x-model="name">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn cancel" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn save">Simpan</button>
+                        <button type="submit" class="btn save" :disabled="profil === '' && (name === '{{ Auth::user()->name }}' || name === '')">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="no_telpon" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('noTelp.update') }}" method="POST" enctype="multipart/form-data" x-data="{ noTelp: '{{ Auth::user()->no_telpon }}' }">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="for-edit-profil">
+                            <label>No Telpon</label>
+                            <input type="text" name="no_telpon" class="form-control" value="" x-model="noTelp">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn save" :disabled="noTelp === '{{ Auth::user()->no_telpon }}' || noTelp.length < 10">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="kelamin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('kelamin.update') }}" method="POST" enctype="multipart/form-data" x-data="{ kelamin: '{{ Auth::user()->jenis_kelamin }}' }">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="for-edit-profil">
+                            <label>Jenis Kelamin</label>
+                            {{-- <input type="text" name="jenis_kelamin" class="form-control" value="" x-model="kelamin"> --}}
+                            <div class="dropdown jenis" id="drop">
+                                <input type="text" readonly class="form-control" id="add-lokasi" name="jenis_kelamin" placeholder="Ubah Jenis Kelamin . . ." required x-model= 'kelamin'>
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="is-real" x-on:click = "kelamin = 'Laki Laki'">
+                                        <div class="item">
+                                            <div class="icons">
+                                                <img src="{{ asset('img/male.png') }}">
+                                            </div>
+                                            <div class="value">
+                                                Laki Laki
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="is-real" x-on:click = "kelamin = 'Perempuan'">
+                                        <div class="item">
+                                            <div class="icons">
+                                                <img src="{{ asset('img/female.png') }}">
+                                            </div>
+                                            <div class="value">
+                                                Perempuan
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn save" :disabled="kelamin === '{{ Auth::user()->jenis_kelamin }}' || kelamin === ''">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="pekerjaan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('pekerjaan.update') }}" method="POST" enctype="multipart/form-data" x-data="{ pekerjaan: '{{ Auth::user()->pekerjaan }}' }">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="for-edit-profil">
+                            <label>Pekerjaan</label>
+                            <input type="text" name="pekerjaan" class="form-control" value="" x-model="pekerjaan">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn save" :disabled="pekerjaan === '{{ Auth::user()->pekerjaan }}' || pekerjaan == ''">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -203,11 +311,11 @@
     @if (Session::has('success'))
         <script>
             Swal.fire({
-                title: 'Sukses!',
-                text: '{{ Session::get('success') }}',
-                icon: 'success',
+                title: "Sukses!",
+                text: "{{ Session::get('success') }}",
+                icon: "success",
+                timer: 3000,
                 showConfirmButton: false,
-                timer: 3000, // Waktu penampilan Sweet Alert (dalam milidetik)
             });
         </script>
     @endif

@@ -320,6 +320,9 @@ body {
         padding: .5rem .8rem;
         padding-bottom: .8rem;
         height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         label {
             display: flex;
@@ -329,6 +332,7 @@ body {
             /* height: 20rem; */
             background-color: rgba(207, 207, 207, 0.7);
             height: fit-content !important;
+            width: 70%;
 
             .gambar-upload {
                 height: fit-content;
@@ -348,9 +352,9 @@ body {
             }
 
             i {
-                font-size: 8rem;
+                font-size: 5rem;
                 color: rgb(180, 180, 180);
-                padding: 6.5rem 0;
+                padding: 5rem 0;
             }
         }
     }

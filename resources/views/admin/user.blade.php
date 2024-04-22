@@ -309,23 +309,23 @@
                                                                                     <i class="fa-solid fa-caret-down"></i>
                                                                                 </button>
                                                                                 <ul class="dropdown-menu">
-                                                                                    <li class="is-real" x-on:click="jenis_kelamin = 'laki laki'">
+                                                                                    <li class="is-real" x-on:click="jenis_kelamin = 'Laki Laki'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('img/male.png') }}">
                                                                                             </div>
                                                                                             <div class="value">
-                                                                                                laki laki
+                                                                                                Laki Laki
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
-                                                                                    <li class="is-real" x-on:click="jenis_kelamin = 'perempuan'">
+                                                                                    <li class="is-real" x-on:click="jenis_kelamin = 'Perempuan'">
                                                                                         <div class="item">
                                                                                             <div class="icons">
                                                                                                 <img src="{{ asset('img/female.png') }}">
                                                                                             </div>
                                                                                             <div class="value">
-                                                                                                perempuan
+                                                                                                Perempuan
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
@@ -440,23 +440,23 @@
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="is-real" x-on:click="jenis_kelamin = 'laki laki'">
+                                    <li class="is-real" x-on:click="jenis_kelamin = 'Laki Laki'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/male.png') }}">
                                             </div>
                                             <div class="value">
-                                                laki laki
+                                                Laki Laki
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="is-real" x-on:click="jenis_kelamin = 'perempuan'">
+                                    <li class="is-real" x-on:click="jenis_kelamin = 'Perempuan'">
                                         <div class="item">
                                             <div class="icons">
                                                 <img src="{{ asset('img/female.png') }}">
                                             </div>
                                             <div class="value">
-                                                perempuan
+                                                Perempuan
                                             </div>
                                         </div>
                                     </li>

@@ -697,6 +697,36 @@ body {
             }
         }
 
+        .kategori-item.proses {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            .log {
+                height: fit-content;
+                width: fit-content;
+                padding: 10px;
+                border-radius: 50%;
+                text-decoration: none;
+                background: rgb(198, 198, 198);
+
+                i {
+                    font-size: 20px;
+                    color: rgb(255, 255, 255);
+                }
+            }
+
+            .keterangan {
+                margin-top: 0.3rem;
+                font-size: 0.55rem;
+                width: 3.7rem;
+                line-height: 1.2;
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+
         .kategori-item:nth-child(4) .keterangan {
             display: flex;
             flex-direction: column;
@@ -706,6 +736,7 @@ body {
 
             p {
                 margin: 0 !important;
+                margin-bottom: 0rem !important;
                 padding: 0 !important;
             }
 

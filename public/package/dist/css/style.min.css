@@ -23346,7 +23346,6 @@ tbody,
 td,
 tfoot,
 th,
-thead,
 tr {
     border-color: inherit;
     border-style: solid;
@@ -25266,7 +25265,7 @@ progress {
     --bs-table-color-state: initial;
     --bs-table-bg-state: initial;
     --bs-table-color: var(--bs-body-color);
-    --bs-table-bg: var(--bs-body-bg);
+    /* --bs-table-bg: var(--bs-body-bg); */
     --bs-table-border-color: #ebf1f6;
     --bs-table-accent-bg: transparent;
     --bs-table-striped-color: var(--bs-body-color);

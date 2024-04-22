@@ -28,26 +28,25 @@ body {
                     /* background-color: aqua; */
                 }
 
-                .no-kamar {
-                    width: 4rem !important;
+                .kamar-old {
+                    width: 5rem !important;
                     /* background-color: red; */
                 }
 
-                .b-tag {
-                    width: 5rem;
-                    /* background-color: aqua; */
-
+                .kamar-new {
+                    width: 6rem !important;
+                    /* background-color: rgb(19, 224, 77); */
                 }
 
-                .t-bayar {
-                    width: 6rem !important;
+                .t-pindah {
+                    width: 7rem !important;
                     /* background-color: red; */
 
                 }
 
 
                 .action {
-                    width: 8rem !important;
+                    width: 1rem !important;
                     /* background-color: aqua; */
 
                 }

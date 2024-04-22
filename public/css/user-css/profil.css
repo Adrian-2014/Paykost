@@ -3,12 +3,13 @@ html,
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box !important;
+    box-sizing: border-boxs;
     font-family: "Poppins", sans-serif;
 }
 
 body {
     background-color: rgb(227, 227, 227) !important;
+    padding-bottom: 4rem;
 }
 
 input:focus {
@@ -123,8 +124,16 @@ input:focus {
                 }
 
                 .chev {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: .65rem;
+                    color: rgba(185, 185, 185, 0.817);
+
                     .fa-solid {
-                        color: gray;
+                        padding-left: .3rem;
+                        color: rgba(128, 128, 128, 0.7);
+                        font-size: 1rem;
                     }
                 }
             }
@@ -159,7 +168,7 @@ input:focus {
                     width: 100%;
 
                     .icon {
-                            
+
                         i {
                             font-size: 1.3rem;
                             color: rgb(0, 149, 255);
@@ -209,6 +218,50 @@ input:focus {
             .first {
                 border-top: unset;
             }
+
+            .item-edit {
+                display: flex;
+                justify-content: space-between;
+                border-top: 1px solid rgba(213, 213, 213, 0.77);
+                align-items: center;
+                padding: .6rem .5rem;
+
+                .deskripsi-singkat {
+                    display: flex;
+                    align-items: center;
+                    gap: .75rem;
+
+                    .icons {
+
+                        i {
+                            font-size: 1.3rem;
+                            color: rgb(0, 149, 255);
+                        }
+                    }
+
+                    .value-change {
+                        color: rgba(0, 0, 0, 0.8);
+                        font-size: .95rem;
+                    }
+                }
+
+                .icon-change {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: .65rem;
+                    color: rgba(149, 149, 149, 0.876);
+
+                    i {
+                        padding-left: .3rem;
+                        color: rgba(128, 128, 128, 0.7);
+                        font-size: 1rem;
+                    }
+
+                }
+            }
+
+
         }
     }
 }
@@ -241,8 +294,8 @@ input:focus {
 
                             img {
                                 /* border: 3px rgb(199, 199, 199) solid; */
-                                height: 5.5rem;
-                                width: 5.5rem;
+                                height: 6rem;
+                                width: 6rem;
                                 border-radius: 50%;
                             }
 
@@ -250,8 +303,8 @@ input:focus {
                                 position: absolute;
                                 top: 0;
                                 left: 0;
-                                height: 5.5rem;
-                                width: 5.5rem;
+                                height: 6rem;
+                                width: 6rem;
                                 border-radius: 50%;
                                 border: none !important;
                                 background-color: rgba(0, 0, 0, 0.3);
@@ -263,7 +316,7 @@ input:focus {
 
                                 i {
                                     color: white;
-                                    font-size: 2rem;
+                                    font-size: 2.3rem;
                                 }
                             }
 
@@ -300,9 +353,88 @@ input:focus {
                         background: linear-gradient(to bottom right, rgb(4, 139, 249), rgb(74, 188, 233));
                         color: white;
                     }
+
+                    .save:disabled {
+                        background: rgb(146, 146, 146);
+                    }
                 }
             }
         }
+    }
+}
+
+.dropdown {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    input {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-right: none;
+        background-color: var(--bgCerah);
+    }
+
+    button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+        color: white;
+        border: none;
+    }
+
+    button:after {
+        display: none;
+    }
+
+    .dropdown-menu {
+        min-width: 100%;
+    }
+
+    .dropdown-menu.show {
+        height: fit-content;
+
+        display: flex;
+        flex-direction: column;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        overflow: hidden;
+        overflow-y: auto;
+        transform: translate(0, 40px) !important;
+    }
+
+    .dropdown-menu li {
+        padding: .5rem 1rem !important;
+        transition: .3s ease;
+        cursor: pointer;
+
+        .item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+
+            .icons {
+                img {
+                    height: 25px;
+                    width: 25px;
+                }
+            }
+        }
+
+    }
+
+    .dropdown-menu li.first {
+        padding-top: .6rem !important;
+    }
+
+    .dropdown-menu li.last {
+        padding-bottom: .6rem !important;
+    }
+
+    .dropdown-menu li:hover {
+        background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
+        color: white;
     }
 }
 
