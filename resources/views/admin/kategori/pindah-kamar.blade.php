@@ -2,7 +2,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-@section('title', 'Pembayaran User')
+@section('title', 'Pindah Kamar')
 <link rel="stylesheet" href="{{ asset('css/admin-css/pindah-kamar.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -50,14 +50,14 @@
             <div class="card-body px-4 py-3">
                 <div class="row align-items-center">
                     <div class="col-9">
-                        <h4 class="fw-semibold mb-8">Pembayaran Kost</h4>
+                        <h4 class="fw-semibold mb-8"> Pengajuan Pindah Kamar</h4>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a class="text-muted " href="./index.html">Admin</a>
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">
-                                    Pembayaran Kost
+                                    Pengajuan Pinah Kamar
                                 </li>
                             </ol>
                         </nav>
@@ -74,7 +74,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2 ps-2 pt-2">Data Pembayaran Kost</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Data Pindah Kamar Kost</h4>
                     </div>
                     <div class="card-body">
                         @if ($PengajuanPindah->isEmpty())
@@ -168,32 +168,33 @@
                                                 </td>
                                                 <td x-data="{ check: false }">
                                                     <div class="td-item aksi">
-                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#persetujuan{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
+                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#view{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
                                                             Lihat
                                                         </div>
                                                         <div class="for-tolak">
-                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->name }}">Tolak!</button>
+                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->nama }}">Tolak!</button>
                                                         </div>
                                                         <div class="for-setuju">
-                                                            <form action="{{ route('SETUJU') }}" method="post">
+                                                            <form action="{{ route('setujuiPindah') }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                <input type="hidden" name="kamar_baru" value="{{ $item->kamar_baru }}">
                                                                 <button type="submit" class="yes setuju" :disabled="check ? false : 'disabled'">Approve</button>
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <div id="penolakan{{ $item->name }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                    <div id="penolakan{{ $item->nama }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    Penolakan Pembayaran {{ $item->name }}
+                                                                    Penolakan Pengajuan pindah Kamar {{ $item->nama }}
                                                                 </div>
-                                                                <form action="{{ route('tolak') }}" x-data="{ alasan: '' }" method="POST">
+                                                                <form action="{{ route('tolakPindah') }}" x-data="{ alasan: '' }" method="POST">
                                                                     @csrf
                                                                     <div class="modal-body">
                                                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                                                         <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
-                                                                        <textarea name="pesan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
+                                                                        <textarea name="respon" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
@@ -203,7 +204,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div id="view{{ $item->id }}" class="modal fade in lihat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog modal-dialog-scrollable modal-lg">
                                                             <div class="modal-content">
@@ -212,84 +212,44 @@
                                                                         <img src="{{ asset('img/two.png') }}">
                                                                     </div>
                                                                     <div class="pay">
-                                                                        Data Pengajuan Pindah <span>{{ $item->name }}</span>
+                                                                        Data Pengajuan Pindah <span>{{ $item->nama }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <div class="first-content">
-                                                                        <div class="fc">
-                                                                            <div class="top">
-                                                                                Pembayaran Pada:
-                                                                            </div>
-                                                                            <div class="bot">
-                                                                                {{-- {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }} <span>WIB</span> --}}
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="fl">
-                                                                            <div class="the-content">
-                                                                                Rp. <span>{{ $item->total_tagihan }}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-content">
-                                                                        <div class="kumpulan-data">
-                                                                            <div class="data">
-                                                                                <div class="kiri">ID Transaksi</div>
-                                                                                <div class="kanan transksi-special">{{ $item->id_pembayaran }}</div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">Tagihan Bulan</div>
-                                                                                <div class="kanan special">
-                                                                                    {{-- {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }} --}}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">Nama User</div>
-                                                                                <div class="kanan">{{ $item->name }}</div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">No.Kamar</div>
-                                                                                <div class="kanan">Kamar No. {{ $item->no_kamar }}</div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">Metode Bayar</div>
-                                                                                {{-- @php
-                                                                                    $bank = DB::table('banks')
-                                                                                        ->where('id', $item->bank_id)
-                                                                                        ->first();
-                                                                                @endphp --}}
-                                                                                {{-- <div class="kanan">Transfer {{ $bank->nama }}</div> --}}
-                                                                            </div>
-                                                                            <div class="data-bukti">
-                                                                                <div class="kiri">Bukti Bayar:</div>
-                                                                                <div class="kanan bukti">
-                                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
-                                                                                </div>
-                                                                            </div>
-                                                                            {{-- <div class="data-bukti">
-                                                                                <div class="text-atas">
-                                                                                    Bukti Bayar
-                                                                                </div>
-                                                                                <div class="for-img">
-                                                                                    <div class="imgs">
-                                                                                        <img src="{{ asset('uploads/' . $item->bukti) }}">
-                                                                                    </div>
-                                                                                </div>
+                                                                    <div class="container-fluid">
+                                                                        <div class="row">
+                                                                            {{-- <div class="col-12">
+
                                                                             </div> --}}
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Nama User</label>
+                                                                                <input type="text" readonly value="{{ $item->nama }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Kamar Lama</label>
+                                                                                <input type="text" readonly value="{{ $item->kamar_lama }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Kamar Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->kamar_baru }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Ukuran Kamar Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->ukuran_baru }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Harga Kamar Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->harga_baru }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Tanggal / Waktu Pindah</label>
+                                                                                <input type="text" readonly value="{{ $item->waktu_pindah }}" class="form-control">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn" data-bs-dismiss="modal">Tutup</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal fade proof" id="bukti{{ $item->id }}" tabindex="-1" data-bs-backdrop="false">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-body">
-                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -307,7 +267,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="border-bottom">
-                        <h4 class="card-title mb-2 ps-2 pt-2">Riwayat Pembayaran Kost</h4>
+                        <h4 class="card-title mb-2 ps-2 pt-2">Riwayat Pengajuan Pindah Kamar</h4>
                     </div>
                     <div class="card-body">
                         @if ($riwayat->isEmpty())
@@ -316,12 +276,12 @@
                                     <img src="{{ asset('img/people.png') }}">
                                 </div>
                                 <div class="text">
-                                    Tidak ada Riwayat Pengajuan
+                                    Tidak ada Riwayat Pengajuan Pindah Kamar
                                 </div>
                             </div>
                         @else
                             <div class="tableku table-responsive riwayat">
-                                <table id="default_order" class="table">
+                                <table id="zero_config" class="table">
                                     <thead>
                                         <tr>
                                             <th class="nama">
@@ -329,22 +289,22 @@
                                                     User
                                                 </div>
                                             </th>
-                                            <th class="no-kamar">
+                                            <th class="kamar-old">
                                                 <div class="th-item">
-                                                    No. Kamar
+                                                    Kamar Lama
                                                 </div>
                                             </th>
-                                            <th class="b-tag">
+                                            <th class="kamar-new">
                                                 <div class="th-item">
-                                                    Bulan tagihan
+                                                    Kamar Baru
                                                 </div>
                                             </th>
-                                            <th class="t-bayar">
+                                            <th class="t-pindah">
                                                 <div class="th-item">
-                                                    Tanggal bayar
+                                                    Tanggal Pindah
                                                 </div>
                                             </th>
-                                            <th class="b-tag">
+                                            <th class="t-pindah">
                                                 <div class="th-item">
                                                     Status
                                                 </div>
@@ -365,7 +325,7 @@
                                                             <div class="imgs">
                                                                 @php
                                                                     $user = DB::table('users')
-                                                                        ->where('name', $item->name)
+                                                                        ->where('name', $item->nama)
                                                                         ->first();
                                                                 @endphp
                                                                 @if ($user)
@@ -377,69 +337,46 @@
                                                                 @endif
                                                             </div>
                                                             <div class="username">
-                                                                {{ $item->name }}
+                                                                {{ $item->nama }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="td-item n-kamar">
+                                                    <div class="td-item old-kamar">
                                                         <div class="item">
-                                                            Kamar No. {{ $item->no_kamar }}
+                                                            Kamar No. {{ $item->kamar_lama }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="td-item b-tag">
+                                                    <div class="td-item new-kamar">
                                                         <div class="item">
-                                                            {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                            Kamar No. {{ $item->kamar_baru }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="td-item bayar">
+                                                    <div class="td-item t-pindah">
                                                         <div class="item">
-                                                            {{ $item->created_at->isoFormat('D MMMM Y') }}
+                                                            {{ $item->waktu_pindah->isoFormat('D MMMM Y') }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item stat">
-                                                        <div class="item @if ($item->status === 'Diterima') diterima @else ditolak @endif">
+                                                        <div class="item @if ($item->status === 'Ditolak') ditolak  @elseif($item->status === 'Diterima') diterima @else dipindahkan @endif">
                                                             {{ $item->status }}
                                                         </div>
-
                                                     </div>
                                                 </td>
                                                 <td x-data="{ check: false }">
                                                     <div class="td-item aksi">
-                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#riwayat{{ $item->id }}" x-on:click="check = true">
+                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#view{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
                                                             Lihat
                                                         </div>
                                                     </div>
-                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    Penolakan Pembayaran <span> {{ $item->name }}</span>
-                                                                </div>
-                                                                <form action="{{ route('tolak') }}" x-data="{ alasan: '' }" method="POST">
-                                                                    @csrf
-                                                                    <div class="modal-body">
-                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
-                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
-                                                                        <textarea name="pesan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
-                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div id="riwayat{{ $item->id }}" class="modal fade in lihat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                    <div id="view{{ $item->id }}" class="modal fade in lihat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog modal-dialog-scrollable modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -447,84 +384,44 @@
                                                                         <img src="{{ asset('img/two.png') }}">
                                                                     </div>
                                                                     <div class="pay">
-                                                                        Data Pembayaran <span>{{ $item->name }}</span>
+                                                                        Data Pengajuan Pindah <span>{{ $item->nama }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <div class="first-content">
-                                                                        <div class="fc">
-                                                                            <div class="top">
-                                                                                Pembayaran Pada:
-                                                                            </div>
-                                                                            <div class="bot">
-                                                                                {{ $item->created_at->isoFormat('D MMMM Y') }} <span>WIB</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="fl">
-                                                                            <div class="the-content">
-                                                                                Rp. <span>{{ $item->total_tagihan }}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="main-content">
-                                                                        <div class="kumpulan-data">
-                                                                            <div class="data">
-                                                                                <div class="kiri">ID Transaksi</div>
-                                                                                <div class="kanan transksi-special">{{ $item->id_pembayaran }}</div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">Tagihan Bulan</div>
-                                                                                <div class="kanan special">
-                                                                                    {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">Nama User</div>
-                                                                                <div class="kanan">{{ $item->name }}</div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">No.Kamar</div>
-                                                                                <div class="kanan">Kamar No. {{ $item->no_kamar }}</div>
-                                                                            </div>
-                                                                            <div class="data">
-                                                                                <div class="kiri">Metode Bayar</div>
-                                                                                @php
-                                                                                    $bank = DB::table('banks')
-                                                                                        ->where('id', $item->bank_id)
-                                                                                        ->first();
-                                                                                @endphp
-                                                                                <div class="kanan">Transfer {{ $bank->nama }}</div>
-                                                                            </div>
-                                                                            <div class="data-bukti">
-                                                                                <div class="kiri">Bukti Bayar:</div>
-                                                                                <div class="kanan bukti">
-                                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
-                                                                                </div>
-                                                                            </div>
-                                                                            {{-- <div class="data-bukti">
-                                                                                <div class="text-atas">
-                                                                                    Bukti Bayar
-                                                                                </div>
-                                                                                <div class="for-img">
-                                                                                    <div class="imgs">
-                                                                                        <img src="{{ asset('uploads/' . $item->bukti) }}">
-                                                                                    </div>
-                                                                                </div>
+                                                                    <div class="container-fluid">
+                                                                        <div class="row">
+                                                                            {{-- <div class="col-12">
+
                                                                             </div> --}}
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Nama User</label>
+                                                                                <input type="text" readonly value="{{ $item->nama }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Kamar Lama</label>
+                                                                                <input type="text" readonly value="{{ $item->kamar_lama }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Kamar Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->kamar_baru }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Ukuran Kamar Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->ukuran_baru }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Harga Kamar Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->harga_baru }}" class="form-control">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label for="" class="px-1 pb-1 pt-3">Tanggal / Waktu Pindah</label>
+                                                                                <input type="text" readonly value="{{ $item->waktu_pindah }}" class="form-control">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn" data-bs-dismiss="modal">Tutup</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal fade proof" id="bukti{{ $item->id }}" tabindex="-1" data-bs-backdrop="false">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-body">
-                                                                    <img src="{{ asset('uploads/' . $item->bukti) }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -539,6 +436,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
@@ -597,55 +495,56 @@
         </script>
     @endif
 
-    @if ($riwayat->isNotEmpty())
-        <script>
-            document.querySelectorAll('.no.tolak').forEach(function(button) {
-                button.addEventListener('click', function(e) {
-                    var itemName = button.getAttribute('data-id');
-                    Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: 'Tolak Pengajuan dari ' + itemName + '?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#3085d6',
-                        confirmButtonText: 'Ya, Tolak!',
-                        cancelButtonText: 'Batal'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#penolakan' + itemName).modal('show');
-                        }
-                    });
-                });
-            });
-        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            curs();
+        });
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                curs();
-            });
+        document.addEventListener('click', function() {
+            curs();
+        });
+        document.addEventListener('input', function() {
+            curs();
+        });
 
-            document.addEventListener('click', function() {
-                curs();
-            });
-            document.addEventListener('input', function() {
-                curs();
-            });
+        function curs() {
+            var prev = document.querySelectorAll('.paginate_button.previous');
+            var next = document.querySelectorAll('.paginate_button.next');
 
-            function curs() {
-                var prev = document.querySelectorAll('.paginate_button.previous');
-                var next = document.querySelectorAll('.paginate_button.next');
+            next.forEach(function(item) {
+                item.innerHTML = '<i class="bi bi-chevron-right"></i>';
+            });
+            prev.forEach(function(item) {
+                item.innerHTML = '<i class="bi bi-chevron-left"></i>';
+            });
+        }
+    </script>
 
-                next.forEach(function(item) {
-                    item.innerHTML = '<i class="bi bi-chevron-right"></i>';
-                });
-                prev.forEach(function(item) {
-                    item.innerHTML = '<i class="bi bi-chevron-left"></i>';
-                });
-            }
-        </script>
-    @endif
     {{-- Sweet Alert --}}
+
+    {{-- <script>
+        document.querySelectorAll('.no.tolak').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var form = this.closest('form');
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Tolak Permintaan dari {{ $item->nama }} ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script> --}}
     <script>
         document.querySelectorAll('.yes.setuju').forEach(function(button) {
             button.addEventListener('click', function(e) {

@@ -97,14 +97,9 @@
                                 <table id="default_order" class="table border table-bordered text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th class="pp">
+                                            <th class="user">
                                                 <div class="th-item">
-                                                    Foto Profil
-                                                </div>
-                                            </th>
-                                            <th class="nama">
-                                                <div class="th-item">
-                                                    Nama
+                                                    User
                                                 </div>
                                             </th>
                                             <th class="lokasi">
@@ -133,17 +128,15 @@
                                         @foreach ($user as $item)
                                             <tr>
                                                 <td>
-                                                    <div class="td-item pp">
-                                                        @if (is_null($item->profil) || empty($item->profil))
-                                                            <img src="{{ asset('img/person-1.jpg') }}">
-                                                        @else
-                                                            <img src="{{ asset('uploads/' . $item->profil) }}">
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="td-item username">
-                                                        <div class="item">
+                                                    <div class="td-item user">
+                                                        <div class="profil">
+                                                            @if (is_null($item->profil) || empty($item->profil))
+                                                                <img src="{{ asset('img/user.png') }}">
+                                                            @else
+                                                                <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                            @endif
+                                                        </div>
+                                                        <div class="nama">
                                                             {{ $item->name }}
                                                         </div>
                                                     </div>
@@ -197,7 +190,7 @@
                                                                     <div class="item for-profil-img">
                                                                         <div class="myImg">
                                                                             @if (is_null($item->profil) || empty($item->profil))
-                                                                                <img src="{{ asset('img/person-1.jpg') }}">
+                                                                                <img src="{{ asset('img/user.png') }}">
                                                                             @else
                                                                                 <img src="{{ asset('uploads/' . $item->profil) }}">
                                                                             @endif
@@ -218,11 +211,11 @@
                                                                         </div>
                                                                         <div class="col-6 mt-2">
                                                                             <label class="px-1">Tanggal Masuk</label>
-                                                                            <input type="text" disabled value="{{ $item->tanggal_masuk }}" class="form-control">
+                                                                            <input type="text" disabled value="{{ $item->tanggalMasukFormatted }}" class="form-control">
                                                                         </div>
                                                                         <div class="col-6 mt-2">
                                                                             <label class="px-1">Durasi Ngekost</label>
-                                                                            <input type="text" disabled value="{{ $item->durasi_ngekost }}" class="form-control">
+                                                                            <input type="text" disabled value="{{ $item->durasiNgekostFormatted }}" class="form-control">
                                                                         </div>
                                                                         <div class="col-6 mt-2">
                                                                             <label class="px-1">Jenis Kelamin</label>
@@ -230,7 +223,7 @@
                                                                         </div>
                                                                         <div class="col-6 mt-2 status">
                                                                             <label class="px-1">Status Bayar</label>
-                                                                            <input type="text" disabled value="Lunas" class="form-control">
+                                                                            <input type="text" disabled value="{{ $item->status_bayar }}" class="form-control @if ($item->status_bayar === 'Sudah Lunas') lunas @elseif($item->status_bayar === 'Proses Validasi') proses @else not-lun @endif">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -247,7 +240,7 @@
                                                         <div class="modal-dialog modal-dialog-scrollable modal-lg" x-data="{
                                                             nama: '{{ $item->name }}',
                                                             email: '{{ $item->email }}',
-                                                            password: '',
+                                                            {{-- password: '', --}}
                                                             tanggal_masuk: '{{ $item->tanggal_masuk }}',
                                                             no_kamar: '{{ $item->no_kamar }}',
                                                             jenis_kelamin: '{{ $item->jenis_kelamin }}',
@@ -350,7 +343,7 @@
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon &&">
+                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon ? null : 'disabled'">
                                                                             Simpan
                                                                         </button>
                                                                     </div>
@@ -393,7 +386,7 @@
                         @csrf
                         <div class="items ps-2">
                             <div class="title pb-1">Nama User<span class="text-danger">*</span></div>
-                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama">
+                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama" maxlength="20">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Email<span class="text-danger">*</span></div>

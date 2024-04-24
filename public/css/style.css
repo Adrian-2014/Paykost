@@ -19,6 +19,9 @@ input:focus {
     height: 100vh !important;
     width: 100vw !important;
     z-index: -100 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .splide__track {
         .splide__list {
@@ -323,4 +326,13 @@ form {
             color: white;
         }
     }
+}
+
+.swal2-title {
+    font-weight: 500;
+    font-size: 1.5rem !important;
+}
+
+.swal2-html-container {
+    font-size: .9rem !important;
 }

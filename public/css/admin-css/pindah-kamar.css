@@ -236,10 +236,19 @@ body {
                 }
 
                 .stat {
-                    .diterima {
+                    .dipindahkan {
                         padding: .5rem .8rem;
                         background-color: rgba(0, 255, 0, 0.5);
                         color: rgb(0, 146, 0);
+                        /* font-weight: bold; */
+                        font-size: .95rem;
+                        border-radius: .4rem;
+                    }
+
+                    .diterima {
+                        padding: .5rem .8rem;
+                        background-color: rgba(0, 132, 255, 0.5);
+                        color: rgb(0, 58, 146);
                         /* font-weight: bold; */
                         font-size: .95rem;
                         border-radius: .4rem;
@@ -356,7 +365,7 @@ body {
 .lihat {
     .modal-dialog {
         .modal-content {
-            width: 60%;
+            width: 80%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);

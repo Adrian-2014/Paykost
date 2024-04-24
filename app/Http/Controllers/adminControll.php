@@ -95,7 +95,21 @@ class adminControll extends Controller
     public function user() {
         $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
         $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->get();
-        return view('admin.user', compact('user', 'kamars'));
+
+        foreach($user as $item) {
+            $mk = $item->tanggal_masuk;
+            $tanggalMasuk = Carbon::parse($mk);
+
+            $hariIni = Carbon::now();
+            $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
+            $bulan = floor($selisihTanggal / 30);
+            $hari = $selisihTanggal % 30;
+            $hasil = "{$bulan} bulan {$hari} hari";
+
+            $item->tanggalMasukFormatted = $tanggalMasuk->translatedFormat('j F Y');
+            $item->durasiNgekostFormatted = $hasil;
+        }
+        return view('admin.user', compact('user', 'kamars', 'tanggalMasuk', 'hasil'));
     }
     public function storeUser(Request $request) {
 
@@ -163,18 +177,18 @@ class adminControll extends Controller
         $user->status_bayar = 'Belum Bayar';
         $user->save();
 
-        // Ubah kondisi kamar yang lama
+
         $old_kamar = KamarKost::where('user_id', $user->id)->first();
         if ($old_kamar) {
             $old_kamar->user_id = null;
-            $old_kamar->kondisi = 'Kosong'; // Kamar kosong
+            $old_kamar->kondisi = 'Kosong';
             $old_kamar->save();
         }
 
-        // Ubah kondisi kamar yang baru
+
         $new_kamar = KamarKost::findOrFail($request->no_kamar);
         $new_kamar->user_id = $user->id;
-        $new_kamar->kondisi = 'Dihuni'; // Kamar dihuni
+        $new_kamar->kondisi = 'Dihuni';
         $new_kamar->save();
 
         return back()->with('success', 'Data pengguna berhasil diperbarui.');
@@ -254,10 +268,13 @@ class adminControll extends Controller
     // For Kamar Kost
     public function kamarKost() {
         $kost = kamarKost::orderBy('id', 'desc')->get();
-        $facilites = fasilitas::get();
+        $fas_kamar = fasilitas::where('tipe', 'Fasilitas Kamar')->get();
+        $fas_umum = fasilitas::where('tipe', 'Fasilitas Umum')->get();
         return view('admin.kamar-kost', [
             'kosts'=>$kost,
-            'facilites'=>$facilites,
+            'fas_kamar'=>$fas_kamar,
+            'fas_umum' => $fas_umum,
+
         ]);
 
     }
@@ -761,10 +778,38 @@ class adminControll extends Controller
     // Pindah Kamar
     public function pagePindah() {
         $PengajuanPindah = pindahKamar::where('status', 'Dalam Proses')->get();
-        $riwayat =  pindahKamar::whereIn('status', ['Ditolak', 'Disetujui'])->get();
+        $riwayat =  pindahKamar::orderBy('created_at', 'desc')->whereIn('status', ['Ditolak', 'Diterima', 'Dipindahkan'])->get();
         $waktuPindah = [];
         $tanggalPengajuan = [];
         return view('admin.kategori.pindah-kamar', compact('PengajuanPindah', 'riwayat'));
+    }
+
+    public function tolakPindah(Request $request) {
+        $request->validate([
+            'respon' => 'required',
+        ]);
+
+        $data = pindahKamar::find($request->id);
+        $data->status = 'Ditolak';
+        $data->respon = $request->respon;
+        $data->save();
+        return redirect()->back()->with('success', 'Data Berhasil di Kirim');
+    }
+
+    public function setujuiPindah(Request $request) {
+
+        $request->validate([
+            'kamar_baru' => 'required',
+        ]);
+
+        $data = pindahKamar::find($request->id);
+        $data->status = 'Diterima';
+        $data->save();
+
+        $kamar = kamarKost::where('nomor_kamar', $request->kamar_baru)->latest()->first();
+        $kamar->kondisi = 'Dipesan';
+        $kamar->save();
+        return redirect()->back()->with('success', 'Data Berhasil di Kirim');
     }
     // Pindah Kamar
 }

@@ -224,6 +224,49 @@ body {
     }
 }
 
+.trans {
+    /* border-top: 1px solid rgba(128, 128, 128, 0.6); */
+    margin-top: 1rem;
+    background-color: white;
+    padding: .5rem;
+    padding-bottom: 0;
+    /* --bs-gutter-x: unset !important; */
+    display: flex;
+    flex-direction: column;
+    /* gap: .5rem; */
+    height: fit-content;
+
+    .command {
+        font-size: .9rem;
+        color: rgba(0, 0, 0, 0.7);
+        padding-bottom: .2rem;
+    }
+
+    .salin {
+        .rekening {
+            display: flex;
+            gap: .35rem;
+            align-items: center;
+
+            .no-rek {
+                color: rgba(0, 0, 0, 0.7);
+                font-weight: bold;
+                /* font-size: 1.2rem; */
+            }
+
+            .copy {
+                img {
+                    height: 1rem;
+                }
+            }
+        }
+    }
+
+    .atas-nama {
+        gap: .3rem;
+    }
+}
+
 .gateway {
     background-color: white;
     margin-top: 1rem;
@@ -286,9 +329,10 @@ body {
 
 }
 
+
 .bukti {
-    background-color: white;
     margin-top: 1rem;
+    background-color: white;
     --bs-gutter-x: unset !important;
     display: flex;
     flex-direction: column;
@@ -344,7 +388,7 @@ body {
 
                     img {
                         height: auto;
-                        width: 100%;
+                        width: 15rem;
                         border-radius: .5rem;
                     }
                 }
@@ -389,4 +433,32 @@ body {
             background: rgb(144, 144, 144);
         }
     }
+}
+
+.alert {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000000 !important;
+    position: absolute !important;
+
+    .menyala {
+        opacity: 0;
+        display: flex;
+        padding: .5rem 1rem;
+        border-radius: .8rem;
+        width: 80% !important;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: .85rem;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: white;
+        transition: .5s ease-in-out;
+        font-weight: 400;
+    }
+}
+
+.cops {
+    opacity: 1 !important;
 }

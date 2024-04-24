@@ -188,7 +188,7 @@ body {
                 .modal-body {
                     display: flex;
                     flex-direction: column;
-                    gap: .65rem;
+                    gap: .3rem;
                     height: fit-content;
                     max-height: 60vh;
                     overflow: auto;
@@ -343,7 +343,7 @@ body {
 
                     display: flex;
                     flex-direction: column;
-                    gap: .65rem;
+                    gap: .3rem;
                     height: fit-content;
                     max-height: 60vh;
                     overflow: auto;
@@ -536,17 +536,17 @@ body {
                 .fasilitas {
                     margin-top: .8rem;
                     padding-left: 1.4rem !important;
-                    overflow-x: auto;
-                    scrollbar-width: thin;
 
                     label {
                         padding-bottom: .7rem;
                     }
 
                     .for-fas {
+                        overflow-x: auto;
                         display: flex;
                         gap: 1.5rem;
                         align-items: center;
+                        scrollbar-width: thin;
 
                         .fas-item {
                             display: flex;
@@ -566,6 +566,20 @@ body {
                                     height: 5.5rem;
                                     width: auto;
                                     border: 1.5px solid rgb(225, 225, 225);
+                                }
+                            }
+                        }
+                    }
+
+                    .umum {
+                        .fas-item {
+                            .for-img {
+                                width: 7rem;
+                                overflow: hidden;
+
+                                img {
+                                    height: 5rem;
+                                    width: auto;
                                 }
                             }
                         }

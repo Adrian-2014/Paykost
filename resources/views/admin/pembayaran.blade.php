@@ -265,16 +265,6 @@
                                                                                     <img src="{{ asset('uploads/' . $item->bukti) }}">
                                                                                 </div>
                                                                             </div>
-                                                                            {{-- <div class="data-bukti">
-                                                                                <div class="text-atas">
-                                                                                    Bukti Bayar
-                                                                                </div>
-                                                                                <div class="for-img">
-                                                                                    <div class="imgs">
-                                                                                        <img src="{{ asset('uploads/' . $item->bukti) }}">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div> --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -343,7 +333,7 @@
                                                     Tanggal bayar
                                                 </div>
                                             </th>
-                                            <th class="b-tag">
+                                            <th class="status">
                                                 <div class="th-item">
                                                     Status
                                                 </div>
@@ -391,7 +381,7 @@
                                                 <td>
                                                     <div class="td-item b-tag">
                                                         <div class="item">
-                                                            {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                            {{ $item->bulan_tagihan->isoFormat('MMMM Y') }}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -414,27 +404,6 @@
                                                     <div class="td-item aksi">
                                                         <div class="item" data-bs-toggle="modal" data-bs-target="#riwayat{{ $item->id }}" x-on:click="check = true">
                                                             Lihat
-                                                        </div>
-                                                    </div>
-                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    Penolakan Pembayaran <span> {{ $item->name }}</span>
-                                                                </div>
-                                                                <form action="{{ route('tolak') }}" x-data="{ alasan: '' }" method="POST">
-                                                                    @csrf
-                                                                    <div class="modal-body">
-                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
-                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
-                                                                        <textarea name="pesan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
-                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -596,54 +565,31 @@
         </script>
     @endif
 
-    @if ($riwayat->isNotEmpty())
-        <script>
-            document.querySelectorAll('.no.tolak').forEach(function(button) {
-                button.addEventListener('click', function(e) {
-                    var itemName = button.getAttribute('data-id');
-                    Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: 'Tolak Pengajuan dari ' + itemName + '?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#3085d6',
-                        confirmButtonText: 'Ya, Tolak!',
-                        cancelButtonText: 'Batal'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#penolakan' + itemName).modal('show');
-                        }
-                    });
-                });
-            });
-        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            curs();
+        });
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                curs();
-            });
+        document.addEventListener('click', function() {
+            curs();
+        });
+        document.addEventListener('input', function() {
+            curs();
+        });
 
-            document.addEventListener('click', function() {
-                curs();
-            });
-            document.addEventListener('input', function() {
-                curs();
-            });
+        function curs() {
+            var prev = document.querySelectorAll('.paginate_button.previous');
+            var next = document.querySelectorAll('.paginate_button.next');
 
-            function curs() {
-                var prev = document.querySelectorAll('.paginate_button.previous');
-                var next = document.querySelectorAll('.paginate_button.next');
+            next.forEach(function(item) {
+                item.innerHTML = '<i class="bi bi-chevron-right"></i>';
+            });
+            prev.forEach(function(item) {
+                item.innerHTML = '<i class="bi bi-chevron-left"></i>';
+            });
+        }
+    </script>
 
-                next.forEach(function(item) {
-                    item.innerHTML = '<i class="bi bi-chevron-right"></i>';
-                });
-                prev.forEach(function(item) {
-                    item.innerHTML = '<i class="bi bi-chevron-left"></i>';
-                });
-            }
-        </script>
-    @endif
     {{-- Sweet Alert --}}
     <script>
         document.querySelectorAll('.yes.setuju').forEach(function(button) {

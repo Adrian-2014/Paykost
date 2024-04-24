@@ -49,6 +49,7 @@ class userPageController extends Controller
         $sementara = $forPay->addDays(30);
         //durasi
         $hariIni = Carbon::now();
+        // $hariIni = Carbon::parse('2024-05-17');
         $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
         $bulan = floor($selisihTanggal / 30);
         $hari = $selisihTanggal % 30;
@@ -59,6 +60,7 @@ class userPageController extends Controller
             $setCarbon = Carbon::parse($payHave);
             $few = Carbon::parse($payHave);
             $next = $few->addDays(30);
+
             return view('user.pembayaran', compact('kamarKost', 'banks', 'pembayaran', 'tanggalMasuk', 'sementara', 'hasil', 'setCarbon', 'next'));
         }else    {
             return view('user.pembayaran', compact('kamarKost', 'banks', 'pembayaran', 'tanggalMasuk', 'sementara', 'hasil'));
@@ -117,48 +119,128 @@ class userPageController extends Controller
 
     // HOME
     public function index() {
-        // DATE REAL TIME
-        $tanggal_masuk = auth()->user()->tanggal_masuk;
-        $tanggalMasuk = Carbon::parse($tanggal_masuk);
-        $forPay = Carbon::parse($tanggal_masuk);
-        $sementara = $forPay->addDays(30);
-        //durasi
-        $hariIni = Carbon::now();
-        $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
-        $bulan = floor($selisihTanggal / 30); // Hitung bulan
-        $hari = $selisihTanggal % 30; // Hitung sisa hari
-        $hasil = "{$bulan} bulan {$hari} hari";
-        // DATE REAL TIME
-
-        $no_kamar = auth()->user()->no_kamar;
-        $hamas = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
-        $pembayaran = pembayaranKost::where('name', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
-        $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
-        $kamarKost = kamarKost::where('status', 'Publish')->where('kondisi', 'Kosong')->get();
-        $gambarsKamars = gambarKamar::inRandomOrder()->take(4)->get();
 
         $user = auth()->user()->name;
+        $no_kamar = auth()->user()->no_kamar;
+        $kamar = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
+        $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
+        $kamarKosong = kamarKost::where('status', 'Publish')->where('kondisi', 'Kosong')->get();
+        $banerKamars = gambarKamar::inRandomOrder()->take(4)->get();
+
+        $pembayaran = pembayaranKost::where('name', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
+
+
+
+        // DATE REAL TIME
+        $tglMasukSementara = auth()->user()->tanggal_masuk;
+        $tanggalMasuk = Carbon::parse($tglMasukSementara);
+
+        $hariIni = Carbon::now();
+        // $hariIni = Carbon::parse('2024-05-17');
+        //durasi
+
+        $pindahKamar = pindahKamar::where('nama', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
+        if($pindahKamar) {
+            $waktu_pindah = $pindahKamar->waktu_pindah;
+            $waktu = Carbon::parse($waktu_pindah);
+            if($hariIni >= $waktu) {
+                return redirect()->route('updatePindah')->withMethod('post');
+            }
+        }
+
+        $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
+        $bulan = floor($selisihTanggal / 30);
+        $hari = $selisihTanggal % 30;
+        // dd($hariIni);
+        $durasi = "{$bulan} bulan {$hari} hari";
+
+        // DATE REAL TIME
         $pindah_kamar = pindahKamar::where('nama', $user)->latest()->first();
 
         if($pembayaran) {
-            $currentTime = Carbon::now();
-            $payHave = $pembayaran->tagihan_selanjutnya;
-            $payHas = $pembayaran->bulan_tagihan;
-            // dd($payHas);
-            $setCarbon = Carbon::parse($payHave);
-            if ($setCarbon > $currentTime) {
-                $next = Carbon::parse($payHas);
-                // $next = $few->addDays(30);
+            $bulan_tagihan = $pembayaran->bulan_tagihan;
+            $tagihan_selanjutnya = $pembayaran->tagihan_selanjutnya;
+            $tags = Carbon::parse($tagihan_selanjutnya);
+            $bank_id = $pembayaran->bank_id;
+            $bank = Bank::where('id', $bank_id)->latest()->first();
+
+            $x = $pembayaran->bulan_tagihan;
+            $y = Carbon::parse($x);
+            $riwayatBulan = $y;
+
+            $waktu_bayar = $pembayaran->created_at;
+            $waktuBayar = Carbon::parse($waktu_bayar);
+            // $tags = Carbon::parse('2024-05-17');
+            // dd($tags);
+            // dd($tagihan_selanjutnya);
+
+
+            // $bulanTagihan = Carbon::parse($bulan_tagihan);
+            // $tagihanSelanjutnya = Carbon::parse($bulan_tagihan);
+            // dd($payHave);
+            if ($tags > $hariIni) {
+                $tagihan_bulans = Carbon::parse($bulan_tagihan);
+                $tagihanBulan = $tagihan_bulans;
+                $pembayaranSelanjutnya = Carbon::parse($tagihan_selanjutnya);
             }else {
-                $few = Carbon::parse($payHave);
-                $next = $few->addDays(30);
+
+                if(auth()->user()->status_bayar === 'Sudah Lunas') {
+                    return redirect()->route('updateStatUser')->withMethod('post');
+                }
+                $tagihan_bulans = Carbon::parse($tagihan_selanjutnya);
+                $tagihanBulan = $tagihan_bulans;
+                $pembayaranSelanjutnya = Carbon::parse($tagihan_selanjutnya)->addDays(30);
 
             }
-            return view('user.index', compact('kamarKost', 'pindah_kamar' , 'pembayaran', 'tanggalMasuk', 'sementara', 'hamas', 'hasil', 'setCarbon', 'next', 'gambarsKamars', 'bannerPro'));
-        } else {
-            return view('user.index', compact('kamarKost', 'pindah_kamar' , 'pembayaran', 'tanggalMasuk', 'sementara', 'hamas', 'hasil', 'gambarsKamars', 'bannerPro'));
+            return view('user.index', compact('kamar', 'bannerPro',  'banerKamars', 'kamarKosong', 'pindah_kamar' , 'pembayaran', 'tanggalMasuk', 'durasi', 'kamar', 'tagihanBulan', 'waktuBayar', 'bank', 'riwayatBulan', 'pembayaranSelanjutnya','hariIni', 'tags'));
+        }else {
+            // $tagihan_bulan = $tanggalMasuk;
+            $tagihanBulan = Carbon::parse($tglMasukSementara);
+            $pembayaranSelanjutnya = Carbon::parse($tglMasukSementara)->addDays(30);
+            return view('user.index', compact('kamar', 'bannerPro',  'banerKamars', 'kamarKosong', 'pindah_kamar' , 'pembayaran', 'tanggalMasuk', 'durasi', 'kamar', 'tagihanBulan',  'pembayaranSelanjutnya','hariIni'));
         }
+
+
+
+        //untuk pindah kamar
+
+        // dd($tagihanBulan);
     }
+
+    // updatePindah
+
+    public function updateStatUser() {
+        $user = auth()->user();
+        $user->status_bayar = 'Belum Bayar';
+        $user->save();
+
+        return redirect()->route('userku');
+    }
+
+    public function updatePindah() {
+        $pindahKamar = pindahKamar::where('nama', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
+        $user = auth()->user();
+        $kamarNow = kamarKost::where('user_id',  auth()->user()->id)->first();
+
+        $user->no_kamar = $pindahKamar->kamar_baru;
+        $user->save();
+        if ($kamarNow) {
+            $kamarNow->user_id = null;
+            $kamarNow->kondisi = 'Kosong';
+            $kamarNow->save();
+        }
+
+        $new_kamar = KamarKost::findOrFail($pindahKamar->kamar_baru);
+        $new_kamar->user_id = $user->id;
+        $new_kamar->kondisi = 'Dihuni';
+        $new_kamar->save();
+
+        $pindahKamar->status = 'Dipindahkan';
+        $pindahKamar->save();
+
+        return redirect()->route('userku');
+    }
+
     // rekomendasi
     public function rekomendasi($id) {
         $data = kamarKost::find($id);
@@ -202,7 +284,20 @@ class userPageController extends Controller
         return view('user.kamarku', compact('kamar_kost', 'fasKamar', 'fasUmum'));
     }
     public function riwayat() {
-        return view('user.riwayat');
+        $riwayatPembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('name', auth()->user()->name)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        foreach($riwayatPembayaran as $item) {
+            $notifikasi = Carbon::parse($item->updated_at);
+            // dd($notifikasi);
+            $item->notif = $notifikasi;
+        }
+
+        $riwayatPindah = pindahKamar::orderBy('updated_at', 'desc')->where('nama', auth()->user()->name)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        foreach($riwayatPindah as $item) {
+            $notifikasi = Carbon::parse($item->updated_at);
+            $item->notif = $notifikasi;
+        }
+
+        return view('user.riwayat', compact('riwayatPembayaran', 'riwayatPindah'));
     }
 
     // PROFIL

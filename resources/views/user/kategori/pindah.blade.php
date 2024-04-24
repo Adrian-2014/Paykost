@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <form action="{{ route('ajukan.pindah') }}" method="post" class="form" id="form" x-data="{ new_kamar: '', real_new_kamar: '', new_harga: '', new_real_harga: '', new_ukuran_kamar: '' }">
+    <form action="{{ route('ajukan.pindah') }}" method="post" class="form" id="form" x-data="{ new_kamar: '', real_new_kamar: '', new_harga: '', new_real_harga: '', new_ukuran_kamar: '', tanggal_pindah: '', jam_pindah: '' }">
         @csrf
         <div class="formulir first" id="formulir">
             <div class="form-item">
@@ -74,13 +74,13 @@
                 <label for="i" class="form-label fw-medium">Ukuran Kamar</label>
                 <input type="text" name="ukuran_kamar_baru" class="form-control" readonly placeholder="Mohon pilih kamar dahulu!" x-model="new_ukuran_kamar">
             </div>
-            <div class="form-item">
+            <div class="form-item" x-bind:class="{ 'd-block': new_kamar, 'd-none': !new_kamar }">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Pindah</label>
-                <input type="date" name="tanggal_pindah" class="form-control">
+                <input type="date" name="tanggal_pindah" id="tanggal" class="form-control" x-model="tanggal_pindah">
             </div>
-            <div class="form-item">
+            <div class="form-item" x-bind:class="{ 'd-block': new_kamar, 'd-none': !new_kamar }">
                 <label for="jam" class="form-label fw-medium">Jam Pindah</label>
-                <input type="time" name="jam_pindah" class="form-control">
+                <input type="time" name="jam_pindah" class="form-control" x-model="jam_pindah">
             </div>
             {{-- <input type="hidden" name="waktu_pindah" x-model="waktu_pindah"> --}}
         </div>
@@ -95,24 +95,18 @@
 
         <div class="navbar sticky-bottom">
             <div class="isi">
-                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
+                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Pengajuan</button>
             </div>
         </div>
     </form>
     <script>
-        // function changeValue(nomor, kamar, ukuran) {
-        //     document.getElementById('p').value = nomor;
-        //     document.getElementById('d').value = kamar;
-        //     document.getElementById('i').value = ukuran;
-        //     var dropdownButton = document.querySelector('.btn.dropdown-toggle');
-        //     dropdownButton.classList.add('selected');
-        //     var inputItemp = document.getElementById('p');
-        //     var inputItemd = document.getElementById('d');
-        //     var inputItemi = document.getElementById('i');
-        //     inputItemp.classList.add('nyalaOi');
-        //     inputItemd.classList.add('nyalaOi');
-        //     inputItemi.classList.add('nyalaOi');
-        // }
+        var hariIni = new Date();
+
+        var besok = new Date(hariIni);
+        besok.setDate(besok.getDate() + 1);
+        var besok_real = besok.toISOString().split('T')[0];
+
+        document.getElementById("tanggal").setAttribute("min", besok_real);
     </script>
 
     <script>

@@ -81,6 +81,7 @@
                 </div>
             </div>
 
+
             <div class="kumpulan-button">
                 <a href="/cuci" class="back">Halaman Utama</a>
                 <input type="hidden" name="id" value="{{ $pemesanan->id_pembelian }}">
@@ -227,7 +228,6 @@
 
     <script>
         function salinTeks() {
-            // Pilih elemen dengan ID "no-rek"
             var elem = document.getElementById("no-rek");
             var button = document.querySelector(".copy");
             var ico = document.querySelector('.ico');

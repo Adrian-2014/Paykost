@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
 
     // Menu
     Route::get('/user/index', [userPageController::class, 'index'])->name('userku');
+    Route::match(['get', 'post'], '/updateStatUser', [userPageController::class, 'updateStatUser'])->name('updateStatUser');
     Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
     Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
     Route::get('/user/profil', [userPageController::class, 'profil']);
@@ -89,6 +90,8 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
 
     // Pindah Kamar
     Route::post('/pindahKamar', [userPageController::class, 'pindahKamar'])->name('ajukan.pindah');
+    // Route::post('/updatePindah', [userPageController::class, 'updatePindah'])->name('updatePindah');
+    Route::match(['get', 'post'], '/updatePindah', [userPageController::class, 'updatePindah'])->name('updatePindah');
     // Pindah Kamar
 
 });
@@ -168,6 +171,8 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
 
     // Pindah Kamar
     Route::get('/admin/pindah', [adminControll::class, 'pagePindah']);
+    Route::post('/tolak/pindah', [adminControll::class, 'tolakPindah'])->name('tolakPindah');
+    Route::post('/setujui/pindah', [adminControll::class, 'setujuiPindah'])->name('setujuiPindah');
     // Pindah Kamar
 
 });

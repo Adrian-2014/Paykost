@@ -6,6 +6,7 @@
 
 @section('container')
 
+
     <div class="navbar fixed-top">
         <div class="container-fluid">
             <div class="exit">
@@ -18,7 +19,7 @@
             </div>
         </div>
     </div>
-    <form action="{{ route('bayarKost') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('bayarKost') }}" method="POST" enctype="multipart/form-data" x-data="{ bank: '', upload: '' }">
         @csrf
         <div class="container-fluid for-explained">
             <div class="container for-banner-kost">
@@ -129,6 +130,32 @@
             </div>
         </div>
 
+        <div class="container-fluid trans">
+            <div class="command">
+                Mohon Transfer ke No. Rekening Ini
+            </div>
+            <div class="salin">
+                <div class="rekening">
+                    <div class="no-rek" id="no-rek">065722313040</div>
+                    <div class="copy" onclick="salinTeks()">
+                        <img src="{{ asset('img-chategories/copy.png') }}" class="ico">
+                    </div>
+                </div>
+            </div>
+            <div class="atas-nama fw-medium d-flex">
+                <div class="a fw-bold">
+                    A/N
+                </div>
+                <div class="n">ADRIAN</div>
+            </div>
+        </div>
+
+        <div class="alert">
+            <div class="menyala">
+
+            </div>
+        </div>
+
         <div class="container-fluid gateway">
             <div class="for-top">
                 <div class="judul">
@@ -171,7 +198,7 @@
                 </div>
             </div>
             <div class="for-input">
-                <input type="file" name="bukti" id="bukti" class="d-none" onchange="loadFile(event)" x-model="bukti">
+                <input type="file" name="bukti" id="bukti" class="d-none" onchange="loadFile(event)" x-model="upload">
                 <label for="bukti" id="for-bukti">
                     <i id="icon-upload" class="bi bi-cloud-arrow-up"></i>
                     <div class="gambar-upload">
@@ -192,7 +219,7 @@
         @else
             <input type="hidden" name="bulan_tagihan" value="{{ $tanggalMasuk->translatedFormat('d-m-Y') }}">
         @endif
-        <input type="hidden" name="bank_name" id="bank_name">
+        <input type="hidden" name="bank_name" id="bank_name" x-model="bank">
         @if ($pembayaran)
             <input type="hidden" name="tagihan_selanjutnya" value="{{ $next }}">
         @else
@@ -200,7 +227,7 @@
         @endif
         <div class="confirm">
             <div class="container-fluid">
-                <button type="submit" class="btn" id="nextPage">Bayar Sekarang</button>
+                <button type="submit" class="btn" id="nextPage" :disabled="bank && upload">Bayar Sekarang</button>
             </div>
         </div>
     </form>
@@ -225,6 +252,90 @@
         console.log(randomString);
     </script>
     <script>
+        function salinTeks() {
+            var elem = document.getElementById("no-rek");
+            var button = document.querySelector(".copy");
+            var ico = document.querySelector('.ico');
+            var alert = document.querySelector('.alert');
+            var menyala = document.querySelector('.menyala');
+
+            var range = document.createRange();
+            range.selectNode(elem);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+
+            // button.classList.add('copied');
+            ico.src = "{{ asset('img-chategories/copied.png') }}";
+            ico.classList.add('co');
+            menyala.classList.add('cops');
+            var isCopy = document.createElement('div');
+            isCopy.classList.add('content');
+            iscops = elem.innerHTML;
+            menyala.innerHTML = ` <div class="valuer">${iscops}</div>
+            <div class="teks"> berhasil disalin </div>`;
+
+            setTimeout(function() {
+                // button.classList.remove('copied');
+                ico.src = "{{ asset('img-chategories/copy.png') }}";
+                ico.classList.remove('co');
+                menyala.classList.remove('cops');
+
+            }, 1500);
+
+        }
+
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const payItems = document.querySelectorAll('.payItems');
+        //     const inputGambar = document.getElementById('img'); // ID input gambar
+        //     const inputNama = document.getElementById('bank_name'); // ID input nama
+
+        //     payItems.forEach(function(item) {
+        //         item.addEventListener('click', function(event) {
+        //             const radioInput = this.querySelector('input[type="radio"]');
+        //             const radioChecked = radioInput.checked;
+
+        //             radioInput.checked = !radioChecked;
+
+        //             payItems.forEach(function(itemLain) {
+        //                 const radioLain = itemLain.querySelector('input[type="radio"]');
+        //                 if (itemLain !== item) {
+        //                     radioLain.checked = false;
+        //                 }
+        //             });
+
+        //             const gambar = this.querySelector('.logos img').getAttribute('src');
+        //             const nama = this.querySelector('.nama').innerHTML;
+
+        //             // inputGambar.value = gambar;
+        //             inputNama.value = nama;
+        //         });
+
+        //         const radioInput = item.querySelector('input[type="radio"]');
+        //         radioInput.addEventListener('click', function(event) {
+        //             const radioChecked = this.checked;
+        //             const parentItem = this.closest('.payItems');
+
+        //             this.checked = !radioChecked;
+
+        //             payItems.forEach(function(itemLain) {
+        //                 const radioLain = itemLain.querySelector('input[type="radio"]');
+        //                 if (itemLain !== parentItem) {
+        //                     radioLain.checked = false;
+        //                 }
+        //             });
+
+        //             const gambar = parentItem.querySelector('.logos img').getAttribute('src');
+        //             const nama = parentItem.querySelector('.nama').innerHTML;
+
+        //             inputGambar.value = gambar;
+        //             inputNama.value = nama;
+        //         });
+        //     });
+
+        // });
+
         document.addEventListener("DOMContentLoaded", function() {
             const payItems = document.querySelectorAll('.payItems');
             const inputGambar = document.getElementById('img'); // ID input gambar
@@ -235,24 +346,25 @@
                     const radioInput = this.querySelector('input[type="radio"]');
                     const radioChecked = radioInput.checked;
 
-                    // Toggle status input radio
                     radioInput.checked = !radioChecked;
 
-                    // Matikan semua input radio kecuali yang dipilih
-                    payItems.forEach(function(otherItem) {
-                        const otherRadioInput = otherItem.querySelector('input[type="radio"]');
-                        if (otherItem !== item) {
-                            otherRadioInput.checked = false;
+                    payItems.forEach(function(itemLain) {
+                        const radioLain = itemLain.querySelector('input[type="radio"]');
+                        if (itemLain !== item) {
+                            radioLain.checked = false;
                         }
                     });
 
-                    // Mengambil gambar dan nama dari item yang dipilih
                     const gambar = this.querySelector('.logos img').getAttribute('src');
                     const nama = this.querySelector('.nama').innerHTML;
 
-                    // Memasukkan nilai gambar dan nama ke dalam input tersembunyi
                     // inputGambar.value = gambar;
                     inputNama.value = nama;
+
+                    if (!document.querySelector('input[type="radio"]:checked')) {
+                        console.log("Tidak ada input radio yang terpilih");
+                        inputNama.value = '';
+                    }
                 });
 
                 const radioInput = item.querySelector('input[type="radio"]');
@@ -260,23 +372,25 @@
                     const radioChecked = this.checked;
                     const parentItem = this.closest('.payItems');
 
-                    // Toggle status input radio
                     this.checked = !radioChecked;
 
-                    // Matikan semua input radio kecuali yang dipilih
-                    payItems.forEach(function(otherItem) {
-                        const otherRadioInput = otherItem.querySelector('input[type="radio"]');
-                        if (otherItem !== parentItem) {
-                            otherRadioInput.checked = false;
+                    payItems.forEach(function(itemLain) {
+                        const radioLain = itemLain.querySelector('input[type="radio"]');
+                        if (itemLain !== parentItem) {
+                            radioLain.checked = false;
                         }
                     });
 
-                    // Mengambil gambar dan nama dari item yang dipilih
                     const gambar = parentItem.querySelector('.logos img').getAttribute('src');
                     const nama = parentItem.querySelector('.nama').innerHTML;
 
                     inputGambar.value = gambar;
                     inputNama.value = nama;
+
+                    if (!document.querySelector('input[type="radio"]:checked')) {
+                        console.log("Tidak ada input radio yang terpilih");
+                        inputNama.value = '';
+                    }
                 });
             });
         });

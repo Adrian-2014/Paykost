@@ -224,6 +224,16 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
+                                                                                    <li class="is-real" x-on:click = "lokasi_banner = 'Halaman Login'">
+                                                                                        <div class="item">
+                                                                                            <div class="icons">
+                                                                                                <img src="{{ asset('img/login.png') }}">
+                                                                                            </div>
+                                                                                            <div class="value">
+                                                                                                Halaman Login
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
@@ -264,7 +274,7 @@
                                                                             Batal
                                                                         </button>
                                                                         <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="status && lokasi_banner ? null : 'disabled'">
-                                                                            Tambahkan
+                                                                            Simpan
                                                                         </button>
                                                                     </div>
                                                                 </form>
@@ -289,7 +299,7 @@
             <div class="modal-content" x-data= "{gambar_banner: '', lokasi_banner: '', status: ''}">
                 <div class="modal-header d-flex align-items-center">
                     <h4 class="modal-title" id="myModalLabel">
-                        Tambahkan Item Cuci
+                        Tambahkan Banner
                     </h4>
                 </div>
                 <form action="{{ route('storeBanner') }}" method="POST" enctype="multipart/form-data" class="fors">
@@ -337,6 +347,16 @@
                                             </div>
                                             <div class="value">
                                                 Pembayaran Jasa Cuci
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="is-real" x-on:click = "lokasi_banner = 'Halaman Login'">
+                                        <div class="item">
+                                            <div class="icons">
+                                                <img src="{{ asset('img/login.png') }}">
+                                            </div>
+                                            <div class="value">
+                                                Halaman Login
                                             </div>
                                         </div>
                                     </li>
@@ -442,7 +462,6 @@
     </script>
 
     <script>
-        // Select all delete buttons and attach event listener to each of them
         document.querySelectorAll('.btn.delete').forEach(function(button) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();

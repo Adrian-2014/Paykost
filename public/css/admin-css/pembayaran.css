@@ -24,12 +24,12 @@ body {
                 }
 
                 .nama {
-                    width: 6.5rem !important;
+                    width: 9rem !important;
                     /* background-color: aqua; */
                 }
 
                 .no-kamar {
-                    width: 4rem !important;
+                    width: 4.5rem !important;
                     /* background-color: red; */
                 }
 
@@ -40,14 +40,14 @@ body {
                 }
 
                 .t-bayar {
-                    width: 6rem !important;
+                    width: 5.5rem !important;
                     /* background-color: red; */
 
                 }
 
 
                 .action {
-                    width: 8rem !important;
+                    width: 3rem !important;
                     /* background-color: aqua; */
 
                 }
@@ -200,11 +200,15 @@ body {
                 }
 
                 .b-tag {
-                    width: 5.5rem;
+                    width: 6rem;
                 }
 
                 .t-bayar {
                     width: 6rem !important;
+                }
+
+                .status {
+                    width: 4.5rem;
                 }
 
                 .action {
@@ -397,7 +401,7 @@ body {
                         gap: .2rem;
 
                         .top {
-                            font-size: 1rem;
+                            font-size: .87rem;
                         }
 
                         .bot {

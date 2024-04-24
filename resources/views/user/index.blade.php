@@ -42,7 +42,6 @@
                 </div>
             </div>
             <div class="profil-item">
-
                 <div class="value">
                     <div class="judul">
                         Nomor Kamar
@@ -70,7 +69,7 @@
                         Durasi Ngekost
                     </div>
                     <div class="nama-v durability" id="durasi">
-                        {{ $hasil }}
+                        {{ $durasi }}
                     </div>
                 </div>
             </div>
@@ -97,15 +96,11 @@
                     </div>
                     <div class="inf">
                         <div class="month paijo">
-                            @if ($pembayaran)
-                                {{ $next->translatedFormat('F Y') }}
-                            @else
-                                {{ $tanggalMasuk->translatedFormat('F Y') }}
-                            @endif
+                            {{ $tagihanBulan->translatedFormat('F Y') }}
                         </div>
                         <div class="harga">
-                            @foreach ($hamas as $kamar)
-                                Rp. {{ $kamar->harga_kamar }}
+                            @foreach ($kamar as $item)
+                                Rp. {{ $item->harga_kamar }}
                             @endforeach
                         </div>
                     </div>
@@ -150,7 +145,7 @@
                     <div class="splide" id="splide-kost">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                @foreach ($gambarsKamars as $item)
+                                @foreach ($banerKamars as $item)
                                     <li class="splide__slide">
                                         <img src="{{ asset('uploads/' . $item->gambar) }}">
                                     </li>
@@ -163,122 +158,127 @@
         </div>
     </section>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title" id="exampleModalLabel">
-                        <img src="{{ asset('img/two.png') }}">
-                    </div>
-                    <div class="id">
-                        #0D97GEK7208F
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="first">
-                        <div class="suc">
-                            <div class="mess">
-                                Pembayaran Berhasil!
-                            </div>
-                            <div class="tgl">
-                                08 November 2023 17:54:12 WIB
-                            </div>
-                            <div class="pay">
-                                Rp. 1.500.000
-                            </div>
-                            <div class="stat">
-                                <div class="stat-item">
-                                    <div class="head">
-                                        Tanggal Masuk
-                                    </div>
-                                    <div class="value">
-                                        08/12/2023
-                                    </div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="head">
-                                        Durasi Ngekost
-                                    </div>
-                                    <div class="value">
-                                        28 Bulan 13 hari
-                                    </div>
-                                </div>
-                            </div>
+    @if ($pembayaran)
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title" id="exampleModalLabel">
+                            <img src="{{ asset('img/two.png') }}">
+                        </div>
+                        <div class="id">
+                            {{ $pembayaran->id_pembayaran }}
                         </div>
                     </div>
-                    <div class="sec">
-                        <div class="info-list">
-                            <div class="info-item">
-                                <div class="inf">
-                                    Nama User
+                    <div class="modal-body">
+                        <div class="first">
+                            <div class="suc">
+                                <div class="mess">
+                                    Pembayaran Berhasil!
                                 </div>
-                                <div class="value">
-                                    {{ auth()->user()->name }}
+                                <div class="tgl">
+                                    @if ($pembayaran)
+                                        {{ $waktuBayar->translatedFormat('j F Y H:i:s') }}
+                                    @endif
+                                    {{-- 08 November 2023 17:54:12 WIB --}}
                                 </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="inf">
-                                    No. Kamar
-                                </div>
-                                <div class="value">
-                                    Kamar No. 5
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="inf">
-                                    Bulan Tagihan
-                                </div>
-                                <div class="value">
-                                    igi ogOO ogoigo
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="inf">
-                                    Total Tagihan
-                                </div>
-                                <div class="value">
+                                <div class="pay">
                                     Rp. 1.500.000
                                 </div>
-                            </div>
-                        </div>
-                        <div class="info-l">
-                            <div class="info-item">
-                                <div class="inf">
-                                    Metode Bayar
-                                </div>
-                                <div class="value">
-                                    Transfer Bank BCA
-                                </div>
-                            </div>
-                            <div class="info-item">
-                                <div class="inf">
-                                    Atas Nama
-                                </div>
-                                <div class="value">
-                                    Adrian
-                                </div>
-                            </div>
-                            <div class="bukti">
-                                <div class="inf">
-                                    Bukti Pembayaran
-                                </div>
-                                <div class="value">
-                                    <img src="{{ asset('img/not.jpg') }}">
+                                <div class="stat">
+                                    <div class="stat-item">
+                                        <div class="head">
+                                            Tanggal Masuk
+                                        </div>
+                                        <div class="value">
+                                            {{ $tanggalMasuk->translatedFormat('j F Y') }}
+                                        </div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="head">
+                                            Durasi Ngekost
+                                        </div>
+                                        <div class="value">
+                                            {{ $durasi }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="sec">
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <div class="inf">
+                                        Nama User
+                                    </div>
+                                    <div class="value">
+                                        {{ auth()->user()->name }}
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="inf">
+                                        No. Kamar
+                                    </div>
+                                    <div class="value">
+                                        Kamar No. {{ auth()->user()->no_kamar }}
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="inf">
+                                        Bulan Tagihan
+                                    </div>
+                                    <div class="value">
+                                        {{ $riwayatBulan->translatedFormat('F Y') }}
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="inf">
+                                        Total Tagihan
+                                    </div>
+                                    <div class="value">
+                                        {{ $pembayaran->total_tagihan }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-l">
+                                <div class="info-item">
+                                    <div class="inf">
+                                        Metode Bayar
+                                    </div>
+                                    <div class="value">
+                                        Transfer {{ $bank->nama }}
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="inf">
+                                        Atas Nama
+                                    </div>
+                                    <div class="value">
+                                        {{ $pembayaran->name }}
+                                    </div>
+                                </div>
+                                <div class="bukti">
+                                    <div class="inf">
+                                        Bukti Pembayaran
+                                    </div>
+                                    <div class="value">
+                                        <img src="{{ asset('uploads/' . $pembayaran->bukti) }}">
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    {{-- <form action="/pdf">
+                    <div class="modal-footer">
+                        {{-- <form action="/pdf">
                         <button type="submit" class="btn">Download</button>
                     </form> --}}
-                    <a href="javascript:void(0)" target="popup" onclick="window.open('/pdf','popup','width=600,height=600'); return false;" class="btn">Download</a>
+                        <a href="javascript:void(0)" target="popup" onclick="window.open('/pdf','popup','width=600,height=600'); return false;" class="btn">Download</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="next container-fluid">
         <div class="row">
@@ -288,18 +288,20 @@
                 </div>
 
                 <div class="value" id="next-pay">
-                    @if ($pembayaran)
-                        {{ $next->translatedFormat('j F Y') }}
-                    @else
-                        {{ $sementara->translatedFormat('j F Y') }}
-                    @endif
+                    {{ $pembayaranSelanjutnya->translatedFormat('j F Y') }}
                 </div>
             </div>
             <div class="col-5">
                 <form action="/pembayaran">
-                    <button type="submit" @if (auth()->user()->status_bayar == 'Sudah Lunas' || auth()->user()->status_bayar == 'Proses Validasi') disabled @else enabled @endif>
-                        Bayar sekarang
-                    </button>
+                    @if ($pembayaran)
+                        <button type="submit" @if (auth()->user()->status_bayar == 'Proses Validasi' || auth()->user()->status_bayar == 'Sudah Lunas') disabled @endif>
+                            Bayar sekarang
+                        </button>
+                    @else
+                        <button type="submit" @if (auth()->user()->status_bayar == 'Proses Validasi') disabled @endif>
+                            Bayar sekarang
+                        </button>
+                    @endif
                 </form>
                 </button>
             </div>
@@ -355,6 +357,15 @@
                             <div class="log">
                                 <i class="fi fi-ss-leave"></i>
                             </div>
+                            <div class="keterangan">
+                                Pindah Kamar Kost
+                            </div>
+                        </div>
+                    @else
+                        <div class="kategori-item">
+                            <a href="/pindah" class="log">
+                                <i class="fi fi-ss-leave"></i>
+                            </a>
                             <div class="keterangan">
                                 Pindah Kamar Kost
                             </div>
@@ -433,11 +444,11 @@
     </div>
 
     <div class="recomendation container-fluid">
-        @if ($kamarKost->isNotEmpty())
+        @if ($kamarKosong->isNotEmpty())
             <div class="splide" role="group" id="slider-2">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        @foreach ($kamarKost as $item)
+                        @foreach ($kamarKosong as $item)
                             <li class="splide__slide">
                                 <div class="card">
                                     @if ($item->gambarKamar->isNotEmpty())
@@ -525,7 +536,7 @@
         </script>
     @endif
     <script>
-        @if ($kamarKost->isNotEmpty())
+        @if ($kamarKosong->isNotEmpty())
             var splideSlider2 = new Splide('#slider-2', {
                 autoplay: false,
                 gap: '.5rem',

@@ -94,7 +94,7 @@
                             </div>
                         @else
                             <div class="tableku table-responsive">
-                                <table id="default_order" class="table border table-bordered text-nowrap">
+                                <table id="zero_config" class="table border table-bordered text-nowrap">
                                     <thead>
                                         <tr>
                                             <th class="gambar">
@@ -314,8 +314,8 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Deskripsi<span class="text-danger">*</span></div>
-                            <input type="hidden" readonly id="specialDesk" name="deskripsi_fasilitas" placeholder="Jenis Fasilitas . . ." required x-model= 'jenis_fasilitas'>
-                            <textarea class="form-control add-input" rows="8" x-model="Deskripsi" onkeyup="move()" id="textarea"></textarea>
+                            {{-- <input type="hidden" readonly id="specialDesk" name="deskripsi_fasilitas" placeholder="Jenis Fasilitas . . ." required x-model= 'jenis_fasilitas'> --}}
+                            <textarea class="form-control add-input" name="deskripsi_fasilitas" rows="8" x-model="Deskripsi" onkeyup="move()" id="textarea"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

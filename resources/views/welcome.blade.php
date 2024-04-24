@@ -1,26 +1,31 @@
+{{-- {{ dd($datas) }} --}}
 @extends('layout.main')
 @section('title', 'login page')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 @section('container')
 
+    @php
+        $datas = \App\Models\Banner::where('lokasi_banner', 'Halaman Login')->where('status', 'Publish')->get();
+    @endphp
+
     <section class="splide" aria-label="Splide Basic HTML Example">
         <div class="splide__track">
             <ul class="splide__list">
-                {{-- @if ($background->isNotEmpty())
-                    @foreach ($background as $item)
+                @if ($datas->isNotEmpty())
+                    @foreach ($datas as $item)
                         <li class="splide__slide">
                             <img src="{{ asset('uploads/' . $item->gambar_banner) }}">
                         </li>
                     @endforeach
-                @else --}}
+                @else
                     <li class="splide__slide">
                         <img src="{{ asset('img/exterior.jpg') }}">
                     </li>
                     <li class="splide__slide">
                         <img src="{{ asset('img/kost.jpeg') }}">
                     </li>
-                {{-- @endif --}}
+                @endif
             </ul>
         </div>
     </section>

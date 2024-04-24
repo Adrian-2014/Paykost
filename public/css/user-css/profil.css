@@ -46,6 +46,7 @@ input:focus {
         .myImage {
 
             img {
+                border: 2px solid rgba(153, 153, 153, 0.4);
                 height: 5.5rem !important;
                 width: 5.5rem !important;
                 border-radius: 50%;

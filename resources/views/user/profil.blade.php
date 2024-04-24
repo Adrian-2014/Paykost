@@ -153,10 +153,10 @@
     </section>
 
     <!-- Modal -->
-    <div class="modal fade" id="profil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="profil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" x-data="{ name: '{{ auth()->user()->name }}' }">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data" x-data="{ profil: '', name: '{{ Auth::user()->name }}' }">
+                <form action="{{ route('profil.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="for-edit-profil">
@@ -167,7 +167,7 @@
                                     <img src="{{ asset('img/user.png') }}" class="photo">
                                 @endif
                                 <button type="button" class="my-btn">
-                                    <input type="file" name="photo" id="profils" x-on:change="loadFile(event);" x-model="profil">
+                                    <input type="file" name="photo" id="profils" x-on:change="loadFile(event);">
                                     <label for="profils">
                                         <i class="bi bi-cloud-arrow-up"></i>
                                     </label>
@@ -175,13 +175,13 @@
                             </label>
                             <div class="users">
                                 <label>Nama User</label>
-                                <input type="text" name="username" class="form-control" value="{{ Auth::user()->name }}" x-model="name">
+                                <input type="text" name="username" class="form-control" value="" x-model="name">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn cancel" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn save" :disabled="profil === '' && (name === '{{ Auth::user()->name }}' || name === '')">Simpan</button>
+                        <button type="submit" class="btn save" :disabled="name ? null : 'disabled'">Simpan</button>
                     </div>
                 </form>
             </div>

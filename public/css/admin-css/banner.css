@@ -173,7 +173,9 @@ body {
                     display: flex;
                     flex-direction: column;
                     gap: .65rem;
-                    height: fit-content;
+                    height: 43vh;
+                    max-height: 60vh;
+                    overflow-y: auto;
 
                     .preview {
                         display: flex;
