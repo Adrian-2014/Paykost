@@ -15,6 +15,7 @@ use App\Models\cuciSetrika;
 use App\Models\cucisize;
 use App\Models\fasilitas;
 use App\Models\gambarKamar;
+use App\Models\gantiAkun;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\pembayaranKost;
@@ -93,6 +94,7 @@ class userPageController extends Controller
         $bayar = new pembayaranKost();
         $bayar->id_pembayaran = $request->id_pembayaran;
         $bayar->name = $request->nama_user;
+        $bayar->user_id = auth()->user()->id;
         $bayar->no_kamar = $request->no_kamar;
         $bayar->bulan_tagihan = $request->bulan_tagihan;
         $bayar->total_tagihan = $request->total_tagihan;
@@ -284,14 +286,14 @@ class userPageController extends Controller
         return view('user.kamarku', compact('kamar_kost', 'fasKamar', 'fasUmum'));
     }
     public function riwayat() {
-        $riwayatPembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('name', auth()->user()->name)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        $riwayatPembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+
         foreach($riwayatPembayaran as $item) {
             $notifikasi = Carbon::parse($item->updated_at);
-            // dd($notifikasi);
             $item->notif = $notifikasi;
         }
 
-        $riwayatPindah = pindahKamar::orderBy('updated_at', 'desc')->where('nama', auth()->user()->name)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        $riwayatPindah = pindahKamar::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Dipindahkan', 'Ditolak'])->get();
         foreach($riwayatPindah as $item) {
             $notifikasi = Carbon::parse($item->updated_at);
             $item->notif = $notifikasi;
@@ -380,6 +382,27 @@ class userPageController extends Controller
 
         return back()->with('success', 'Jenis Kelamin berhasil diperbarui.');
     }
+    public function updateAkun(Request $request) {
+        // dd($request);
+        $request->validate([
+            'old_email' => 'required',
+            'password_old' => 'required',
+            'new_email',
+            'new_password'
+        ]);
+
+        $permintaan = new gantiAkun();
+        $permintaan->nama = auth()->user()->name;
+        $permintaan->user_id = auth()->user()->id;
+        $permintaan->email_old = $request->old_email;
+        $permintaan->password_old = $request->password_old;
+        $permintaan->email_new = $request->new_email;
+        $permintaan->password_new = $request->new_password;
+        $permintaan->status = 'Dalam Proses';
+        $permintaan->save();
+
+        return back()->with('success', 'Permintaan Berhasil Dikirim.');
+    }
     // PROFIL
 
     // M A I N  M E N U
@@ -467,6 +490,7 @@ class userPageController extends Controller
         // $gambarBank->move(public_path('uploads'), $namaFile);
 
         $pesanan = new pemesanan();
+        $pesanan->user_id = auth()->user()->id;
         $pesanan->id_pembelian = $request->id;
         $pesanan->nama_user = $request->nama;
         $pesanan->jumlah = $request->jumlah;
@@ -525,6 +549,7 @@ class userPageController extends Controller
 
         $proses = new ProsesCuci();
         $proses->id_pembelian = $request->id;
+        $proses->user_id = auth()->user()->id;
         $proses->nama_user = $request->nama;
         $proses->jumlah = $request->jumlah;
         $proses->status = $request->status;
@@ -541,51 +566,34 @@ class userPageController extends Controller
     }
 
     public function proses() {
-        $username = auth()->user()->name; // Ganti 'username' dengan nama kolom yang sesuai dalam model pengguna Anda
-        $pemesanans = ProsesCuci::where('nama_user', $username)->whereIn('status', ['Proses Cuci', 'Proses Pengambilan'])->orderBy('id', 'desc')->get();
+        $pemesanans = ProsesCuci::where('user_id', auth()->user()->id)->whereIn('status', ['Proses Cuci', 'Proses Pengambilan'])->orderBy('id', 'desc')->get();
         foreach ($pemesanans as $pemesanan) {
-            // Ambil tanggal dan jam pemesanan
             $tgl_start = $pemesanan->tgl_start;
 
-            // Pisahkan tanggal dan jam
             $parts = explode(', ', $tgl_start);
             $tanggal = $parts[0];
             $jam = $parts[1];
-
-            // Konversi format tanggal ke format yang dapat dikenali oleh strtotime()
             $tanggal_converted = implode('-', array_reverse(explode('/', $tanggal)));
-
-            // Gabungkan tanggal dan jam
             $datetime = $tanggal_converted . ' ' . $jam;
-
-            // Ubah menjadi timestamp
             $timestamp_pemesanan = strtotime($datetime);
-
-            // Ambil timestamp waktu saat ini
             $timestamp_sekarang = time();
-
-            // Perbarui status pemesanan berdasarkan tanggal dan jam
             $pemesanan->status = ($timestamp_sekarang < $timestamp_pemesanan) ? 'Proses Pengambilan' : 'Proses Cuci';
-
-            // Simpan perubahan status ke database
             $pemesanan->save();
         }
         return view('user.kategori.pemesanan.proses' ,compact('pemesanans'));
     }
     public function riwayatCuci() {
-        $username = auth()->user()->name;
 
         $pemesanan = pemesanan::find(session()->get('pemesanan_id'));
         $bank = $pemesanan ? Bank::find($pemesanan->bank_id) : null;
 
-        $done = ProsesCuci::where('nama_user', $username)->where('status', 'Selesai')->orderBy('id', 'desc')->get();
+        $done = ProsesCuci::where('user_id', auth()->user()->id)->where('status', 'Selesai')->orderBy('id', 'desc')->get();
 
         return view('user.kategori.pemesanan.riwayat', compact('done', 'bank'));
     }
 
     public function updateStatus(Request $request)
     {
-
         $request->validate([
            'id' => 'required',
            'status'=>'required',
@@ -642,5 +650,6 @@ class userPageController extends Controller
 
         return redirect()->route('userku')->with('success', 'Permintaan Anda Berhasil Di Kirim');
     }
+
 
 }

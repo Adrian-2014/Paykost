@@ -14,6 +14,7 @@ use App\Models\cuciSetrika;
 use App\Models\cucisize;
 use App\Models\fasilitas;
 use App\Models\gambarKamar;
+use App\Models\gantiAkun;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\KamarKostFasilitas;
@@ -44,11 +45,11 @@ class adminControll extends Controller
     {
         $pembayaran = pembayaranKost::orderBy('id', 'desc')->where('status', 'Proses Validasi')->get();
         $riwayat = pembayaranKost::orderBy('id', 'desc')->whereIn('status', ['Diterima', 'Ditolak'])->get();
-        $dataBulanFormat = [];
-        $dataPay = [];
-        $tanggalBayar =[];
+        // $dataBulanFormat = [];
+        // $dataPay = [];
+        // $tanggalBayar =[];
 
-        return view('admin.pembayaran', compact('pembayaran','riwayat', 'dataBulanFormat', 'dataPay', 'tanggalBayar'));
+        return view('admin.pembayaran', compact('pembayaran','riwayat'));
     }
     public function payTolak(Request $request) {
         $request->validate([
@@ -95,6 +96,8 @@ class adminControll extends Controller
     public function user() {
         $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
         $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->get();
+        $request =  gantiAkun::orderBy('id', 'desc')->where('status', 'Dalam Proses')->get();
+        $riwayat = gantiAkun::orderBy('id', 'desc')->where('status', ['Ditolak', 'Diterima'])->get();
 
         foreach($user as $item) {
             $mk = $item->tanggal_masuk;
@@ -108,8 +111,9 @@ class adminControll extends Controller
 
             $item->tanggalMasukFormatted = $tanggalMasuk->translatedFormat('j F Y');
             $item->durasiNgekostFormatted = $hasil;
+            // return view('admin.user', compact('user', 'kamars', 'tanggalMasuk', 'hasil'));
         }
-        return view('admin.user', compact('user', 'kamars', 'tanggalMasuk', 'hasil'));
+        return view('admin.user', compact('user', 'kamars', 'request', 'riwayat'));
     }
     public function storeUser(Request $request) {
 
@@ -774,7 +778,6 @@ class adminControll extends Controller
         return redirect()->back();
     }
 
-
     // Pindah Kamar
     public function pagePindah() {
         $PengajuanPindah = pindahKamar::where('status', 'Dalam Proses')->get();
@@ -812,4 +815,23 @@ class adminControll extends Controller
         return redirect()->back()->with('success', 'Data Berhasil di Kirim');
     }
     // Pindah Kamar
+
+    public function tolakAccount(Request $request) {
+
+        $request->validate([
+            'alasan' => 'required',
+        ]);
+
+        $akun = gantiAkun::where('id', $request->id)->first();
+
+        $akun->alasan = $request->alasan;
+        $akun->status = 'Ditolak';
+        $akun->save();
+
+        return back()->with('success', 'Data Telah DI Kirim');
+    }
+
+    public function setujuAccount(Request $request) {
+        
+    }
 }

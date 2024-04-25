@@ -351,16 +351,36 @@
     <div class="kategori container-fluid mt-4">
         <div class="row">
             <div class="col-12">
-                @if ($pindah_kamar)
-                    @if ($pindah_kamar->status === 'Dalam Proses')
-                        <div class="kategori-item proses">
-                            <div class="log">
-                                <i class="fi fi-ss-leave"></i>
+                @if (auth()->user()->status_bayar === 'Sudah Lunas')
+                    @if ($pindah_kamar)
+                        @if ($pindah_kamar->status === 'Dipindahkan')
+                            <div class="kategori-item">
+                                <a href="/pindah" class="log">
+                                    <i class="fi fi-ss-leave"></i>
+                                </a>
+                                <div class="keterangan">
+                                    Pindah Kamar Kost
+                                </div>
                             </div>
-                            <div class="keterangan">
-                                Pindah Kamar Kost
+                        @elseif($pindah_kamar->status === 'Ditolak')
+                            <div class="kategori-item">
+                                <a href="/pindah" class="log">
+                                    <i class="fi fi-ss-leave"></i>
+                                </a>
+                                <div class="keterangan">
+                                    Pindah Kamar Kost
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="kategori-item proses">
+                                <div class="log">
+                                    <i class="fi fi-ss-leave"></i>
+                                </div>
+                                <div class="keterangan">
+                                    Pindah Kamar Kost
+                                </div>
+                            </div>
+                        @endif
                     @else
                         <div class="kategori-item">
                             <a href="/pindah" class="log">
@@ -372,15 +392,16 @@
                         </div>
                     @endif
                 @else
-                    <div class="kategori-item">
-                        <a href="/pindah" class="log">
+                    <div class="kategori-item proses">
+                        <div class="log">
                             <i class="fi fi-ss-leave"></i>
-                        </a>
+                        </div>
                         <div class="keterangan">
                             Pindah Kamar Kost
                         </div>
                     </div>
                 @endif
+
                 <div class="kategori-item">
                     <a href="/laporanKerusakan" class="log">
                         <i class="fi fi-ss-house-chimney-crack"></i>

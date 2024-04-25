@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pembayaran_kosts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('user_id');
             $table->string('no_kamar');
             $table->string('bulan_tagihan');
             $table->string('total_tagihan');

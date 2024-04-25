@@ -227,11 +227,11 @@
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Kamar Lama</label>
-                                                                                <input type="text" readonly value="{{ $item->kamar_lama }}" class="form-control">
+                                                                                <input type="text" readonly value="Kamar No. {{ $item->kamar_lama }}" class="form-control">
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Kamar Baru</label>
-                                                                                <input type="text" readonly value="{{ $item->kamar_baru }}" class="form-control">
+                                                                                <input type="text" readonly value="Kamar No. {{ $item->kamar_baru }}" class="form-control">
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Ukuran Kamar Baru</label>
@@ -243,7 +243,7 @@
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Tanggal / Waktu Pindah</label>
-                                                                                <input type="text" readonly value="{{ $item->waktu_pindah }}" class="form-control">
+                                                                                <input type="text" readonly value="{{ $item->waktu_pindah->isoFormat('D MMMM Y') }}" class="form-control">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -399,11 +399,11 @@
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Kamar Lama</label>
-                                                                                <input type="text" readonly value="{{ $item->kamar_lama }}" class="form-control">
+                                                                                <input type="text" readonly value="Kamar No. {{ $item->kamar_lama }}" class="form-control">
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Kamar Baru</label>
-                                                                                <input type="text" readonly value="{{ $item->kamar_baru }}" class="form-control">
+                                                                                <input type="text" readonly value="Kamar No. {{ $item->kamar_baru }}" class="form-control">
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Ukuran Kamar Baru</label>
@@ -415,7 +415,7 @@
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Tanggal / Waktu Pindah</label>
-                                                                                <input type="text" readonly value="{{ $item->waktu_pindah }}" class="form-control">
+                                                                                <input type="text" readonly value="{{ $item->waktu_pindah->translatedFormat('j F Y') }}" class="form-control">
                                                                             </div>
                                                                         </div>
                                                                     </div>

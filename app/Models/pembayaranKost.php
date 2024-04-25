@@ -11,6 +11,6 @@ class pembayaranKost extends Model
     protected $table = 'pembayaran_kosts';
     protected $casts = [
         'bulan_tagihan' => 'date:d-m-Y',
-        'created_at' => 'date:Y-m-d H:i:s'
+        'created_at' => 'date:Y-m-d H:i:s',
     ];
 }

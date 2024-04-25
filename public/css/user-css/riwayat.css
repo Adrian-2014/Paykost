@@ -325,7 +325,471 @@ body {
 }
 
 
+/* KUMPULAN MODAL PEMBAYARAN */
 
+
+/* histori pembayaran */
+
+.riwayat-pembayaran {
+
+    .modal-dialog {
+
+        .modal-content {
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.7rem 1rem !important;
+
+                .modal-title {
+                    img {
+                        height: 25px;
+                        width: 87px;
+                    }
+                }
+
+                .id {
+                    display: flex;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    gap: 0.5rem;
+                }
+            }
+
+            .modal-body {
+                height: 22rem;
+                border-bottom: none !important;
+                padding-top: 1rem !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+
+                .first {
+                    .suc {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 0;
+
+                        .mess {
+                            font-size: 0.95rem;
+                            font-weight: bold;
+                            color: green;
+                            letter-spacing: 0.3px;
+                        }
+
+                        .merr {
+                            font-size: 0.95rem;
+                            font-weight: bold;
+                            color: rgb(255, 0, 0);
+                            letter-spacing: 0.3px;
+                        }
+
+                        .tgl {
+                            font-size: 0.7rem;
+                            color: gray;
+                        }
+
+                        .pay {
+                            font-size: 1.2rem;
+                            font-weight: bolder;
+                            margin-top: 0.5rem;
+                        }
+                    }
+
+                    .stat {
+                        background-color: white;
+                        border-radius: 13px;
+                        margin-top: 0.8rem;
+                        border: 0.6px solid rgba(128, 128, 128, 0.447);
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0.5rem 1rem;
+
+                        .stat-item {
+                            display: flex;
+                            text-align: center;
+                            flex-direction: column;
+
+                            .head {
+                                font-size: 0.75rem;
+                                color: gray;
+                            }
+
+                            .value {
+                                color: rgba(0, 0, 0, 0.78);
+                                font-weight: 600;
+                                font-size: 0.85rem;
+                            }
+                        }
+                    }
+                }
+
+                .sec {
+                    margin-top: .5rem;
+
+                    .info-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.4rem;
+
+                        .info-item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            .inf {
+                                font-size: 0.8rem;
+                                color: gray;
+                                margin-top: -0.2rem;
+                            }
+
+                            .value {
+                                font-size: 0.85rem;
+                                color: rgba(0, 0, 0, 0.85);
+                                font-weight: 500;
+                                margin-top: -0.2rem;
+                            }
+                        }
+                    }
+
+                    .info-l {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.4rem;
+                        margin-top: .75rem;
+
+                        .info-item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            /* padding: 0 1rem; */
+                            .inf {
+                                font-size: 0.8rem;
+                                color: gray;
+                                margin-top: -0.5rem;
+                            }
+
+                            .value {
+                                font-size: 0.8rem;
+                                color: rgba(0, 0, 0, 0.85);
+                                font-weight: 500;
+                                margin-top: -0.2rem;
+                            }
+                        }
+
+                        .bukti {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            img {
+                                width: 200px;
+                                /* height: 307px; */
+                                max-height: 350px;
+                                height: auto;
+                                margin-top: 0.5rem;
+                                border-radius: 6px;
+                                border: 1px solid gray;
+                            }
+
+                            .inf {
+                                color: gray;
+                                margin-top: 0.5rem;
+                                width: 100%;
+                                font-size: 0.9rem;
+                            }
+                        }
+                    }
+                }
+
+                .sec::after {
+                    content: "";
+                    display: block;
+                    border-bottom: 0.8px solid rgba(128, 128, 128, 0.199);
+                    margin-top: 0.7rem !important;
+                    transform: scaleX(1);
+                }
+
+                .third {
+                    display: flex;
+                    flex-direction: column;
+                    border: 1px solid rgba(255, 0, 0, 0.8);
+                    border-radius: .5rem;
+                    padding: .5rem;
+
+                    /* gap: .35rem; */
+
+                    .message {
+                        font-size: .9rem;
+                        color: rgba(0, 0, 0, 0.85);
+                    }
+
+                    .pesan {
+                        font-size: .75rem;
+                        color: rgba(0, 0, 0, 0.7);
+                    }
+                }
+            }
+
+            .modal-footer {
+                padding: 0.3rem 0.7rem;
+                display: flex;
+                justify-content: center;
+
+                .btn {
+                    background: linear-gradient(rgb(88, 125, 246),
+                            rgb(100, 203, 244));
+                    color: white;
+                    border: none;
+                    outline: none;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+}
+
+.riwayat-pindah {
+
+    .modal-dialog {
+
+        .modal-content {
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.7rem 1rem !important;
+
+                .modal-title {
+                    img {
+                        height: 25px;
+                        width: 87px;
+                    }
+                }
+
+                .id {
+                    display: flex;
+                    font-size: 0.7rem;
+                    font-weight: 600;
+                    gap: 0.5rem;
+                }
+            }
+
+            .modal-body {
+                height: fit-content !important;
+                /* max-height: 22rem; */
+                border-bottom: none !important;
+                padding-top: 1rem !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+
+                .first {
+                    .suc {
+                        display: flex;
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 0;
+
+                        .mess {
+                            font-size: 0.95rem;
+                            font-weight: bold;
+                            color: green;
+                            letter-spacing: 0.3px;
+                        }
+
+                        .merr {
+                            font-size: 0.95rem;
+                            font-weight: bold;
+                            color: rgb(255, 0, 0);
+                            letter-spacing: 0.3px;
+                        }
+
+                        .tgl {
+                            font-size: 0.7rem;
+                            color: gray;
+                        }
+
+                        .pay {
+                            font-size: 1.2rem;
+                            font-weight: bolder;
+                            margin-top: 0.5rem;
+                        }
+                    }
+
+                    .stat {
+                        background-color: white;
+                        border-radius: 13px;
+                        margin-top: 0.8rem;
+                        border: 0.6px solid rgba(128, 128, 128, 0.447);
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0.5rem 1rem;
+
+                        .stat-item {
+                            display: flex;
+                            text-align: center;
+                            flex-direction: column;
+
+                            .head {
+                                font-size: 0.75rem;
+                                color: gray;
+                            }
+
+                            .value {
+                                color: rgba(0, 0, 0, 0.78);
+                                font-weight: 600;
+                                font-size: 0.85rem;
+                            }
+                        }
+                    }
+                }
+
+                .sec {
+                    margin-top: .5rem;
+
+                    .info-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.4rem;
+
+                        .info-item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            .inf {
+                                font-size: 0.8rem;
+                                color: gray;
+                                margin-top: -0.2rem;
+                            }
+
+                            .value {
+                                font-size: 0.85rem;
+                                color: rgba(0, 0, 0, 0.85);
+                                font-weight: 500;
+                                margin-top: -0.2rem;
+                            }
+                        }
+                    }
+
+                    .info-l {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.4rem;
+                        margin-top: .75rem;
+
+                        .info-item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            /* padding: 0 1rem; */
+                            .inf {
+                                font-size: 0.8rem;
+                                color: gray;
+                                margin-top: -0.5rem;
+                            }
+
+                            .value {
+                                font-size: 0.8rem;
+                                color: rgba(0, 0, 0, 0.85);
+                                font-weight: 500;
+                                margin-top: -0.2rem;
+                            }
+                        }
+
+                        .bukti {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            img {
+                                width: 200px;
+                                /* height: 307px; */
+                                max-height: 350px;
+                                height: auto;
+                                margin-top: 0.5rem;
+                                border-radius: 6px;
+                                border: 1px solid gray;
+                            }
+
+                            .inf {
+                                color: gray;
+                                margin-top: 0.5rem;
+                                width: 100%;
+                                font-size: 0.9rem;
+                            }
+                        }
+                    }
+                }
+
+                .alasan {
+                    margin-top: .5rem;
+                    display: flex;
+                    flex-direction: column;
+                    /* border: 1px solid rgba(255, 0, 0, 0.8); */
+                    background-color: rgba(0, 0, 0, 0.08);
+                    border-radius: .5rem;
+                    padding: .5rem;
+
+                    .heading {
+                        font-size: .85rem;
+                        color: rgba(0, 0, 0, 0.85);
+                    }
+
+                    .item {
+                        font-size: .7rem;
+                        color: rgba(0, 0, 0, 0.7);
+                    }
+                }
+
+                .third {
+                    margin-top: .5rem;
+                    display: flex;
+                    flex-direction: column;
+                    border: 1px solid rgba(255, 0, 0, 0.8);
+                    border-radius: .5rem;
+                    padding: .5rem;
+
+                    /* gap: .35rem; */
+
+                    .message {
+                        font-size: .9rem;
+                        color: rgba(0, 0, 0, 0.85);
+                    }
+
+                    .pesan {
+                        font-size: .75rem;
+                        color: rgba(0, 0, 0, 0.7);
+                    }
+                }
+            }
+
+            .modal-footer {
+                padding: 0.3rem 0.7rem;
+                display: flex;
+                justify-content: center;
+
+                .btn {
+                    background: linear-gradient(rgb(88, 125, 246),
+                            rgb(100, 203, 244));
+                    color: white;
+                    border: none;
+                    outline: none;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+}
+
+/* histori pembayaran */
+
+
+/* KUMPULAN MODAL PEMBAYARAN */
 
 /* M E N U  S */
 

@@ -41,7 +41,7 @@
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
-                <div class="item-choice">
+                <div class="item-choice" data-bs-toggle="modal" data-bs-target="#account">
                     <div class="details">
                         <i class="ti ti-at"></i>
                         <div class="info">
@@ -153,6 +153,36 @@
     </section>
 
     <!-- Modal -->
+
+    <div class="modal fade" id="account" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('akun.update') }}" method="POST" x-data="{ emails: '', password: '' }">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="for-edit-account">
+                            <label>Email Lama</label>
+                            <input type="email" name="old_email" class="form-control" value="{{ auth()->user()->email }}" readonly>
+                            <input type="hidden" value="{{ auth()->user()->password }}" name="password_old">
+                        </div>
+                        <div class="for-edit-account pt-2">
+                            <label>Email Baru</label>
+                            <input type="text" name="new_email" class="form-control" value="" x-model="emails">
+                        </div>
+                        <div class="for-edit-account">
+                            <label>Password Baru</label>
+                            <input type="text" name="new_password" class="form-control" value="" x-model="password">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn save" :disabled="(password || emails) === ''">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="profil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" x-data="{ name: '{{ auth()->user()->name }}' }">
         <div class="modal-dialog">
             <div class="modal-content">

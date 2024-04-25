@@ -154,7 +154,7 @@
                                                 <td>
                                                     <div class="td-item b-tag">
                                                         <div class="item">
-                                                            {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                            {{ $item->bulan_tagihan->isoFormat('MMMM Y') }}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -171,7 +171,7 @@
                                                             Lihat
                                                         </div>
                                                         <div class="for-tolak">
-                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->name }}">Tolak!</button>
+                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-name="{{ $item->name }}" data-id="{{ $item->id }}">Tolak!</button>
                                                         </div>
                                                         <div class="for-setuju">
                                                             <form action="{{ route('SETUJU') }}" method="post">
@@ -181,7 +181,7 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <div id="penolakan{{ $item->name }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -192,7 +192,7 @@
                                                                     <div class="modal-body">
                                                                         <input type="hidden" name="id" value="{{ $item->id }}">
                                                                         <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
-                                                                        <textarea name="pesan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
+                                                                        <textarea name="alasan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
@@ -221,7 +221,7 @@
                                                                                 Pembayaran Pada:
                                                                             </div>
                                                                             <div class="bot">
-                                                                                {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }} <span>WIB</span>
+                                                                                {{ $item->created_at->isoFormat('D MMMM Y') }} <span>{{ $item->created_at->translatedFormat('H:i:s') }} WIB</span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="fl">
@@ -239,7 +239,7 @@
                                                                             <div class="data">
                                                                                 <div class="kiri">Tagihan Bulan</div>
                                                                                 <div class="kanan special">
-                                                                                    {{ $item->bulan_tagihan->isoFormat('D MMMM Y') }}
+                                                                                    {{ $item->bulan_tagihan->isoFormat('MMMM Y') }}
                                                                                 </div>
                                                                             </div>
                                                                             <div class="data">
@@ -520,7 +520,8 @@
         <script>
             document.querySelectorAll('.no.tolak').forEach(function(button) {
                 button.addEventListener('click', function(e) {
-                    var itemName = button.getAttribute('data-id');
+                    var itemId = button.getAttribute('data-id');
+                    var itemName = button.getAttribute('data-name');
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
                         text: 'Tolak Pengajuan dari ' + itemName + '?',
@@ -532,7 +533,7 @@
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $('#penolakan' + itemName).modal('show');
+                            $('#penolakan' + itemId).modal('show');
                         }
                     });
                 });

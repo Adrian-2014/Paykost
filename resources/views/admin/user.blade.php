@@ -361,6 +361,309 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="border-bottom">
+                        <h4 class="card-title mb-2 ps-2 pt-2">Pengajuan Ganti Akun</h4>
+                    </div>
+                    <div class="card-body">
+                        @if ($request->isEmpty())
+                            <div class="illustration d-flex flex-column">
+                                <div class="image">
+                                    <img src="{{ asset('img/people.png') }}">
+                                </div>
+                                <div class="text">
+                                    Tidak ada Permintaan saat ini
+                                </div>
+                            </div>
+                        @else
+                            <div class="tableku table-responsive pengajuan">
+                                <table id="zero_config" class="table border table-bordered text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="user">
+                                                <div class="th-item">
+                                                    User
+                                                </div>
+                                            </th>
+                                            <th class="action">
+                                                <div class="th-item">
+                                                    Aksi
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($request as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="td-item user">
+                                                        <div class="for-first">
+                                                            <div class="profil">
+                                                                @if (is_null($item->profil) || empty($item->profil))
+                                                                    <img src="{{ asset('img/user.png') }}">
+                                                                @else
+                                                                    <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                @endif
+                                                            </div>
+                                                            <div class="nama">
+                                                                {{ $item->nama }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="for-sec">
+                                                            <div class="email">
+                                                                {{ $item->email_old }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="for-third">
+                                                            <div class="kamar">
+                                                                Kamar No. {{ $item->no_kamar }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item action" x-data="{ check: false }">
+                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#pengajuan{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
+                                                            Lihat
+                                                        </div>
+                                                        <div class="for-tolak">
+                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->id }}" data-name="{{ $item->nama }}">Tolak!</button>
+                                                        </div>
+                                                        <div class="for-setuju">
+                                                            <form action="{{ route('setuju.account') }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                <input type="hidden" name="new_email" value="{{ $item->email_new }}">
+                                                                <button type="submit" class="yes setuju" :disabled="check ? false : 'disabled'">Approve</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    Penolakan Pengajuan {{ $item->nama }}
+                                                                </div>
+                                                                <form action="{{ route('tolak.account') }}" x-data="{ alasan: '' }" method="POST">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
+                                                                        <textarea name="alasan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
+                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="pengajuan{{ $item->id }}" class="modal fade in pengajuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div class="item for-profil-img">
+                                                                        <div class="myImg">
+                                                                            @if (is_null($item->profil) || empty($item->profil))
+                                                                                <img src="{{ asset('img/user.png') }}">
+                                                                            @else
+                                                                                <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="name">
+                                                                            {{ $item->nama }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+
+                                                                        @if ($item->email_new)
+                                                                            <div class="col-12">
+                                                                                <label for="">Email Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->email_new }}" class="form-control">
+                                                                            </div>
+                                                                        @endif
+                                                                        @if ($item->password_new)
+                                                                            <div class="col-12">
+                                                                                <label for="">Password Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->password_new }}" class="form-control">
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
+                                                                        Tutup
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="border-bottom">
+                        <h4 class="card-title mb-2 ps-2 pt-2">Riwayat Pengajuan</h4>
+                    </div>
+                    <div class="card-body">
+                        @if ($riwayat->isEmpty())
+                            <div class="illustration d-flex flex-column">
+                                <div class="image">
+                                    <img src="{{ asset('img/people.png') }}">
+                                </div>
+                                <div class="text">
+                                    Tidak ada Riwayat saat ini
+                                </div>
+                            </div>
+                        @else
+                            <div class="tableku table-responsive pengajuan">
+                                <table id="zero_config" class="table border table-bordered text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="user">
+                                                <div class="th-item">
+                                                    User
+                                                </div>
+                                            </th>
+                                            <th class="action">
+                                                <div class="th-item">
+                                                    Aksi
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($riwayat as $item)
+                                            <tr>
+                                                <td>
+                                                    <div class="td-item user">
+                                                        <div class="for-first">
+                                                            <div class="profil">
+                                                                @if (is_null($item->profil) || empty($item->profil))
+                                                                    <img src="{{ asset('img/user.png') }}">
+                                                                @else
+                                                                    <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                @endif
+                                                            </div>
+                                                            <div class="nama">
+                                                                {{ $item->nama }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="for-sec">
+                                                            <div class="email">
+                                                                {{ $item->email_old }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="for-third">
+                                                            <div class="kamar">
+                                                                Kamar No. {{ $item->no_kamar }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item action" x-data="{ check: false }">
+                                                        <div class="item" data-bs-toggle="modal" data-bs-target="#pengajuan{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
+                                                            Lihat
+                                                        </div>
+                                                        <div class="for-tolak">
+                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->id }}" data-name="{{ $item->nama }}">Tolak!</button>
+                                                        </div>
+                                                        <div class="for-setuju">
+                                                            <form action="{{ route('SETUJU') }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                <input type="hidden" name="new_email" value="{{ $item->email_new }}">
+                                                                <button type="submit" class="yes setuju" :disabled="check ? false : 'disabled'">Approve</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    Penolakan Pengajuan {{ $item->nama }}
+                                                                </div>
+                                                                <form action="{{ route('tolak.account') }}" x-data="{ alasan: '' }" method="POST">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
+                                                                        <textarea name="alasan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
+                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="pengajuan{{ $item->id }}" class="modal fade in pengajuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div class="item for-profil-img">
+                                                                        <div class="myImg">
+                                                                            @if (is_null($item->profil) || empty($item->profil))
+                                                                                <img src="{{ asset('img/user.png') }}">
+                                                                            @else
+                                                                                <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="name">
+                                                                            {{ $item->nama }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+
+                                                                        @if ($item->email_new)
+                                                                            <div class="col-12">
+                                                                                <label for="">Email Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->email_new }}" class="form-control">
+                                                                            </div>
+                                                                        @endif
+                                                                        @if ($item->password_new)
+                                                                            <div class="col-12">
+                                                                                <label for="">Password Baru</label>
+                                                                                <input type="text" readonly value="{{ $item->password_new }}" class="form-control">
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
+                                                                        Tutup
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -459,7 +762,7 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">No Telephone<span class="text-danger">*</span></div>
-                            <input type="text" name="no_telpon" placeholder="No Telepone . . ." class="form-control target" x-model="no_telpon">
+                            <input type="text" name="no_telpon" placeholder="No Telepone . . ." inputmode="numeric" class="form-control target" x-model="no_telpon">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Pekerjaan<span class="text-danger">*</span></div>
@@ -496,65 +799,48 @@
         document.addEventListener('click', function() {
             curs();
         });
-
         document.addEventListener('input', function() {
             curs();
         });
 
         function curs() {
-            var prev = document.querySelector('.paginate_button.previous');
-            var next = document.querySelector('.paginate_button.next');
-            // var length = document.querySelector('.dataTables_length label').innerHTML;
-            prev.innerHTML = '<i class="bi bi-chevron-left"></i>';
-            next.innerHTML = '<i class="bi bi-chevron-right"></i>';
-            // length.replace('Show', 'Menampilkan').replace('entries', 'Data');
-        }
-        document.querySelectorAll('.is-item').forEach(function(item) {
-            item.addEventListener('click', close);
-        });
+            var prev = document.querySelectorAll('.paginate_button.previous');
+            var next = document.querySelectorAll('.paginate_button.next');
 
-        function close() {
-            var modals = document.querySelector('.body-tambah');
-            modals.classList.remove('active');
-        }
-
-        function modal() {
-            var btnyala = document.querySelector('.dropdown-toggle.edi.show');
-            var btnadd = document.querySelector('.dropdown-toggle.add.show');
-            var modals = document.querySelector('.body-tambah');
-            if (btnyala || btnadd) {
-                modals.classList.add('active');
-            } else {
-                modals.classList.remove('active');
-            }
+            next.forEach(function(item) {
+                item.innerHTML = '<i class="bi bi-chevron-right"></i>';
+            });
+            prev.forEach(function(item) {
+                item.innerHTML = '<i class="bi bi-chevron-left"></i>';
+            });
         }
     </script>
 
-    <script>
-        // Select all delete buttons and attach event listener to each of them
-        document.querySelectorAll('.btn.delete').forEach(function(button) {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                var form = this.closest('form');
-
-                // Display Sweet Alert for confirmation
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: 'Item ini akan dihapus secara permanen!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
+    @if ($request->isNotEmpty())
+        <script>
+            document.querySelectorAll('.no.tolak').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    var itemId = button.getAttribute('data-id');
+                    var itemName = button.getAttribute('data-name');
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Tolak Pengajuan dari ' + itemName + '?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, Tolak!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#penolakan' + itemId).modal('show');
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
+    @endif
+
     @if (Session::has('success'))
         <script>
             Swal.fire({

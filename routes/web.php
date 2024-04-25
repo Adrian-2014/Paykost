@@ -28,6 +28,7 @@ Route::get('/', [loginController::class, 'index'])->name('login');
 
 
 // U S E R  S T A R T
+// Route::get('/transaction/getModal/{id}', [userPageController::class , 'getModal']);
 
 Route::group(['middleware' => ['auth', 'cek:2']], function () {
 
@@ -44,6 +45,7 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::get('/user/profil', [userPageController::class, 'profil']);
     // Menu
 
+
     // kategori
     Route::get('/pindah', [userPageController::class, 'pindah']);
     Route::get('/laporanKerusakan', [userPageController::class, 'laporanKerusakan']);
@@ -57,6 +59,7 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::post('kelaminUpdate', [userPageController::class, 'kelaminUpdate'])->name('kelamin.update');
     Route::post('updateNoTelpon', [userPageController::class, 'updateNoTelpon'])->name('noTelp.update');
     Route::post('updatePekerjaan', [userPageController::class, 'updatePekerjaan'])->name('pekerjaan.update');
+    Route::post('update/account', [userPageController::class, 'updateAkun'])->name('akun.update');
     // Profil
 
     // jasa cuci baju
@@ -84,6 +87,7 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::post('updateStatus', [userPageController::class, 'updateStatus'])->name('updateStatus');
     // jasa cuci baju
 
+
     // Rekomendasi
     Route::get('/rekomendasi/{id}', [userPageController::class, 'rekomendasi']);
     // Rekomendasi
@@ -95,7 +99,6 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     // Pindah Kamar
 
 });
-
 // U S E R  E N D
 
 
@@ -175,6 +178,8 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
     Route::post('/setujui/pindah', [adminControll::class, 'setujuiPindah'])->name('setujuiPindah');
     // Pindah Kamar
 
+    Route::post('/tolak/account', [adminControll::class, 'tolakAccount'])->name('tolak.account');
+    Route::post('/setuju/account', [adminControll::class, 'setujuAccount'])->name('setuju.account');
 });
 
 // A D M I N  E N D

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pindah_kamars', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('user_id');
             $table->string('kamar_lama');
             $table->string('harga_lama');
             $table->string('kamar_baru');
