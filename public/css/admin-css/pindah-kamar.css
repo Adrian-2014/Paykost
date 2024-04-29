@@ -18,7 +18,7 @@ body {
                 th {
                     .th-item {
                         text-align: center;
-                        font-weight: 600;
+                        font-weight: 500;
                     }
 
                 }
@@ -185,13 +185,13 @@ body {
                 th {
                     .th-item {
                         text-align: center;
-                        font-weight: 600;
+                        font-weight: 500;
                     }
 
                 }
 
                 .nama {
-                    width: 7rem !important;
+                    width: 10rem !important;
                 }
 
                 .no-kamar {
@@ -302,58 +302,12 @@ body {
                     .item {
                         cursor: pointer;
                         padding: .5rem 1.25rem;
-                        /* height: 1.5rem; */
-                        /* width: 1.5rem; */
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        background: linear-gradient(to bottom right, rgb(29, 118, 242), rgb(62, 181, 227));
-                        /* border-top-left-radius: .6rem;
-                        border-bottom-right-radius: .6rem; */
+                        background: rgb(27, 176, 206) !important;
                         border-radius: .5rem;
                         color: white;
-                    }
-
-                    .for-setuju {
-                        .yes {
-                            cursor: pointer;
-                            padding: .4rem 1.25rem;
-                            /* height: 1.5rem; */
-                            /* width: 1.5rem; */
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            background: linear-gradient(to bottom right, rgb(53, 202, 8), rgb(78, 233, 69));
-                            border-top-left-radius: .6rem !important;
-                            border-bottom-right-radius: .6rem !important;
-                            color: white;
-                            border: none;
-                        }
-
-                        .yes:disabled {
-                            background: rgb(172, 172, 172);
-                        }
-                    }
-
-                    .for-tolak {
-                        .no {
-                            cursor: pointer;
-                            padding: .4rem 1.25rem;
-                            /* height: 1.5rem; */
-                            /* width: 1.5rem; */
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            background: linear-gradient(to bottom right, rgb(255, 0, 0), rgba(252, 26, 26, 0.8));
-                            border-top-left-radius: .6rem !important;
-                            border-bottom-right-radius: .6rem !important;
-                            color: white;
-                            border: none;
-                        }
-
-                        .no:disabled {
-                            background: rgb(172, 172, 172);
-                        }
                     }
 
                 }
@@ -365,7 +319,7 @@ body {
 .lihat {
     .modal-dialog {
         .modal-content {
-            width: 80%;
+            width: 70%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -619,6 +573,9 @@ body {
         }
     }
 }
+
+
+
 
 /* Dropdown */
 

@@ -15,7 +15,8 @@
         </div>
     </div>
 
-    <form action="{{ route('ajukan.pindah') }}" method="post" class="form" id="form" x-data="{ new_kamar: '', real_new_kamar: '', new_harga: '', new_real_harga: '', new_ukuran_kamar: '', tanggal_pindah: '', jam_pindah: '' }">
+    <form action="{{ route('ajukan.pindah') }}" method="post" class="form" id="form" @if (isset($kamarNew)) x-data="{ new_kamar: 'Kamar No. {{ $kamarNew->nomor_kamar }}', real_new_kamar: '{{ $kamarNew->nomor_kamar }}', new_harga: 'Rp. {{ $kamarNew->harga_kamar }}', new_real_harga: '{{ $kamarNew->harga_kamar }}', new_ukuran_kamar: '{{ $kamarNew->ukuran_kamar }}', tanggal_pindah: '', jam_pindah: '' }" @else
+    x-data="{ new_kamar: '', real_new_kamar: '', new_harga: '', new_real_harga: '', new_ukuran_kamar: '', tanggal_pindah: '', jam_pindah: '' }" @endif>
         @csrf
         <div class="formulir first" id="formulir">
             <div class="form-item">
@@ -26,6 +27,7 @@
                 <label for="k-now" class="form-label fw-medium">No. Kamar saat ini</label>
                 <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" disabled>
                 <input type="hidden" name="no_kamar" class="form-control" value="{{ auth()->user()->no_kamar }}">
+                <input type="hidden" name="user_id" class="form-control" value="{{ auth()->user()->id }}">
             </div>
             <div class="form-item">
                 <label for="h-now" class="form-label fw-medium">Harga Kamar saat ini</label>
@@ -39,7 +41,7 @@
                 <label for="k-new" class="form-label fw-medium">Kamar Baru</label>
                 <div class="dropdown lokasi" id="drop">
                     <input type="text" readonly class="form-control add-input" id="add-lokasi" placeholder="Pilih Kamar . . ." required x-model= 'new_kamar'>
-                    <input type="hidden" readonly name="kamar_baru" required x-model= 'real_new_kamar'>
+                    <input type="hidden"name="kamar_baru" required x-model='real_new_kamar'>
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-caret-down"></i>
                     </button>

@@ -6,7 +6,7 @@
     --isianColor: rgba(0, 0, 0, 0.75);
     --placeholderColor: rgba(0, 0, 0, 0.4);
     --placeholderSize: .8rem;
-    --bgInput: rgba(0, 0, 0, 0.2);
+    --bgInput: rgba(0, 0, 0, 0.1);
 }
 
 *,
@@ -19,8 +19,7 @@ body {
 }
 
 body {
-    background-color: rgba(78, 77, 77, 0.325) !important;
-
+    background-color: rgba(189, 189, 189, 0.325) !important;
 }
 
 .navbar {
@@ -305,6 +304,7 @@ body {
             outline: none !important;
             border: none !important;
             margin: auto !important;
+            color: rgb(145, 145, 145);
             background-color: rgba(153, 153, 153, 0.3);
             font-size: .95rem;
         }
@@ -314,7 +314,7 @@ body {
 
 .active {
     background: linear-gradient(to top right, rgb(0, 85, 255), rgb(99, 192, 229));
-    color: white;
+    color: white !important;
 }
 
 label span {

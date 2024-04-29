@@ -88,8 +88,51 @@
                         </div>
                     </div>
                 </div>
+                <div class="item-choice">
+                    <div class="details">
+                        <div class="icon">
+                            <i class="ti ti-phone"></i>
+                        </div>
+                        <div class="info">
+                            <div class="heads">Nomor Telepon</div>
+                            <div class="values">
+                                {{ auth()->user()->no_telpon }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-choice">
+                    <div class="details">
+                        <div class="icon">
+                            @if (Auth::user()->jenis_kelamin === 'Laki Laki')
+                                <i class="ti ti-gender-male"></i>
+                            @else
+                                <i class="ti ti-gender-female"></i>
+                            @endif
+                        </div>
+                        <div class="info">
+                            <div class="heads">Jenis Kelamin</div>
+                            <div class="values">
+                                {{ auth()->user()->jenis_kelamin }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-choice">
+                    <div class="details">
+                        <div class="icon">
+                            <i class="ti ti-world"></i>
+                        </div>
+                        <div class="info">
+                            <div class="heads">Pekerjaan</div>
+                            <div class="values">
+                                {{ auth()->user()->pekerjaan }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="item-edit" data-bs-toggle="modal" data-bs-target="#no_telpon">
+                {{-- <div class="item-edit" data-bs-toggle="modal" data-bs-target="#no_telpon">
                     <div class="deskripsi-singkat">
                         <div class="icons">
                             <i class="ti ti-phone"></i>
@@ -134,7 +177,7 @@
                         ubah
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="item-choice" id="logoutBtn">
                     <div class="details">
@@ -318,7 +361,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat" class="nav-link">
+                <a href="/user/riwayat/pembayaran" class="nav-link">
                     <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat

@@ -16,7 +16,7 @@
     </div>
 
     <div class="form">
-        <form action="{{ route('proses') }}" method="POST" enctype="multipart/form-data" x-data = "{img: ''}">
+        <form action="{{ route('proses') }}" method="POST" enctype="multipart/form-data" x-data="{ images: '' }">
             @csrf
             <div class="inform-umum">
                 <div class="umum-item">
@@ -76,8 +76,7 @@
                 </div>
                 <div class="bukti">
                     <div class="tekt-input">Sertakan Bukti <span class="text-danger">*</span></div>
-                    <input type="file" id="inp" name="bukti_bayar" class="form-control" x-model="img">
-                    {{-- <label for="inp"><i class="bi bi-folder2-open"></i></label> --}}
+                    <input type="file" id="inp" name="bukti_bayar" class="form-control" x-model="images">
                 </div>
             </div>
 
@@ -86,6 +85,7 @@
                 <a href="/cuci" class="back">Halaman Utama</a>
                 <input type="hidden" name="id" value="{{ $pemesanan->id_pembelian }}">
                 <input type="hidden" name="nama" value="{{ $pemesanan->nama_user }}">
+                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <input type="hidden" name="no_kamar" value="{{ $pemesanan->no_kamar }}">
                 <input type="hidden" name="layanan" value="{{ $pemesanan->jenis_layanan }}">
                 <input type="hidden" name="tgl_start" value="{{ $pemesanan->tgl_start }}">
@@ -93,7 +93,7 @@
                 <input type="hidden" name="jumlah" value="{{ $pemesanan->jumlah }}">
                 <input type="hidden" name="status" value="Proses Pengambilan">
                 <input type="hidden" name="total_biaya" value="{{ $pemesanan->total_biaya }}">
-                <button type="submit" class="submit" :disabled="img ? null : 'disabled'">Konfirmasi Pembayaran</button>
+                <button type="submit" class="submit" :disabled="images">Konfirmasi Pembayaran</button>
             </div>
         </form>
     </div>
@@ -133,26 +133,29 @@
             Jasa Cuci Sepatu
         </div>
         <div class="row">
-            <div class="col-6">
-                <div class="items">
-                    <div class="s-gambar">
-                        <img src="{{ asset('gambar-kategori/fast-cleaning.jpeg') }}">
-                    </div>
-                    <div class="d-l">
-                        <div class="nama-layanan fw-medium">
-                            Fast Cleaning
+            @foreach ($sipatu as $item)
+                <a class="col-6" href="/sepatu">
+                    <div class="items">
+                        <div class="s-gambar">
+                            <img src="{{ asset('uploads/' . $item->gambar_barang) }}">
                         </div>
-                        <div class="desk">
-                            Layanan pembersihan sepatu cepat
+                        <div class="d-l">
+                            <div class="nama-layanan fw-medium">
+                                Nama
+                            </div>
+                            <div class="desk">
+                                Layanan {{ $item->nama }}
+                            </div>
+                        </div>
+                        <div class="tombol-lihat">
+                            <div class="rp">Rp.</div>
+                            <div class="real-cost">{{ $item->harga_barang }}</div>
                         </div>
                     </div>
-                    <div class="tombol-lihat">
-                        <div class="rp">Rp.</div>
-                        <div class="real-cost">15.000</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
+                </a>
+            @endforeach
+
+            {{-- <div class="col-6">
                 <div class="items">
                     <div class="s-gambar">
                         <img src="{{ asset('gambar-kategori/deep-cleaning.jpeg') }}">
@@ -208,7 +211,7 @@
                         <div class="real-cost">25.000</div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

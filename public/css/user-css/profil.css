@@ -44,11 +44,15 @@ input:focus {
         gap: .6rem;
 
         .myImage {
+            height: 5.5rem !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             img {
                 border: 2px solid rgba(153, 153, 153, 0.4);
-                height: 5.5rem !important;
                 width: 5.5rem !important;
+                height: auto;
                 border-radius: 50%;
             }
         }
@@ -292,10 +296,14 @@ input:focus {
 
                         .pp {
                             position: relative;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 6rem;
 
                             img {
                                 /* border: 3px rgb(199, 199, 199) solid; */
-                                height: 6rem;
+                                height: auto;
                                 width: 6rem;
                                 border-radius: 50%;
                             }

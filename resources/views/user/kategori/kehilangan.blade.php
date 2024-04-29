@@ -15,16 +15,18 @@
         </div>
     </div>
 
-    <form action="/" method="POST" class="form" id="form">
+    <form action="{{ route('laporKehilangan') }}" method="POST" class="form" id="form">
         @csrf
         <div class="formulir first" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama User</label>
-                <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
+                <input type="text" name="nama" class="form-control" value="{{ auth()->user()->name }}" readonly>
+                <input type="hidden" name="user_id" class="form-control" value="{{ auth()->user()->id }}">
             </div>
             <div class="form-item">
                 <label for="k-now" class="form-label fw-medium">No. Kamar</label>
-                <input type="text" id="k-now" class="form-control" value="Kamar No. 5" disabled>
+                <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" readonly>
+                <input type="hidden" name="no_kamar" class="form-control" value="{{ auth()->user()->no_kamar }}" readonly>
             </div>
         </div>
 
@@ -33,7 +35,7 @@
                 <label for="k-new" class="form-label fw-medium">Apa yang Hilang? <span>*</span></label>
                 <div class="dropdown">
 
-                    <input type="text" disabled class="form-control" id="isi" placeholder="pilih barang anda yang hilang">
+                    <input type="text" readonly class="form-control" id="isi" name="barang" placeholder="pilih barang anda yang hilang">
                     </input>
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-caret-down-fill"></i>
@@ -79,7 +81,6 @@
                                 </div>
                             </div>
                         </li>
-
                         <li class="last">
                             <div class="item" onclick="barang('Uang Tunai')">
                                 <div class="icons">
@@ -91,12 +92,12 @@
                             </div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="barang('Lainnya...')">
+                            <div class="item" onclick="barang('Lainnya . . .')">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/pencil.png') }}">
                                 </div>
                                 <div class="value">
-                                    Lainnya...
+                                    Lainnya . . .
                                 </div>
                             </div>
                         </li>
@@ -107,24 +108,24 @@
 
             <div class="form-item">
                 <label for="tanggal" class="form-label fw-medium">Tanggal Kehilangan <span>*</span></label>
-                <input type="date" id="tanggal" class="form-control">
+                <input type="date" name="tanggal" id="tanggal" class="form-control">
             </div>
             <div class="form-item">
                 <label for="waktu" class="form-label fw-medium">Jam Kehilangan <span>*</span></label>
-                <input type="time" id="waktu" class="form-control">
+                <input type="time" name="jam" id="waktu" class="form-control">
             </div>
         </div>
 
         <div class="formulir last">
             <div class="form-item">
                 <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Tambahan <span>*</span></label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
+                <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
             </div>
         </div>
 
         <div class="navbar sticky-bottom">
             <div class="isi">
-                <button type="submit" class="fw-medium rounded-pill" disabled id="tombol">Kirim Laporan</button>
+                <button type="submit" class="fw-medium rounded-pill" readonly id="tombol">Kirim Laporan</button>
             </div>
         </div>
     </form>
@@ -133,18 +134,24 @@
         function barang(barangHilang) {
             var isiInput = document.getElementById('isi');
             var placeholderText = '';
-            if (barangHilang === 'Lainnya...') {
+            if (barangHilang === 'Lainnya . . .') {
                 isiInput.value = '';
-                isiInput.disabled = false;
+                isiInput.removeAttribute('readonly');
                 placeholderText = 'Isi barang anda yang hilang...';
                 isiInput.focus();
             } else {
                 isiInput.value = barangHilang;
-                isiInput.disabled = true;
+                isiInput.readonly = true;
                 placeholderText = 'Pilih barang anda yang hilang';
             }
             isiInput.placeholder = placeholderText;
         }
+
+
+        var hariIni = new Date();
+        var besok_real = hariIni.toISOString().split('T')[0];
+
+        document.getElementById("tanggal").setAttribute("max", besok_real);
     </script>
     <script>
         function enableSubmit() {

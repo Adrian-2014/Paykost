@@ -88,7 +88,7 @@
                             </div>
                         @else
                             <div class="tableku table-responsive">
-                                <table id="zero_config" class="table">
+                                <table id="default_order" class="table">
                                     <thead>
                                         <tr>
                                             <th class="nama">
@@ -127,7 +127,7 @@
                                                             <div class="imgs">
                                                                 @php
                                                                     $user = DB::table('users')
-                                                                        ->where('name', $item->nama)
+                                                                        ->where('id', $item->user_id)
                                                                         ->first();
                                                                 @endphp
                                                                 @if ($user)
@@ -172,7 +172,7 @@
                                                             Lihat
                                                         </div>
                                                         <div class="for-tolak">
-                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->nama }}">Tolak!</button>
+                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-name="{{ $item->nama }}" data-id="{{ $item->id }}">Tolak!</button>
                                                         </div>
                                                         <div class="for-setuju">
                                                             <form action="{{ route('setujuiPindah') }}" method="post">
@@ -183,7 +183,7 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <div id="penolakan{{ $item->nama }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -243,7 +243,7 @@
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Tanggal / Waktu Pindah</label>
-                                                                                <input type="text" readonly value="{{ $item->waktu_pindah->isoFormat('D MMMM Y') }}" class="form-control">
+                                                                                <input type="text" readonly value="{{ $item->waktu_pindah->translatedFormat('j F Y H:i:s') }}" class="form-control">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -325,7 +325,7 @@
                                                             <div class="imgs">
                                                                 @php
                                                                     $user = DB::table('users')
-                                                                        ->where('name', $item->nama)
+                                                                        ->where('id', $item->user_id)
                                                                         ->first();
                                                                 @endphp
                                                                 @if ($user)
@@ -415,7 +415,7 @@
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <label for="" class="px-1 pb-1 pt-3">Tanggal / Waktu Pindah</label>
-                                                                                <input type="text" readonly value="{{ $item->waktu_pindah->translatedFormat('j F Y') }}" class="form-control">
+                                                                                <input type="text" readonly value="{{ $item->waktu_pindah->translatedFormat('j F Y H:i:s') }}" class="form-control">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -450,7 +450,8 @@
         <script>
             document.querySelectorAll('.no.tolak').forEach(function(button) {
                 button.addEventListener('click', function(e) {
-                    var itemName = button.getAttribute('data-id');
+                    var itemId = button.getAttribute('data-id');
+                    var itemName = button.getAttribute('data-name');
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
                         text: 'Tolak Pengajuan dari ' + itemName + '?',
@@ -462,7 +463,7 @@
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $('#penolakan' + itemName).modal('show');
+                            $('#penolakan' + itemId).modal('show');
                         }
                     });
                 });

@@ -349,7 +349,7 @@ body {
 
             .modal-body {
                 border-bottom: none !important;
-                padding-top: 1rem !important;
+                padding-top: .3rem !important;
                 padding-left: 1rem !important;
                 padding-right: 1rem !important;
 
@@ -408,7 +408,7 @@ body {
                 }
 
                 .sec {
-                    margin-top: 1rem;
+                    margin-top: .6rem;
 
                     .info-list {
                         display: flex;

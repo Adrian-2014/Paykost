@@ -10,7 +10,7 @@
     <div class="navbar fixed-top">
         <div class="container-fluid">
             <div class="exit">
-                <a href="/user/index" class="back">
+                <a href="javascript:void(0)" onclick="window.history.go(-1); return false;" class="back">
                     <i class="left" data-feather="chevron-left"></i>
                 </a>
                 <div class="info fw-medium">
@@ -49,12 +49,6 @@
     </div>
 
     <div class="container-fluid fasilitas">
-        <div class="head">
-            Fasilitas Kost
-        </div>
-        <div class="isian-singkat">
-            Kamar ini dilengkapi berbagai fasilitas untuk <span>Kemudahan</span> & <span>Kenyamanan</span> Kamu.
-        </div>
         <div class="mycontent">
             <div class="jud-kamar">
                 Fasilitas Kamar
@@ -133,7 +127,34 @@
 
     <div class="confirm">
         <div class="container-fluid">
-            <a href="/pindah" class="btn" id="nextPage">Ajukan Pindah Kamar</a>
+
+            @if (auth()->user()->status_bayar === 'Sudah Lunas')
+                @if ($pindah)
+                    @if ($pindah->status === 'Dipindahkan')
+                        <form action="{{ route('kePindah') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="no_kamar" value="{{ $data->nomor_kamar }}">
+                            <button type="submit" class="btn">Ajukan Pindah</button>
+                        </form>
+                    @elseif($pindah->status === 'Ditolak')
+                        <form action="{{ route('kePindah') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="no_kamar" value="{{ $data->nomor_kamar }}">
+                            <button type="submit" class="btn">Ajukan Pindah</button>
+                        </form>
+                    @else
+                        <button type="submit" class="btn" disabled>Ajukan Pindah</button>
+                    @endif
+                @else
+                    <form action="{{ route('kePindah') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="no_kamar" value="{{ $data->nomor_kamar }}">
+                        <button type="submit" class="btn">Ajukan Pindah</button>
+                    </form>
+                @endif
+            @else
+                <button type="submit" class="btn" disabled>Pindah Ke Kamar Ini</button>
+            @endif
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>

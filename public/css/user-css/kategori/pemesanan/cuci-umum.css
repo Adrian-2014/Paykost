@@ -145,7 +145,7 @@ body {
     gap: .9rem;
     overflow-x: auto;
     width: 100% !important;
-    height: fit-content;
+    height: 0;
 
 
     .item-subtotal {

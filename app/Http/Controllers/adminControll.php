@@ -18,6 +18,7 @@ use App\Models\gantiAkun;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\KamarKostFasilitas;
+use App\Models\laporanKehilangan;
 use App\Models\pembayaranKost;
 use App\Models\pindahKamar;
 use App\Models\ProsesCuci;
@@ -52,17 +53,18 @@ class adminControll extends Controller
         return view('admin.pembayaran', compact('pembayaran','riwayat'));
     }
     public function payTolak(Request $request) {
+        // dd($request);
         $request->validate([
             'id'=>'required',
-            'pesan' => 'required',
+            'alasan' => 'required',
         ]);
 
-        $pay = pembayaranKost::find($request->id);
-        $pay->pesan = $request->pesan;
+        $pay = pembayaranKost::where('id', $request->id)->first();
+        $pay->pesan = $request->alasan;
         $pay->status = 'Ditolak';
         $pay->save();
 
-        $user = User::where('name', $pay->name)->first();
+        $user = User::where('id', $pay->user_id)->first();
         $user->status_bayar = 'Ditolak';
         $user->save();
         return back()->with('success', 'Data Berhasil Dikirim.');
@@ -97,7 +99,7 @@ class adminControll extends Controller
         $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
         $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->get();
         $request =  gantiAkun::orderBy('id', 'desc')->where('status', 'Dalam Proses')->get();
-        $riwayat = gantiAkun::orderBy('id', 'desc')->where('status', ['Ditolak', 'Diterima'])->get();
+        $riwayat = gantiAkun::orderBy('id', 'desc')->whereIn('status', ['Ditolak', 'Diterima'])->get();
 
         foreach($user as $item) {
             $mk = $item->tanggal_masuk;
@@ -130,7 +132,6 @@ class adminControll extends Controller
             'role_id' => 'required',
         ]);
 
-        // Simpan data user ke tabel users
         $user = new User();
         $user->name = $request->nama;
         $user->email = $request->email;
@@ -144,10 +145,9 @@ class adminControll extends Controller
         $user->role_id = $request->role_id;
         $user->status_bayar = 'Belum Bayar';
         $user->save();
-        // Ubah kondisi kamar menjadi 'Dihuni'
-        $kamar = KamarKost::findOrFail($request->no_kamar);
+        $kamar = KamarKost::where('nomor_kamar', $request->no_kamar)->first();
         $kamar->user_id = $user->id;
-        $kamar->kondisi = 'Dihuni'; // Kamar dihuni
+        $kamar->kondisi = 'Dihuni';
         $kamar->save();
 
         return back()->with('success', 'User berhasil ditambahkan.');
@@ -155,7 +155,7 @@ class adminControll extends Controller
     public function updateUser(Request $request) {
 
         $request->validate([
-            'id' => 'required', // tambahkan validasi untuk id
+            'id' => 'required',
             'nama' => 'required',
             'email' => 'required',
             'tanggal_masuk' => 'required',
@@ -167,8 +167,7 @@ class adminControll extends Controller
             'role_id' => 'required',
         ]);
 
-        // Simpan data user ke tabel users
-        $user = User::find($request->id);
+        $user = User::where('id',$request->id)->first();
         $user->name = $request->nama;
         $user->email = $request->email;
         $user->tanggal_masuk = $request->tanggal_masuk;
@@ -178,7 +177,7 @@ class adminControll extends Controller
         $user->pekerjaan = $request->pekerjaan;
         $user->status = $request->status;
         $user->role_id = $request->role_id;
-        $user->status_bayar = 'Belum Bayar';
+        // $user->status_bayar = 'Belum Bayar';
         $user->save();
 
 
@@ -190,12 +189,19 @@ class adminControll extends Controller
         }
 
 
-        $new_kamar = KamarKost::findOrFail($request->no_kamar);
+        $new_kamar = KamarKost::where('nomor_kamar', $request->no_kamar)->first();
         $new_kamar->user_id = $user->id;
         $new_kamar->kondisi = 'Dihuni';
         $new_kamar->save();
 
-        return back()->with('success', 'Data pengguna berhasil diperbarui.');
+        return redirect()->route('admin.user')->with('success', 'Data pengguna berhasil diperbarui.');
+    }
+
+    public function toggleUser($id) {
+        $users = User::find($id);
+        $users->status = $users->status == 'Aktif' ? 'Nonaktif' : 'Aktif';
+        $users->save();
+        return back()->with('success', 'Status Berhasil Dirubah');
     }
 
     // For Fasilitas Kamar
@@ -288,11 +294,10 @@ class adminControll extends Controller
             'nomor_kamar' => 'required',
             'ukuran_kamar' => 'required',
             'kondisi' => 'required',
-            'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif', // Validasi untuk banyak gambar
+            'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif',
             'harga_kamar'=>'required',
         ]);
 
-        // Cek apakah nomor kamar sudah ada sebelumnya
         if (kamarKost::where('nomor_kamar', $request->nomor_kamar)->exists()) {
             return back()->with('fail', 'Kamar Kost No. ' .$request->nomor_kamar. '  sudah ada');
         }
@@ -735,17 +740,61 @@ class adminControll extends Controller
         return back()->with('success', 'Status Berhasil Dirubah');
     }
     public function sepatuHapus($id) {
-          // Cari item berdasarkan ID
-          $item = cuciSepatu::findOrFail($id);
-          // Hapus item
-          $item->delete();
-          return back()->with('success', 'Barang Telah Dihapus.');
+        // Cari item berdasarkan ID
+        $item = cuciSepatu::findOrFail($id);
+        // Hapus item
+        $item->delete();
+        return back()->with('success', 'Barang Telah Dihapus.');
     }
 
     // Proses Cuci
     public function prosesPencucian() {
         $proses = ProsesCuci::whereIn('status', ['Proses Pengambilan', 'Proses Cuci'])->get();
+        $now = Carbon::now();
+
+        $pengambilan = ProsesCuci::where('status', 'Proses Pengambilan')->get();
+        $processing = ProsesCuci::where('status', 'Proses Cuci')->get();
+
+        if($processing) {
+            foreach($processing as $item) {
+
+                $dones = str_replace(',', '', $item->tgl_done);
+
+                $td = Carbon::createFromFormat('d/m/Y H:i:s', $dones);
+                // $tp = Carbon::parse($tgl_starts);
+                // dd($now);
+                if($now >= $td) {
+                    $src = ProsesCuci::where('id', $item->id)->first();
+                    $src->status = 'Selesai';
+                    $src->save();
+                    return view('admin.kategori.cuci.proses-cuci', compact('proses'));
+                }else {
+                    return view('admin.kategori.cuci.proses-cuci', compact('proses'));
+                }
+            }
+        }
+
+        if($pengambilan) {
+            foreach($pengambilan as $item) {
+
+                $tgl_starts = str_replace(',', '', $item->tgl_start);
+
+                $tp = Carbon::createFromFormat('d/m/Y H:i:s', $tgl_starts);
+                // $tp = Carbon::parse($tgl_starts);
+                // dd($now);
+                if($now > $tp) {
+                    $src = ProsesCuci::where('id', $item->id)->first();
+                    $src->status = 'Proses Cuci';
+                    $src->save();
+                    return view('admin.kategori.cuci.proses-cuci', compact('proses'));
+                }
+            }
+        }else {
+            return view('admin.kategori.cuci.proses-cuci', compact('proses'));
+        }
+
         return view('admin.kategori.cuci.proses-cuci', compact('proses'));
+
     }
 
     public function editTanggal(Request $request) {
@@ -780,10 +829,17 @@ class adminControll extends Controller
 
     // Pindah Kamar
     public function pagePindah() {
-        $PengajuanPindah = pindahKamar::where('status', 'Dalam Proses')->get();
-        $riwayat =  pindahKamar::orderBy('created_at', 'desc')->whereIn('status', ['Ditolak', 'Diterima', 'Dipindahkan'])->get();
-        $waktuPindah = [];
-        $tanggalPengajuan = [];
+        // $perpindahan = pindahKamar::where('status', 'Diterima')->get();
+        // $now = Carbon::now();
+        // foreach($perpindahan as $item) {
+        //     $x = Carbon::parse($item->waktu_pindah);
+        //     $waktuPindah = $x;
+        //     if($now >=  $item->waktu_pindah) {
+        //         return redirect()->route('updatesPindah')->withMethod('post');
+        //     }
+        // }
+        $PengajuanPindah = pindahKamar::orderBy('id', 'desc')->where('status', 'Dalam Proses')->get();
+        $riwayat =  pindahKamar::orderBy('id', 'desc')->whereIn('status', ['Ditolak', 'Diterima', 'Dipindahkan'])->get();
         return view('admin.kategori.pindah-kamar', compact('PengajuanPindah', 'riwayat'));
     }
 
@@ -814,8 +870,32 @@ class adminControll extends Controller
         $kamar->save();
         return redirect()->back()->with('success', 'Data Berhasil di Kirim');
     }
+
+    // public function updatesPindah() {
+    //     $pindahKamar = pindahKamar::where('status', 'Diterima')->get();
+    //     foreach($pindahKamar as $item) {
+    //         $kamarNow = kamarKost::where('user_id',  $item->user_id)->first();
+    //         $user = $item->user_id;
+    //         $user->no_kamar = $item->kamar_baru;
+    //         $user->save();
+    //         if ($kamarNow) {
+    //             $kamarNow->user_id = null;
+    //             $kamarNow->kondisi = 'Kosong';
+    //             $kamarNow->save();
+    //         }
+    //         $new_kamar = KamarKost::where('nomor_kamar', $item->kamar_baru)->first();
+    //         $new_kamar->user_id = $user->id;
+    //         $new_kamar->kondisi = 'Dihuni';
+    //         $new_kamar->save();
+
+    //         $item->status = 'Dipindahkan';
+    //         $item->save();
+    //     }
+
+    // }
     // Pindah Kamar
 
+    // Akun
     public function tolakAccount(Request $request) {
 
         $request->validate([
@@ -830,8 +910,61 @@ class adminControll extends Controller
 
         return back()->with('success', 'Data Telah DI Kirim');
     }
-
     public function setujuAccount(Request $request) {
-        
+        // dd($request);
+        $request->validate([
+            'id',
+            'new_email' => 'nullable|email',
+            'new_password' => 'nullable',
+        ]);
+
+
+        $newEmail = $request->input('new_email');
+        $newPassword = $request->input('new_password');
+
+        $user = User::where('id', $request->user_id)->first();
+
+        if (!empty($newEmail)) {
+            if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+                return back()->with('fail', 'Format email tidak valid');
+            }else {
+                $user->email = $newEmail;
+            }
+        }
+
+        // Cek apakah input password tidak kosong
+        if (!empty($newPassword)) {
+            // Enkripsi password baru
+            $user->password = Hash::make($newPassword);
+        }
+
+        // dd($request);
+        $ajuan = gantiAkun::where('id', $request->id)->first();
+        $ajuan->status = 'Diterima';
+        $ajuan->save();
+        $user->save();
+
+        return redirect()->back()->with('success', 'Data Berhasil Di Update');
+    }
+    // Akun
+
+    public function laporanKehilangan() {
+        $lk = laporanKehilangan::orderBy('id', 'desc')->where('status', 'Dalam Proses')->get();
+        $rk = laporanKehilangan::orderBy('id', 'desc')->where('status', 'Direspon')->get();
+
+        return view('admin.kategori.laporan-kehilangan', compact('lk', 'rk'));
+    }
+    public function responKehilangan(Request $request) {
+
+        // dd($request->all());
+        $request->validate([
+            'respon' => 'required',
+        ]);
+
+        $laporan = laporanKehilangan::where('user_id', $request->user_id)->first();
+        $laporan->respon = $request->respon;
+        $laporan->status = 'Direspon';
+        $laporan->save();
+        return redirect()->back()->with('success', 'Respon Berhasil Dikirim');
     }
 }

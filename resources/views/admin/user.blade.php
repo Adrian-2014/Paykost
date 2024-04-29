@@ -157,20 +157,20 @@
                                                 </td>
                                                 <td>
                                                     <div class="td-item status">
-                                                        <div class="item stat @if ($item->status == 'Aktif') aktif @else nonaktif @endif">
-                                                            {{ $item->status }}
+                                                        <div class="item stat @if ($item->status_bayar === 'Sudah Lunas') aktif @elseif($item->status_bayar === 'Proses Validasi') proses @else nonaktif @endif">
+                                                            {{ $item->status_bayar }}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="td-item action">
-                                                        <div class="toggle">
+                                                        {{-- <div class="toggle">
                                                             <form id="edit-form" name="edit-form" method="post">
                                                                 <div class="form-check form-switch">
                                                                     <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Aktif' ? 'checked' : null }} />
                                                                 </div>
                                                             </form>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="target-modal detail-btn" data-bs-toggle="modal" data-bs-target="#detail{{ $item->id }}">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </div>
@@ -401,10 +401,13 @@
                                                     <div class="td-item user">
                                                         <div class="for-first">
                                                             <div class="profil">
-                                                                @if (is_null($item->profil) || empty($item->profil))
+                                                                @php
+                                                                    $user = \App\Models\User::where('id', $item->user_id)->first();
+                                                                @endphp
+                                                                @if (is_null($user->profil) || empty($user->profil))
                                                                     <img src="{{ asset('img/user.png') }}">
                                                                 @else
-                                                                    <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                    <img src="{{ asset('uploads/' . $user->profil) }}">
                                                                 @endif
                                                             </div>
                                                             <div class="nama">
@@ -418,7 +421,10 @@
                                                         </div>
                                                         <div class="for-third">
                                                             <div class="kamar">
-                                                                Kamar No. {{ $item->no_kamar }}
+                                                                @php
+                                                                    $no_kamar = \App\Models\User::where('id', $item->user_id)->first();
+                                                                @endphp
+                                                                Kamar No. {{ $no_kamar->no_kamar }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -435,7 +441,9 @@
                                                             <form action="{{ route('setuju.account') }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="id" value="{{ $item->id }}">
+                                                                <input type="hidden" name="user_id" value="{{ $item->user_id }}">
                                                                 <input type="hidden" name="new_email" value="{{ $item->email_new }}">
+                                                                <input type="hidden" name="new_password" value="{{ $item->pasword_new }}">
                                                                 <button type="submit" class="yes setuju" :disabled="check ? false : 'disabled'">Approve</button>
                                                             </form>
                                                         </div>
@@ -529,13 +537,18 @@
                                 </div>
                             </div>
                         @else
-                            <div class="tableku table-responsive pengajuan">
+                            <div class="tableku table-responsive riwayat">
                                 <table id="zero_config" class="table border table-bordered text-nowrap">
                                     <thead>
                                         <tr>
                                             <th class="user">
                                                 <div class="th-item">
                                                     User
+                                                </div>
+                                            </th>
+                                            <th class="stat">
+                                                <div class="th-item">
+                                                    Status
                                                 </div>
                                             </th>
                                             <th class="action">
@@ -552,10 +565,13 @@
                                                     <div class="td-item user">
                                                         <div class="for-first">
                                                             <div class="profil">
-                                                                @if (is_null($item->profil) || empty($item->profil))
+                                                                @php
+                                                                    $user = \App\Models\User::where('id', $item->user_id)->first();
+                                                                @endphp
+                                                                @if (is_null($user->profil) || empty($user->profil))
                                                                     <img src="{{ asset('img/user.png') }}">
                                                                 @else
-                                                                    <img src="{{ asset('uploads/' . $item->profil) }}">
+                                                                    <img src="{{ asset('uploads/' . $user->profil) }}">
                                                                 @endif
                                                             </div>
                                                             <div class="nama">
@@ -569,9 +585,25 @@
                                                         </div>
                                                         <div class="for-third">
                                                             <div class="kamar">
-                                                                Kamar No. {{ $item->no_kamar }}
+                                                                @php
+                                                                    $no_kamar = \App\Models\User::where('id', $item->user_id)->first();
+                                                                @endphp
+                                                                Kamar No. {{ $no_kamar->no_kamar }}
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="td-item status">
+                                                        @if ($item->status === 'Diterima')
+                                                            <div class="th-item setuju">
+                                                                Disetujui
+                                                            </div>
+                                                        @else
+                                                            <div class="th-item tolak">
+                                                                Ditolak
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td>
@@ -579,45 +611,28 @@
                                                         <div class="item" data-bs-toggle="modal" data-bs-target="#pengajuan{{ $item->id }}" x-on:click="check = true" x-bind:class="{ 'disabled': check === true }">
                                                             Lihat
                                                         </div>
-                                                        <div class="for-tolak">
-                                                            <button type="submit" class="no tolak" :disabled="check ? false : 'disabled'" data-id="{{ $item->id }}" data-name="{{ $item->nama }}">Tolak!</button>
-                                                        </div>
-                                                        <div class="for-setuju">
-                                                            <form action="{{ route('SETUJU') }}" method="post">
-                                                                @csrf
-                                                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                                                <input type="hidden" name="new_email" value="{{ $item->email_new }}">
-                                                                <button type="submit" class="yes setuju" :disabled="check ? false : 'disabled'">Approve</button>
-                                                            </form>
-                                                        </div>
                                                     </div>
-
-                                                    <div id="penolakan{{ $item->id }}" class="modal fade in penolakan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    Penolakan Pengajuan {{ $item->nama }}
-                                                                </div>
-                                                                <form action="{{ route('tolak.account') }}" x-data="{ alasan: '' }" method="POST">
-                                                                    @csrf
-                                                                    <div class="modal-body">
-                                                                        <input type="hidden" name="id" value="{{ $item->id }}">
-                                                                        <label for="">Alasan Penolakan <span class="text-danger">*</span></label>
-                                                                        <textarea name="alasan" x-model="alasan" rows="10" placeholder="Sertakan alasan penolakan di sini . . ."></textarea>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn close" data-bs-dismiss="modal">Tutup</button>
-                                                                        <button type="submit" class="btn submits" :disabled="alasan === ''">Kirim Penolakan</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div id="pengajuan{{ $item->id }}" class="modal fade in pengajuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                    <div id="pengajuan{{ $item->id }}" class="modal fade in riwayats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
+
+                                                                    <div class="for-stat">
+                                                                        @if ($item->status === 'Diterima')
+                                                                            <div class="success">
+                                                                                Disetujui
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="fail">
+                                                                                Ditolak
+                                                                            </div>
+                                                                        @endif
+
+                                                                        <div class="time">
+                                                                            {{ $item->updated_at->translatedFormat('j F Y H:i') }} <span>WIB</span>
+                                                                        </div>
+                                                                    </div>
+
                                                                     <div class="item for-profil-img">
                                                                         <div class="myImg">
                                                                             @if (is_null($item->profil) || empty($item->profil))
@@ -634,7 +649,7 @@
 
                                                                         @if ($item->email_new)
                                                                             <div class="col-12">
-                                                                                <label for="">Email Baru</label>
+                                                                                <label for="">Email baru</label>
                                                                                 <input type="text" readonly value="{{ $item->email_new }}" class="form-control">
                                                                             </div>
                                                                         @endif
@@ -840,6 +855,28 @@
             });
         </script>
     @endif
+
+    <script>
+        document.querySelectorAll('.yes.setuju').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var form = this.closest('form');
+                // Display Sweet Alert for confirmation
+                Swal.fire({
+                    title: 'Setujui Permintaan?',
+                    text: 'Baca data dengan teliti sebelum Menyetujui!',
+                    icon: 'info',
+                    showCancelButton: false,
+                    confirmButtonColor: '#17A1FD',
+                    confirmButtonText: 'Ya, Setujui!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 
     @if (Session::has('success'))
         <script>

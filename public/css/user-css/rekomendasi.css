@@ -307,5 +307,9 @@ body {
             color: white;
             border: none !important;
         }
+
+        .btn:disabled {
+            background: rgb(157, 157, 157);
+        }
     }
 }

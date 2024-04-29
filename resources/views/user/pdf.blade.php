@@ -13,7 +13,7 @@
                 <img src="{{ asset('img/two.png') }}">
             </div>
             <div class="id">
-                #0D97GEK7208F
+                {{ $data->id_pembayaran }}
             </div>
         </nav>
     </div>
@@ -23,10 +23,10 @@
             Pembayaran Berhasil!
         </div>
         <div class="tgl">
-            08 November 2023 17:54:12 WIB
+            {{ $data->updated_at->translatedFormat('j F Y H:i:s') }} WIB
         </div>
         <div class="uang">
-            Rp. 1.500.000
+            Rp. {{ $data->total_tagihan }}
         </div>
     </div>
 
@@ -36,7 +36,7 @@
                 Tanggal Masuk
             </div>
             <div class="value">
-                08/12/2023
+                {{ $tanggalMasuk->translatedFormat('j F Y') }}
             </div>
         </div>
         <div class="info-item">
@@ -44,7 +44,7 @@
                 Durasi Ngekost
             </div>
             <div class="value">
-                28 Bulan 13 Hari
+                {{ $data->durasi_ngekost }}
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                     Nama
                 </div>
                 <div class="value">
-                    Adrian Kurniawan
+                    {{ auth()->user()->name }}
                 </div>
             </div>
             <div class="info-item">
@@ -64,7 +64,7 @@
                     No. Kamar
                 </div>
                 <div class="value">
-                    Kamar No. 5
+                    Kamar No. {{ auth()->user()->no_kamar }}
                 </div>
             </div>
             <div class="info-item">
@@ -72,7 +72,7 @@
                     Bulan Tagihan
                 </div>
                 <div class="value">
-                    November 2023
+                    {{ $data->bulan_tagihan->translatedFormat('F Y') }}
                 </div>
             </div>
             <div class="info-item">
@@ -80,7 +80,7 @@
                     Total Tagihan
                 </div>
                 <div class="value">
-                    Rp. 1.500.000
+                    Rp. {{ $data->total_tagihan }}
                 </div>
             </div>
 
@@ -91,7 +91,10 @@
                     Metode Bayar
                 </div>
                 <div class="value">
-                    Transfer Bank BCA
+                    @php
+                        $bank = \App\Models\Bank::where('id', $data->bank_id)->first();
+                    @endphp
+                    Transfer {{ $bank->nama }}
                 </div>
             </div>
             <div class="info-item">
@@ -99,7 +102,8 @@
                     Atas Nama
                 </div>
                 <div class="value">
-                    Adrian
+                    {{ $data->name }}
+
                 </div>
             </div>
         </div>
@@ -110,12 +114,14 @@
             Bukti Pembayaran
         </div>
         <div class="gambar">
-            <img src="{{ asset('img/not.jpg') }}">
+            <img src="{{ asset('uploads/' . $data->bukti) }}">
         </div>
     </div>
 
     <script>
-        // window.onafterprint = window.close;
-        window.print();
+        window.addEventListener('DOMContentLoaded', function() {
+            window.print();
+            
+        });
     </script>
 @endsection

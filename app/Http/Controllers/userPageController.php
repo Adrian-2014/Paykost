@@ -18,6 +18,7 @@ use App\Models\gambarKamar;
 use App\Models\gantiAkun;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
+use App\Models\laporanKehilangan;
 use App\Models\pembayaranKost;
 use App\Models\pemesanan;
 use App\Models\pindahKamar;
@@ -29,7 +30,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+// require_once __DIR__ . '/vendor/autoload.php';
 use Mpdf\Mpdf;
+
 
 class userPageController extends Controller
 {
@@ -122,14 +125,12 @@ class userPageController extends Controller
     // HOME
     public function index() {
 
-        $user = auth()->user()->name;
-        $no_kamar = auth()->user()->no_kamar;
-        $kamar = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
+        $kamar = kamarKost::where('nomor_kamar', auth()->user()->no_kamar)->with('gambarKamar')->get();
         $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
         $kamarKosong = kamarKost::where('status', 'Publish')->where('kondisi', 'Kosong')->get();
         $banerKamars = gambarKamar::inRandomOrder()->take(4)->get();
 
-        $pembayaran = pembayaranKost::where('name', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
+        $pembayaran = pembayaranKost::where('user_id', auth()->user()->id)->where('status', 'Diterima')->latest()->first();
 
 
 
@@ -141,7 +142,7 @@ class userPageController extends Controller
         // $hariIni = Carbon::parse('2024-05-17');
         //durasi
 
-        $pindahKamar = pindahKamar::where('nama', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
+        $pindahKamar = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Diterima')->latest()->first();
         if($pindahKamar) {
             $waktu_pindah = $pindahKamar->waktu_pindah;
             $waktu = Carbon::parse($waktu_pindah);
@@ -157,7 +158,7 @@ class userPageController extends Controller
         $durasi = "{$bulan} bulan {$hari} hari";
 
         // DATE REAL TIME
-        $pindah_kamar = pindahKamar::where('nama', $user)->latest()->first();
+        $pindah_kamar = pindahKamar::where('user_id', auth()->user()->id)->latest()->first();
 
         if($pembayaran) {
             $bulan_tagihan = $pembayaran->bulan_tagihan;
@@ -185,7 +186,6 @@ class userPageController extends Controller
                 $tagihanBulan = $tagihan_bulans;
                 $pembayaranSelanjutnya = Carbon::parse($tagihan_selanjutnya);
             }else {
-
                 if(auth()->user()->status_bayar === 'Sudah Lunas') {
                     return redirect()->route('updateStatUser')->withMethod('post');
                 }
@@ -220,7 +220,7 @@ class userPageController extends Controller
     }
 
     public function updatePindah() {
-        $pindahKamar = pindahKamar::where('nama', auth()->user()->name)->where('status', 'Diterima')->latest()->first();
+        $pindahKamar = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Diterima')->latest()->first();
         $user = auth()->user();
         $kamarNow = kamarKost::where('user_id',  auth()->user()->id)->first();
 
@@ -232,7 +232,7 @@ class userPageController extends Controller
             $kamarNow->save();
         }
 
-        $new_kamar = KamarKost::findOrFail($pindahKamar->kamar_baru);
+        $new_kamar = KamarKost::where('nomor_kamar', $pindahKamar->kamar_baru)->first();
         $new_kamar->user_id = $user->id;
         $new_kamar->kondisi = 'Dihuni';
         $new_kamar->save();
@@ -245,15 +245,30 @@ class userPageController extends Controller
 
     // rekomendasi
     public function rekomendasi($id) {
+        $pindah = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Dalam Proses')->latest()->first();
         $data = kamarKost::find($id);
         $fasKamar = fasilitas::where('tipe', 'Fasilitas Kamar')->get();
         $fasUmum = fasilitas::where('tipe', 'Fasilitas Umum ')->get();
-        return view('user.rekomendasi', compact('data', 'fasKamar', 'fasUmum'));
+        return view('user.rekomendasi', compact('data', 'fasKamar', 'fasUmum', 'pindah'));
+    }
+
+    public function pindahKe(Request $request) {
+        $user = auth()->user()->id;
+        $kamar = kamarKost::where('user_id', $user)->first();
+        $pindahKamar = kamarKost::where('kondisi','kosong')->get();
+        // $no_kamar = $request->input('no_kamar');
+        $kamarNew = kamarKost::where('nomor_kamar', $request->no_kamar)->first();
+        return view('user.kategori.pindah', compact('kamarNew', 'kamar', 'pindahKamar'));
     }
     // pdf
-    public function pdf() {
-        return view('user.pdf');
-    }
+    // public function pdf($id) {
+    //     $mpdf = new Mpdf();
+    //     $tglMasukSementara = auth()->user()->tanggal_masuk;
+    //     $tanggalMasuk = Carbon::parse($tglMasukSementara);
+    //     $data = pembayaranKost::find($id);
+
+    //     return view('user.pdf', compact('data', 'tanggalMasuk'));
+    // }
 
     // kategori
     public function pindah() {
@@ -285,9 +300,21 @@ class userPageController extends Controller
         $fasUmum = fasilitas::where('tipe', 'Fasilitas Umum ')->get();
         return view('user.kamarku', compact('kamar_kost', 'fasKamar', 'fasUmum'));
     }
-    public function riwayat() {
+    public function riwayatPembayaran() {
+        $semua = pembayaranKost::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Ditolak', 'Diterima'])->get();
+        // $proses = pembayaranKost::orderBy('id', 'desc')->where('status', 'Proses Validasi')->where('user_id', auth()->user()->id)->get();
+        $tolak = pembayaranKost::orderBy('id', 'desc')->where('status', 'Ditolak')->where('user_id', auth()->user()->id)->get();
+        $terima = pembayaranKost::orderBy('id', 'desc')->where('status', 'Diterima')->where('user_id', auth()->user()->id)->get();
+        return view('user.riwayat-pembayaran', compact('semua', 'tolak', 'terima'));
+    }
+    public function riwayatPindah() {
+        $semua = pindahKamar::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Ditolak', 'Dipindahkan'])->get();
+        $tolak = pindahKamar::orderBy('id', 'desc')->where('status', 'Ditolak')->where('user_id', auth()->user()->id)->get();
+        $disetujui = pindahKamar::orderBy('id', 'desc')->where('status', 'Dipindahkan')->where('user_id', auth()->user()->id)->get();
+        return view('user.riwayat-pindah', compact('semua', 'tolak', 'disetujui'));
+    }
+    public function riwayatKehilangan() {
         $riwayatPembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Diterima', 'Ditolak'])->get();
-
         foreach($riwayatPembayaran as $item) {
             $notifikasi = Carbon::parse($item->updated_at);
             $item->notif = $notifikasi;
@@ -299,7 +326,9 @@ class userPageController extends Controller
             $item->notif = $notifikasi;
         }
 
-        return view('user.riwayat', compact('riwayatPembayaran', 'riwayatPindah'));
+        $riwayatKehilangan = laporanKehilangan::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->where('status', 'Direspon')->get();
+
+        return view('user.riwayat', compact('riwayatPembayaran', 'riwayatPindah', 'riwayatKehilangan'));
     }
 
     // PROFIL
@@ -506,13 +535,14 @@ class userPageController extends Controller
         // return back()->with('success', 'Barang berhasil ditambahkan.');
         session()->put('pemesanan_id', $pesanan->id);
         // $pemesanan = pemesanan::find(session()->put('pemesanan_id', $pesanan->id));
-        return redirect('/checkKonfirmasi');
+        return redirect()->route('checkKonfirmasi');
     }
     public function checkKonfirmasi() {
         $bannerPro = Banner::where('lokasi_banner', 'Pembayaran Jasa Cuci')->where('status', 'Publish')->get();
+        $sipatu = cuciSepatu::get();
         $pemesanan = pemesanan::find(session()->get('pemesanan_id'));
         $bank = Bank::find($pemesanan->bank_id);
-        return view('user.kategori.pemesanan.kofirmasi-pesan',compact('pemesanan','bank', 'bannerPro'));
+        return view('user.kategori.pemesanan.kofirmasi-pesan',compact('pemesanan','bank', 'bannerPro', 'sipatu'));
     }
 
     public function prosesCuci(Request $request) {
@@ -612,6 +642,7 @@ class userPageController extends Controller
             'name' => 'required',
             'no_kamar' => 'required',
             'harga_kamar' => 'required',
+            'user_id' => 'required',
 
             'harga_kamar_baru' => 'required',
             'ukuran_kamar_baru' => 'required',
@@ -627,6 +658,7 @@ class userPageController extends Controller
         $data->nama = $request->name;
         $data->kamar_lama = $request->no_kamar;
         $data->harga_lama = $request->harga_kamar;
+        $data->user_id = $request->user_id;
         $data->kamar_baru = $request->kamar_baru;
         $data->harga_baru = $request->harga_kamar_baru;
         $data->ukuran_baru = $request->ukuran_kamar_baru;
@@ -651,5 +683,41 @@ class userPageController extends Controller
         return redirect()->route('userku')->with('success', 'Permintaan Anda Berhasil Di Kirim');
     }
 
+    public function laporKehilangan(Request $request) {
 
+        // dd($request);
+        $request->validate([
+            'nama' => 'required',
+            'user_id' => 'required',
+            'no_kamar' => 'required',
+            'barang' => 'required',
+            'tanggal' => 'required',
+            'jam' => 'required',
+            'keterangan'
+         ]);
+
+        $waktu = $request->tanggal . ' ' . $request->jam;
+
+        $lapor = new laporanKehilangan();
+        $lapor->nama = $request->nama;
+        $lapor->user_id = $request->user_id;
+        $lapor->no_kamar = $request->no_kamar;
+        $lapor->barang_hilang = $request->barang;
+        $lapor->waktu_kehilangan = $waktu;
+        $lapor->keterangan = $request->keterangan;
+        $lapor->status = 'Dalam Proses';
+        $lapor->save();
+
+        return redirect()->route('userku')->with('success', 'Permintaan Anda Berhasil Di Kirim');
+    }
+
+    public function laporKerusakan(Request $request) {
+        dd($request->all());
+        $request->validate([
+            'nama' => 'required',
+            'no_kamar' => 'required',
+            'bagian_rusak' => 'required',
+            'tanggal' => 'required',
+        ]);
+    }
 }

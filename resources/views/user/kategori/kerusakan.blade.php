@@ -15,15 +15,17 @@
         </div>
     </div>
 
-    <form action="" method="" class="form" id="form" enctype="multipart/form-data">
+    <form action="{{ route('laporan.kerusakan') }}" method="post" class="form" id="form" enctype="multipart/form-data" x-data="{ rusak: ''}">
+        @csrf
         <div class="formulir first" id="formulir">
             <div class="form-item">
                 <label for="name" class="form-label fw-medium">Nama User</label>
-                <input type="text" id="name" class="form-control" value="Adrian Kurniawan" disabled>
+                <input type="text" id="name" name="nama" class="form-control" value="{{ auth()->user()->name }}" readonly>
             </div>
             <div class="form-item">
                 <label for="k-now" class="form-label fw-medium">No. Kamar</label>
-                <input type="text" id="k-now" class="form-control" value="Kamar No. 5" disabled>
+                <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" readonly>
+                <input type="hidden" name="no_kamar" class="form-control" value="{{ auth()->user()->no_kamar }}">
             </div>
         </div>
 
@@ -31,7 +33,7 @@
             <div class="form-item first">
                 <label class="form-label fw-medium forFile">Apa yang Rusak? <span>*</span></label>
                 <div class="dropdown">
-                    <input type="text" disabled class="form-control" id="isi" placeholder="Bagian yang mengalami kerusakan..." onkeyup="inputTyped()">
+                    <input type="text" disabled class="form-control" name="bagian_rusak" id="isi" placeholder="Bagian yang mengalami kerusakan..." onkeyup="inputTyped()">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-caret-down-fill"></i>
                     </button>
@@ -102,14 +104,14 @@
             </div>
             <div class="form-item sec">
                 <label for="tanggal" class="fw-medium">Tanggal Rusak <span>*</span></label>
-                <input type="date" id="tanggal" class="form-control" style="box-shadow: unset !important">
+                <input type="date" id="tanggal" name="tanggal" class="form-control" style="box-shadow: unset !important">
             </div>
             <div class="form-item third">
                 <label for="files" class="form-label fw-medium">Unggah Foto <span>*</span></label>
                 <div class="uploadFoto">
                     <div class="uploadFoto-item">
                         <div class="input-area">
-                            <input type="file" id="files1" class="form-control untuk-file" accept="image/*">
+                            <input type="file" id="files1" name="input1" class="form-control untuk-file" accept="image/*">
                             <label for="files1" class="labelFile" id="labelku1">
                                 <i class='bx bx-cloud-upload'></i>
                             </label>
@@ -117,7 +119,7 @@
                     </div>
                     <div class="uploadFoto-item">
                         <div class="input-area">
-                            <input type="file" id="files2" class="form-control untuk-file" accept="image/*">
+                            <input type="file" id="files2" name="input2" class="form-control untuk-file" accept="image/*">
                             <label for="files2" class="labelFile" id="labelku2">
                                 <i class='bx bx-cloud-upload'></i>
                             </label>
@@ -125,7 +127,7 @@
                     </div>
                     <div class="uploadFoto-item">
                         <div class="input-area">
-                            <input type="file" id="files3" class="form-control untuk-file" accept="image/*">
+                            <input type="file" id="files3" name="input3" class="form-control untuk-file" accept="image/*">
                             <label for="files3" class="labelFile" id="labelku3">
                                 <i class='bx bx-cloud-upload'></i>
                             </label>
@@ -133,7 +135,7 @@
                     </div>
                     <div class="uploadFoto-item">
                         <div class="input-area">
-                            <input type="file" id="files4" class="form-control untuk-file" accept="image/*">
+                            <input type="file" id="files4" name="input4" class="form-control untuk-file" accept="image/*">
                             <label for="files4" class="labelFile" id="labelku4">
                                 <i class='bx bx-cloud-upload'></i>
                             </label>
@@ -141,7 +143,7 @@
                     </div>
                     <div class="uploadFoto-item">
                         <div class="input-area">
-                            <input type="file" id="files5" class="form-control untuk-file" accept="image/*">
+                            <input type="file" id="files5" name="input5" class="form-control untuk-file" accept="image/*">
                             <label for="files5" class="labelFile" id="labelku5">
                                 <i class='bx bx-cloud-upload'></i>
                             </label>
@@ -160,7 +162,7 @@
             <div class="form-item">
                 {{-- <label for="alasan" class="form-label fw-medium"></label> --}}
                 <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan (Opsional)</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
+                <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
             </div>
         </div>
 
@@ -173,18 +175,23 @@
 
 
     <script>
-        // Mengambil elemen input dan div gambar
+        var hariIni = new Date();
+
+        // var besok = new Date(hariIni);
+        // besok.setDate(besok.getDate() + 1);
+        var hari_real = hariIni.toISOString().split('T')[0];
+
+        document.getElementById("tanggal").setAttribute("max", hari_real);
+
         const inputElement = document.getElementById('tanggal');
         const inputIsi = document.getElementById('isi');
         const imageContainer = document.querySelector('.form-item.third');
         const submitButton = document.getElementById('tombol');
 
-        // Menambahkan event listener untuk input
         inputElement.addEventListener('input', function() {
             checkValidation();
         });
 
-        // Menambahkan event listener untuk div gambar
         imageContainer.addEventListener('DOMSubtreeModified', function() {
             checkValidation();
         });
@@ -219,18 +226,15 @@
             checkValidation();
         }
 
-        // Loop melalui setiap elemen input file
         const inputFiles = document.querySelectorAll('.untuk-file');
         const isian = document.querySelector('.uploadFoto');
 
-        // Loop melalui setiap elemen input file
         inputFiles.forEach(input => {
-            // ...
+
             input.addEventListener('change', function() {
-                // Mengambil file yang diunggah
+
                 const file = this.files[0];
 
-                // Mencari label yang belum memiliki gambar
                 let targetLabel = null;
                 for (let i = 1; i <= 5; i++) {
                     const label = document.getElementById(`labelku${i}`);
@@ -242,18 +246,16 @@
                 }
 
                 if (targetLabel) {
-                    // Membuat elemen gambar baru
                     const img = document.createElement('img');
                     img.src = URL.createObjectURL(file);
 
-                    // Membuat tombol hapus
                     var deleteButton = document.createElement('button');
                     deleteButton.classList.add('button-delete')
                     deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
                     deleteButton.addEventListener('click', function() {
                         img.remove();
                         this.remove();
-                        // Mengembalikan label
+
                         targetLabel.style.display = 'flex';
                         // Mengosongkan nilai input file
                         input.value = '';
@@ -292,16 +294,11 @@
 
         });
 
-
-
         function checkValidation() {
-            // Memeriksa jika nilai input tidak kosong dan div gambar memiliki setidaknya satu gambar
             if (inputElement.value !== '' && inputIsi.value !== '' && imageContainer.getElementsByTagName('img').length > 0) {
-                // Mengaktifkan tombol submit
                 submitButton.removeAttribute('disabled');
                 submitButton.classList.add('active');
             } else {
-                // Menonaktifkan tombol submit
                 submitButton.setAttribute('disabled', 'disabled');
                 submitButton.classList.remove('active');
             }

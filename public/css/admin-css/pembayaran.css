@@ -180,7 +180,7 @@ body {
 }
 
 .riwayat {
-    .table {
+    table {
         thead {
             tr {
                 th {
@@ -303,55 +303,12 @@ body {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        background: linear-gradient(to bottom right, rgb(29, 118, 242), rgb(62, 181, 227));
+                        background: rgb(27, 176, 206) !important;
                         /* border-top-left-radius: .6rem;
                         border-bottom-right-radius: .6rem; */
                         border-radius: .5rem;
                         color: white;
                     }
-
-                    .for-setuju {
-                        .yes {
-                            cursor: pointer;
-                            padding: .4rem 1.25rem;
-                            /* height: 1.5rem; */
-                            /* width: 1.5rem; */
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            background: linear-gradient(to bottom right, rgb(53, 202, 8), rgb(78, 233, 69));
-                            border-top-left-radius: .6rem !important;
-                            border-bottom-right-radius: .6rem !important;
-                            color: white;
-                            border: none;
-                        }
-
-                        .yes:disabled {
-                            background: rgb(172, 172, 172);
-                        }
-                    }
-
-                    .for-tolak {
-                        .no {
-                            cursor: pointer;
-                            padding: .4rem 1.25rem;
-                            /* height: 1.5rem; */
-                            /* width: 1.5rem; */
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            background: linear-gradient(to bottom right, rgb(255, 0, 0), rgba(252, 26, 26, 0.8));
-                            border-top-left-radius: .6rem !important;
-                            border-bottom-right-radius: .6rem !important;
-                            color: white;
-                            border: none;
-                        }
-
-                        .no:disabled {
-                            background: rgb(172, 172, 172);
-                        }
-                    }
-
                 }
             }
         }

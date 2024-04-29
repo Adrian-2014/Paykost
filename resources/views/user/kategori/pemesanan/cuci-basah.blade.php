@@ -227,7 +227,7 @@
                                         </li>
                                     @endforeach
                                     <div class="last">
-                                        <button class="btn dropdown-toggle totop" type="button" x-on:click="open = !open" id="b">
+                                        <button class="btn dropdown-toggle totop" type="button" x-on:click="open = !open; updateAddButton()" id="b">
                                             <div clas="isi">
                                                 Simpan
                                             </div>
@@ -553,19 +553,14 @@
             var items = document.querySelectorAll('.dropdown-menu .nilai');
             var addButton = document.getElementById('add');
             var sub = document.querySelector('.subtotal');
-            var showClassExists = document.querySelector('.dropdown-menu').classList.contains('show');
+            var showClassExists = document.querySelector(".dropdown-toggle").classList.contains('dis');
             var inputGreaterThanZero = false;
-
-            items.forEach(function(item) {
-                if (parseInt(item.value) > 0) {
-                    inputGreaterThanZero = true;
-                }
-            });
-
-            if (!showClassExists && inputGreaterThanZero) {
+            if (!showClassExists && sub.innerHTML !== '') {
                 addButton.classList.add('myback');
                 sub.classList.add('shut');
-                addButton.disabled = false;
+                addButton.removeAttribute('disabled');
+
+                console.log('active')
             } else {
                 addButton.classList.remove('myback');
                 sub.classList.remove('shut');

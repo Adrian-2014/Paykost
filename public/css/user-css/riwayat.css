@@ -9,68 +9,177 @@ body {
 
 body {
     background-color: rgb(221, 221, 221) !important;
-    /* padding-bottom: 4.8rem; */
+    padding-bottom: 3rem;
 }
 
-.filter {
-    padding: 1rem .8rem !important;
+
+
+.nav {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
-    gap: .8rem;
-    width: auto;
-    overflow-x: auto !important;
-    /* scrollbar-width: 0 !important; */
+    justify-content: space-between;
+    /* background-color: black; */
+
+    .filter {
+        /* background-color: #00ff2a; */
+        padding: .5rem .8rem !important;
+        /* padding-top: 0 !important; */
+        display: flex;
+        align-items: center;
+        /* justify-content: center; */
+        gap: .8rem;
+        /* width: auto; */
+
+        .choice {
+            display: flex;
+            /* background-color: #0062ff; */
+            height: 2rem;
+            justify-content: end;
 
 
-    .btns {
-        width: fit-content;
-        border: none;
-        background: transparent;
-        /* background-color: #0062ff; */
+            .dropstart {
 
-        .item {
-            /* width: 100%; */
-            white-space: nowrap;
+                .dropdown-toggle {
+                    border: none !important;
+                    padding: .6rem .2rem !important;
+
+                    i {
+                        /* background-color: aqua; */
+                        font-size: 1.3rem;
+                    }
+                }
+
+                .dropdown-toggle::before {
+                    content: none;
+                }
+
+                .dropdown-toggle.show {
+                    border: none;
+                }
+
+                .dropdown-menu.show {
+                    background-color: rgba(0, 0, 0, 0.8);
+                    position: absolute;
+                    width: fit-content !important;
+                    inset: 7px -40px auto auto !important;
+                    margin: 0px;
+                    transform: translate3d(-40px, 0px, 0px) !important;
+                    display: flex;
+                    flex-direction: column;
+                    font-size: .7rem;
+                    padding: .3rem .5rem;
+
+                    li {
+                        a {
+                            color: white;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        .btns {
             width: fit-content;
-            font-size: .9rem;
+            border: none;
+            background: transparent;
+            /* background-color: #0062ff; */
+
+            .item {
+                /* width: 100%; */
+                white-space: nowrap;
+                width: fit-content;
+                font-size: .9rem;
+            }
+
+            .pembayaran-btn {
+                padding: .5rem 1rem;
+                border-radius: 2rem;
+                background: rgb(255, 252, 252);
+                border: 1px solid rgb(188, 188, 188);
+            }
+
+            .pindah-kamar {
+                padding: .5rem 1rem;
+                border-radius: 2rem;
+                background: rgb(255, 252, 252);
+                border: 1px solid rgb(188, 188, 188);
+            }
+
+            .laporan-kehilangan {
+                padding: .5rem 1rem;
+                border-radius: 2rem;
+                background: rgb(255, 252, 252);
+                border: 1px solid rgb(188, 188, 188);
+            }
+
+            .laporan-kerusakan {
+                padding: .5rem 1rem;
+                border-radius: 2rem;
+                background: rgb(255, 252, 252);
+                border: 1px solid rgb(188, 188, 188);
+            }
+
         }
 
-        .pembayaran-btn {
-            padding: .5rem .8rem;
-            border-radius: 2rem;
-            background: rgb(255, 252, 252);
-            border: 1px solid rgb(188, 188, 188);
+        .btns.active {
+            .item {
+                background: linear-gradient(to bottom right, rgb(0, 138, 202), rgb(102, 201, 241));
+                color: white;
+                border: none;
+            }
         }
-
-        .pindah-kamar {
-            padding: .5rem .8rem;
-            border-radius: 2rem;
-            background: rgb(255, 252, 252);
-            border: 1px solid rgb(188, 188, 188);
-        }
-
-        .laporan-kehilangan {
-            padding: .5rem .8rem;
-            border-radius: 2rem;
-            background: rgb(255, 252, 252);
-            border: 1px solid rgb(188, 188, 188);
-        }
-
-        .laporan-kerusakan {
-            padding: .5rem .8rem;
-            border-radius: 2rem;
-            background: rgb(255, 252, 252);
-            border: 1px solid rgb(188, 188, 188);
-        }
-
     }
 
-    .btns.active {
-        .item {
-            background: linear-gradient(to bottom right, rgb(0, 138, 202), rgb(102, 201, 241));
-            color: white;
-            border: none;
+    .choice {
+        display: flex;
+        /* background-color: #0062ff; */
+        height: 2rem;
+        justify-content: end;
+
+
+        .dropstart {
+
+            .dropdown-toggle {
+                border: none !important;
+                /* padding: .6rem .2rem !important; */
+
+                i {
+                    /* background-color: aqua; */
+                    font-size: 1.2rem;
+                }
+            }
+
+            .dropdown-toggle::before {
+                content: none;
+            }
+
+            .dropdown-toggle.show {
+                border: none;
+            }
+
+            .dropdown-menu.show {
+                background-color: rgba(0, 0, 0, 0.9);
+                position: absolute;
+                width: fit-content !important;
+                inset: 7px -10px auto auto !important;
+                margin: 0px;
+                transform: translate3d(-28px, 0px, 0px);
+                display: flex;
+                flex-direction: column;
+                font-size: .8rem;
+                padding: .5rem .7rem;
+                gap: .3rem;
+
+                li {
+                    a {
+                        color: white;
+                        text-decoration: none;
+                    }
+                }
+            }
         }
     }
 }
@@ -84,15 +193,16 @@ body {
 }
 
 .container-fluid {
+    /* margin-bottom: 3.5rem; */
     /* min-height: 100vh; */
     height: fit-content;
     padding-top: 0 !important;
-    padding: 1rem;
+    /* padding: 1rem; */
 
     .splide {
         .splide__track {
             .splide__list {
-                height: calc(100vh - 12rem) !important;
+                height: calc(100vh - 11rem) !important;
                 /* width: fit-content; */
 
 
@@ -119,13 +229,15 @@ body {
                                 display: flex;
                                 flex-direction: column;
                                 gap: .5rem;
-                                padding: .7rem .5rem;
+                                padding: .7rem .6rem;
+                                padding-bottom: .3rem !important;
                                 border-radius: .4rem;
 
                                 .heading {
                                     padding: 0 .5rem;
                                     display: flex;
                                     align-items: center;
+                                    justify-content: space-between;
                                     gap: 1.5rem;
 
                                     .logo {
@@ -173,6 +285,7 @@ body {
                                     display: flex;
                                     gap: .5rem;
                                     align-items: center;
+                                    justify-content: space-between;
 
                                     .id-pembayaran {
                                         font-style: italic;
@@ -188,7 +301,7 @@ body {
 
                                     .tanggal-pembayaran {
                                         color: rgba(96, 96, 96, 0.8);
-                                        font-size: .8rem;
+                                        font-size: .65rem;
                                     }
                                 }
                             }
@@ -197,6 +310,109 @@ body {
                     }
 
                     .container.for-pindah {
+                        display: flex;
+                        flex-direction: column;
+                        width: fit-content !important;
+                        gap: .7rem;
+                        /* background-color: #0062ff; */
+                        --bs-gutter-x: none;
+
+                        .riwayat-item.kost {
+                            padding: .2rem;
+                            border-radius: .5rem;
+                            background: white;
+
+                            .items {
+                                background: rgb(241, 240, 240);
+                                display: flex;
+                                flex-direction: column;
+                                gap: .5rem;
+                                padding: .7rem .5rem;
+                                padding-bottom: .5rem !important;
+                                border-radius: .4rem;
+
+                                .heading {
+                                    padding: 0 .5rem;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    gap: 1.5rem;
+
+                                    .logo {
+                                        img {
+                                            height: 2rem;
+                                        }
+                                    }
+
+                                    .status.accept {
+                                        padding: .2rem 1rem;
+                                        background-color: rgba(7, 242, 7, 0.2);
+                                        color: rgb(0, 161, 0);
+                                        font-weight: 500;
+                                        border-radius: 1rem;
+                                        font-size: .85rem;
+                                    }
+
+                                    .status.dismiss {
+                                        padding: .2rem 1.3rem;
+                                        background-color: rgba(242, 7, 7, 0.2);
+                                        color: rgb(230, 0, 0);
+                                        font-weight: 500;
+                                        border-radius: 1rem;
+                                        font-size: .9rem;
+                                    }
+                                }
+
+                                .info {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: .3rem;
+
+                                    .info-head {
+                                        font-weight: 500;
+                                        font-size: .95rem;
+                                    }
+
+                                    .info-data {
+                                        font-size: .75rem;
+                                        color: rgba(39, 39, 39, 0.667);
+                                    }
+                                }
+
+                                .date {
+                                    display: flex;
+                                    gap: .5rem;
+                                    align-items: center;
+                                    justify-content: space-between;
+
+                                    .id-pembayaran {
+                                        /* font-style: italic;
+                                         */
+                                        font-weight: 500;
+                                        font-size: .75rem;
+                                        padding: .3rem .6rem;
+                                        border-radius: 1rem;
+                                        background: rgba(128, 128, 128, 0.35);
+                                        color: rgba(0, 0, 0, 0.5);
+                                    }
+
+                                    .center {
+                                        i {
+                                            color: rgba(116, 115, 115, 0.8);
+                                        }
+                                    }
+
+                                    .tanggal-pembayaran {
+                                        color: rgba(96, 96, 96, 0.8);
+                                        font-size: .7rem;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    .container.for-kehilangan {
                         display: flex;
                         flex-direction: column;
                         width: fit-content !important;
@@ -229,23 +445,15 @@ body {
                                         }
                                     }
 
-                                    .status.accept {
+                                    .status {
                                         padding: .2rem 1rem;
-                                        background-color: rgba(7, 242, 7, 0.2);
-                                        color: rgb(0, 161, 0);
+                                        background-color: rgba(7, 187, 242, 0.2);
+                                        color: rgb(0, 129, 161);
                                         font-weight: 500;
                                         border-radius: 1rem;
                                         font-size: .85rem;
                                     }
 
-                                    .status.dismiss {
-                                        padding: .2rem 1.3rem;
-                                        background-color: rgba(242, 7, 7, 0.2);
-                                        color: rgb(230, 0, 0);
-                                        font-weight: 500;
-                                        border-radius: 1rem;
-                                        font-size: .9rem;
-                                    }
                                 }
 
                                 .info {
@@ -269,9 +477,9 @@ body {
                                     gap: .5rem;
                                     align-items: center;
 
-                                    .id-pembayaran {
+                                    .no-kamar {
                                         /* font-style: italic;
-                                         */
+                                             */
                                         font-weight: 500;
                                         font-size: .75rem;
                                         padding: .3rem .6rem;
@@ -286,7 +494,7 @@ body {
                                         }
                                     }
 
-                                    .tanggal-pembayaran {
+                                    .tanggal {
                                         color: rgba(96, 96, 96, 0.8);
                                         font-size: .8rem;
                                     }
@@ -324,8 +532,7 @@ body {
 
 }
 
-
-/* KUMPULAN MODAL PEMBAYARAN */
+/* KUMPULAN MODAL  */
 
 
 /* histori pembayaran */
@@ -360,7 +567,7 @@ body {
             .modal-body {
                 height: 22rem;
                 border-bottom: none !important;
-                padding-top: 1rem !important;
+                padding-top: .3rem !important;
                 padding-left: 1rem !important;
                 padding-right: 1rem !important;
 
@@ -431,7 +638,8 @@ body {
                     .info-list {
                         display: flex;
                         flex-direction: column;
-                        gap: 0.4rem;
+                        gap: 0.25rem;
+
 
                         .info-item {
                             display: flex;
@@ -456,8 +664,8 @@ body {
                     .info-l {
                         display: flex;
                         flex-direction: column;
-                        gap: 0.4rem;
-                        margin-top: .75rem;
+                        gap: 0.25rem;
+                        margin-top: .7rem;
 
                         .info-item {
                             display: flex;
@@ -489,14 +697,14 @@ body {
                                 /* height: 307px; */
                                 max-height: 350px;
                                 height: auto;
-                                margin-top: 0.5rem;
+                                margin-top: 0.2rem;
                                 border-radius: 6px;
                                 border: 1px solid gray;
                             }
 
                             .inf {
                                 color: gray;
-                                margin-top: 0.5rem;
+                                /* margin-top: 0.1rem; */
                                 width: 100%;
                                 font-size: 0.9rem;
                             }
@@ -551,36 +759,17 @@ body {
     }
 }
 
+/* histori pembayaran */
+
 .riwayat-pindah {
 
     .modal-dialog {
 
         .modal-content {
 
-            .modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.7rem 1rem !important;
-
-                .modal-title {
-                    img {
-                        height: 25px;
-                        width: 87px;
-                    }
-                }
-
-                .id {
-                    display: flex;
-                    font-size: 0.7rem;
-                    font-weight: 600;
-                    gap: 0.5rem;
-                }
-            }
-
             .modal-body {
-                height: fit-content !important;
-                /* max-height: 22rem; */
+                height: fit-content;
+                max-height: 55vh;
                 border-bottom: none !important;
                 padding-top: 1rem !important;
                 padding-left: 1rem !important;
@@ -614,7 +803,7 @@ body {
 
                         .pay {
                             font-size: 1.2rem;
-                            font-weight: bolder;
+                            font-weight: 500;
                             margin-top: 0.5rem;
                         }
                     }
@@ -786,10 +975,134 @@ body {
     }
 }
 
-/* histori pembayaran */
+.riwayat-kehilangan {
 
+    .modal-dialog {
 
-/* KUMPULAN MODAL PEMBAYARAN */
+        .modal-content {
+            .modal-body {
+                max-height: 65vh;
+                overflow: auto;
+                display: flex;
+                flex-direction: column;
+                gap: .8rem;
+
+                .first {
+                    display: flex;
+                    flex-direction: column;
+                    /* gap: .3rem; */
+                    align-items: center;
+                    justify-content: center;
+
+                    .top {
+                        font-size: 1.15rem;
+                        font-weight: 600;
+                        color: #1997ff;
+                    }
+
+                    .bottom {
+                        font-size: .7rem;
+                        color: rgba(0, 0, 0, 0.65);
+                    }
+                }
+
+                .sec {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .25rem;
+
+                    .umum {
+                        display: flex;
+                        flex-direction: column;
+                        /* gap: .2rem; */
+
+                        .umum-item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            .left {
+                                font-size: .85rem;
+                                color: rgba(0, 0, 0, 0.5);
+                            }
+
+                            .right {
+                                font-size: .9rem;
+                                color: rgba(0, 0, 0, 0.65);
+                            }
+                        }
+                    }
+
+                    .lost {
+                        display: flex;
+                        flex-direction: column;
+                        /* gap: .2rem; */
+
+                        .lost-item {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            .left {
+                                font-size: .9rem;
+                                color: rgba(0, 0, 0, 0.7);
+                            }
+
+                            .right {
+                                font-size: .95rem;
+                                color: rgba(0, 0, 0, 0.85);
+                            }
+                        }
+
+                        .lost-keterangan {
+                            display: flex;
+                            flex-direction: column;
+                            gap: .25rem;
+
+                            .left {
+                                font-size: .9rem;
+                                color: rgba(0, 0, 0, 0.7);
+                            }
+
+                            .right {
+                                background-color: rgba(66, 164, 245, 0.3);
+                                font-size: .8rem;
+                                padding: .3rem .5rem;
+                                border-radius: .5rem;
+                                color: rgba(0, 0, 0, 0.7);
+                            }
+                        }
+
+                        .lost-respon {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-direction: column;
+                            margin-top: .5rem;
+                            gap: .35rem;
+
+                            .left {
+                                font-size: .95rem;
+                                color: rgba(0, 0, 0, 0.8);
+                            }
+
+                            .right {
+                                background-color: rgba(0, 255, 4, 0.3);
+                                border: 1px solid rgb(0, 150, 18);
+                                font-size: .8rem;
+                                padding: .3rem .5rem;
+                                border-radius: .5rem;
+                                color: rgba(0, 0, 0, 0.7);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* KUMPULAN MODAL  */
 
 /* M E N U  S */
 

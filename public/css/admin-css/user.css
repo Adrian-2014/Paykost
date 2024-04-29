@@ -28,7 +28,7 @@ body {
                 }
 
                 .harga {
-                    width: 6.5rem;
+                    width: 8rem;
                 }
 
                 .img {
@@ -40,7 +40,11 @@ body {
                 }
 
                 .status {
-                    width: 9rem !important;
+                    width: 8rem !important;
+                }
+
+                .action {
+                    width: 7rem !important;
                 }
             }
 
@@ -49,118 +53,127 @@ body {
                 display: none;
             }
         }
-    }
 
-    tbody {
-        tr {
+        tbody {
+            tr {
 
-            td {
-                height: fit-content;
-                /* padding: unset; */
-                padding: .7rem 1rem !important;
+                td {
+                    height: fit-content;
+                    /* padding: unset; */
+                    padding: .7rem 1rem !important;
 
-                .td-item {
-                    height: 2.5rem;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center !important;
-                    width: 100%;
+                    .td-item {
+                        height: 2.5rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center !important;
+                        width: 100%;
 
-                }
+                    }
 
-                .user {
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    gap: 1rem;
+                    .user {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        gap: 1rem;
 
-                    .profil {
-                        img {
-                            height: 3rem;
-                            width: 3rem;
-                            border-radius: 50%;
+                        .profil {
+                            img {
+                                height: 3rem;
+                                width: 3rem;
+                                border-radius: 50%;
+                            }
+                        }
+
+                        .nama {
+                            font-weight: 500;
                         }
                     }
 
-                    .nama {
-                        font-weight: 500;
-                    }
-                }
 
+                    .td-item.status {
+                        .item.stat.aktif {
+                            padding: .35rem 1rem;
+                            border-radius: .3rem;
+                            background-color: rgba(17, 255, 0, 0.3);
+                            color: rgb(5, 140, 0);
+                        }
 
-                .td-item.status {
-                    .item.stat.aktif {
-                        padding: .35rem 1rem;
-                        border-radius: .3rem;
-                        background-color: rgba(0, 162, 255, 0.3);
-                        color: rgb(0, 89, 255);
-                    }
+                        .item.stat.proses {
+                            padding: .35rem 1rem;
+                            border-radius: .3rem;
+                            background-color: rgba(255, 128, 0, 0.3);
+                            color: rgb(255, 145, 0);
+                        }
 
-                    .item.stat.nonaktif {
-                        background-color: rgba(255, 21, 0, 0.3);
-                        color: rgb(255, 0, 0);
-                        padding: .35rem 1rem;
-                        border-radius: .3rem;
-                    }
-                }
-
-
-                .td-item.action {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 0 1rem;
-
-                    .toggle {
-                        input {
-                            height: 1.5rem;
-                            width: 2.5rem;
+                        .item.stat.nonaktif {
+                            background-color: rgba(255, 21, 0, 0.3);
+                            color: rgb(255, 0, 0);
+                            padding: .35rem 1rem;
+                            border-radius: .3rem;
                         }
                     }
 
-                    .delete-form {
-                        .btn.delete {
+
+                    .td-item.action {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0 1rem;
+
+                        .toggle {
+                            input {
+                                height: 1.5rem;
+                                width: 2.5rem;
+                            }
+                        }
+
+                        .delete-form {
+                            .btn.delete {
+                                /* padding: .2rem; */
+                                /* height: 1.5rem; */
+                                width: 1.5rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background-color: rgb(245, 51, 29);
+                                border-radius: .4rem;
+                                color: white;
+                            }
+
+                        }
+
+                        .detail-btn {
+                            padding: .5rem;
+                            /* height: 1.5rem; */
+                            /* width: 1.5rem; */
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background-color: rgb(30, 149, 9);
+                            border-radius: .4rem;
+                            color: white;
+                        }
+
+                        .btn.edit-btn {
                             /* padding: .2rem; */
                             /* height: 1.5rem; */
                             width: 1.5rem;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            background-color: rgb(245, 51, 29);
+                            background-color: rgb(29, 119, 245);
                             border-radius: .4rem;
                             color: white;
                         }
-
-                    }
-
-                    .detail-btn {
-                        padding: .5rem;
-                        /* height: 1.5rem; */
-                        /* width: 1.5rem; */
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background-color: rgb(30, 149, 9);
-                        border-radius: .4rem;
-                        color: white;
-                    }
-
-                    .btn.edit-btn {
-                        /* padding: .2rem; */
-                        /* height: 1.5rem; */
-                        width: 1.5rem;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background-color: rgb(29, 119, 245);
-                        border-radius: .4rem;
-                        color: white;
                     }
                 }
             }
         }
     }
+
+
 }
 
 .pengajuan {
@@ -312,6 +325,132 @@ body {
     }
 }
 
+.riwayat {
+    .table.border {
+        thead {
+            tr {
+                th {
+                    .th-item {
+                        text-align: center;
+                        font-weight: 500;
+                    }
+
+                }
+
+                .user {
+                    width: 37rem !important;
+                }
+            }
+
+            th::before,
+            ::after {
+                display: none;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+
+            td {
+                height: fit-content;
+                padding: .7rem 1rem !important;
+
+                .td-item {
+                    height: 2.5rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center !important;
+                    width: 100%;
+
+                }
+
+                .user {
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .for-first {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        gap: 1rem;
+                        width: 12rem;
+
+                        .profil {
+                            img {
+                                height: 3rem;
+                                width: 3rem;
+                                border-radius: 50%;
+                            }
+                        }
+
+                        .nama {
+                            font-weight: 500;
+                        }
+                    }
+
+                    .for-sec {
+                        /* background-color: aqua; */
+                        width: 10rem;
+
+                        .email {
+                            text-align: left;
+                        }
+                    }
+                }
+
+                .status {
+                    .setuju {
+                        padding: .5rem .8rem;
+                        background-color: rgba(0, 255, 0, 0.5);
+                        color: rgb(0, 146, 0);
+                        /* font-weight: bold; */
+                        font-size: .95rem;
+                        border-radius: .4rem;
+                    }
+
+                    .tolak {
+                        padding: .5rem .8rem;
+                        background-color: rgba(255, 1, 1, 0.5);
+                        color: rgb(230, 0, 0);
+                        /* font-weight: bold; */
+                        font-size: .95rem;
+                        border-radius: .4rem;
+                    }
+                }
+
+
+                .td-item.action {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    gap: .6rem;
+
+                    .item {
+                        cursor: pointer;
+                        padding: .5rem 1.25rem;
+                        /* height: 1.5rem; */
+                        /* width: 1.5rem; */
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgb(27, 176, 206);
+                        /* border-top-left-radius: .6rem;
+                        border-bottom-right-radius: .6rem; */
+                        border-radius: .5rem;
+                        color: white;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
 .card-body {
     padding-top: .5rem !important;
     padding-bottom: .5rem !important;
@@ -334,7 +473,7 @@ body {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
+            width: 70%;
 
             form {
                 .modal-body {
@@ -455,7 +594,7 @@ body {
 
 .det {
     .modal-content {
-        width: 80%;
+        width: 65%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -527,7 +666,7 @@ body {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
+            width: 70%;
 
             form {
                 .modal-body {
@@ -739,6 +878,80 @@ body {
                 .submits:disabled {
                     background: rgb(166, 166, 166);
                     color: white;
+                }
+            }
+        }
+    }
+}
+
+.riwayats {
+    .modal-dialog {
+        .modal-content {
+            .modal-body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: .7rem;
+
+                .for-stat {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .success {
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: rgb(0, 219, 0);
+                    }
+
+                    .fail {
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: red;
+                    }
+
+                    .time {
+                        font-size: .95rem;
+                        color: rgba(0, 0, 0, 0.7);
+
+                        span {
+                            color: rgba(0, 0, 0, 0.55);
+
+                        }
+                    }
+                }
+
+                .item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: .3rem;
+                    align-items: center;
+
+                    .myImg {
+                        img {
+                            height: 5rem;
+                            width: 5rem;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .name {
+                        font-size: 1.1rem;
+                    }
+                }
+
+                .row {
+                    /* gap: .5rem; */
+                    width: 100%;
+                }
+            }
+
+            .modal-footer {
+                .cancel {
+                    color: rgb(99, 99, 99);
+                    background-color: rgba(128, 128, 128, 0.25);
+                    border: none !important;
                 }
             }
         }

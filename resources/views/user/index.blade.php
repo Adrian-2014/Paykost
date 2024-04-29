@@ -170,7 +170,7 @@
                             {{ $pembayaran->id_pembayaran }}
                         </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="print">
                         <div class="first">
                             <div class="suc">
                                 <div class="mess">
@@ -178,12 +178,12 @@
                                 </div>
                                 <div class="tgl">
                                     @if ($pembayaran)
-                                        {{ $waktuBayar->translatedFormat('j F Y H:i:s') }}
+                                        {{ $waktuBayar->translatedFormat('j F Y H:i:s') }} WIB
                                     @endif
                                     {{-- 08 November 2023 17:54:12 WIB --}}
                                 </div>
                                 <div class="pay">
-                                    Rp. 1.500.000
+                                    Rp. {{ $pembayaran->total_tagihan }}
                                 </div>
                                 <div class="stat">
                                     <div class="stat-item">
@@ -199,7 +199,7 @@
                                             Durasi Ngekost
                                         </div>
                                         <div class="value">
-                                            {{ $durasi }}
+                                            {{ $pembayaran->durasi_ngekost }}
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +236,7 @@
                                         Total Tagihan
                                     </div>
                                     <div class="value">
-                                        {{ $pembayaran->total_tagihan }}
+                                        Rp. {{ $pembayaran->total_tagihan }}
                                     </div>
                                 </div>
                             </div>
@@ -270,10 +270,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        {{-- <form action="/pdf">
-                        <button type="submit" class="btn">Download</button>
-                    </form> --}}
-                        <a href="javascript:void(0)" target="popup" onclick="window.open('/pdf','popup','width=600,height=600'); return false;" class="btn">Download</a>
+                        <a href="/pdf/{{ $pembayaran->id }}" target="popup" class="btn">Download</a>
+                        {{-- <button type="button" id="printBtn">
+                            Print
+                        </button> --}}
                     </div>
                 </div>
             </div>
@@ -523,7 +523,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat" class="nav-link">
+                <a href="/user/riwayat/pembayaran" class="nav-link">
                     <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat

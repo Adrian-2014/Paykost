@@ -78,13 +78,19 @@ body {
 
             .stat {
                 padding: .5rem .7rem !important;
-                /* border: 1px solid; */
                 font-size: .85rem;
-                /* background: linear-gradient(to top left, rgba(17, 100, 234, 0.7), rgba(31, 167, 221, 0.7)); */
-                background-color: rgba(11, 160, 11, 0.5);
-                border-radius: .4rem;
-                color: white;
+                /* background-color: rgba(11, 160, 11, 0.5); */
+                border-radius: .5rem;
+            }
 
+            .stat.lunas {
+                background-color: rgba(0, 151, 0, 0.5);
+                color: white;
+            }
+
+            .stat.tolak {
+                background-color: rgba(255, 0, 0, 0.5);
+                color: white;
             }
         }
 
@@ -285,7 +291,7 @@ body {
         padding: 0 !important;
         width: 100%;
         border: 1.2px solid rgb(0, 94, 255);
-        height: 15rem;
+        height: 12.5rem;
         overflow-y: scroll;
 
         li {
@@ -297,6 +303,8 @@ body {
             border: unset;
         }
     }
+
+
 }
 
 .container.upload {

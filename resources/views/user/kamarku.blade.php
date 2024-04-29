@@ -30,9 +30,20 @@
                 <div class="sparate">
                     <i class="ti ti-point-filled"></i>
                 </div>
-                <div class="stat">
-                    Kost Sudah Terbayar
-                </div>
+                @php
+                    $pay = App\Models\pembayaranKost::where('user_id', auth()->user()->id)
+                        ->latest()
+                        ->first();
+                @endphp
+                @if ($pay->status === 'Diterima')
+                    <div class="stat lunas">
+                        Kost Sudah Terbayar
+                    </div>
+                @else
+                    <div class="stat tolak">
+                        Kost belum Terbayar
+                    </div>
+                @endif
             </div>
             <div class="tanggal">
                 <div class="item kiri">
@@ -81,9 +92,6 @@
     </div>
 
     <div class="container fasilitas">
-        <div class="head">
-            Fasilitas Kost
-        </div>
         <div class="mycontent">
             @foreach ($kamar_kost as $item)
                 <div class="jud-kamar">
@@ -178,7 +186,6 @@
                 <li>7. Boleh Membawa bayi</li>
                 <li>8. Tidak boleh Membawa hewan peliharaan</li>
                 <li>9. Bayar sewa tepat waktu</li>
-                <li>10. Dilarang merokok di dalam kamar</li>
             </ul>
         </div>
     </div>
@@ -227,7 +234,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat" class="nav-link">
+                <a href="/user/riwayat/pembayaran" class="nav-link">
                     <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat

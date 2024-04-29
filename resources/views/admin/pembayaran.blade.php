@@ -127,7 +127,7 @@
                                                             <div class="imgs">
                                                                 @php
                                                                     $user = DB::table('users')
-                                                                        ->where('name', $item->name)
+                                                                        ->where('id', $item->user_id)
                                                                         ->first();
                                                                 @endphp
                                                                 @if ($user)
@@ -187,7 +187,7 @@
                                                                 <div class="modal-header">
                                                                     Penolakan Pembayaran {{ $item->name }}
                                                                 </div>
-                                                                <form action="{{ route('tolak') }}" x-data="{ alasan: '' }" method="POST">
+                                                                <form action="{{ route('tolak.pay') }}" x-data="{ alasan: '' }" method="POST">
                                                                     @csrf
                                                                     <div class="modal-body">
                                                                         <input type="hidden" name="id" value="{{ $item->id }}">
@@ -415,7 +415,7 @@
                                                                         <img src="{{ asset('img/two.png') }}">
                                                                     </div>
                                                                     <div class="pay">
-                                                                        Data Pembayaran <span>{{ $item->name }}</span>
+                                                                        Riwayat Pembayaran <span>{{ $item->name }}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-body">

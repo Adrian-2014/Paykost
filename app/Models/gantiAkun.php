@@ -9,4 +9,7 @@ class gantiAkun extends Model
 {
     use HasFactory;
     protected $table = 'ganti_akuns';
+    protected $casts = [
+        'updated_at' => 'date:Y-m-d H:i:s',
+    ];
 }

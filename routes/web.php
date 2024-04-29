@@ -31,7 +31,6 @@ Route::get('/', [loginController::class, 'index'])->name('login');
 // Route::get('/transaction/getModal/{id}', [userPageController::class , 'getModal']);
 
 Route::group(['middleware' => ['auth', 'cek:2']], function () {
-
     // Core
     Route::get('/pembayaran', [userPageController::class, 'pembayaran']);
     Route::post('bayar', [userPageController::class, 'bayarKost'])->name('bayarKost');
@@ -41,10 +40,11 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::get('/user/index', [userPageController::class, 'index'])->name('userku');
     Route::match(['get', 'post'], '/updateStatUser', [userPageController::class, 'updateStatUser'])->name('updateStatUser');
     Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
-    Route::get('/user/riwayat', [userPageController::class, 'riwayat']);
     Route::get('/user/profil', [userPageController::class, 'profil']);
-    // Menu
 
+    Route::get('/user/riwayat/pembayaran', [userPageController::class, 'riwayatPembayaran']);
+    Route::get('/user/riwayat/pindah', [userPageController::class, 'riwayatPindah']);
+    // Menu
 
     // kategori
     Route::get('/pindah', [userPageController::class, 'pindah']);
@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
 
     // Rekomendasi
     Route::get('/rekomendasi/{id}', [userPageController::class, 'rekomendasi']);
+    Route::post('pindah/ke', [userPageController::class, 'pindahKe'])->name('kePindah');
     // Rekomendasi
 
     // Pindah Kamar
@@ -98,6 +99,8 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::match(['get', 'post'], '/updatePindah', [userPageController::class, 'updatePindah'])->name('updatePindah');
     // Pindah Kamar
 
+    Route::post('/lapor/hilang', [userPageController::class, 'laporKehilangan'])->name('laporKehilangan');
+    Route::post('/lapor/rusak', [userPageController::class, 'laporKerusakan'])->name('laporan.kerusakan');
 });
 // U S E R  E N D
 
@@ -113,13 +116,14 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
     // PEMBAYARAN KOST
     Route::get('/admin/requestPembayaran', [adminControll::class, 'pembayaranPage'])->name('pembayaranPage');
     Route::post('/terima', [adminControll::class, 'paySetuju'])->name('SETUJU');
-    Route::post('/tolak', [adminControll::class, 'payTolak'])->name('tolak');
+    Route::post('/tolak/pay', [adminControll::class, 'payTolak'])->name('tolak.pay');
     // PEMBAYARAN KOST
 
     // USER
     Route::get('/admin/user', [adminControll::class, 'user'])->name('admin.user');
     Route::post('/admin/add/user', [adminControll::class, 'storeUser'])->name('storeUser');
     Route::post('/admin/updateUser', [adminControll::class, 'updateUser'])->name('update.user');
+    Route::get('/toggleUser/{id}', [adminControll::class, 'toggleUser'])->name('togles.user');
     // USER
 
     // FASILITAS
@@ -178,8 +182,18 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
     Route::post('/setujui/pindah', [adminControll::class, 'setujuiPindah'])->name('setujuiPindah');
     // Pindah Kamar
 
+    // Akun
     Route::post('/tolak/account', [adminControll::class, 'tolakAccount'])->name('tolak.account');
     Route::post('/setuju/account', [adminControll::class, 'setujuAccount'])->name('setuju.account');
+    // Akun
+
+    // Laporan Kehilangan
+
+    Route::get('/admin/kehilangan', [adminControll::class, 'laporanKehilangan'])->name('admin.kehilangan');
+    Route::post('/admin/respon/kehilangan', [adminControll::class, 'responKehilangan'])->name('respon.kehilangan');
+    // Laporan Kehilangan
+
+    Route::match(['get', 'post'], '/updatesPindah', [adminControll::class, 'updatesPindah'])->name('updatesPindah');
 });
 
 // A D M I N  E N D
@@ -187,7 +201,7 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
 
 // EXTRA
 Route::get('/pengajuan', [loginController::class, 'pengajuan']);
-Route::get('/pdf', [userPageController::class, 'pdf']);
+Route::get('/pdf/{id}', [userPageController::class, 'pdf']);
 Route::get('proposal', function() {
     return view('proposal-rafi');
 });
