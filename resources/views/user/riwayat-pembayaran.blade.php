@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="/user/riwayat/kehilangan">
                             Laporan Kehilangan
                         </a>
                     </li>
@@ -530,7 +530,7 @@
                                         <div class="inf">
                                             Bukti Pembayaran
                                         </div>
-                                        <div class="value">
+                                        <div class="value img-bukti" data-id="{{ $item->id }}">
                                             <img src="{{ asset('uploads/' . $item->bukti) }}">
                                         </div>
                                     </div>
@@ -783,6 +783,19 @@
         </div>
     </nav>
 
+    <script>
+        document.querySelectorAll('.img-bukti').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                var itemId = button.getAttribute('data-id');
+                var imageUrl = button.querySelector('img').getAttribute('src');
+                Swal.fire({
+                    imageUrl: imageUrl,
+                    color: "#716add",
+                    showConfirmButton: false
+                });
+            });
+        });
+    </script>
     <script>
         var splide = new Splide('.splide', {
             type: 'fade',

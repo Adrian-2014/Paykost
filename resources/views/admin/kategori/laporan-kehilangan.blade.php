@@ -248,7 +248,7 @@
                                                                 <div class="modal-body">
                                                                     <input type="hidden" name="user_id" value="{{ $item->user_id }}">
                                                                     {{-- <input type="hidden" name="user_id" value="{{ $item->id }}"> --}}
-                                                                    <label for="">Berikan Respon untuk {{ $item->nama }} <span class="text-danger">*</span></label>
+                                                                    <label for="">Berikan Respon untuk Laporan {{ $item->nama }} <span class="text-danger">*</span></label>
                                                                     <textarea name="respon" id="respons" rows="5"></textarea>
                                                                 </div>
                                                                 <div class="modal-footer">

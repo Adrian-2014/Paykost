@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <form action="{{ route('laporan.kerusakan') }}" method="post" class="form" id="form" enctype="multipart/form-data" x-data="{ rusak: ''}">
+    <form action="{{ route('laporan.kerusakan') }}" method="post" class="form" id="form" enctype="multipart/form-data" x-data="{ rusak: '' }">
         @csrf
         <div class="formulir first" id="formulir">
             <div class="form-item">
@@ -107,54 +107,25 @@
                 <input type="date" id="tanggal" name="tanggal" class="form-control" style="box-shadow: unset !important">
             </div>
             <div class="form-item third">
-                <label for="files" class="form-label fw-medium">Unggah Foto <span>*</span></label>
-                <div class="uploadFoto">
-                    <div class="uploadFoto-item">
-                        <div class="input-area">
+                <div class="for-uploadFoto">
+                    <label for="files" class="form-label fw-medium">Unggah Foto<span>*</span></label>
+                    <div class="uploadFoto">
+                        <div class="uploadFoto-item">
                             <input type="file" id="files1" name="input1" class="form-control untuk-file" accept="image/*">
-                            <label for="files1" class="labelFile" id="labelku1">
-                                <i class='bx bx-cloud-upload'></i>
-                            </label>
+                            <div class="input-area">
+                                <label for="files1" class="labelFile" id="labelku1">
+                                    <i class='bx bx-cloud-upload'></i>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="uploadFoto-item">
-                        <div class="input-area">
-                            <input type="file" id="files2" name="input2" class="form-control untuk-file" accept="image/*">
-                            <label for="files2" class="labelFile" id="labelku2">
-                                <i class='bx bx-cloud-upload'></i>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="uploadFoto-item">
-                        <div class="input-area">
-                            <input type="file" id="files3" name="input3" class="form-control untuk-file" accept="image/*">
-                            <label for="files3" class="labelFile" id="labelku3">
-                                <i class='bx bx-cloud-upload'></i>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="uploadFoto-item">
-                        <div class="input-area">
-                            <input type="file" id="files4" name="input4" class="form-control untuk-file" accept="image/*">
-                            <label for="files4" class="labelFile" id="labelku4">
-                                <i class='bx bx-cloud-upload'></i>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="uploadFoto-item">
-                        <div class="input-area">
-                            <input type="file" id="files5" name="input5" class="form-control untuk-file" accept="image/*">
-                            <label for="files5" class="labelFile" id="labelku5">
-                                <i class='bx bx-cloud-upload'></i>
-                            </label>
-                        </div>
+                    <button type="button" id="addInput">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                    <div class="notification">
+                        Berhasil Di Hapus!
                     </div>
                 </div>
-
-                <div class="notification">
-                    Berhasil Di Hapus!
-                </div>
-
             </div>
         </div>
 
@@ -226,73 +197,169 @@
             checkValidation();
         }
 
-        const inputFiles = document.querySelectorAll('.untuk-file');
-        const isian = document.querySelector('.uploadFoto');
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadContainer = document.querySelector('.uploadFoto');
+            const addInputButton = document.getElementById('addInput');
+            let inputCount = 1;
 
-        inputFiles.forEach(input => {
+            addInputButton.style.display = 'none';
 
-            input.addEventListener('change', function() {
-
-                const file = this.files[0];
-
-                let targetLabel = null;
-                for (let i = 1; i <= 5; i++) {
-                    const label = document.getElementById(`labelku${i}`);
-                    const img = label.nextElementSibling;
-                    if (!img) {
-                        targetLabel = label;
-                        break;
+            function checkInputs() {
+                const inputs = uploadContainer.querySelectorAll('.untuk-file');
+                let allInputsFilled = true;
+                inputs.forEach(input => {
+                    if (!input.files[0]) {
+                        allInputsFilled = false;
                     }
+                });
+
+                if (allInputsFilled && inputCount < 5) {
+                    addInputButton.disabled = false;
+                } else {
+                    addInputButton.disabled = true;
                 }
+            }
 
-                if (targetLabel) {
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(file);
+            uploadContainer.addEventListener('change', function(event) {
+                if (event.target && event.target.classList.contains('untuk-file')) {
+                    const fileInput = event.target;
+                    const file = fileInput.files[0];
+                    const targetLabel = fileInput.parentElement.querySelector('.labelFile');
 
-                    var deleteButton = document.createElement('button');
-                    deleteButton.classList.add('button-delete')
-                    deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
-                    deleteButton.addEventListener('click', function() {
-                        img.remove();
-                        this.remove();
+                    if (targetLabel && file) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
 
-                        targetLabel.style.display = 'flex';
-                        // Mengosongkan nilai input file
-                        input.value = '';
-                        // Menambahkan div pesan berhasil dihapus
-                        const successMessage = document.createElement('div');
-                        successMessage.classList.add('notification', 'visible');
-                        successMessage.textContent = 'Berhasil dihapus';
-                        isian.appendChild(successMessage);
+                        targetLabel.style.display = 'none';
+                        targetLabel.parentElement.appendChild(img);
 
-                        // Menambahkan timeout untuk menghapus pesan setelah 2 detik
-                        setTimeout(function() {
-                            successMessage.classList.remove('visible');
-                        }, 800);
+                        const deleteButton = document.createElement('button');
+                        deleteButton.classList.add('button-delete');
+                        deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
+                        deleteButton.addEventListener('click', function() {
+                            const parentDiv = fileInput.closest('.uploadFoto-item');
+                            parentDiv.remove();
+                            inputCount--;
+                            updateIdsAndNames();
+                            checkInputs();
+                            addInputButton.style.display = 'block';
+                        });
+                        targetLabel.parentElement.appendChild(deleteButton);
 
-                        // Memeriksa apakah ada elemen gambar kosong di sebelah kanan
-                        const nextImageContainer = targetLabel.parentElement.nextElementSibling;
-                        if (nextImageContainer) {
-                            const nextImg = nextImageContainer.querySelector('img');
-                            if (!nextImg) {
-                                // Geser gambar-gambar ke kiri
-                                const currentImageContainer = targetLabel.parentElement;
-                                currentImageContainer.parentElement.removeChild(currentImageContainer);
-                                nextImageContainer.parentElement.insertBefore(currentImageContainer, nextImageContainer);
-                            }
+                        if (inputCount < 5) {
+                            addInputButton.style.display = 'block';
                         }
-                    });
+                    }
 
-                    // Menghapus label
-                    targetLabel.style.display = 'none';
+                    if (inputCount === 5) {
+                        addInputButton.style.display = 'none';
+                    }
 
-                    // Menambahkan gambar dan tombol hapus ke dalam div input-area
-                    targetLabel.parentElement.appendChild(img);
-                    targetLabel.parentElement.appendChild(deleteButton);
+                    checkInputs();
                 }
             });
 
+            addInputButton.addEventListener('click', function() {
+                if (inputCount < 5) {
+                    const newInputDiv = document.createElement('div');
+                    newInputDiv.classList.add('uploadFoto-item');
+                    newInputDiv.innerHTML = `
+                <input type="file" id="files${inputCount + 1}" name="input${inputCount + 1}" class="form-control untuk-file" accept="image/*">
+                <div class="input-area">
+                    <label for="files${inputCount + 1}" class="labelFile" id="labelku${inputCount + 1}">
+                        <i class='bx bx-cloud-upload'></i>
+                    </label>
+                </div>`;
+                    uploadContainer.appendChild(newInputDiv);
+
+                    inputCount++;
+
+                    if (inputCount === 5) {
+                        addInputButton.style.display = 'none';
+                    }
+
+                    checkInputs();
+                }
+            });
+
+
+            function updateIdsAndNames() {
+                const inputs = uploadContainer.querySelectorAll('.untuk-file');
+                inputs.forEach((input, index) => {
+                    input.id = `files${index + 1}`;
+                    input.name = `input${index + 1}`;
+                    const label = input.parentElement.querySelector('.labelFile');
+                    label.setAttribute('for', `files${index + 1}`);
+                });
+            }
         });
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const uploadContainer = document.querySelector('.uploadFoto');
+        //     const addInputButton = document.getElementById('addInput');
+        //     let inputCount = 1;
+
+        //     addInputButton.addEventListener('click', function() {
+        //         if (inputCount < 5) {
+        //             inputCount++;
+        //             const newInputDiv = document.createElement('div');
+        //             newInputDiv.classList.add('uploadFoto-item');
+        //             newInputDiv.innerHTML = `
+    //             <input type="file" id="files${inputCount}" name="input${inputCount}" class="form-control untuk-file" accept="image/*">
+    //              <div class="input-area">
+    //                  <label for="files${inputCount}" class="labelFile" id="labelku${inputCount}">
+    //                         <i class='bx bx-cloud-upload'></i>
+    //                     </label>
+    //                 </div>
+    //             `;
+        //             uploadContainer.insertBefore(newInputDiv, addInputButton);
+        //         } else {
+        //             addInputButton.style = 'display: none;'
+        //         }
+
+        //         if (inputCount === 5) {
+        //             addInputButton.style = 'display: none;'
+        //         }
+        //     });
+
+        //     uploadContainer.addEventListener('click', function(event) {
+        //         if (event.target && event.target.classList.contains('button-delete')) {
+        //             const deleteButton = event.target;
+        //             const uploadItem = deleteButton.parentElement;
+        //             const uploadContainer = uploadItem.parentElement;
+        //             uploadContainer.removeChild(uploadItem);
+        //             inputCount--;
+
+        //             // Mengatur ulang ID dan label untuk input yang tersisa
+        //             const uploadItems = uploadContainer.querySelectorAll('.uploadFoto-item');
+        //             uploadItems.forEach((item, index) => {
+        //                 const input = item.querySelector('input');
+        //                 const label = item.querySelector('label');
+        //                 input.id = `files${index + 1}`;
+        //                 input.name = `input${index + 1}`;
+        //                 label.setAttribute('for', `files${index + 1}`);
+        //                 label.id = `labelku${index + 1}`;
+        //             });
+        //         }
+        //     });
+
+        //     // Event listener untuk menghapus preview img dan input saat tombol hapus di klik
+        //     uploadContainer.addEventListener('click', function(event) {
+        //         if (event.target && event.target.tagName === 'IMG') {
+        //             const img = event.target;
+        //             const uploadItem = img.parentElement;
+        //             const input = uploadItem.querySelector('input');
+        //             const label = uploadItem.querySelector('label');
+        //             const deleteButton = uploadItem.querySelector('.button-delete');
+
+        //             input.value = '';
+        //             label.style.display = 'flex';
+        //             uploadItem.removeChild(img);
+        //             uploadItem.removeChild(deleteButton);
+        //         }
+        //     });
+        // });
+
 
         function checkValidation() {
             if (inputElement.value !== '' && inputIsi.value !== '' && imageContainer.getElementsByTagName('img').length > 0) {

@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
 
     Route::get('/user/riwayat/pembayaran', [userPageController::class, 'riwayatPembayaran']);
     Route::get('/user/riwayat/pindah', [userPageController::class, 'riwayatPindah']);
+    Route::get('/user/riwayat/kehilangan', [userPageController::class, 'riwayatKehilangan']);
     // Menu
 
     // kategori

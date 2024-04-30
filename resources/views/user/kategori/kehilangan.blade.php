@@ -30,19 +30,18 @@
             </div>
         </div>
 
-        <div class="formulir sec">
+        <div class="formulir sec" x-data="{ barang: '' }">
             <div class="form-item">
                 <label for="k-new" class="form-label fw-medium">Apa yang Hilang? <span>*</span></label>
                 <div class="dropdown">
-
-                    <input type="text" readonly class="form-control" id="isi" name="barang" placeholder="pilih barang anda yang hilang">
+                    <input type="text" class="form-control" id="isi" name="barang" placeholder="pilih barang anda yang hilang" x-model="barang">
                     </input>
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <ul class="dropdown-menu">
                         <li class="first">
-                            <div class="item" onclick="barang('Kunci Kamar')">
+                            <div class="item" x-on:click="barang = 'Kunci Kamar'">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/key-chain.png') }}">
                                 </div>
@@ -52,7 +51,7 @@
                             </div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="barang('Dompet')">
+                            <div class="item" x-on:click="barang = 'Dompet'">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/wallet.png') }}">
                                 </div>
@@ -62,7 +61,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="item" onclick="barang('Handphone')">
+                            <div class="item" x-on:click="barang = 'Handphone'">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/smartphone.png') }}">
                                 </div>
@@ -72,7 +71,7 @@
                             </div>
                         </li>
                         <li class="last">
-                            <div class="item" onclick="barang('Laptop')">
+                            <div class="item" x-on:click="barang = 'Laptop'">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/laptop.png') }}">
                                 </div>
@@ -81,7 +80,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="last">
+                        <li class="last" x-on:click="barang = 'Uang Tunai'">
                             <div class="item" onclick="barang('Uang Tunai')">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/money.png') }}">

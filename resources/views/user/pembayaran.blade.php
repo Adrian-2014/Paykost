@@ -232,6 +232,8 @@
         </div>
     </form>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script>
         function generateRandomString(length) {
             const characters = '1ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -286,10 +288,11 @@
 
         }
 
+
         // document.addEventListener("DOMContentLoaded", function() {
         //     const payItems = document.querySelectorAll('.payItems');
-        //     const inputGambar = document.getElementById('img'); // ID input gambar
-        //     const inputNama = document.getElementById('bank_name'); // ID input nama
+        //     const inputGambar = document.getElementById('img');
+        //     const inputNama = document.getElementById('bank_name');
 
         //     payItems.forEach(function(item) {
         //         item.addEventListener('click', function(event) {
@@ -310,6 +313,11 @@
 
         //             // inputGambar.value = gambar;
         //             inputNama.value = nama;
+
+        //             if (!document.querySelector('input[type="radio"]:checked')) {
+        //                 console.log("Tidak ada input radio yang terpilih");
+        //                 inputNama.value = '';
+        //             }
         //         });
 
         //         const radioInput = item.querySelector('input[type="radio"]');
@@ -331,15 +339,36 @@
 
         //             inputGambar.value = gambar;
         //             inputNama.value = nama;
+
+        //             if (!document.querySelector('input[type="radio"]:checked')) {
+        //                 disabled();
+        //             }
         //         });
         //     });
-
         // });
 
         document.addEventListener("DOMContentLoaded", function() {
             const payItems = document.querySelectorAll('.payItems');
-            const inputGambar = document.getElementById('img'); // ID input gambar
-            const inputNama = document.getElementById('bank_name'); // ID input nama
+            const inputGambar = document.getElementById('img');
+            const inputNama = document.getElementById('bank_name');
+            const fileInput = document.getElementById('bukti');
+            const submitButton = document.getElementById('nextPage');
+
+            function noCheckedInput() {
+                return !document.querySelector('input[type="radio"]:checked');
+            }
+
+            function isEmptyFileInput() {
+                return fileInput.files.length === 0;
+            }
+
+            function disabledSubmitButton() {
+                if (noCheckedInput() || isEmptyFileInput()) {
+                    submitButton.disabled = true;
+                } else {
+                    submitButton.disabled = false;
+                }
+            }
 
             payItems.forEach(function(item) {
                 item.addEventListener('click', function(event) {
@@ -358,16 +387,18 @@
                     const gambar = this.querySelector('.logos img').getAttribute('src');
                     const nama = this.querySelector('.nama').innerHTML;
 
-                    // inputGambar.value = gambar;
                     inputNama.value = nama;
 
-                    if (!document.querySelector('input[type="radio"]:checked')) {
-                        console.log("Tidak ada input radio yang terpilih");
-                        inputNama.value = '';
-                    }
+                    disabledSubmitButton();
                 });
+            });
 
-                const radioInput = item.querySelector('input[type="radio"]');
+            fileInput.addEventListener('change', function(event) {
+                disabledSubmitButton();
+            });
+
+            const radioInputs = document.querySelectorAll('input[type="radio"]');
+            radioInputs.forEach(function(radioInput) {
                 radioInput.addEventListener('click', function(event) {
                     const radioChecked = this.checked;
                     const parentItem = this.closest('.payItems');
@@ -387,13 +418,79 @@
                     inputGambar.value = gambar;
                     inputNama.value = nama;
 
-                    if (!document.querySelector('input[type="radio"]:checked')) {
-                        console.log("Tidak ada input radio yang terpilih");
-                        inputNama.value = '';
-                    }
+                    disabledSubmitButton();
                 });
             });
+
+            disabledSubmitButton();
         });
+
+        let previousFileList = {};
+        array = [];
+
+        $("input[type='file']").change(function(event) {
+            let file_list = event.target.files;
+            let key = event.target.id;
+
+            if (file_list.length > 0) {
+                persist_file(array, file_list, key);
+                previousFileList[key] = file_list;
+            } else {
+                event.target.files = previousFileList[key];
+            }
+        });
+
+        function persist_file(array, file_list, key) {
+            if (file_list.length > 0) {
+                if (member(array, key)) {
+
+                } else {
+                    array.push({
+                        key: key,
+                        file_list: file_list
+                    });
+                }
+            }
+        }
+
+        function member(array, key) {
+            return array.some((element, index) => {
+                return element.key == key;
+            });
+        }
+
+        function element_for(array, key) {
+            return array.find((function(obj, index) {
+                return obj.key === key;
+            }));
+        }
+
+
+
+        // function persist_file(array, file_list, key) {
+        //     if (file_list.length > 0) {
+        //         if (member(array, key)) {
+        //             element_for(array, key).file_list = file_list;
+        //         } else {
+        //             array.push({
+        //                 key: key,
+        //                 file_list: file_list
+        //             })
+        //         }
+        //     }
+        // }
+
+        // function member(array, key) {
+        //     return array.some((element, index) => {
+        //         return element.key == key
+        //     })
+        // }
+
+        // function element_for(array, key) {
+        //     return array.find((function(obj, index) {
+        //         return obj.key === key
+        //     }))
+        // }
 
         function loadFile(event) {
             var image = document.getElementById('showimg');

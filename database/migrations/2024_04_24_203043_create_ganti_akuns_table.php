@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('email_old');
             $table->string('password_old');
-            $table->string('email_new');
-            $table->string('password_new');
+            $table->string('email_new')->nullable();
+            $table->string('password_new')->nullable();
             $table->string('status');
-            $table->string('alasan');
+            $table->string('alasan')->nullable();
             $table->timestamps();
         });
     }

@@ -35,10 +35,16 @@
                         ->latest()
                         ->first();
                 @endphp
-                @if ($pay->status === 'Diterima')
-                    <div class="stat lunas">
-                        Kost Sudah Terbayar
-                    </div>
+                @if ($pay)
+                    @if ($pay->status === 'Diterima')
+                        <div class="stat lunas">
+                            Kost Sudah Terbayar
+                        </div>
+                    @else
+                        <div class="stat tolak">
+                            Kost belum Terbayar
+                        </div>
+                    @endif
                 @else
                     <div class="stat tolak">
                         Kost belum Terbayar

@@ -378,7 +378,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="tableku table-responsive pengajuan">
+                            <div class="table-responsive pengajuan">
                                 <table id="zero_config" class="table border table-bordered text-nowrap">
                                     <thead>
                                         <tr>
@@ -537,7 +537,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="tableku table-responsive riwayat">
+                            <div class="table-responsive riwayat">
                                 <table id="zero_config" class="table border table-bordered text-nowrap">
                                     <thead>
                                         <tr>
@@ -716,7 +716,7 @@
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Tanggal Masuk<span class="text-danger">*</span></div>
-                            <input type="date" name="tanggal_masuk" placeholder="tanggal_masuk . . ." class="form-control target" x-model="tanggal_masuk">
+                            <input type="date" name="tanggal_masuk" id="tanggal" placeholder="tanggal_masuk . . ." class="form-control target" x-model="tanggal_masuk">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">No Kamar<span class="text-danger">*</span></div>
@@ -829,6 +829,12 @@
                 item.innerHTML = '<i class="bi bi-chevron-left"></i>';
             });
         }
+
+
+        var hariIni = new Date();
+        var besok_real = hariIni.toISOString().split('T')[0];
+
+        document.getElementById("tanggal").setAttribute("max", besok_real);
     </script>
 
     @if ($request->isNotEmpty())

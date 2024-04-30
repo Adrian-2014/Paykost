@@ -261,7 +261,7 @@
                                     <div class="inf">
                                         Bukti Pembayaran
                                     </div>
-                                    <div class="value">
+                                    <div class="value img-bukti" data-id="{{ $pembayaran->id }}">
                                         <img src="{{ asset('uploads/' . $pembayaran->bukti) }}">
                                     </div>
                                 </div>
@@ -625,6 +625,20 @@
                     menu.classList.remove('active');
                     // navbar.classList.remove('active');
                 }
+            });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.img-bukti').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                var itemId = button.getAttribute('data-id');
+                var imageUrl = button.querySelector('img').getAttribute('src');
+                Swal.fire({
+                    imageUrl: imageUrl,
+                    color: "#716add",
+                    showConfirmButton: false
+                });
             });
         });
     </script>

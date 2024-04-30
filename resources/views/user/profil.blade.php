@@ -10,7 +10,7 @@
 
     <section class="profil">
         <div class="profil-prof">
-            <div class="myImage">
+            <div class="myImage" img-bukti>
                 @if (Auth::user()->profil)
                     <img src="{{ asset('uploads/' . Auth::user()->profil) }}">
                 @else
@@ -21,7 +21,7 @@
                 {{ auth()->user()->name }}
             </div>
             <div class="kamar">
-                Kamar No. {{ auth()->user()->no_kamar }}
+                {{ auth()->user()->email }}
             </div>
         </div>
     </section>
@@ -393,6 +393,19 @@
         </script>
     @endif
 
+    <script>
+        document.querySelectorAll('.img-bukti').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                var itemId = button.getAttribute('data-id');
+                var imageUrl = button.querySelector('img').getAttribute('src');
+                Swal.fire({
+                    imageUrl: imageUrl,
+                    color: "#716add",
+                    showConfirmButton: false
+                });
+            });
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var button = document.getElementById('logoutBtn');

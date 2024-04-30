@@ -226,7 +226,7 @@ body {
                     .for-first {
                         display: flex;
                         align-items: center;
-                        justify-content: flex-start;
+                        justify-content: space-between !important;
                         gap: 1rem;
                         width: 12rem;
 

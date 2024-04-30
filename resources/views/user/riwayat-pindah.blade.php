@@ -38,7 +38,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="/user/riwayat/kehilangan">
                             Laporan Kehilangan
                         </a>
                     </li>
@@ -65,9 +65,16 @@
                                                 <div class="logo">
                                                     <img src="{{ asset('img/logo.png') }}">
                                                 </div>
-                                                <div class="status @if ($item->status === 'Dipindahkan') accept @else dismiss @endif">
-                                                    {{ $item->status }}
-                                                </div>
+                                                @if ($item->status === 'Dipindahkan')
+                                                    <div class="status accept">
+                                                        Disetujui
+                                                    </div>
+                                                @else
+                                                    <div class="status dismiss">
+                                                        Ditolak
+                                                    </div>
+                                                @endif
+
                                             </div>
                                             <div class="info">
                                                 <div class="info-head">
@@ -121,9 +128,15 @@
                                                 <div class="logo">
                                                     <img src="{{ asset('img/logo.png') }}">
                                                 </div>
-                                                <div class="status accept">
-                                                    {{ $item->status }}
-                                                </div>
+                                                @if ($item->status === 'Dipindahkan')
+                                                    <div class="status accept">
+                                                        Disetujui
+                                                    </div>
+                                                @else
+                                                    <div class="status dismiss">
+                                                        Ditolak
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="info">
                                                 <div class="info-head">
@@ -161,37 +174,38 @@
                     {{-- FOR RIWAYAT PEMBAYARAN TOLAK --}}
                     <li class="splide__slide">
                         @if ($tolak->isNotEmpty())
-                            <div class="container for-pay">
+                            <div class="container for-pindah">
                                 @foreach ($tolak as $item)
-                                    <div class="riwayat-item kost" data-bs-toggle="modal" data-bs-target="#history-payment{{ $item->id }}">
+                                    <div class="riwayat-item kost" data-bs-toggle="modal" data-bs-target="#riwayat-pindah{{ $item->id }}">
                                         <div class="items">
                                             <div class="heading">
                                                 <div class="logo">
                                                     <img src="{{ asset('img/logo.png') }}">
                                                 </div>
-                                                <div class="status dismiss">
-                                                    Ditolak
-                                                </div>
+                                                @if ($item->status === 'Dipindahkan')
+                                                    <div class="status accept">
+                                                        Disetujui
+                                                    </div>
+                                                @else
+                                                    <div class="status dismiss">
+                                                        Ditolak
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="info">
                                                 <div class="info-head">
-                                                    Pembayaran Kost {{ $item->status }}!
+                                                    Permintaan Pindah Kost Ditolak!
                                                 </div>
                                                 <div class="info-data">
-                                                    @if ($item->status === 'Diterima')
-                                                        Selamat {{ $item->name }}, Pembayaran kamu telah Di Terima oleh Admin. Klik Untuk Selengkapnya . . .
-                                                    @else
-                                                        Mohon Maaf {{ $item->name }}, Pembayaran kamu telah Di Tolak oleh Admin, Klik untuk info Selengkpanya . . .
-                                                    @endif
+                                                    Selamat {{ $item->nama }}, Permintaan pindah Kamu ke Kamar No. <span class="fw-bold">{{ $item->kamar_baru }} </span> telah Ditolak oleh Admin. Klik Untuk Selengkapnya . . .
                                                 </div>
                                             </div>
                                             <div class="date">
                                                 <div class="id-pembayaran">
-                                                    {{ $item->id_pembayaran }}
+                                                    Kamar No. {{ $item->kamar_lama }}
                                                 </div>
-
                                                 <div class="tanggal-pembayaran">
-                                                    {{ $item->updated_at->translatedFormat('j F Y H:i:s') }}
+                                                    {{ $item->created_at->translatedFormat('j F Y H:i') }}
                                                 </div>
                                             </div>
                                         </div>
@@ -204,7 +218,7 @@
                                     <img src="{{ asset('img/people.png') }}">
                                 </div>
                                 <div class="text">
-                                    Yah,, kamu Tidak Memiliki Riwayat Pembayaran Saat ini.
+                                    Yah,, kamu Tidak Memiliki Riwayat Pindah Kamar.
                                 </div>
                             </div>
                         @endif
@@ -269,56 +283,6 @@
                         @endif
                     </li> --}}
                     {{-- FOR RIWAYAT PINDAH KAMAR --}}
-
-                    {{-- FOR RIWAYAT LAPORAN KEHILANGAN --}}
-                    {{-- <li class="splide__slide">
-                        @if ($riwayatKehilangan->isNotEmpty())
-                            <div class="container for-kehilangan">
-                                @foreach ($riwayatKehilangan as $item)
-                                    <div class="riwayat-item kost" data-bs-toggle="modal" data-bs-target="#riwayat-kehilangan{{ $item->id }}">
-                                        <div class="items">
-                                            <div class="heading">
-                                                <div class="logo">
-                                                    <img src="{{ asset('img/logo.png') }}">
-                                                </div>
-                                                <div class="status">
-                                                    Ditanggapi
-                                                </div>
-                                            </div>
-                                            <div class="info">
-                                                <div class="info-head">
-                                                </div>
-                                                <div class="info-data">
-                                                    Laporan Kehilangan kamu telah Ditanggapi oleh Admin. Klik untuk keterangan lebih lanjut . . .
-                                                </div>
-                                            </div>
-                                            <div class="date">
-                                                <div class="no-kamar">
-                                                    Kamar No. {{ $item->no_kamar }}
-                                                </div>
-                                                <div class="center">
-                                                    <i class="bi bi-dot"></i>
-                                                </div>
-                                                <div class="tanggal">
-                                                    {{ $item->updated_at->translatedFormat('j F Y H:i:s') }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="container empties">
-                                <div class="logo">
-                                    <img src="{{ asset('img/people.png') }}">
-                                </div>
-                                <div class="text">
-                                    Yah,, kamu Tidak Memiliki Riwayat Laporan Kehilangan.
-                                </div>
-                            </div>
-                        @endif
-                    </li> --}}
-                    {{-- FOR RIWAYAT LAPORAN KEHILANGAN --}}
 
                     {{-- <li class="splide__slide">
                         @if ($riwayatPindah->isNotEmpty())

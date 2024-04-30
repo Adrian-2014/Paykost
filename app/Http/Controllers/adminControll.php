@@ -115,6 +115,17 @@ class adminControll extends Controller
             $item->durasiNgekostFormatted = $hasil;
             // return view('admin.user', compact('user', 'kamars', 'tanggalMasuk', 'hasil'));
         }
+
+        $now = Carbon::now();
+        $pindahkamar = pindahKamar::where('status', 'Diterima')->get();
+        foreach($pindahkamar as $item) {
+
+            $waktupindah = Carbon::parse($item->waktu_pindah);
+            if($now >= $waktupindah) {
+                return redirect()->route('updatesPindah');
+            }
+        }
+
         return view('admin.user', compact('user', 'kamars', 'request', 'riwayat'));
     }
     public function storeUser(Request $request) {
@@ -195,6 +206,29 @@ class adminControll extends Controller
         $new_kamar->save();
 
         return redirect()->route('admin.user')->with('success', 'Data pengguna berhasil diperbarui.');
+    }
+
+    public function updatesPindah() {
+        $now = Carbon::now();
+        $pindahkamar = pindahKamar::where('status', 'Diterima')->get();
+        foreach($pindahkamar as $item) {
+            $waktupindah = Carbon::parse($item->waktu_pindah);
+            if($now >= $waktupindah) {
+                $user = User::where('id', $item->user_id)->first();
+                $user->no_kamar = $item->kamar_baru;
+                $user->save();
+
+                $item->status = 'Dipindahkan';
+                $item->save();
+
+                $kamar = kamarKost::where('nomor_kamar', $item->kamar_baru)->first();
+                $kamar->user_id = $user->id;
+                $kamar->kondisi = 'Dihuni';
+                $kamar->save();
+
+                return redirect()->route('admin.index');
+            }
+        }
     }
 
     public function toggleUser($id) {

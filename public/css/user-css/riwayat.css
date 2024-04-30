@@ -413,6 +413,7 @@ body {
                     }
 
                     .container.for-kehilangan {
+                        margin-top: .5rem;
                         display: flex;
                         flex-direction: column;
                         width: fit-content !important;
@@ -431,6 +432,7 @@ body {
                                 flex-direction: column;
                                 gap: .5rem;
                                 padding: .7rem .5rem;
+                                padding-bottom: .3rem;
                                 border-radius: .4rem;
 
                                 .heading {
@@ -476,10 +478,10 @@ body {
                                     display: flex;
                                     gap: .5rem;
                                     align-items: center;
+                                    justify-content: space-between;
 
                                     .no-kamar {
-                                        /* font-style: italic;
-                                             */
+                                        /* font-style: italic; */
                                         font-weight: 500;
                                         font-size: .75rem;
                                         padding: .3rem .6rem;
@@ -488,15 +490,9 @@ body {
                                         color: rgba(0, 0, 0, 0.5);
                                     }
 
-                                    .center {
-                                        i {
-                                            color: rgba(116, 115, 115, 0.8);
-                                        }
-                                    }
-
                                     .tanggal {
                                         color: rgba(96, 96, 96, 0.8);
-                                        font-size: .8rem;
+                                        font-size: .7rem;
                                     }
                                 }
                             }
@@ -1044,12 +1040,12 @@ body {
                             align-items: center;
 
                             .left {
-                                font-size: .9rem;
+                                font-size: .85rem;
                                 color: rgba(0, 0, 0, 0.7);
                             }
 
                             .right {
-                                font-size: .95rem;
+                                font-size: .9rem;
                                 color: rgba(0, 0, 0, 0.85);
                             }
                         }
@@ -1166,3 +1162,20 @@ body {
 }
 
 /* M E N U  E*/
+
+
+/* bukti */
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+    width: fit-content !important;
+    padding: .15rem !important;
+    border-radius: .5rem !important;
+}
+
+div:where(.swal2-container) img:where(.swal2-image) {
+    height: auto !important;
+    width: 18rem !important;
+    /* max-width: 100% ; */
+    margin: 0 !important;
+    border-radius: .35rem !important;
+}
