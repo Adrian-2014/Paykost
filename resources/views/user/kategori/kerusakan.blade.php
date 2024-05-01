@@ -107,24 +107,22 @@
                 <input type="date" id="tanggal" name="tanggal" class="form-control" style="box-shadow: unset !important">
             </div>
             <div class="form-item third">
+                <label for="files" class="form-label fw-medium">Unggah Foto<span>*</span></label>
                 <div class="for-uploadFoto">
-                    <label for="files" class="form-label fw-medium">Unggah Foto<span>*</span></label>
                     <div class="uploadFoto">
-                        <div class="uploadFoto-item">
+                        {{-- <div class="uploadFoto-item">
                             <input type="file" id="files1" name="input1" class="form-control untuk-file" accept="image/*">
                             <div class="input-area">
-                                <label for="files1" class="labelFile" id="labelku1">
-                                    <i class='bx bx-cloud-upload'></i>
+                                <label for="files1" class="labelFile" id="labelku2" style="display: none;">
+                                    <i class="bx bx-cloud-upload"></i>
                                 </label>
+                                <img src="blob:http://localhost:8000/6cd2bc4b-af29-41f4-bc39-a095ae65be04"><button class="button-delete"><i class="bi bi-trash3"></i></button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
-                    <button type="button" id="addInput">
+                    <button type="button" id="addInput" class="btn add">
                         <i class="bi bi-plus"></i>
                     </button>
-                    <div class="notification">
-                        Berhasil Di Hapus!
-                    </div>
                 </div>
             </div>
         </div>
@@ -200,9 +198,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             const uploadContainer = document.querySelector('.uploadFoto');
             const addInputButton = document.getElementById('addInput');
-            let inputCount = 1;
+            let inputCount = 0;
 
-            addInputButton.style.display = 'none';
+            // addInputButton.style.display = 'none';
 
             function checkInputs() {
                 const inputs = uploadContainer.querySelectorAll('.untuk-file');
@@ -240,7 +238,7 @@
                             const parentDiv = fileInput.closest('.uploadFoto-item');
                             parentDiv.remove();
                             inputCount--;
-                            updateIdsAndNames();
+                            acselatarion();
                             checkInputs();
                             addInputButton.style.display = 'block';
                         });
@@ -283,7 +281,7 @@
             });
 
 
-            function updateIdsAndNames() {
+            function acselatarion() {
                 const inputs = uploadContainer.querySelectorAll('.untuk-file');
                 inputs.forEach((input, index) => {
                     input.id = `files${index + 1}`;

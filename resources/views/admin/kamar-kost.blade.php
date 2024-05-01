@@ -166,13 +166,23 @@
                                                 </td>
                                                 <td>
                                                     <div class="td-item action">
-                                                        <div class="toggle">
-                                                            <form id="edit-form" name="edit-form" method="post">
-                                                                <div class="form-check form-switch">
-                                                                    <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
-                                                                </div>
-                                                            </form>
-                                                        </div>
+                                                        @if ($item->kondisi !== 'Dihuni' && $item->kondisi !== 'Dipesan')
+                                                            <div class="toggle">
+                                                                <form id="edit-form" name="edit-form" method="post">
+                                                                    <div class="form-check form-switch">
+                                                                        <input class="form-check-input" type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        @else
+                                                            <div class="toggle">
+                                                                <form id="edit-form" name="edit-form" method="post">
+                                                                    <div class="form-check form-switch">
+                                                                        <input class="form-check-input" disabled type="checkbox" data-id={{ $item->id }} {{ $item->status == 'Publish' ? 'checked' : null }} />
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        @endif
                                                         <div class="target-modal" data-bs-toggle="modal" data-bs-target="#detail{{ $item->id }}">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </div>
