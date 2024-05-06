@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('title', 'rincian-pembyaran')
 <link rel="stylesheet" href="{{ asset('css/user-css/kategori/pemesanan/konfirmasi-pesan.css') }}">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@trimbleinc/modus-bootstrap@1.6.3/dist/modus.min.css">
 @section('container')
 
@@ -76,10 +77,19 @@
                 </div>
                 <div class="bukti">
                     <div class="tekt-input">Sertakan Bukti <span class="text-danger">*</span></div>
-                    <input type="file" id="inp" name="bukti_bayar" class="form-control" x-model="images">
+                    <div class="for-input">
+                        <input type="file" name="bukti_bayar" id="bukti" class="d-none" onchange="loadFile(event)" x-model="images">
+                        <label for="bukti" id="for-bukti">
+                            <i id="icon-upload" class="bi bi-cloud-arrow-up"></i>
+                            <div class="gambar-upload">
+                                <div class="upload-real">
+                                    <img src="" id="showimg" class="d-none">
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
             </div>
-
 
             <div class="kumpulan-button">
                 <a href="/cuci" class="back">Halaman Utama</a>
@@ -93,7 +103,7 @@
                 <input type="hidden" name="jumlah" value="{{ $pemesanan->jumlah }}">
                 <input type="hidden" name="status" value="Proses Pengambilan">
                 <input type="hidden" name="total_biaya" value="{{ $pemesanan->total_biaya }}">
-                <button type="submit" class="submit" :disabled="images">Konfirmasi Pembayaran</button>
+                <button type="submit" class="submit" :disabled="images ? null : 'disabled'">Konfirmasi Pembayaran</button>
             </div>
         </form>
     </div>
@@ -261,7 +271,14 @@
                 menyala.classList.remove('cops');
 
             }, 1500);
+        }
 
+        function loadFile(event) {
+            var image = document.getElementById('showimg');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.classList.remove('d-none');
+            var icon = document.getElementById('icon-upload');
+            icon.classList.add('d-none');
         }
     </script>
 

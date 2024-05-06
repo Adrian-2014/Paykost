@@ -1,5 +1,6 @@
 @extends('layout.dashboard')
 
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Laporan Kehilangan')
@@ -185,7 +186,7 @@
                                                                     <img src="{{ asset('img/two.png') }}">
                                                                 </div>
                                                                 <div class="pay">
-                                                                    Laporan Kehilangan dari {{ $item->nama }}
+                                                                    Laporan Kehilangan<span class="fw-bold ps-1">{{ $item->nama }}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-body">
@@ -240,16 +241,14 @@
                                                                     <img src="{{ asset('img/two.png') }}">
                                                                 </div>
                                                                 <div class="pay">
-                                                                    Feedback Laporan {{ $item->nama }}
+                                                                    Feedback Laporan<span class="ps-1">{{ $item->nama }}</span>
                                                                 </div>
                                                             </div>
                                                             <form action="{{ route('respon.kehilangan') }}" method="post">
                                                                 @csrf
                                                                 <div class="modal-body">
                                                                     <input type="hidden" name="user_id" value="{{ $item->user_id }}">
-                                                                    {{-- <input type="hidden" name="user_id" value="{{ $item->id }}"> --}}
-                                                                    <label for="">Berikan Respon untuk Laporan {{ $item->nama }} <span class="text-danger">*</span></label>
-                                                                    <textarea name="respon" id="respons" rows="5"></textarea>
+                                                                    <textarea name="respon" id="respons" rows="5" placeholder="Respon Laporan Kehilangan"></textarea>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn" data-bs-dismiss="modal">Batal</button>
@@ -369,7 +368,7 @@
                                                         </button>
                                                     </div>
                                                 </td>
-                                                <div id="riwayat{{ $item->id }}" class="modal fade in view" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                                <div id="riwayat{{ $item->id }}" class="modal fade in riwayat-view" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
                                                     <div class="modal-dialog modal-dialog-scrollable modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -411,14 +410,26 @@
                                                                         <label for="">Waktu Kehilangan</label>
                                                                         <input type="text" readonly value="{{ $item->waktu_kehilangan->translatedFormat('j F Y H:i') }}" class="form-control">
                                                                     </div>
-                                                                    <div class="col-12 pt-2">
-                                                                        <label for="">keterangan</label>
-                                                                        <textarea readonly value="" class="form-control" rows="5">{{ $item->keterangan }}</textarea>
-                                                                    </div>
-                                                                    <div class="col-12 pt-2 respon">
-                                                                        <label for="">Respon</label>
-                                                                        <textarea readonly value="" class="form-control" rows="5">{{ $item->respon }}</textarea>
-                                                                    </div>
+                                                                    @if ($item->keterangan)
+                                                                        <div class="col-12 pt-2 keterangan">
+                                                                            <div class="kets">
+                                                                                <div class="heads">Keterangan</div>
+                                                                                <div class="isi">
+                                                                                    {{ $item->keterangan }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($item->respon)
+                                                                        <div class="col-12 pt-3 respon">
+                                                                            <div class="kets">
+                                                                                <div class="heads">Respon</div>
+                                                                                <div class="isi">
+                                                                                    {{ $item->respon }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">

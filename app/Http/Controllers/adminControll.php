@@ -13,18 +13,21 @@ use App\Models\cuciSepatu;
 use App\Models\cuciSetrika;
 use App\Models\cucisize;
 use App\Models\fasilitas;
+use App\Models\filterRiwayat;
 use App\Models\gambarKamar;
 use App\Models\gantiAkun;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\KamarKostFasilitas;
 use App\Models\laporanKehilangan;
+use App\Models\laporanKerusakan;
 use App\Models\pembayaranKost;
 use App\Models\pindahKamar;
 use App\Models\ProsesCuci;
 use App\Models\User;
 use Carbon\Carbon;
 use Database\Seeders\CuciKeringSeeder;
+use FontLib\Table\Type\cmap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -37,8 +40,10 @@ class adminControll extends Controller
 {
     public function index()
     {
-        // $this->authorize('admin');
-        return view('admin.index');
+        $jumlahUser = User::where('role_id', 2)->count();
+        $jumlahTransaksi = pembayaranKost::count();
+        $jumlahKamar = kamarKost::count();
+        return view('admin.index', compact('jumlahUser', 'jumlahTransaksi', 'jumlahKamar'));
     }
 
     // Setuju
@@ -67,7 +72,12 @@ class adminControll extends Controller
         $user = User::where('id', $pay->user_id)->first();
         $user->status_bayar = 'Ditolak';
         $user->save();
+        $filter = new filterRiwayat();
+        $filter->pembayaran_kost_id = $pay->id;
+        $filter->user_id = $pay->user_id;
+        $filter->save();
         return back()->with('success', 'Data Berhasil Dikirim.');
+
     }
 
     public function paySetuju(Request $request) {
@@ -89,7 +99,14 @@ class adminControll extends Controller
             $user->status_bayar = 'Belum Bayar';
         }
         $user->save();
+
+        $filter = new filterRiwayat();
+        $filter->pembayaran_kost_id = $pay->id;
+        $filter->user_id = $pay->user_id;
+        // dd($filter->pembayaran_kost_id);
+        $filter->save();
         return back()->with('success', 'Data Berhasil Dikirim.');
+
 
     }
     // Setuju
@@ -886,6 +903,12 @@ class adminControll extends Controller
         $data->status = 'Ditolak';
         $data->respon = $request->respon;
         $data->save();
+
+        $filter = new filterRiwayat();
+        $filter->pindah_kamar_id = $data->id;
+        $filter->user_id = $data->user_id;
+        $filter->save();
+
         return redirect()->back()->with('success', 'Data Berhasil di Kirim');
     }
 
@@ -902,6 +925,7 @@ class adminControll extends Controller
         $kamar = kamarKost::where('nomor_kamar', $request->kamar_baru)->latest()->first();
         $kamar->kondisi = 'Dipesan';
         $kamar->save();
+
         return redirect()->back()->with('success', 'Data Berhasil di Kirim');
     }
 
@@ -999,6 +1023,44 @@ class adminControll extends Controller
         $laporan->respon = $request->respon;
         $laporan->status = 'Direspon';
         $laporan->save();
+
+        $filter = new filterRiwayat();
+        $filter->kehilangan_id = $laporan->id;
+        $filter->user_id = $laporan->user_id;
+        $filter->save();
+
         return redirect()->back()->with('success', 'Respon Berhasil Dikirim');
     }
+
+
+    // Laporan Kerusakan
+
+    public function laporanKerusakan() {
+        $kerusakan = laporanKerusakan::orderBy('id', 'desc')->where('status','Dalam Proses')->get();
+        $riwayat = laporanKerusakan::orderBy('id', 'desc')->where('status','Direspon')->get();
+
+        return view('admin.kategori.laporan-kerusakan', compact('kerusakan', 'riwayat'));
+    }
+
+    public function responKerusakan(Request $request) {
+
+        // dd($request->all());
+        $request->validate([
+            'respon' => 'required',
+        ]);
+
+        $laporan = laporanKerusakan::where('user_id', $request->user_id)->first();
+        $laporan->respon = $request->respon;
+        $laporan->status = 'Direspon';
+        $laporan->save();
+
+        $filter = new filterRiwayat();
+        $filter->kerusakan_id = $laporan->id;
+        $filter->user_id = $laporan->user_id;
+        $filter->save();
+
+        return redirect()->back()->with('success', 'Respon Berhasil Dikirim');
+    }
+
+    // Laporan Kerusakan
 }

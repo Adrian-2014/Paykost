@@ -62,10 +62,10 @@
         <div class="for-tombol">
             <button type="submit" id="tombol" :disabled="input1 && input2 ? null : 'disabled'">Masuk</button>
         </div>
-        <div class="bot">
-            Idea by Burning Room Technology
-        </div>
     </form>
+    <div class="bot">
+        Idea by Burning Room Technology
+    </div>
 
 
     @if (Session::has('error'))
@@ -101,7 +101,7 @@
             arrows: false,
             autoplay: true,
             interval: 15000,
-            speed: 10000,
+            speed: 8000,
             pagination: false,
         });
 

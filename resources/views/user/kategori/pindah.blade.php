@@ -25,14 +25,23 @@
             </div>
             <div class="form-item">
                 <label for="k-now" class="form-label fw-medium">No. Kamar saat ini</label>
-                <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" disabled>
+                <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" readonly>
                 <input type="hidden" name="no_kamar" class="form-control" value="{{ auth()->user()->no_kamar }}">
                 <input type="hidden" name="user_id" class="form-control" value="{{ auth()->user()->id }}">
             </div>
-            <div class="form-item">
+            {{-- <div class="form-item">
                 <label for="h-now" class="form-label fw-medium">Harga Kamar saat ini</label>
-                <input type="text" id="h-now" class="form-control" value="Rp. {{ $kamar->harga_kamar }}" disabled>
-                <input type="hidden" name="harga_kamar" class="form-control" value="{{ $kamar->harga_kamar }}">
+                <input type="text" id="h-now" class="form-control" value="Rp. {{ $kamar->harga_kamar }}" readonly>
+            </div> --}}
+            <input type="hidden" name="harga_kamar" class="form-control" value="{{ $kamar->harga_kamar }}">
+            <div class="form-item">
+                <label for="h-now" class="form-label fw-medium">Tanggal Masuk</label>
+                <input type="text" class="form-control" value="{{ $tanggalMasuk->translatedFormat('j F Y') }}" readonly>
+                <input type="hidden" name="tanggal_masuk" class="form-control" value="{{ auth()->user()->tanggal_masuk }}" readonly>
+            </div>
+            <div class="form-item">
+                <label for="h-now" class="form-label fw-medium">Durasi Ngekost</label>
+                <input type="text" name="durasi" class="form-control" value="{{ $durasi }}" readonly>
             </div>
         </div>
 

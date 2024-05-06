@@ -10,6 +10,8 @@ class pindahKamar extends Model
     use HasFactory;
     protected $casts =  [
         'waktu_pindah' => 'date:Y-m-d H:i',
-        'created_at' => 'date:Y-m-d H:i:s'
+        'created_at' => 'date:Y-m-d H:i:s',
+        'tanggal_masuk' => 'date:Y-m-d H:i:s'
     ];
+
 }

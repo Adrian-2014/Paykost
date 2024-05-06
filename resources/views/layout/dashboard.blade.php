@@ -24,7 +24,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/dist/boxicons.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.8/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.8/sweetalert2.min.js"></script>
+
+
     @yield('styles')
 
 </head>
@@ -140,7 +143,7 @@
                                         <div class="round-16 d-flex align-items-center justify-content-center">
                                             <i class="ti ti-circle"></i>
                                         </div>
-                                        <span class="hide-menu">Jasa Cuci Khusus </span>
+                                        <span class="hide-menu">Jasa Cuci Khusus</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
@@ -199,8 +202,8 @@
                             <span class="hide-menu">Lainnya</span>
                         </li>
 
-                        <li class="sidebar-item logout">
-                            <a class="sidebar-link" href="/logout" aria-expanded="false">
+                        <li class="sidebar-item logout" id="logoutBtn">
+                            <a class="sidebar-link bg-white" href="/logout">
                                 <span>
                                     <i class="ti ti-logout"></i>
                                 </span>
@@ -274,7 +277,39 @@
     <script src="{{ asset('package') }}/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="{{ asset('package') }}/dist/js/dashboard.js"></script>
 
+
     @yield('internal-script')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var button = document.getElementById('logoutBtn');
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Display Sweet Alert for confirmation
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Anda akan keluar dari akun ini!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Keluar!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Perform logout action here, for example redirect to logout page
+                        window.location.href = "/logout";
+                    }
+                });
+            });
+        });
+
+        function loadFile(event) {
+            var image = document.querySelector('.photo');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 </body>
 
 </html>

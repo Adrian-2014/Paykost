@@ -93,7 +93,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <div class="container rules">
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Peraturan Kost
+            </button>
+            <ul class="dropdown-menu">
+                <li class="first">1. Buang Sampah pada tempatnya</li>
+                <li>2. Dilarang Membawa Miras / Narkoba</li>
+                <li>3. Dilarang Membuat Suara Kencang di malam hari</li>
+                <li>4. Di larang Berkunjung di atas jam 21:00</li>
+                <li>5. Pagar wajib di kunci kembali setelah di buka</li>
+                <li>6. Wajib mengganti Properti kost yang di rusak</li>
+                <li>7. Boleh Membawa bayi</li>
+                <li>8. Tidak boleh Membawa hewan peliharaan</li>
+                <li>9. Bayar sewa tepat waktu</li>
+            </ul>
         </div>
     </div>
 
@@ -177,50 +195,67 @@
         </div>
     </div>
 
-    <div class="container rules">
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Peraturan Kost
-            </button>
-            <ul class="dropdown-menu">
-                <li class="first">1. Buang Sampah pada tempatnya</li>
-                <li>2. Dilarang Membawa Miras / Narkoba</li>
-                <li>3. Dilarang Membuat Suara Kencang di malam hari</li>
-                <li>4. Di larang Berkunjung di atas jam 21:00</li>
-                <li>5. Pagar wajib di kunci kembali setelah di buka</li>
-                <li>6. Wajib mengganti Properti kost yang di rusak</li>
-                <li>7. Boleh Membawa bayi</li>
-                <li>8. Tidak boleh Membawa hewan peliharaan</li>
-                <li>9. Bayar sewa tepat waktu</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="container upload">
-        <div class="head">
+    <div class="container pic">
+        <div class="head pb-1">
             Kamar Kost Kamu
         </div>
-        <div class="mycontent">
-            <div class="item">
-                <input type="file" class="form-control d-none">
-                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
-            </div>
-            <div class="item">
-                <input type="file" class="form-control d-none">
-                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
-            </div>
-            <div class="item">
-                <input type="file" class="form-control d-none">
-                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
-            </div>
-            <div class="item">
-                <input type="file" class="form-control d-none">
-                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
-            </div>
-            <div class="item">
-                <input type="file" class="form-control d-none">
-                <label for="input"><i class="bi bi-cloud-arrow-up"></i></label>
-            </div>
+
+        <div class="for-foto">
+
+            @foreach ($fotoku as $foto)
+                <div class="data-foto" data-bs-toggle="modal" data-bs-target="#foto{{ $foto->id }}">
+                    <div class="item">
+                        <img src="{{ asset('uploads/' . $foto->gambar) }}">
+                    </div>
+                </div>
+
+                {{-- modal --}}
+                <div class="modal fade fotoku" id="foto{{ $foto->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <img src="{{ asset('uploads/' . $foto->gambar) }}">
+                            </div>
+                            <div class="modal-footer">
+                                <div class="for-edit">
+                                    <form action="{{ route('edit.pic') }}" method="post" class="edit-form" id="formEdit{{ $foto->id }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="btns">
+                                            <input type="hidden" name="id" value="{{ $foto->id }}">
+                                            <input type="file" name="gambar" id="edit-{{ $foto->id }}" class="edit-pics" onchange="submitForm('formEdit{{ $foto->id }}')">
+                                            <label for="edit-{{ $foto->id }}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="for-delete">
+                                    <form action="{{ route('delete.pic') }}" method="post" class="delete-form" id="formDelete{{ $foto->id }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="btns">
+                                            <input type="hidden" name="id" value="{{ $foto->id }}">
+                                            <input type="hidden" value="{{ $item->gambar }}">
+                                            <button type="submit" class="deletes">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+            <form action="{{ route('kamarUpload') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                @csrf
+                <div class="upload-foto">
+                    <input type="file" id="file" name="gambar" onchange="uploadss('uploadForm')">
+                    <label for="file">
+                        <i class="bi bi-cloud-arrow-up"></i>
+                    </label>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -240,7 +275,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat/pembayaran" class="nav-link">
+                <a href="/user/riwayat/" class="nav-link">
                     <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat
@@ -271,4 +306,70 @@
 
         splide.mount();
     </script>
+
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Sukses!',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3000,
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var element = document.querySelector('.container.pic');
+                element.scrollIntoView();
+            });
+        </script>
+    @endif
+
+    <script>
+        function submitForm(formId) {
+            document.getElementById(formId).submit();
+            console.log(formId);
+        }
+
+        function uploadss(id) {
+            document.getElementById(id).submit();
+            console.log(id);
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let count = 0;
+            count = document.querySelectorAll('.data-foto').length;
+            if (count < 10) {
+                console.log(count);
+            } else {
+                var formulir = document.querySelector('#uploadForm');
+                formulir.classList.add('d-none');
+            }
+
+        });
+
+        document.querySelectorAll('.deletes').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var form = this.closest('form');
+
+                Swal.fire({
+                    title: 'Apakah Kamu yakin?',
+                    text: 'Item ini akan dihapus secara permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

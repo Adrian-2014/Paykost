@@ -10,7 +10,7 @@
 
     <section class="profil">
         <div class="profil-prof">
-            <div class="myImage" img-bukti>
+            <div class="myImage" class="img-bukti" data-id="{{ auth()->user()->id }}">
                 @if (Auth::user()->profil)
                     <img src="{{ asset('uploads/' . Auth::user()->profil) }}">
                 @else
@@ -361,7 +361,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat/pembayaran" class="nav-link">
+                <a href="/user/riwayat/" class="nav-link">
                     <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat
@@ -414,8 +414,8 @@
 
                 // Display Sweet Alert for confirmation
                 Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: 'Anda akan keluar dari akun ini!',
+                    title: 'Apakah Kamu yakin?',
+                    text: 'Kamu akan keluar dari akun ini!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

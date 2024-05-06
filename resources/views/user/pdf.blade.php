@@ -7,121 +7,122 @@
 
 @section('container')
 
-    <div class="container-fluid satu position-relative">
-        <nav class="navbar fixed-top px-3 py-1">
-            <div class="navbar-brand">
-                <img src="{{ asset('img/two.png') }}">
-            </div>
-            <div class="id">
-                {{ $data->id_pembayaran }}
-            </div>
-        </nav>
-    </div>
-
-    <div class="pay-stat">
-        <div class="pay">
-            Pembayaran Berhasil!
-        </div>
-        <div class="tgl">
-            {{ $data->updated_at->translatedFormat('j F Y H:i:s') }} WIB
-        </div>
-        <div class="uang">
-            Rp. {{ $data->total_tagihan }}
-        </div>
-    </div>
-
-    <div class="info-kost">
-        <div class="info-item">
-            <div class="inf">
-                Tanggal Masuk
-            </div>
-            <div class="value">
-                {{ $tanggalMasuk->translatedFormat('j F Y') }}
-            </div>
-        </div>
-        <div class="info-item">
-            <div class="inf">
-                Durasi Ngekost
-            </div>
-            <div class="value">
-                {{ $data->durasi_ngekost }}
+    <div class="navbar fixed-top">
+        <div class="container-fluid">
+            <div class="exit">
+                <a href="/user/index" class="back">
+                    <i class="left" data-feather="chevron-left"></i>
+                </a>
+                <div class="info fw-medium">
+                    Download PDF
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="info-pembayaran">
-        <div class="information">
-            <div class="info-item">
-                <div class="name">
-                    Nama
+    <div class="container-fluid once">
+        <div class="heading">
+            <div class="item">
+                <div class="logo">
+                    <img src="{{ asset('img/two.png') }}">
                 </div>
-                <div class="value">
-                    {{ auth()->user()->name }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="name">
-                    No. Kamar
-                </div>
-                <div class="value">
-                    Kamar No. {{ auth()->user()->no_kamar }}
+                <div class="id">
+                    {{ $data->id_pembayaran }}
                 </div>
             </div>
-            <div class="info-item">
-                <div class="name">
-                    Bulan Tagihan
+        </div>
+        <div class="bodies">
+            <div class="pay-one">
+                <div class="status">
+                    @if ($data->status === 'Diterima')
+                        <div class="status-pay success">
+                            Pembayaran Berhasil!
+                        </div>
+                    @else
+                        <div class="status-pay fail">
+                            Pembayaran Ditolak!
+                        </div>
+                    @endif
+                    <div class="status-tgl">
+                        {{ $data->created_at->translatedFormat('j F Y H:i:s') }} WIB
+                    </div>
                 </div>
-                <div class="value">
-                    {{ $data->bulan_tagihan->translatedFormat('F Y') }}
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="name">
-                    Total Tagihan
-                </div>
-                <div class="value">
+                <div class="harga">
                     Rp. {{ $data->total_tagihan }}
                 </div>
             </div>
-
-        </div>
-        <div class="information">
-            <div class="info-item">
-                <div class="name">
-                    Metode Bayar
-                </div>
-                <div class="value">
-                    @php
-                        $bank = \App\Models\Bank::where('id', $data->bank_id)->first();
-                    @endphp
-                    Transfer {{ $bank->nama }}
+            <div class="pay-sec">
+                <div class="info-content">
+                    <div class="tanggal-masuk items">
+                        <div class="top">Tanggal Masuk</div>
+                        <div class="bottom">{{ $data->tanggal_masuk }}</div>
+                    </div>
+                    <div class="durasi items">
+                        <div class="top">Durasi Ngekost</div>
+                        <div class="bottom">{{ $data->durasi_ngekost }}</div>
+                    </div>
                 </div>
             </div>
-            <div class="info-item">
-                <div class="name">
-                    Atas Nama
+            <div class="pay-third">
+                <div class="info-umum">
+                    <div class="item">
+                        <div class="left">Nama User</div>
+                        <div class="right">{{ $data->name }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="left">No. Kamar</div>
+                        <div class="right">Kamar No. {{ $data->no_kamar }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="left">Bulan Tagihan</div>
+                        <div class="right">{{ $data->bulan_tagihan->translatedFormat('F Y') }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="left">Total Tagihan</div>
+                        <div class="right">Rp. {{ $data->total_tagihan }}</div>
+                    </div>
                 </div>
-                <div class="value">
-                    {{ $data->name }}
-
+                <div class="info-pay">
+                    <div class="item">
+                        <div class="left">Metode Bayar</div>
+                        @php
+                            $bank = \App\Models\Bank::where('id', $data->bank_id)->first();
+                        @endphp
+                        <div class="right">Transfer {{ $bank->nama }}</div>
+                    </div>
+                    <div class="item">
+                        <div class="left">Atas Nama</div>
+                        <div class="right">{{ $data->name }}</div>
+                    </div>
                 </div>
             </div>
+            <div class="pay-fourth">
+                <div class="bukti">
+                    <div class="top">Bukti Pembayaran</div>
+                    <div class="bot">
+                        <img src="{{ asset('uploads/' . $data->bukti) }}">
+                    </div>
+                </div>
+            </div>
+            @if ($data->status === 'Ditolak')
+                <div class="pay-last">
+                    <div class="content">
+                        <div class="head-tolak">
+                            Alasan Penolakan
+                        </div>
+                        <div class="isi-tolak">
+                            {{ $data->pesan }}
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 
-    <div class="bukti">
-        <div class="name">
-            Bukti Pembayaran
-        </div>
-        <div class="gambar">
-            <img src="{{ asset('uploads/' . $data->bukti) }}">
-        </div>
-    </div>
 
     <script>
         window.addEventListener('DOMContentLoaded', function() {
             window.print();
-            
         });
     </script>
 @endsection

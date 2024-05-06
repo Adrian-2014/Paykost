@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('user_id');
+            $table->string('tanggal_masuk');
+            $table->string('durasi_ngekost');
             $table->string('kamar_lama');
             $table->string('harga_lama');
             $table->string('kamar_baru');

@@ -367,6 +367,13 @@ body {
                             letter-spacing: 0.3px;
                         }
 
+                        .merr {
+                            font-size: 0.95rem;
+                            font-weight: bold;
+                            color: rgb(238, 0, 0);
+                            letter-spacing: 0.3px;
+                        }
+
                         .tgl {
                             font-size: 0.7rem;
                             color: gray;
@@ -438,8 +445,8 @@ body {
                     .info-l {
                         display: flex;
                         flex-direction: column;
-                        gap: 0.4rem;
-                        margin-top: 1.5rem;
+                        gap: 0.2rem;
+                        margin-top: .8rem;
 
                         .info-item {
                             display: flex;
@@ -450,7 +457,7 @@ body {
                             .inf {
                                 font-size: 0.8rem;
                                 color: gray;
-                                margin-top: -0.5rem;
+                                /* margin-top: 0; */
                             }
 
                             .value {
@@ -471,14 +478,14 @@ body {
                                 /* height: 307px; */
                                 max-height: 350px;
                                 height: auto;
-                                margin-top: 0.5rem;
+                                margin-top: 0.35rem;
                                 border-radius: 6px;
                                 border: 1px solid gray;
                             }
 
                             .inf {
                                 color: gray;
-                                margin-top: 0.5rem;
+                                margin-top: .25rem;
                                 width: 100%;
                                 font-size: 0.9rem;
                             }
@@ -492,6 +499,28 @@ body {
                     border-bottom: 0.8px solid rgba(128, 128, 128, 0.199);
                     margin-top: 0.7rem !important;
                     transform: scaleX(1);
+                }
+
+                .third {
+                    display: flex;
+                    flex-direction: column;
+                    border: 1px solid rgba(255, 0, 0, 0.8);
+                    border-radius: .5rem;
+                    padding: .5rem;
+
+                    /* gap: .35rem; */
+
+                    .message {
+                        font-size: .9rem;
+                        font-weight: 500;
+                        font-style: italic;
+                        color: rgba(255, 0, 0, 0.85);
+                    }
+
+                    .pesan {
+                        font-size: .75rem;
+                        color: rgba(0, 0, 0, 0.7);
+                    }
                 }
             }
 

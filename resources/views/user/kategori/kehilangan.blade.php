@@ -117,7 +117,7 @@
 
         <div class="formulir last">
             <div class="form-item">
-                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan Tambahan <span>*</span></label>
+                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Keterangan <span>*</span></label>
                 <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="5" placeholder="Tambahkan keterangan kamu..."></textarea>
             </div>
         </div>

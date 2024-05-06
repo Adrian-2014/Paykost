@@ -173,14 +173,18 @@
                     <div class="modal-body" id="print">
                         <div class="first">
                             <div class="suc">
-                                <div class="mess">
-                                    Pembayaran Berhasil!
-                                </div>
+                                @if ($pembayaran->status === 'Diterima')
+                                    <div class="mess">
+                                        Pembayaran Berhasil!
+                                    </div>
+                                @endif
+                                @if ($pembayaran->status === 'Ditolak')
+                                    <div class="merr">
+                                        Pembayaran Ditolak!
+                                    </div>
+                                @endif
                                 <div class="tgl">
-                                    @if ($pembayaran)
-                                        {{ $waktuBayar->translatedFormat('j F Y H:i:s') }} WIB
-                                    @endif
-                                    {{-- 08 November 2023 17:54:12 WIB --}}
+                                    {{ $pembayaran->created_at->translatedFormat('j F Y H:i:s') }} WIB
                                 </div>
                                 <div class="pay">
                                     Rp. {{ $pembayaran->total_tagihan }}
@@ -268,12 +272,19 @@
                             </div>
 
                         </div>
+                        @if ($pembayaran->status === 'Ditolak')
+                            <div class="third">
+                                <div class="message">
+                                    Alasan Penolakan
+                                </div>
+                                <div class="pesan">
+                                    {{ $pembayaran->pesan }}
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer">
-                        <a href="/pdf/{{ $pembayaran->id }}" target="popup" class="btn">Download</a>
-                        {{-- <button type="button" id="printBtn">
-                            Print
-                        </button> --}}
+                        <a href="/pdf/{{ $pembayaran->id }}" class="btn">Download</a>
                     </div>
                 </div>
             </div>
@@ -523,7 +534,7 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="/user/riwayat/pembayaran" class="nav-link">
+                <a href="/user/riwayat/" class="nav-link">
                     <i class="fa fa-history"></i>
                     <div class="isi fw-normal">
                         Riwayat
@@ -552,7 +563,7 @@
                 text: '{{ Session::get('success') }}',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 3000 // Waktu penampilan Sweet Alert (dalam milidetik)
+                timer: 3000
             });
         </script>
     @endif
@@ -628,7 +639,6 @@
             });
         });
     </script>
-
     <script>
         document.querySelectorAll('.img-bukti').forEach(function(button) {
             button.addEventListener('click', function(e) {
@@ -642,5 +652,4 @@
             });
         });
     </script>
-
 @endsection

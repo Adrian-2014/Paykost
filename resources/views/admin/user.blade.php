@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Admin User')
 <link rel="stylesheet" href="{{ asset('css/admin-css/user.css') }}">
@@ -343,7 +344,7 @@
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon ? null : 'disabled'">
+                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon ? '' : 'disabled'">
                                                                             Simpan
                                                                         </button>
                                                                     </div>
@@ -792,7 +793,7 @@
                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon && (password.length < 4)">
+                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="password.length < 4 || !(nama && email && tanggal_masuk && no_kamar && jenis_kelamin && pekerjaan && no_telpon)">
                             Tambahkan
                         </button>
                     </div>

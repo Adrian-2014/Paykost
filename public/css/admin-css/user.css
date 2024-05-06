@@ -521,12 +521,14 @@ body {
 
                             .dropdown-menu.show {
                                 height: fit-content;
+                                max-height: 15rem !important;
                                 display: flex;
                                 flex-direction: column;
                                 padding-top: 0 !important;
                                 padding-bottom: 0 !important;
-                                overflow: hidden;
+                                /* overflow: hidden; */
                                 overflow-y: auto;
+                                scrollbar-width: none !important;
                                 transform: translate(0, 40px) !important;
                             }
 
@@ -714,12 +716,14 @@ body {
 
                             .dropdown-menu.show {
                                 height: fit-content;
+                                max-height: 15rem;
                                 display: flex;
                                 flex-direction: column;
                                 padding-top: 0 !important;
                                 padding-bottom: 0 !important;
-                                overflow: hidden;
+                                /* overflow: hidden; */
                                 overflow-y: auto;
+                                scrollbar-width: none !important;
                                 transform: translate(0, 40px) !important;
                             }
 

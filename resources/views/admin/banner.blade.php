@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Admin Banner')
 <link rel="stylesheet" href="{{ asset('css/admin-css/banner.css') }}">

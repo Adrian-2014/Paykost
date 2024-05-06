@@ -42,6 +42,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'tanggal_masuk' => 'date:Y-m-d',
     ];
 
     /**

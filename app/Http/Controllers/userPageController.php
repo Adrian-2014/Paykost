@@ -15,10 +15,14 @@ use App\Models\cuciSetrika;
 use App\Models\cucisize;
 use App\Models\fasilitas;
 use App\Models\gambarKamar;
+use App\Models\gambarKerusakan;
 use App\Models\gantiAkun;
+use App\Models\filterRiwayat;
+use App\Models\fotoKamarku;
 use App\Models\jasaSetrika;
 use App\Models\kamarKost;
 use App\Models\laporanKehilangan;
+use App\Models\laporanKerusakan;
 use App\Models\pembayaranKost;
 use App\Models\pemesanan;
 use App\Models\pindahKamar;
@@ -57,7 +61,7 @@ class userPageController extends Controller
         $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
         $bulan = floor($selisihTanggal / 30);
         $hari = $selisihTanggal % 30;
-        $hasil = "{$bulan} bulan {$hari} hari";
+        $hasil = "{$bulan} Bulan {$hari} Hari";
 
         if($pembayaran) {
             $payHave = $pembayaran->tagihan_selanjutnya;
@@ -129,8 +133,8 @@ class userPageController extends Controller
         $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
         $kamarKosong = kamarKost::where('status', 'Publish')->where('kondisi', 'Kosong')->get();
         $banerKamars = gambarKamar::inRandomOrder()->take(4)->get();
-        $pembayaran = pembayaranKost::where('user_id', auth()->user()->id)->where('status', 'Diterima')->latest()->first();
-        $allPay = pembayaranKost::where('user_id', auth()->user()->id)->latest()->first();
+        $pembayaran = pembayaranKost::where('user_id', auth()->user()->id)->whereIn('status', ['Diterima', 'Ditolak'])->latest()->first();
+        // $allPay = pembayaranKost::where('user_id', auth()->user()->id)->latest()->first();
 
         // DATE REAL TIME
         $tglMasukSementara = auth()->user()->tanggal_masuk;
@@ -153,7 +157,7 @@ class userPageController extends Controller
         $bulan = floor($selisihTanggal / 30);
         $hari = $selisihTanggal % 30;
         // dd($hariIni);
-        $durasi = "{$bulan} bulan {$hari} hari";
+        $durasi = "{$bulan} Bulan {$hari} Hari";
 
         // DATE REAL TIME
         $pindah_kamar = pindahKamar::where('user_id', auth()->user()->id)->latest()->first();
@@ -215,7 +219,6 @@ class userPageController extends Controller
 
         return redirect()->route('userku');
     }
-
     public function updatePindah() {
         $pindahKamar = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Diterima')->latest()->first();
         $user = auth()->user();
@@ -237,9 +240,13 @@ class userPageController extends Controller
         $pindahKamar->status = 'Dipindahkan';
         $pindahKamar->save();
 
+        $filter = new filterRiwayat();
+        $filter->pindah_kamar_id = $pindahKamar->id;
+        $filter->user_id = $pindahKamar->user_id;
+        $filter->save();
+
         return redirect()->route('userku');
     }
-
     // rekomendasi
     public function rekomendasi($id) {
         $pindah = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Dalam Proses')->latest()->first();
@@ -255,21 +262,30 @@ class userPageController extends Controller
         $pindahKamar = kamarKost::where('kondisi','kosong')->get();
         // $no_kamar = $request->input('no_kamar');
         $kamarNew = kamarKost::where('nomor_kamar', $request->no_kamar)->first();
+
         return view('user.kategori.pindah', compact('kamarNew', 'kamar', 'pindahKamar'));
     }
     // pdf
     public function pdf($id) {
         $data = pembayaranKost::find($id);
-
-        return view('user.pdf', compact('data', 'tanggalMasuk'));
+        return view('user.pdf', compact('data'));
     }
 
     // kategori
     public function pindah() {
+
+        $hariIni = Carbon::now();
+        $tanggalMasuk = auth()->user()->tanggal_masuk;
+        $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
+        $bulan = floor($selisihTanggal / 30);
+        $hari = $selisihTanggal % 30;
+        // dd($hariIni);
+        $durasi = "{$bulan} bulan {$hari} hari";
+
         $user = auth()->user()->id;
         $kamar = kamarKost::where('user_id', $user)->first();
         $pindahKamar = kamarKost::where('kondisi','kosong')->get();
-        return view('user.kategori.pindah', compact('kamar','pindahKamar'));
+        return view('user.kategori.pindah', compact('kamar','pindahKamar', 'tanggalMasuk', 'durasi'));
     }
     public function laporanKerusakan() {
         return view('user.kategori.kerusakan');
@@ -284,33 +300,82 @@ class userPageController extends Controller
     public function kehilangan() {
         return view('user.kategori.kehilangan');
     }
-    // HOME
 
+    // HOME
 
     public function kamarku() {
         $no_kamar = auth()->user()->no_kamar;
         $kamar_kost = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
         $fasKamar = fasilitas::where('tipe', 'Fasilitas Kamar')->get();
         $fasUmum = fasilitas::where('tipe', 'Fasilitas Umum ')->get();
-        return view('user.kamarku', compact('kamar_kost', 'fasKamar', 'fasUmum'));
+        $fotoku = fotoKamarku::where('user_id', auth()->user()->id)->where('no_kamar', auth()->user()->no_kamar)->orderBy('id', 'desc')->get();
+        return view('user.kamarku', compact('kamar_kost', 'fasKamar', 'fasUmum', 'fotoku'));
     }
+
+    public function uploadKamar(Request $request) {
+        // dd($request->all());
+
+        $file = $request->file('gambar');
+        $namaFile = time().'.'.$file->getClientOriginalExtension();
+        $file->move(public_path('uploads'), $namaFile);
+
+        $kamarku = new fotoKamarku();
+        $kamarku->nama_user = auth()->user()->name;
+        $kamarku->user_id = auth()->user()->id;
+        $kamarku->no_kamar = auth()->user()->no_kamar;
+        $kamarku->gambar = $namaFile;
+        $kamarku->save();
+
+        return redirect()->back()->with('success', 'Gambar berhasil di unggah');
+    }
+    public function editPic(Request $request) {
+        // dd($request->all());
+
+        $file = $request->file('gambar');
+        $namaFile = time().'.'.$file->getClientOriginalExtension();
+        $file->move(public_path('uploads'), $namaFile);
+
+        $kamarku = fotoKamarku::where('id', $request->id)->first();
+        $kamarku->gambar = $namaFile;
+        $kamarku->save();
+
+        return redirect()->back()->with('success', 'Gambar berhasil di Ubah');
+    }
+
+    public function deletePic(Request $request) {
+        // dd($request->all());
+
+        $kamarku = fotoKamarku::where('id', $request->id)->first();
+            if(file_exists(public_path('uploads/'.$kamarku->gambar))) {
+                unlink(public_path('uploads/'.$kamarku->gambar));
+            }
+
+        $kamarku->delete();
+
+        return redirect()->back()->with('success', 'Gambar berhasil di Hapus');
+    }
+
+    public function riwayatAll() {
+        $all = filterRiwayat::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->get();
+
+        return view('user.all-riwayat', compact('all'));
+    }
+
     public function riwayatPembayaran() {
-        $semua = pembayaranKost::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Ditolak', 'Diterima'])->get();
-        // $proses = pembayaranKost::orderBy('id', 'desc')->where('status', 'Proses Validasi')->where('user_id', auth()->user()->id)->get();
-        $tolak = pembayaranKost::orderBy('id', 'desc')->where('status', 'Ditolak')->where('user_id', auth()->user()->id)->get();
-        $terima = pembayaranKost::orderBy('id', 'desc')->where('status', 'Diterima')->where('user_id', auth()->user()->id)->get();
-        return view('user.riwayat-pembayaran', compact('semua', 'tolak', 'terima'));
+        $pembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        return view('user.riwayat-pembayaran', compact('pembayaran'));
     }
     public function riwayatPindah() {
-        $semua = pindahKamar::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Ditolak', 'Dipindahkan'])->get();
-        $tolak = pindahKamar::orderBy('id', 'desc')->where('status', 'Ditolak')->where('user_id', auth()->user()->id)->get();
-        $disetujui = pindahKamar::orderBy('id', 'desc')->where('status', 'Dipindahkan')->where('user_id', auth()->user()->id)->get();
-        return view('user.riwayat-pindah', compact('semua', 'tolak', 'disetujui'));
+        $pindah = pindahKamar::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Dipindahkan', 'Ditolak'])->get();
+        return view('user.riwayat-pindah', compact('pindah'));
     }
     public function riwayatKehilangan() {
-        $semua = laporanKehilangan::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->where('status', 'Direspon')->get();
-
-        return view('user.riwayat-kehilangan', compact('semua'));
+        $kehilangan = laporanKehilangan::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->where('status', 'Direspon')->get();
+        return view('user.riwayat-kehilangan', compact('kehilangan'));
+    }
+    public function riwayatKerusakan() {
+        $kerusakan = laporanKerusakan::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->where('status', 'Direspon')->get();
+        return view('user.riwayat-kerusakan', compact('kerusakan'));
     }
 
     // PROFIL
@@ -323,7 +388,7 @@ class userPageController extends Controller
         $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
         $bulan = floor($selisihTanggal / 30);
         $hari = $selisihTanggal % 30;
-        $hasil = "{$bulan} bulan {$hari} hari";
+        $hasil = "{$bulan} Bulan {$hari} Hari";
         return view('user.profil', compact('tanggalMasuk', 'hasil'));
     }
     public function updateProfil(Request $request)  {
@@ -526,7 +591,6 @@ class userPageController extends Controller
         $bank = Bank::find($pemesanan->bank_id);
         return view('user.kategori.pemesanan.kofirmasi-pesan',compact('pemesanan','bank', 'bannerPro', 'sipatu'));
     }
-
     public function prosesCuci(Request $request) {
         // dd($request->all());
 
@@ -576,7 +640,6 @@ class userPageController extends Controller
 
         return redirect()->route('layanancuci')->with('success', 'Barang cucian Kamu akan Segera di Proses');
     }
-
     public function proses() {
         $pemesanans = ProsesCuci::where('user_id', auth()->user()->id)->whereIn('status', ['Proses Cuci', 'Proses Pengambilan'])->orderBy('id', 'desc')->get();
         foreach ($pemesanans as $pemesanan) {
@@ -603,7 +666,6 @@ class userPageController extends Controller
 
         return view('user.kategori.pemesanan.riwayat', compact('done', 'bank'));
     }
-
     public function updateStatus(Request $request)
     {
         $request->validate([
@@ -617,9 +679,8 @@ class userPageController extends Controller
         $data->save();
         return redirect()->back();
     }
-
     public function pindahKamar(Request $request) {
-        // dd($request);
+        // dd($request->all());
         $request->validate([
             'name' => 'required',
             'no_kamar' => 'required',
@@ -639,6 +700,8 @@ class userPageController extends Controller
         $data = new pindahKamar();
         $data->nama = $request->name;
         $data->kamar_lama = $request->no_kamar;
+        $data->tanggal_masuk = $request->tanggal_masuk;
+        $data->durasi_ngekost = $request->durasi;
         $data->harga_lama = $request->harga_kamar;
         $data->user_id = $request->user_id;
         $data->kamar_baru = $request->kamar_baru;
@@ -664,7 +727,6 @@ class userPageController extends Controller
 
         return redirect()->route('userku')->with('success', 'Permintaan Anda Berhasil Di Kirim');
     }
-
     public function laporKehilangan(Request $request) {
 
         // dd($request);
@@ -692,15 +754,69 @@ class userPageController extends Controller
 
         return redirect()->route('userku')->with('success', 'Permintaan Anda Berhasil Di Kirim');
     }
-
     public function laporKerusakan(Request $request) {
+
         // dd($request->input);
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'nama' => 'required',
             'no_kamar' => 'required',
             'bagian_rusak' => 'required',
             'tanggal' => 'required',
         ]);
+
+        $laporan = new laporanKerusakan();
+        $laporan->nama = $request->nama;
+        $laporan->user_id = auth()->user()->id;
+        $laporan->no_kamar = $request->no_kamar;
+        $laporan->bagian_rusak = $request->bagian_rusak;
+        $laporan->tanggal_rusak = $request->tanggal;
+        $laporan->keterangan = $request->keterangan;
+        $laporan->status = 'Dalam Proses';
+        $laporan->save();
+
+
+        $gambarLaporan = new gambarKerusakan();
+
+        if ($request->hasFile('input1')) {
+            $gambarBarang = $request->file('input1');
+            $namaFile1 = time().'.'.$gambarBarang->getClientOriginalName();
+            $gambarBarang->move(public_path('uploads'), $namaFile1);
+
+            $gambarLaporan->gambar1 = $namaFile1;
+        }
+        if ($request->hasFile('input2')) {
+            $gambarBarang = $request->file('input2');
+            $namaFile2 = time().'.'.$gambarBarang->getClientOriginalName();
+            $gambarBarang->move(public_path('uploads'), $namaFile2);
+
+            $gambarLaporan->gambar2 = $namaFile2;
+        }
+        if ($request->hasFile('input3')) {
+            $gambarBarang = $request->file('input3');
+            $namaFile3 = time().'.'.$gambarBarang->getClientOriginalName();
+            $gambarBarang->move(public_path('uploads'), $namaFile3);
+
+            $gambarLaporan->gambar3 = $namaFile3;
+        }
+        if ($request->hasFile('input4')) {
+            $gambarBarang = $request->file('input4');
+            $namaFile4 = time().'.'.$gambarBarang->getClientOriginalName();
+            $gambarBarang->move(public_path('uploads'), $namaFile4);
+
+            $gambarLaporan->gambar4 = $namaFile4;
+        }
+        if ($request->hasFile('input5')) {
+            $gambarBarang = $request->file('input5');
+            $namaFile5 = time().'.'.$gambarBarang->getClientOriginalName();
+            $gambarBarang->move(public_path('uploads'), $namaFile5);
+
+            $gambarLaporan->gambar5 = $namaFile5;
+        }
+
+        $gambarLaporan->laporan_id = $laporan->id;
+        $gambarLaporan->save();
+
+        return redirect()->route('userku')->with('success', 'Laporan berhasil dikirim');
     }
 }

@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('gambar_kerusakans', function (Blueprint $table) {
             $table->id();
-            $table->string('gambar');
             $table->foreignId('laporan_id');
+            $table->string('gambar1')->nullable();
+            $table->string('gambar2')->nullable();
+            $table->string('gambar3')->nullable();
+            $table->string('gambar4')->nullable();
+            $table->string('gambar5')->nullable();
             $table->timestamps();
         });
     }

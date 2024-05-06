@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Pembayaran User')
 <link rel="stylesheet" href="{{ asset('css/admin-css/pembayaran.css') }}">
@@ -261,7 +262,7 @@
                                                                             </div>
                                                                             <div class="data-bukti">
                                                                                 <div class="kiri">Bukti Bayar:</div>
-                                                                                <div class="kanan bukti">
+                                                                                <div class="kanan bukti img-bukti" data-id="{{ $item->id }}">
                                                                                     <img src="{{ asset('uploads/' . $item->bukti) }}">
                                                                                 </div>
                                                                             </div>
@@ -635,4 +636,21 @@
             });
         </script>
     @endif
+
+    <script>
+        document.querySelectorAll('.img-bukti').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                var itemId = button.getAttribute('data-id');
+                var imageUrl = button.querySelector('img').getAttribute('src');
+                Swal.fire({
+                    imageUrl: imageUrl,
+                    color: "#716add",
+                    showConfirmButton: false,
+                    customClass: {
+                        container: "bukti-swal",
+                    },
+                });
+            });
+        });
+    </script>
 @endsection

@@ -1,6 +1,7 @@
 @extends('layout.dashboard')
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="stylesheet" href="{{ asset('package') }}/dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
 @section('title', 'Admin Fasilitas')
 <link rel="stylesheet" href="{{ asset('css/admin-css/fasilitas.css') }}">
@@ -238,7 +239,8 @@
                                                                         <button type="button" class="btn waves-effect cancel" data-bs-dismiss="modal">
                                                                             Batal
                                                                         </button>
-                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && Deskripsi && jenis_fasilitas && gambar_fasilitas ? null : 'disabled'">
+                                                                        <button type="submit" class="btn waves-effect simpan" id="add-save" data-bs-dismiss="modal" :disabled="nama && Deskripsi && jenis_fasilitas && gambar_fasilitas ? '\' : '
+                                                                        disabled '">
                                                                             Simpan
                                                                         </button>
                                                                     </div>

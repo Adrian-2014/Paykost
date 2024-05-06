@@ -42,9 +42,11 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
     Route::get('/user/profil', [userPageController::class, 'profil']);
 
+    Route::get('/user/riwayat', [userPageController::class, 'riwayatAll']);
     Route::get('/user/riwayat/pembayaran', [userPageController::class, 'riwayatPembayaran']);
     Route::get('/user/riwayat/pindah', [userPageController::class, 'riwayatPindah']);
     Route::get('/user/riwayat/kehilangan', [userPageController::class, 'riwayatKehilangan']);
+    Route::get('/user/riwayat/kerusakan', [userPageController::class, 'riwayatKerusakan']);
     // Menu
 
     // kategori
@@ -88,6 +90,11 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::post('updateStatus', [userPageController::class, 'updateStatus'])->name('updateStatus');
     // jasa cuci baju
 
+    // Kamarku
+    Route::post('/upload/kamar', [userPageController::class, 'uploadKamar'])->name('kamarUpload');
+    Route::post('/edit/kamar', [userPageController::class, 'editPic'])->name('edit.pic');
+    Route::post('/delete/kamar', [userPageController::class, 'deletePic'])->name('delete.pic');
+    // Kamarku
 
     // Rekomendasi
     Route::get('/rekomendasi/{id}', [userPageController::class, 'rekomendasi']);
@@ -189,10 +196,14 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
     // Akun
 
     // Laporan Kehilangan
-
     Route::get('/admin/kehilangan', [adminControll::class, 'laporanKehilangan'])->name('admin.kehilangan');
     Route::post('/admin/respon/kehilangan', [adminControll::class, 'responKehilangan'])->name('respon.kehilangan');
     // Laporan Kehilangan
+
+    // Laporan Kerusakan
+    Route::get('/admin/kerusakan', [adminControll::class, 'laporanKerusakan']);
+    Route::post('/admin/respon/kerusakan', [adminControll::class, 'responKerusakan'])->name('respon.kerusakan');
+    // Laporan Kerusakan
 
     Route::match(['get', 'post'], '/updatesPindah', [adminControll::class, 'updatesPindah'])->name('updatesPindah');
 });

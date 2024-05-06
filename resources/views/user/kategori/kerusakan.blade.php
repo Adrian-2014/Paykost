@@ -33,13 +33,13 @@
             <div class="form-item first">
                 <label class="form-label fw-medium forFile">Apa yang Rusak? <span>*</span></label>
                 <div class="dropdown">
-                    <input type="text" disabled class="form-control" name="bagian_rusak" id="isi" placeholder="Bagian yang mengalami kerusakan..." onkeyup="inputTyped()">
+                    <input type="text" readonly class="form-control" name="bagian_rusak" id="isi" placeholder="Bagian yang mengalami kerusakan..." onkeyup="inputTyped()">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li class="first">
-                            <div class="item" onclick="bagian('Pintu Kamar')">
+                        <li class="first" onclick="bagian('Pintu Kamar')">
+                            <div class="item">
                                 <div class="icons">
                                     <img src="{{ asset('/gambar-kategori/door.png') }}">
                                 </div>
@@ -48,8 +48,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="item" onclick="bagian('Plafon Kamar')">
+                        <li onclick="bagian('Plafon Kamar')">
+                            <div class="item">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/asbestos.png') }}">
                                 </div>
@@ -58,8 +58,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="item" onclick="bagian('Ac Kamar')">
+                        <li onclick="bagian('Ac Kamar')">
+                            <div class="item">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/air-conditioner.png') }}">
                                 </div>
@@ -68,8 +68,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="item" onclick="bagian('Lantai Kamar')">
+                        <li onclick="bagian('Lantai Kamar')">
+                            <div class="item">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/floor.png') }}">
                                 </div>
@@ -78,8 +78,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="item" onclick="bagian('Keran Air Kamar mandi')">
+                        <li onclick="bagian('Keran Air Kamar mandi')">
+                            <div class="item">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/faucet.png') }}">
                                 </div>
@@ -88,8 +88,8 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="last">
-                            <div class="item" onclick="bagian('Lainnya...')">
+                        <li class="last" onclick="bagian('Lainnya...')">
+                            <div class="item">
                                 <div class="icons">
                                     <img src="{{ asset('gambar-kategori/pencil.png') }}">
                                 </div>
@@ -110,19 +110,15 @@
                 <label for="files" class="form-label fw-medium">Unggah Foto<span>*</span></label>
                 <div class="for-uploadFoto">
                     <div class="uploadFoto">
-                        {{-- <div class="uploadFoto-item">
+                        <div class="uploadFoto-item">
                             <input type="file" id="files1" name="input1" class="form-control untuk-file" accept="image/*">
                             <div class="input-area">
-                                <label for="files1" class="labelFile" id="labelku2" style="display: none;">
-                                    <i class="bx bx-cloud-upload"></i>
+                                <label for="files1" class="labelFile" id="labelku1">
+                                    <i class='bx bx-cloud-upload'></i>
                                 </label>
-                                <img src="blob:http://localhost:8000/6cd2bc4b-af29-41f4-bc39-a095ae65be04"><button class="button-delete"><i class="bi bi-trash3"></i></button>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
-                    <button type="button" id="addInput" class="btn add">
-                        <i class="bi bi-plus"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -145,7 +141,6 @@
 
     <script>
         var hariIni = new Date();
-
         // var besok = new Date(hariIni);
         // besok.setDate(besok.getDate() + 1);
         var hari_real = hariIni.toISOString().split('T')[0];
@@ -172,16 +167,14 @@
             var placeholderText = '';
 
             if (barangHilang === 'Lainnya...') {
-
                 isiInput.value = '';
-                isiInput.disabled = false;
+                isiInput.removeAttribute('readonly', 'readonly');
                 placeholderText = 'Bagian yang mengalami kerusakan..';
                 isiInput.focus();
 
             } else {
-
                 isiInput.value = barangHilang;
-                isiInput.disabled = true;
+                isiInput.setAttribute('readonly', 'readonly');
                 placeholderText = 'Pilih bagian yang rusak';
 
             }
@@ -195,12 +188,10 @@
             checkValidation();
         }
 
+
         document.addEventListener('DOMContentLoaded', function() {
             const uploadContainer = document.querySelector('.uploadFoto');
-            const addInputButton = document.getElementById('addInput');
-            let inputCount = 0;
-
-            // addInputButton.style.display = 'none';
+            let inputCount = 1;
 
             function checkInputs() {
                 const inputs = uploadContainer.querySelectorAll('.untuk-file');
@@ -212,9 +203,26 @@
                 });
 
                 if (allInputsFilled && inputCount < 5) {
-                    addInputButton.disabled = false;
-                } else {
-                    addInputButton.disabled = true;
+                    addInputAutomatically();
+                }
+            }
+
+            function addInputAutomatically() {
+                const newInputDiv = document.createElement('div');
+                newInputDiv.classList.add('uploadFoto-item');
+                newInputDiv.innerHTML = `
+            <input type="file" id="files${inputCount + 1}" name="input${inputCount + 1}" class="form-control untuk-file" accept="image/*">
+            <div class="input-area">
+                <label for="files${inputCount + 1}" class="labelFile" id="labelku${inputCount + 1}">
+                    <i class='bx bx-cloud-upload'></i>
+                </label>
+            </div>`;
+                uploadContainer.appendChild(newInputDiv);
+
+                inputCount++;
+
+                if (inputCount === 5) {
+                    checkInputs();
                 }
             }
 
@@ -238,50 +246,23 @@
                             const parentDiv = fileInput.closest('.uploadFoto-item');
                             parentDiv.remove();
                             inputCount--;
-                            acselatarion();
+                            acselarators();
                             checkInputs();
-                            addInputButton.style.display = 'block';
                         });
                         targetLabel.parentElement.appendChild(deleteButton);
 
                         if (inputCount < 5) {
-                            addInputButton.style.display = 'block';
+                            addInputAutomatically();
                         }
                     }
 
                     if (inputCount === 5) {
-                        addInputButton.style.display = 'none';
+                        checkInputs();
                     }
-
-                    checkInputs();
                 }
             });
 
-            addInputButton.addEventListener('click', function() {
-                if (inputCount < 5) {
-                    const newInputDiv = document.createElement('div');
-                    newInputDiv.classList.add('uploadFoto-item');
-                    newInputDiv.innerHTML = `
-                <input type="file" id="files${inputCount + 1}" name="input${inputCount + 1}" class="form-control untuk-file" accept="image/*">
-                <div class="input-area">
-                    <label for="files${inputCount + 1}" class="labelFile" id="labelku${inputCount + 1}">
-                        <i class='bx bx-cloud-upload'></i>
-                    </label>
-                </div>`;
-                    uploadContainer.appendChild(newInputDiv);
-
-                    inputCount++;
-
-                    if (inputCount === 5) {
-                        addInputButton.style.display = 'none';
-                    }
-
-                    checkInputs();
-                }
-            });
-
-
-            function acselatarion() {
+            function acselarators() {
                 const inputs = uploadContainer.querySelectorAll('.untuk-file');
                 inputs.forEach((input, index) => {
                     input.id = `files${index + 1}`;
@@ -291,72 +272,6 @@
                 });
             }
         });
-
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const uploadContainer = document.querySelector('.uploadFoto');
-        //     const addInputButton = document.getElementById('addInput');
-        //     let inputCount = 1;
-
-        //     addInputButton.addEventListener('click', function() {
-        //         if (inputCount < 5) {
-        //             inputCount++;
-        //             const newInputDiv = document.createElement('div');
-        //             newInputDiv.classList.add('uploadFoto-item');
-        //             newInputDiv.innerHTML = `
-    //             <input type="file" id="files${inputCount}" name="input${inputCount}" class="form-control untuk-file" accept="image/*">
-    //              <div class="input-area">
-    //                  <label for="files${inputCount}" class="labelFile" id="labelku${inputCount}">
-    //                         <i class='bx bx-cloud-upload'></i>
-    //                     </label>
-    //                 </div>
-    //             `;
-        //             uploadContainer.insertBefore(newInputDiv, addInputButton);
-        //         } else {
-        //             addInputButton.style = 'display: none;'
-        //         }
-
-        //         if (inputCount === 5) {
-        //             addInputButton.style = 'display: none;'
-        //         }
-        //     });
-
-        //     uploadContainer.addEventListener('click', function(event) {
-        //         if (event.target && event.target.classList.contains('button-delete')) {
-        //             const deleteButton = event.target;
-        //             const uploadItem = deleteButton.parentElement;
-        //             const uploadContainer = uploadItem.parentElement;
-        //             uploadContainer.removeChild(uploadItem);
-        //             inputCount--;
-
-        //             // Mengatur ulang ID dan label untuk input yang tersisa
-        //             const uploadItems = uploadContainer.querySelectorAll('.uploadFoto-item');
-        //             uploadItems.forEach((item, index) => {
-        //                 const input = item.querySelector('input');
-        //                 const label = item.querySelector('label');
-        //                 input.id = `files${index + 1}`;
-        //                 input.name = `input${index + 1}`;
-        //                 label.setAttribute('for', `files${index + 1}`);
-        //                 label.id = `labelku${index + 1}`;
-        //             });
-        //         }
-        //     });
-
-        //     // Event listener untuk menghapus preview img dan input saat tombol hapus di klik
-        //     uploadContainer.addEventListener('click', function(event) {
-        //         if (event.target && event.target.tagName === 'IMG') {
-        //             const img = event.target;
-        //             const uploadItem = img.parentElement;
-        //             const input = uploadItem.querySelector('input');
-        //             const label = uploadItem.querySelector('label');
-        //             const deleteButton = uploadItem.querySelector('.button-delete');
-
-        //             input.value = '';
-        //             label.style.display = 'flex';
-        //             uploadItem.removeChild(img);
-        //             uploadItem.removeChild(deleteButton);
-        //         }
-        //     });
-        // });
 
 
         function checkValidation() {
