@@ -40,12 +40,12 @@
             <div class="row">
                 <div class="col-12">
                     <label for="" class="ps-1">Email</label>
-                    <input type="email" placeholder="Masukkan email anda . . ." name="email" value="{{ old('email') }}" autocomplete="off" x-model="input1">
+                    <input type="email" placeholder="Masukkan email kamu . . ." name="email" value="{{ old('email') }}" autocomplete="off" x-model="input1">
                 </div>
                 <div class="col-12 password">
                     <label for="" class="ps-1">Password </label>
                     <div class="input-password">
-                        <input type="password" placeholder="Masukkan kata sandi anda . . ." name="password" id="password" autocomplete="off" x-model="input2">
+                        <input type="password" placeholder="Masukkan kata sandi kamu . . ." name="password" id="password" autocomplete="off" x-model="input2">
                         <div class="icon">
                             <i class="bi-eye-slash" id="waduh"></i>
                         </div>

@@ -20,6 +20,10 @@
         </div>
     </div>
 
+    <div class="pengisi">
+
+    </div>
+
     <div class="container-fluid once">
         <div class="heading">
             <div class="item">
@@ -34,7 +38,7 @@
         <div class="bodies">
             <div class="pay-one">
                 <div class="status">
-                    @if ($data->status === 'Diterima')
+                    @if ($data->status === 'Lunas')
                         <div class="status-pay success">
                             Pembayaran Berhasil!
                         </div>
@@ -96,15 +100,17 @@
                     </div>
                 </div>
             </div>
-            <div class="pay-fourth">
-                <div class="bukti">
-                    <div class="top">Bukti Pembayaran</div>
-                    <div class="bot">
-                        <img src="{{ asset('uploads/' . $data->bukti) }}">
+
+            @if ($data->status === 'Ditolak')
+                <div class="pay-fourth ditolak">
+                    <div class="bukti">
+                        <div class="top">Bukti Pembayaran</div>
+                        <div class="bot">
+                            <img src="{{ asset('uploads/' . $data->bukti) }}">
+                        </div>
                     </div>
                 </div>
-            </div>
-            @if ($data->status === 'Ditolak')
+
                 <div class="pay-last">
                     <div class="content">
                         <div class="head-tolak">
@@ -115,10 +121,18 @@
                         </div>
                     </div>
                 </div>
+            @else
+                <div class="pay-fourth diterima">
+                    <div class="bukti">
+                        <div class="top">Bukti Pembayaran</div>
+                        <div class="bot">
+                            <img src="{{ asset('uploads/' . $data->bukti) }}">
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
     </div>
-
 
     <script>
         window.addEventListener('DOMContentLoaded', function() {

@@ -340,7 +340,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             let count = 0;
             count = document.querySelectorAll('.data-foto').length;
-            if (count < 10) {
+            if (count < 7) {
                 console.log(count);
             } else {
                 var formulir = document.querySelector('#uploadForm');

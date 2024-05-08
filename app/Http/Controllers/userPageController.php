@@ -133,7 +133,7 @@ class userPageController extends Controller
         $bannerPro = Banner::where('lokasi_banner', 'Home user')->where('status', 'Publish')->get();
         $kamarKosong = kamarKost::where('status', 'Publish')->where('kondisi', 'Kosong')->get();
         $banerKamars = gambarKamar::inRandomOrder()->take(4)->get();
-        $pembayaran = pembayaranKost::where('user_id', auth()->user()->id)->whereIn('status', ['Diterima', 'Ditolak'])->latest()->first();
+        $pembayaran = pembayaranKost::where('user_id', auth()->user()->id)->whereIn('status', ['Lunas', 'Ditolak'])->latest()->first();
         // $allPay = pembayaranKost::where('user_id', auth()->user()->id)->latest()->first();
 
         // DATE REAL TIME
@@ -144,7 +144,7 @@ class userPageController extends Controller
         // $hariIni = Carbon::parse('2024-05-17');
         //durasi
 
-        $pindahKamar = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Diterima')->latest()->first();
+        $pindahKamar = pindahKamar::where('user_id', auth()->user()->id)->where('status', 'Disetujui')->latest()->first();
         if($pindahKamar) {
             $waktu_pindah = $pindahKamar->waktu_pindah;
             $waktu = Carbon::parse($waktu_pindah);
@@ -204,8 +204,6 @@ class userPageController extends Controller
             return view('user.index', compact('kamar', 'bannerPro',  'banerKamars', 'kamarKosong', 'pindah_kamar' , 'pembayaran', 'tanggalMasuk', 'durasi', 'kamar', 'tagihanBulan',  'pembayaranSelanjutnya','hariIni'));
         }
 
-
-
         //untuk pindah kamar
 
         // dd($tagihanBulan);
@@ -237,12 +235,13 @@ class userPageController extends Controller
         $new_kamar->kondisi = 'Dihuni';
         $new_kamar->save();
 
-        $pindahKamar->status = 'Dipindahkan';
+        $pindahKamar->status = 'Disetujui';
         $pindahKamar->save();
 
         $filter = new filterRiwayat();
         $filter->pindah_kamar_id = $pindahKamar->id;
         $filter->user_id = $pindahKamar->user_id;
+        $filter->nama = 'Pindah Kamar';
         $filter->save();
 
         return redirect()->route('userku');
@@ -262,8 +261,14 @@ class userPageController extends Controller
         $pindahKamar = kamarKost::where('kondisi','kosong')->get();
         // $no_kamar = $request->input('no_kamar');
         $kamarNew = kamarKost::where('nomor_kamar', $request->no_kamar)->first();
+        $tgl = Carbon::parse(auth()->user()->tanggal_masuk);
+        $now = Carbon::now();
+        $test = $tgl->diffInDays($now);
+        $bulan = floor($test / 30);
+        $hari = $test % 30;
+        $durasi = "{$bulan} Bulan {$hari} Hari";
 
-        return view('user.kategori.pindah', compact('kamarNew', 'kamar', 'pindahKamar'));
+        return view('user.kategori.pindah', compact('kamarNew', 'kamar', 'pindahKamar', 'durasi'));
     }
     // pdf
     public function pdf($id) {
@@ -273,7 +278,6 @@ class userPageController extends Controller
 
     // kategori
     public function pindah() {
-
         $hariIni = Carbon::now();
         $tanggalMasuk = auth()->user()->tanggal_masuk;
         $selisihTanggal = $tanggalMasuk->diffInDays($hariIni);
@@ -302,7 +306,6 @@ class userPageController extends Controller
     }
 
     // HOME
-
     public function kamarku() {
         $no_kamar = auth()->user()->no_kamar;
         $kamar_kost = kamarKost::where('nomor_kamar', $no_kamar)->with('gambarKamar')->get();
@@ -355,18 +358,26 @@ class userPageController extends Controller
         return redirect()->back()->with('success', 'Gambar berhasil di Hapus');
     }
 
+
+    // Riwayat
     public function riwayatAll() {
         $all = filterRiwayat::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->get();
+        // $all = filterRiwayat::search(trim($request->search))->orderBy('id', 'desc')->where('user_id', auth()->user()->id)->get();
 
         return view('user.all-riwayat', compact('all'));
     }
 
+    public function searchAll(Request $request) {
+        $all = filterRiwayat::search(trim($request->search))->orderBy('id', 'desc')->where('user_id', auth()->user()->id)->get();
+
+        return view('user.all-riwayat', compact('all'));
+    }
     public function riwayatPembayaran() {
-        $pembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        $pembayaran = pembayaranKost::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Lunas', 'Ditolak'])->get();
         return view('user.riwayat-pembayaran', compact('pembayaran'));
     }
     public function riwayatPindah() {
-        $pindah = pindahKamar::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Dipindahkan', 'Ditolak'])->get();
+        $pindah = pindahKamar::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->whereIn('status', ['Disetujui', 'Ditolak'])->get();
         return view('user.riwayat-pindah', compact('pindah'));
     }
     public function riwayatKehilangan() {
@@ -377,6 +388,196 @@ class userPageController extends Controller
         $kerusakan = laporanKerusakan::orderBy('updated_at', 'desc')->where('user_id', auth()->user()->id)->where('status', 'Direspon')->get();
         return view('user.riwayat-kerusakan', compact('kerusakan'));
     }
+    public function searchPay(Request $request) {
+        $search = $request->input('search');
+
+        if(strtolower($search) == 'januari') {
+            $search = '01';
+        } elseif(strtolower($search) == 'februari') {
+            $search = '02';
+        } elseif(strtolower($search) == 'maret') {
+            $search = '03';
+        } elseif(strtolower($search) == 'april') {
+            $search = '04';
+        } elseif(strtolower($search) == 'mei') {
+            $search = '05';
+        } elseif(strtolower($search) == 'juni') {
+            $search = '06';
+        } elseif(strtolower($search) == 'juli') {
+            $search = '07';
+        } elseif(strtolower($search) == 'agustus') {
+            $search = '08';
+        } elseif(strtolower($search) == 'september') {
+            $search = '09';
+        } elseif(strtolower($search) == 'oktober') {
+            $search = '10';
+        } elseif(strtolower($search) == 'november') {
+            $search = '11';
+        } elseif(strtolower($search) == 'desember') {
+            $search = '12';
+        }
+
+        $pembayaran = pembayaranKost::where('id_pembayaran', 'like', '%' . $search . '%')
+        ->orWhere('status', 'like', '%' . $search . '%')
+        ->orWhere('name', 'like', '%' . $search . '%')
+        ->orWhere(function($query) use ($search) {
+            $query->where('bulan_tagihan', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(bulan_tagihan, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->orWhere(function($query) use ($search) {
+            $query->where('updated_at', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(bulan_tagihan, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->where('user_id', auth()->user()->id)
+        ->whereIn('status', ['Diterima', 'Ditolak'])
+        ->get();
+        $searchResult = count($pembayaran) > 0 ? true : false;
+        return view('user.riwayat-pembayaran', compact('pembayaran', 'searchResult'));
+    }
+    public function searchPindah(Request $request) {
+        $search = $request->input('search');
+
+        if(strtolower($search) == 'januari') {
+            $search = '01';
+        } elseif(strtolower($search) == 'februari') {
+            $search = '02';
+        } elseif(strtolower($search) == 'maret') {
+            $search = '03';
+        } elseif(strtolower($search) == 'april') {
+            $search = '04';
+        } elseif(strtolower($search) == 'mei') {
+            $search = '05';
+        } elseif(strtolower($search) == 'juni') {
+            $search = '06';
+        } elseif(strtolower($search) == 'juli') {
+            $search = '07';
+        } elseif(strtolower($search) == 'agustus') {
+            $search = '08';
+        } elseif(strtolower($search) == 'september') {
+            $search = '09';
+        } elseif(strtolower($search) == 'oktober') {
+            $search = '10';
+        } elseif(strtolower($search) == 'november') {
+            $search = '11';
+        } elseif(strtolower($search) == 'desember') {
+            $search = '12';
+        }
+
+        $pindah = pindahKamar::where('nama', 'like', '%' . $search . '%')
+        ->orWhere('status', 'like', '%' . $search . '%')
+        ->orWhere('kamar_lama', 'like', '%' . $search . '%')
+        ->orWhere('kamar_baru', 'like', '%' . $search . '%')
+        ->orWhere(function($query) use ($search) {
+            $query->where('waktu_pindah', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(waktu_pindah, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->orWhere(function($query) use ($search) {
+            $query->where('updated_at', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(updated_at, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->where('user_id', auth()->user()->id)
+        ->whereIn('status', ['Disetujui', 'Ditolak'])
+        ->get();
+        $searchResult = count($pindah) > 0 ? true : false;
+        return view('user.riwayat-pindah', compact('pindah', 'searchResult'));
+        // return back()->with(['searchResult' => $searchResult, 'pindah' => $pindah]);
+    }
+    public function searchKerusakan(Request $request) {
+        $search = $request->input('search');
+
+        if(strtolower($search) == 'januari') {
+            $search = '01';
+        } elseif(strtolower($search) == 'februari') {
+            $search = '02';
+        } elseif(strtolower($search) == 'maret') {
+            $search = '03';
+        } elseif(strtolower($search) == 'april') {
+            $search = '04';
+        } elseif(strtolower($search) == 'mei') {
+            $search = '05';
+        } elseif(strtolower($search) == 'juni') {
+            $search = '06';
+        } elseif(strtolower($search) == 'juli') {
+            $search = '07';
+        } elseif(strtolower($search) == 'agustus') {
+            $search = '08';
+        } elseif(strtolower($search) == 'september') {
+            $search = '09';
+        } elseif(strtolower($search) == 'oktober') {
+            $search = '10';
+        } elseif(strtolower($search) == 'november') {
+            $search = '11';
+        } elseif(strtolower($search) == 'desember') {
+            $search = '12';
+        }
+
+        $kerusakan = laporanKerusakan::where('nama', 'like', '%' . $search . '%')
+        ->orWhere('status', 'like', '%' . $search . '%')
+        ->orWhere('id_laporan', 'like', '%' . $search . '%')
+        ->orWhere('bagian_rusak', 'like', '%' . $search . '%')
+        ->orWhere(function($query) use ($search) {
+            $query->where('tanggal_rusak', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(tanggal_rusak, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->orWhere(function($query) use ($search) {
+            $query->where('updated_at', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(updated_at, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->where('user_id', auth()->user()->id)
+        ->where('status', 'Ditanggapi')
+        ->get();
+        $searchResult = count($kerusakan) > 0 ? true : false;
+        return view('user.riwayat-kerusakan', compact('kerusakan', 'searchResult'));
+    }
+    public function searchKehilangan(Request $request) {
+        $search = $request->input('search');
+
+        if(strtolower($search) == 'januari') {
+            $search = '01';
+        } elseif(strtolower($search) == 'februari') {
+            $search = '02';
+        } elseif(strtolower($search) == 'maret') {
+            $search = '03';
+        } elseif(strtolower($search) == 'april') {
+            $search = '04';
+        } elseif(strtolower($search) == 'mei') {
+            $search = '05';
+        } elseif(strtolower($search) == 'juni') {
+            $search = '06';
+        } elseif(strtolower($search) == 'juli') {
+            $search = '07';
+        } elseif(strtolower($search) == 'agustus') {
+            $search = '08';
+        } elseif(strtolower($search) == 'september') {
+            $search = '09';
+        } elseif(strtolower($search) == 'oktober') {
+            $search = '10';
+        } elseif(strtolower($search) == 'november') {
+            $search = '11';
+        } elseif(strtolower($search) == 'desember') {
+            $search = '12';
+        }
+
+        $kehilangan = laporanKehilangan::where('nama', 'like', '%' . $search . '%')
+        ->orWhere('status', 'like', '%' . $search . '%')
+        ->orWhere('id_laporan', 'like', '%' . $search . '%')
+        ->orWhere('barang_hilang', 'like', '%' . $search . '%')
+        ->orWhere(function($query) use ($search) {
+            $query->where('waktu_kehilangan', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(waktu_kehilangan, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->orWhere(function($query) use ($search) {
+            $query->where('updated_at', 'like', '%' . $search . '%')
+                  ->whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(updated_at, '-', -2), '-', 1) = ?", [$search]);
+        })
+        ->where('user_id', auth()->user()->id)
+        ->where('status', 'Ditanggapi')
+        ->get();
+        $searchResult = count($kehilangan) > 0 ? true : false;
+        return view('user.riwayat-kehilangan', compact('kehilangan', 'searchResult'));
+    }
+
+    // Riwayat
 
     // PROFIL
     public function profil() {
@@ -729,7 +930,7 @@ class userPageController extends Controller
     }
     public function laporKehilangan(Request $request) {
 
-        // dd($request);
+        // dd($request->all());
         $request->validate([
             'nama' => 'required',
             'user_id' => 'required',
@@ -737,6 +938,7 @@ class userPageController extends Controller
             'barang' => 'required',
             'tanggal' => 'required',
             'jam' => 'required',
+            'laporan_id' => 'required',
             'keterangan'
          ]);
 
@@ -749,6 +951,7 @@ class userPageController extends Controller
         $lapor->barang_hilang = $request->barang;
         $lapor->waktu_kehilangan = $waktu;
         $lapor->keterangan = $request->keterangan;
+        $lapor->id_laporan   = $request->laporan_id;
         $lapor->status = 'Dalam Proses';
         $lapor->save();
 
@@ -763,6 +966,7 @@ class userPageController extends Controller
             'no_kamar' => 'required',
             'bagian_rusak' => 'required',
             'tanggal' => 'required',
+            'laporan_id' => 'required',
         ]);
 
         $laporan = new laporanKerusakan();
@@ -772,6 +976,7 @@ class userPageController extends Controller
         $laporan->bagian_rusak = $request->bagian_rusak;
         $laporan->tanggal_rusak = $request->tanggal;
         $laporan->keterangan = $request->keterangan;
+        $laporan->id_laporan = $request->laporan_id;
         $laporan->status = 'Dalam Proses';
         $laporan->save();
 

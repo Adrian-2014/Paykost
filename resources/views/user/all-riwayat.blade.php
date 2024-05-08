@@ -55,7 +55,7 @@
                                         <div class="logo">
                                             <img src="{{ asset('img/logo.png') }}">
                                         </div>
-                                        @if ($item->pembayaranKost->status === 'Diterima')
+                                        @if ($item->pembayaranKost->status === 'Lunas')
                                             <div class="status accept">
                                                 Lunas
                                             </div>
@@ -67,14 +67,14 @@
                                     </div>
                                     <div class="info">
                                         <div class="info-head">
-                                            @if ($item->pembayaranKost->status === 'Diterima')
+                                            @if ($item->pembayaranKost->status === 'Lunas')
                                                 Pembayaran Kost Lunas!
                                             @else
                                                 Pembayaran Kost Ditolak
                                             @endif
                                         </div>
                                         <div class="info-data">
-                                            @if ($item->pembayaranKost->status === 'Diterima')
+                                            @if ($item->pembayaranKost->status === 'Lunas')
                                                 Selamat {{ $item->pembayaranKost->name }}, Pembayaran kamu telah Di Terima oleh Admin. Klik Untuk Selengkapnya
                                             @else
                                                 Mohon Maaf {{ $item->pembayaranKost->name }}, Pembayaran kamu telah Di Tolak oleh Admin, Klik untuk Selengkpanya
@@ -100,7 +100,7 @@
                                         <div class="logo">
                                             <img src="{{ asset('img/door.png') }}">
                                         </div>
-                                        @if ($item->pindahKamar->status === 'Dipindahkan')
+                                        @if ($item->pindahKamar->status === 'Disetujui')
                                             <div class="status accept">
                                                 Disetujui
                                             </div>
@@ -113,9 +113,9 @@
                                     <div class="info">
                                         <div class="info-head">
                                             @if ($item->pindahKamar->status === 'Dipindahkan')
-                                                Permintaan Pindah Kost Disetujui!
+                                                Permintaan Pindah Kamar Disetujui!
                                             @else
-                                                Permintaan Pindah Kost Ditolak!
+                                                Permintaan Pindah Kamar Ditolak!
                                             @endif
                                         </div>
                                         <div class="info-data">
@@ -150,12 +150,12 @@
                                     </div>
                                     <div class="info">
                                         <div class="info-data">
-                                            Laporan Kehilangan kamu telah Ditanggapi oleh Admin. Klik untuk keterangan lebih lanjut
+                                            Laporan Kehilangan kamu telah Ditanggapi oleh Admin. Klik untuk Selengkapnya
                                         </div>
                                     </div>
                                     <div class="date">
-                                        <div class="no-kamar">
-                                            Kamar No. {{ $item->kehilangan->no_kamar }}
+                                        <div class="id-laporan">
+                                            {{ $item->kehilangan->id_laporan }}
                                         </div>
                                         <div class="tanggal">
                                             {{ $item->kehilangan->updated_at->translatedFormat('j F Y H:i:s') }}
@@ -183,8 +183,8 @@
                                         </div>
                                     </div>
                                     <div class="date">
-                                        <div class="no-kamar">
-                                            Kamar No. {{ $item->kerusakan->no_kamar }}
+                                        <div class="id-laporan">
+                                            {{ $item->kerusakan->id_laporan }}
                                         </div>
                                         <div class="tanggal">
                                             {{ $item->updated_at->translatedFormat('j F Y H:i:s') }}
@@ -218,7 +218,7 @@
                             <div class="modal-body">
                                 <div class="first">
                                     <div class="suc">
-                                        @if ($item->pembayaranKost->status === 'Diterima')
+                                        @if ($item->pembayaranKost->status === 'Lunas')
                                             <div class="mess">
                                                 Pembayaran Berhasil!
                                             </div>
@@ -353,7 +353,7 @@
                             <div class="modal-body">
                                 <div class="first">
                                     <div class="suc">
-                                        @if ($item->pindahKamar->status === 'Dipindahkan')
+                                        @if ($item->pindahKamar->status === 'Disetujui')
                                             <div class="mess">
                                                 Pengajuan Pindah Disetujui!
                                             </div>
@@ -431,7 +431,7 @@
                                         </div>
                                         <div class="info-item">
                                             <div class="inf">
-                                                Waktu Pindah
+                                                Tanggal / Waktu Pindah
                                             </div>
                                             <div class="value">
                                                 {{ $item->pindahKamar->waktu_pindah->translatedFormat('j F Y H:i') }}
@@ -477,6 +477,14 @@
                 <div class="modal fade in riwayat-kehilangan" id="riwayat-kehilangan{{ $item->kehilangan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title" id="exampleModalLabel">
+                                    <img src="{{ asset('img/two.png') }}">
+                                </div>
+                                <div class="id">
+                                    {{ $item->kehilangan->id_laporan }}
+                                </div>
+                            </div>
                             <div class="modal-body">
                                 <div class="first">
                                     <div class="top">
@@ -563,6 +571,14 @@
                 <div class="modal fade in riwayat-kerusakan" id="riwayat-kerusakan{{ $item->kerusakan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title" id="exampleModalLabel">
+                                    <img src="{{ asset('img/two.png') }}">
+                                </div>
+                                <div class="id">
+                                    {{ $item->kerusakan->id_laporan }}
+                                </div>
+                            </div>
                             <div class="modal-body">
                                 <div class="first">
                                     <div class="top">
@@ -764,21 +780,22 @@
         });
 
         splide.mount();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionElement = document.getElementById('searchbar');
+            const inputElement = accordionElement.querySelector('.search');
 
+            function checkAccordionShow() {
+                if (accordionElement.classList.contains('show')) {
+                    inputElement.focus();
+                }
+            }
 
-        const buttons = document.querySelectorAll('.btns');
-        buttons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                splide.go(index);
-            });
-        });
-
-        splide.on('moved', (newIndex) => {
-            buttons.forEach(button => {
-                button.classList.remove('active');
-            });
-            buttons[newIndex].classList.add('active');
+            document.addEventListener('DOMContentLoaded', checkAccordionShow);
+            accordionElement.addEventListener('shown.bs.collapse', checkAccordionShow);
         });
     </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @endsection

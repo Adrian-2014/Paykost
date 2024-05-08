@@ -24,7 +24,7 @@ body {
                 }
 
                 .nama {
-                    width: 9rem !important;
+                    width: 10rem !important;
                     /* background-color: aqua; */
                 }
 
@@ -40,7 +40,7 @@ body {
                 }
 
                 .t-bayar {
-                    width: 5.5rem !important;
+                    width: 6rem !important;
                     /* background-color: red; */
 
                 }
@@ -192,27 +192,27 @@ body {
                 }
 
                 .nama {
-                    width: 7rem !important;
+                    width: 3rem !important;
                 }
 
                 .no-kamar {
-                    width: 6rem;
+                    width: 5rem !important;
                 }
 
                 .b-tag {
-                    width: 6rem;
+                    width: 5.5rem !important;
                 }
 
                 .t-bayar {
-                    width: 6rem !important;
+                    width: 6.5rem !important;
                 }
 
                 .status {
-                    width: 4.5rem;
+                    width: 6rem !important;
                 }
 
                 .action {
-                    width: 4.5rem;
+                    width: 4rem !important;
                 }
 
                 th::before,

@@ -9,7 +9,25 @@
 @section('container')
 
     <div class="sticky-top">
-        Riwayat Kamu
+        <div class="judul">
+            Riwayat Kamu
+        </div>
+        <div class="src" data-bs-toggle="collapse" data-bs-target="#searchbar" aria-expanded="true" aria-controls="collapseOne">
+            <i data-feather="search"></i>
+        </div>
+    </div>
+
+    <div id="searchbar" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <div class="bar">
+                <form action="{{ route('pay.riwayat.search') }}" method="GET">
+                    <button type="submit">
+                        <i data-feather="search"></i>
+                    </button>
+                    <input type="search" class="search" name="search" placeholder="Cari Riwayat . . .">
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="nav">
@@ -34,16 +52,27 @@
 
     <div class="container-fluid">
         <div class="row riwayat">
-            <div class="col-12 all-riwayat">
-                @if ($pembayaran->isNotEmpty())
-                    @foreach ($pembayaran as $item)
+            @if (isset($searchResult) && !$searchResult)
+                <div class="col-12 empty-search">
+                    <div class="container empties">
+                        <div class="logo">
+                            <img src="{{ asset('img/empty.png') }}">
+                        </div>
+                        <div class="text">
+                            Data Pencarian Tidak Ditemukan
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="col-12 all-riwayat">
+                    @forelse ($pembayaran as $item)
                         <div class="riwayat-item payment" data-bs-toggle="modal" data-bs-target="#history-payment{{ $item->id }}">
                             <div class="items">
                                 <div class="heading">
                                     <div class="logo">
                                         <img src="{{ asset('img/logo.png') }}">
                                     </div>
-                                    @if ($item->status === 'Diterima')
+                                    @if ($item->status === 'Lunas')
                                         <div class="status accept">
                                             Lunas
                                         </div>
@@ -55,14 +84,14 @@
                                 </div>
                                 <div class="info">
                                     <div class="info-head">
-                                        @if ($item->status === 'Diterima')
+                                        @if ($item->status === 'Lunas')
                                             Pembayaran Kost Lunas!
                                         @else
                                             Pembayaran Kost Ditolak
                                         @endif
                                     </div>
                                     <div class="info-data">
-                                        @if ($item->status === 'Diterima')
+                                        @if ($item->status === 'Lunas')
                                             Selamat {{ $item->name }}, Pembayaran kamu telah Di Terima oleh Admin. Klik Untuk Selengkapnya
                                         @else
                                             Mohon Maaf {{ $item->name }}, Pembayaran kamu telah Di Tolak oleh Admin, Klik untuk Selengkpanya
@@ -80,22 +109,20 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="col-12 empty-riwayat">
-                        <div class="container empties">
-                            <div class="logo">
-                                <img src="{{ asset('img/people.png') }}">
-                            </div>
-                            <div class="text">
-                                Yah,, kamu Tidak Memiliki Riwayat Apapun Saat ini.
+                    @empty
+                        <div class="col-12 empty-riwayat">
+                            <div class="container empties">
+                                <div class="logo">
+                                    <img src="{{ asset('img/people.png') }}">
+                                </div>
+                                <div class="text">
+                                    Yah,, kamu tidak memiliki Riwayat Pembayaran saat ini.
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif
-
-            </div>
-
+                    @endforelse
+                </div>
+            @endif
         </div>
     </div>
 
@@ -117,7 +144,7 @@
                         <div class="modal-body">
                             <div class="first">
                                 <div class="suc">
-                                    @if ($item->status === 'Diterima')
+                                    @if ($item->status === 'Lunas')
                                         <div class="mess">
                                             Pembayaran Berhasil!
                                         </div>
@@ -273,6 +300,21 @@
         </div>
     </nav>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionElement = document.getElementById('searchbar');
+            const inputElement = accordionElement.querySelector('.search');
+
+            function checkAccordionShow() {
+                if (accordionElement.classList.contains('show')) {
+                    inputElement.focus();
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', checkAccordionShow);
+            accordionElement.addEventListener('shown.bs.collapse', checkAccordionShow);
+        });
+    </script>
     <script>
         document.querySelectorAll('.img-bukti').forEach(function(button) {
             button.addEventListener('click', function(e) {

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('kehilangan_id')->nullable();
             $table->foreignId('ganti_akun_id')->nullable();
             $table->string('user_id')->nullable();
+            $table->string('nama')->nullable();
             $table->timestamps();
         });
     }

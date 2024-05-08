@@ -36,7 +36,7 @@
             <input type="hidden" name="harga_kamar" class="form-control" value="{{ $kamar->harga_kamar }}">
             <div class="form-item">
                 <label for="h-now" class="form-label fw-medium">Tanggal Masuk</label>
-                <input type="text" class="form-control" value="{{ $tanggalMasuk->translatedFormat('j F Y') }}" readonly>
+                <input type="text" class="form-control" value="{{ auth()->user()->tanggal_masuk->translatedFormat('j F Y') }}" readonly>
                 <input type="hidden" name="tanggal_masuk" class="form-control" value="{{ auth()->user()->tanggal_masuk }}" readonly>
             </div>
             <div class="form-item">

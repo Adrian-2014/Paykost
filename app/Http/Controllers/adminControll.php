@@ -41,16 +41,21 @@ class adminControll extends Controller
     public function index()
     {
         $jumlahUser = User::where('role_id', 2)->count();
-        $jumlahTransaksi = pembayaranKost::count();
+        $jumlahTransaksi = pembayaranKost::whereIn('status', ['Diterima', 'Ditolak'])->count();
         $jumlahKamar = kamarKost::count();
-        return view('admin.index', compact('jumlahUser', 'jumlahTransaksi', 'jumlahKamar'));
+
+        $lr = laporanKehilangan::where('status', 'Dalam Proses')->count();
+        $lh = laporanKerusakan::where('status', 'Dalam Proses')->count();
+
+        $jumlahLaporan = $lr + $lh;
+        return view('admin.index', compact('jumlahUser', 'jumlahTransaksi', 'jumlahKamar', 'jumlahLaporan'));
     }
 
     // Setuju
     public function pembayaranPage()
     {
         $pembayaran = pembayaranKost::orderBy('id', 'desc')->where('status', 'Proses Validasi')->get();
-        $riwayat = pembayaranKost::orderBy('id', 'desc')->whereIn('status', ['Diterima', 'Ditolak'])->get();
+        $riwayat = pembayaranKost::orderBy('id', 'desc')->whereIn('status', ['Lunas', 'Ditolak'])->get();
         // $dataBulanFormat = [];
         // $dataPay = [];
         // $tanggalBayar =[];
@@ -75,7 +80,10 @@ class adminControll extends Controller
         $filter = new filterRiwayat();
         $filter->pembayaran_kost_id = $pay->id;
         $filter->user_id = $pay->user_id;
+        $filter->nama = 'Pembayaran Kost';
         $filter->save();
+
+
         return back()->with('success', 'Data Berhasil Dikirim.');
 
     }
@@ -85,7 +93,7 @@ class adminControll extends Controller
             'id'=>'required',
         ]);
         $pay = pembayaranKost::find($request->id);
-        $pay->status = 'Diterima';
+        $pay->status = 'Lunas';
         $pay->save();
 
         $user = User::where('name', $pay->name)->first();
@@ -103,6 +111,7 @@ class adminControll extends Controller
         $filter = new filterRiwayat();
         $filter->pembayaran_kost_id = $pay->id;
         $filter->user_id = $pay->user_id;
+        $filter->nama = 'Pembayaran Kost';
         // dd($filter->pembayaran_kost_id);
         $filter->save();
         return back()->with('success', 'Data Berhasil Dikirim.');
@@ -114,7 +123,7 @@ class adminControll extends Controller
     // For User
     public function user() {
         $user = User::where('role_id', '>', 1)->orderBy('id', 'desc')->get();
-        $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->get();
+        $kamars = kamarKost::where('kondisi', 'Kosong')->where('status', 'Publish')->orderBy('nomor_kamar', 'asc')->get();
         $request =  gantiAkun::orderBy('id', 'desc')->where('status', 'Dalam Proses')->get();
         $riwayat = gantiAkun::orderBy('id', 'desc')->whereIn('status', ['Ditolak', 'Diterima'])->get();
 
@@ -890,7 +899,7 @@ class adminControll extends Controller
         //     }
         // }
         $PengajuanPindah = pindahKamar::orderBy('id', 'desc')->where('status', 'Dalam Proses')->get();
-        $riwayat =  pindahKamar::orderBy('id', 'desc')->whereIn('status', ['Ditolak', 'Diterima', 'Dipindahkan'])->get();
+        $riwayat =  pindahKamar::orderBy('id', 'desc')->whereIn('status', ['Ditolak', 'Proses Pindah', 'Disetujui'])->get();
         return view('admin.kategori.pindah-kamar', compact('PengajuanPindah', 'riwayat'));
     }
 
@@ -907,6 +916,7 @@ class adminControll extends Controller
         $filter = new filterRiwayat();
         $filter->pindah_kamar_id = $data->id;
         $filter->user_id = $data->user_id;
+        $filter->nama = 'Pindah Kamar';
         $filter->save();
 
         return redirect()->back()->with('success', 'Data Berhasil di Kirim');
@@ -919,7 +929,7 @@ class adminControll extends Controller
         ]);
 
         $data = pindahKamar::find($request->id);
-        $data->status = 'Diterima';
+        $data->status = 'Proses Pindah';
         $data->save();
 
         $kamar = kamarKost::where('nomor_kamar', $request->kamar_baru)->latest()->first();
@@ -928,31 +938,6 @@ class adminControll extends Controller
 
         return redirect()->back()->with('success', 'Data Berhasil di Kirim');
     }
-
-    // public function updatesPindah() {
-    //     $pindahKamar = pindahKamar::where('status', 'Diterima')->get();
-    //     foreach($pindahKamar as $item) {
-    //         $kamarNow = kamarKost::where('user_id',  $item->user_id)->first();
-    //         $user = $item->user_id;
-    //         $user->no_kamar = $item->kamar_baru;
-    //         $user->save();
-    //         if ($kamarNow) {
-    //             $kamarNow->user_id = null;
-    //             $kamarNow->kondisi = 'Kosong';
-    //             $kamarNow->save();
-    //         }
-    //         $new_kamar = KamarKost::where('nomor_kamar', $item->kamar_baru)->first();
-    //         $new_kamar->user_id = $user->id;
-    //         $new_kamar->kondisi = 'Dihuni';
-    //         $new_kamar->save();
-
-    //         $item->status = 'Dipindahkan';
-    //         $item->save();
-    //     }
-
-    // }
-    // Pindah Kamar
-
     // Akun
     public function tolakAccount(Request $request) {
 
@@ -965,6 +950,12 @@ class adminControll extends Controller
         $akun->alasan = $request->alasan;
         $akun->status = 'Ditolak';
         $akun->save();
+
+        $filter = new filterRiwayat();
+        $filter->pindah_kamar_id = $akun->id;
+        $filter->user_id = $akun->user_id;
+        $filter->nama = 'Ganti Akun';
+        $filter->save();
 
         return back()->with('success', 'Data Telah DI Kirim');
     }
@@ -1002,6 +993,13 @@ class adminControll extends Controller
         $ajuan->save();
         $user->save();
 
+        $filter = new filterRiwayat();
+        $filter->pindah_kamar_id = $user->id;
+        $filter->user_id = $user->user_id;
+        $filter->nama = 'Ganti Akun';
+        $filter->save();
+
+
         return redirect()->back()->with('success', 'Data Berhasil Di Update');
     }
     // Akun
@@ -1027,6 +1025,7 @@ class adminControll extends Controller
         $filter = new filterRiwayat();
         $filter->kehilangan_id = $laporan->id;
         $filter->user_id = $laporan->user_id;
+        $filter->nama = 'Laporan Kehilangan';
         $filter->save();
 
         return redirect()->back()->with('success', 'Respon Berhasil Dikirim');
@@ -1057,6 +1056,7 @@ class adminControll extends Controller
         $filter = new filterRiwayat();
         $filter->kerusakan_id = $laporan->id;
         $filter->user_id = $laporan->user_id;
+        $filter->nama = 'laporan Kerusakan';
         $filter->save();
 
         return redirect()->back()->with('success', 'Respon Berhasil Dikirim');

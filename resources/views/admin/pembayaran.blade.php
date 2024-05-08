@@ -395,7 +395,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="td-item stat">
-                                                        <div class="item @if ($item->status === 'Diterima') diterima @else ditolak @endif">
+                                                        <div class="item @if ($item->status === 'Lunas') diterima @else ditolak @endif">
                                                             {{ $item->status }}
                                                         </div>
 

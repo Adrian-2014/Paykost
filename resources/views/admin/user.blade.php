@@ -158,9 +158,24 @@
                                                 </td>
                                                 <td>
                                                     <div class="td-item status">
-                                                        <div class="item stat @if ($item->status_bayar === 'Sudah Lunas') aktif @elseif($item->status_bayar === 'Proses Validasi') proses @else nonaktif @endif">
-                                                            {{ $item->status_bayar }}
-                                                        </div>
+                                                        @if ($item->status_bayar === 'Sudah Lunas')
+                                                            <div class="item stat aktif">
+                                                                Sudah Lunas
+                                                            </div>
+                                                        @elseif($item->status_bayar === 'Proses Validasi')
+                                                            <div class="item stat proses">
+                                                                Proses Validasi
+                                                            </div>
+                                                        @elseif($item->status_bayar === 'Ditolak')
+                                                            <div class="item stat nonaktif">
+                                                                Pembayaran Ditolak
+                                                            </div>
+                                                        @else
+                                                            <div class="item stat nonaktif">
+                                                                Belum Bayar
+                                                            </div>
+                                                        @endif
+
                                                     </div>
                                                 </td>
                                                 <td>
@@ -260,7 +275,7 @@
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Nama User<span class="text-danger">*</span></div>
                                                                             <input type="hidden" name="id" value="{{ $item->id }}">
-                                                                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama">
+                                                                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama" maxlength="18">
                                                                         </div>
                                                                         <div class="items ps-2">
                                                                             <div class="title pb-1">Email<span class="text-danger">*</span></div>
@@ -705,7 +720,7 @@
                         @csrf
                         <div class="items ps-2">
                             <div class="title pb-1">Nama User<span class="text-danger">*</span></div>
-                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama" maxlength="20">
+                            <input type="text" name="nama" placeholder="Nama user . . ." class="form-control target" x-model="nama" maxlength="18">
                         </div>
                         <div class="items ps-2">
                             <div class="title pb-1">Email<span class="text-danger">*</span></div>

@@ -8,8 +8,8 @@ body {
 }
 
 body {
-    background-color: rgba(236, 233, 233, 0.881) !important;
     padding-bottom: 3.5rem;
+    background-color: rgba(236, 233, 233, 0.881) !important;
 }
 
 
@@ -51,6 +51,7 @@ body {
     }
 
 }
+
 
 .splide.banner {
     width: 100%;

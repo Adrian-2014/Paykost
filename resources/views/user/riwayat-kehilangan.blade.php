@@ -9,7 +9,25 @@
 @section('container')
 
     <div class="sticky-top">
-        Riwayat Kamu
+        <div class="judul">
+            Riwayat Kamu
+        </div>
+        <div class="src" data-bs-toggle="collapse" data-bs-target="#searchbar" aria-expanded="true" aria-controls="collapseOne">
+            <i data-feather="search"></i>
+        </div>
+    </div>
+
+    <div id="searchbar" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <div class="bar">
+                <form action="{{ route('kehilangan.riwayat.search') }}" method="GET">
+                    <button type="submit">
+                        <i data-feather="search"></i>
+                    </button>
+                    <input type="search" class="search" name="search" placeholder="Cari Riwayat . . .">
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="nav">
@@ -34,9 +52,20 @@
 
     <div class="container-fluid">
         <div class="row riwayat">
-            <div class="col-12 all-riwayat">
-                @if ($kehilangan->isNotEmpty())
-                    @foreach ($kehilangan as $item)
+            @if (isset($searchResult) && !$searchResult)
+                <div class="col-12 empty-search">
+                    <div class="container empties">
+                        <div class="logo">
+                            <img src="{{ asset('img/empty.png') }}">
+                        </div>
+                        <div class="text">
+                            Data Pencarian Tidak Ditemukan
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="col-12 all-riwayat">
+                    @forelse ($kehilangan as $item)
                         <div class="riwayat-item kehilangan" data-bs-toggle="modal" data-bs-target="#riwayat-kehilangan{{ $item->id }}">
                             <div class="items">
                                 <div class="heading">
@@ -53,8 +82,8 @@
                                     </div>
                                 </div>
                                 <div class="date">
-                                    <div class="no-kamar">
-                                        Kamar No. {{ $item->no_kamar }}
+                                    <div class="id-laporan">
+                                        {{ $item->id_laporan }}
                                     </div>
                                     <div class="tanggal">
                                         {{ $item->updated_at->translatedFormat('j F Y H:i:s') }}
@@ -62,23 +91,22 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="col-12 empty-riwayat">
-                        <div class="container empties">
-                            <div class="logo">
-                                <img src="{{ asset('img/people.png') }}">
-                            </div>
-                            <div class="text">
-                                Yah,, kamu Tidak Memiliki Riwayat Apapun Saat ini.
+                    @empty
+                        <div class="col-12 empty-riwayat">
+                            <div class="container empties">
+                                <div class="logo">
+                                    <img src="{{ asset('img/people.png') }}">
+                                </div>
+                                <div class="text">
+                                    Yah,, kamu tidak memiliki Riwayat Laporan saat ini.
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif
-            </div>
+                    @endforelse
+                </div>
+            @endif
         </div>
     </div>
-
 
     {{-- RIWAYAT KEHILANGAN --}}
     @if ($kehilangan->isNotEmpty())
@@ -86,6 +114,14 @@
             <div class="modal fade in riwayat-kehilangan" id="riwayat-kehilangan{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title" id="exampleModalLabel">
+                                <img src="{{ asset('img/two.png') }}">
+                            </div>
+                            <div class="id">
+                                {{ $item->id_laporan }}
+                            </div>
+                        </div>
                         <div class="modal-body">
                             <div class="first">
                                 <div class="top">

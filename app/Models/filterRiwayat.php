@@ -34,4 +34,21 @@ class filterRiwayat extends Model
     {
         return $this->belongsTo(gantiAkun::class, 'ganti_akun_id');
     }
+
+    public function scopeSearch($query, $term)
+    {
+        $term = "%$term%";
+        $query->where(function ($query) use ($term) {
+            $query->orWhereHas('pembayaranKost', function ($query) use ($term) {
+                    $query->where('id', 'like', $term)
+                        ->orWhere('status','like',$term);
+                })->orWhereHas('regency', function ($query) use ($term) {
+                    $query->where('name', 'like', $term);
+                })->orWhereHas('district', function ($query) use ($term) {
+                    $query->where('name', 'like', $term);
+                })->orWhereHas('village', function ($query) use ($term) {
+                    $query->where('name', 'like', $term);
+                });
+        });
+    }
 }

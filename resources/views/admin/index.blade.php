@@ -45,8 +45,8 @@
                     <div class="card-body">
                         <div class="text-center">
                             <img src="{{ asset('package') }}/dist/images/svgs/icon-favorites.svg" width="50" height="50" class="mb-3" alt="" />
-                            <p class="fw-semibold fs-3 text-danger mb-1">Events</p>
-                            <h5 class="fw-semibold text-danger mb-0">696</h5>
+                            <p class="fw-semibold fs-3 text-danger mb-1">Laporan</p>
+                            <h5 class="fw-semibold text-danger mb-0">{{ $jumlahLaporan }}</h5>
                         </div>
                     </div>
                 </div>

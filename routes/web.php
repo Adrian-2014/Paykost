@@ -41,13 +41,19 @@ Route::group(['middleware' => ['auth', 'cek:2']], function () {
     Route::match(['get', 'post'], '/updateStatUser', [userPageController::class, 'updateStatUser'])->name('updateStatUser');
     Route::get('/user/kamarku', [userPageController::class, 'kamarku']);
     Route::get('/user/profil', [userPageController::class, 'profil']);
+    // Menu
 
+    // Riwayat
     Route::get('/user/riwayat', [userPageController::class, 'riwayatAll']);
     Route::get('/user/riwayat/pembayaran', [userPageController::class, 'riwayatPembayaran']);
     Route::get('/user/riwayat/pindah', [userPageController::class, 'riwayatPindah']);
     Route::get('/user/riwayat/kehilangan', [userPageController::class, 'riwayatKehilangan']);
     Route::get('/user/riwayat/kerusakan', [userPageController::class, 'riwayatKerusakan']);
-    // Menu
+    Route::get('/user/search/pay', [userPageController::class, 'searchPay'])->name('pay.riwayat.search');
+    Route::get('/user/search/pindah', [userPageController::class, 'searchPindah'])->name('pindah.riwayat.search');
+    Route::get('/user/search/rusak', [userPageController::class, 'searchKerusakan'])->name('kerusakan.riwayat.search');
+    Route::get('/user/search/hilang', [userPageController::class, 'searchKehilangan'])->name('kehilangan.riwayat.search');
+    // Riwayat
 
     // kategori
     Route::get('/pindah', [userPageController::class, 'pindah']);
@@ -213,6 +219,7 @@ Route::group(['middleware' => ['auth', 'cek:1']], function() {
 
 // EXTRA
 Route::get('/pengajuan', [loginController::class, 'pengajuan']);
+Route::post('/pengajuan/pemulihan', [loginController::class, 'formPengajuan'])->name('pengajuan.route');
 Route::get('/pdf/{id}', [userPageController::class, 'pdf']);
 Route::get('proposal', function() {
     return view('proposal-rafi');

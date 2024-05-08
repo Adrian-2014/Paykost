@@ -39,7 +39,7 @@ input {
 
     .container-fluid {
         display: flex;
-        justify-content: start !important;
+        justify-content: space-between !important;
         padding-left: 1.5rem !important;
 
         padding: 0;
@@ -54,7 +54,14 @@ input {
                 font-size: 1.4rem;
                 font-weight: bold !important;
             }
+
         }
+
+            .id {
+                font-size: .85rem;
+
+                font-weight: 600 !important;
+            }
 
     }
 

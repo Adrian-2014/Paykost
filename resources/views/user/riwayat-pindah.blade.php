@@ -9,7 +9,25 @@
 @section('container')
 
     <div class="sticky-top">
-        Riwayat Kamu
+        <div class="judul">
+            Riwayat Kamu
+        </div>
+        <div class="src" data-bs-toggle="collapse" data-bs-target="#searchbar" aria-expanded="true" aria-controls="collapseOne">
+            <i data-feather="search"></i>
+        </div>
+    </div>
+
+    <div id="searchbar" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            <div class="bar">
+                <form action="{{ route('pindah.riwayat.search') }}" method="GET">
+                    <button type="submit">
+                        <i data-feather="search"></i>
+                    </button>
+                    <input type="search" class="search" name="search" placeholder="Cari Riwayat . . .">
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="nav">
@@ -34,16 +52,28 @@
 
     <div class="container-fluid">
         <div class="row riwayat">
-            <div class="col-12 all-riwayat">
-                @if ($pindah->isNotEmpty())
-                    @foreach ($pindah as $item)
+
+            @if (isset($searchResult) && !$searchResult)
+                <div class="col-12 empty-search">
+                    <div class="container empties">
+                        <div class="logo">
+                            <img src="{{ asset('img/empty.png') }}">
+                        </div>
+                        <div class="text">
+                            Data Pencarian Tidak Ditemukan
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="col-12 all-riwayat">
+                    @forelse ($pindah as $item)
                         <div class="riwayat-item pindah" data-bs-toggle="modal" data-bs-target="#riwayat-pindah{{ $item->id }}">
                             <div class="items">
                                 <div class="heading">
                                     <div class="logo">
                                         <img src="{{ asset('img/door.png') }}">
                                     </div>
-                                    @if ($item->status === 'Dipindahkan')
+                                    @if ($item->status === 'Disetujui')
                                         <div class="status accept">
                                             Disetujui
                                         </div>
@@ -56,9 +86,9 @@
                                 <div class="info">
                                     <div class="info-head">
                                         @if ($item->status === 'Dipindahkan')
-                                            Permintaan Pindah Kost Disetujui!
+                                            Permintaan Pindah kamar Disetujui!
                                         @else
-                                            Permintaan Pindah Kost Ditolak!
+                                            Permintaan Pindah kamar Ditolak!
                                         @endif
                                     </div>
                                     <div class="info-data">
@@ -79,27 +109,23 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                @else
-                    <div class="col-12 empty-riwayat">
-                        <div class="container empties">
-                            <div class="logo">
-                                <img src="{{ asset('img/people.png') }}">
-                            </div>
-                            <div class="text">
-                                Yah,, kamu Tidak Memiliki Riwayat Apapun Saat ini.
+                    @empty
+                        <div class="col-12 empty-riwayat">
+                            <div class="container empties">
+                                <div class="logo">
+                                    <img src="{{ asset('img/people.png') }}">
+                                </div>
+                                <div class="text">
+                                    Yah,, kamu Tidak Memiliki Riwayat Pindah Kamar saat ini.
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endif
-
-            </div>
-
+                    @endforelse
+                </div>
+            @endif
         </div>
     </div>
 
-
-    {{-- RIWAYAT PEMBAYARAN --}}
     {{-- RIWAYAT PINDAH KAMAR --}}
     @if ($pindah->isNotEmpty())
         @foreach ($pindah as $item)
@@ -109,7 +135,7 @@
                         <div class="modal-body">
                             <div class="first">
                                 <div class="suc">
-                                    @if ($item->status === 'Dipindahkan')
+                                    @if ($item->status === 'Disetujui')
                                         <div class="mess">
                                             Pengajuan Pindah Disetujui!
                                         </div>
@@ -187,7 +213,7 @@
                                     </div>
                                     <div class="info-item">
                                         <div class="inf">
-                                            Waktu Pindah
+                                            Tanggal / Waktu Pindah
                                         </div>
                                         <div class="value">
                                             {{ $item->waktu_pindah->translatedFormat('j F Y H:i') }}
@@ -223,7 +249,6 @@
         @endforeach
     @endif
     {{-- RIWAYAT PINDAH KAMAR --}}
-    {{-- RIWAYAT PEMBAYARAN --}}
 
 
     <nav class="navbar fixed-bottom">
@@ -271,13 +296,29 @@
             });
         });
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const element = document.querySelector(".active");
-            element.scrollIntoView({
-                inline: "center"
-            });
+            const accordionElement = document.getElementById('searchbar');
+            const inputElement = accordionElement.querySelector('.search');
+
+            function checkAccordionShow() {
+                if (accordionElement.classList.contains('show')) {
+                    inputElement.focus();
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', checkAccordionShow);
+            accordionElement.addEventListener('shown.bs.collapse', checkAccordionShow);
         });
+    </script>
+    <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        const element = document.querySelector(".active");
+        element.scrollIntoView({
+            inline: "center"
+        });
+        // });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 @endsection

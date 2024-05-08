@@ -94,7 +94,7 @@
                                     <img src="{{ asset('img/people.png') }}">
                                 </div>
                                 <div class="text">
-                                    Kamar Kost tidak di Temukan, Silahkan tambahkan Kamar
+                                    Tidak ada data kamar kost, Silahkan tambahkan Kamar
                                 </div>
                             </div>
                         @else

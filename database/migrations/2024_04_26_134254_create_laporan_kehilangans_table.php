@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('no_kamar');
             $table->string('barang_hilang');
+            $table->string('id_laporan');
             $table->string('waktu_kehilangan');
             $table->string('status');
-            $table->string('keterangan');
-            $table->string('respon')->nullable();
+            $table->string('keterangan', 1500);
+            $table->string('respon', 1500)->nullable();
             $table->timestamps();
         });
     }

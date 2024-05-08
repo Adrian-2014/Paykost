@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\pengajuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -50,6 +52,29 @@ class loginController extends Controller
 
         return back()->with('error', 'email dan password tidak sesuai');
     }
+
+    public function formPengajuan(Request $request) {
+        // dd($request);
+        $request->validate([
+            'email' => 'required',
+            'no_kamar' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->where('no_kamar', $request->no_kamar)->first();
+
+        if ($user) {
+            $pengajuan = new pengajuan();
+            $pengajuan->email = $request->email;
+            $pengajuan->no_kamar = $request->no_kamar;
+            $pengajuan->keterangan = $request->keterangan_lanjutan;
+            $pengajuan->save();
+
+            return back()->with('success', 'Formulir berhasil di kirim');
+        } else {
+            return back()->with('error', 'Data yang Kamu Masukkan tidak cocok.');
+        }
+    }
+
 
 
     public function logout()

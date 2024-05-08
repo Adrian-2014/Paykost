@@ -366,9 +366,19 @@
                                                 </td>
                                                 <td>
                                                     <div class="td-item stat">
-                                                        <div class="item @if ($item->status === 'Ditolak') ditolak  @elseif($item->status === 'Diterima') diterima @else dipindahkan @endif">
-                                                            {{ $item->status }}
-                                                        </div>
+                                                        @if ($item->status === 'Ditolak')
+                                                            <div class="item ditolak">
+                                                                Ditolak
+                                                            </div>
+                                                        @elseif($item->status === 'Proses Pindah')
+                                                            <div class="item diterima">
+                                                                Disetujui
+                                                            </div>
+                                                        @else
+                                                            <div class="item dipindahkan">
+                                                                Dipindahkan
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td x-data="{ check: false }">

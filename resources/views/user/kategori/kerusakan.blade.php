@@ -12,6 +12,9 @@
             <div class="info fw-medium">
                 Laporan Kerusakan
             </div>
+            <div class="id" id="laporan">
+
+            </div>
         </div>
     </div>
 
@@ -26,6 +29,7 @@
                 <label for="k-now" class="form-label fw-medium">No. Kamar</label>
                 <input type="text" id="k-now" class="form-control" value="Kamar No. {{ auth()->user()->no_kamar }}" readonly>
                 <input type="hidden" name="no_kamar" class="form-control" value="{{ auth()->user()->no_kamar }}">
+                <input type="hidden" name="laporan_id" id="id_laporan" class="form-control" value="">
             </div>
         </div>
 
@@ -139,6 +143,25 @@
     </form>
 
 
+    <script>
+        function generateRandomString(length) {
+            const characters = '1ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '#';
+
+            for (let i = 1; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            return result;
+        }
+
+        const randomString = generateRandomString(10);
+        var target = document.getElementById('id_laporan');
+        var targets = document.getElementById('laporan');
+        target.value = randomString;
+        targets.innerHTML = randomString;
+        console.log(randomString);
+    </script>
     <script>
         var hariIni = new Date();
         // var besok = new Date(hariIni);
